@@ -56,7 +56,7 @@
           </div>
         </q-card>
         <q-separator />
-        <q-item v-ripple>
+        <q-item >
           <q-item-section avatar>
             <q-icon name="nights_stay" />
           </q-item-section>
