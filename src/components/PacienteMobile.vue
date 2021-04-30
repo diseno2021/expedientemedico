@@ -16,34 +16,63 @@
       <q-card>
         <q-card-section>
           <div class="row ">
-            <div class="col offset-sm-1">
-              <q-icon name="cake" style="font-size: 2em;" class="text-indigo" />
-              <span> {{ fechaNacimiento }} ({{ edad }} años) </span>
+            <div class="col ">
+              <div class="row items-center">
+                <div class="col-3 text-center">
+                  <q-icon
+                    name="cake"
+                    style="font-size: 2em;"
+                    class="text-indigo"
+                  />
+                </div>
+                <div class="col">
+                  <div class="row  justify-center">{{ fechaNacimiento }}</div>
+                  <div class="row text-caption justify-center">{{ edad }} años</div>
+                </div>
+              </div>
             </div>
             <div class="col">
-              <q-icon
-                name="bloodtype"
-                style="font-size: 2em;"
-                class="text-red "
-              />
-              <span> {{ paciente.tipoSangre }}</span>
+              <div class="row items-center">
+                <div class="col-3  text-center">
+                  <q-icon
+                    name="bloodtype"
+                    style="font-size: 2em;"
+                    class="text-red "
+                  />
+                </div>
+                <div class="col text-center">
+                  {{ paciente.tipoSangre }}
+                </div>
+              </div>
             </div>
           </div>
 
           <div class="row q-mt-md ">
-            <div class="col offset-sm-1">
-              <q-icon
-                :name="paciente.genero == 'Masculino' ? 'male' : 'female'"
-                :class="
-                  paciente.genero == 'Masculino' ? 'text-blue' : 'text-pink'
-                "
-                style="font-size: 2em"
-              />
-              <span class="q-mr-sm"> {{ paciente.genero }}</span>
+            <div class="col">
+              <div class="row items-center">
+                <div class="col-3 text-center">
+                  <q-icon
+                    :name="paciente.genero == 'Masculino' ? 'male' : 'female'"
+                    :class="
+                      paciente.genero == 'Masculino' ? 'text-blue' : 'text-pink'
+                    "
+                    style="font-size: 2em"
+                  />
+                </div>
+                <div class="col text-center">
+                  {{ paciente.genero }}
+                </div>
+              </div>
             </div>
             <div class="col">
-              <q-icon name="monitor_weight" style="font-size: 2em" />
-              <span>{{ paciente.peso[paciente.peso.length - 1] }} lb</span>
+              <div class="row items-center">
+                <div class="col-3 text-center">
+                  <q-icon name="monitor_weight" style="font-size: 2em" />
+                </div>
+                <div class="col text-center">
+                  {{ paciente.peso[paciente.peso.length - 1] }} lb
+                </div>
+              </div>
             </div>
           </div>
         </q-card-section>
