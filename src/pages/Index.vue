@@ -642,6 +642,9 @@ export default {
         edad--;
       }
       return edad;
+    },
+    getPeso(p){
+      return p.peso[p.peso.length - 1];
     }
   },
   computed: {
@@ -664,11 +667,11 @@ export default {
 
         if (this.orderBy == "peso" && this.orderDescend==false) {
           ordenado = this.pacientes.sort((p1, p2)=>  {
-            return p1[p1.peso.length - 1]-p2[p2.peso.length - 1]; //de menor a mayor
+            return this.getPeso(p1)-this.getPeso(p2); //de menor a mayor
           });
         } else if (this.orderBy == "peso"  && this.orderDescend==true) {
            ordenado = this.pacientes.sort((p1, p2)=>  {
-            return p2[p2.peso.length - 1]-p1[p1.peso.length - 1]; //de mayor a menor
+            return this.getPeso(p2)-this.getPeso(p1); //de mayor a menor
           });
         }
         return ordenado;
@@ -687,13 +690,13 @@ export default {
           });
         }
 
-        if (this.orderBy == "peso" && this.orderDescend==false) {
-          ordenado = this.pacientes.sort((p1, p2)=>  {
-            return p1[p1.peso.length - 1]-p2[p2.peso.length - 1]; //de menor a mayor
+         if (this.orderBy == "peso" && this.orderDescend==false) {
+          ordenado = filtrado.sort((p1, p2)=>  {
+            return this.getPeso(p1)-this.getPeso(p2); //de menor a mayor
           });
         } else if (this.orderBy == "peso"  && this.orderDescend==true) {
-           ordenado = this.pacientes.sort((p1, p2)=>  {
-            return p2[p2.peso.length - 1]-p1[p1.peso.length - 1]; //de mayor a menor
+           ordenado = filtrado.sort((p1, p2)=>  {
+            return this.getPeso(p2)-this.getPeso(p1); //de mayor a menor
           });
         }
         return ordenado;
