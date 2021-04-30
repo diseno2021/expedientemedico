@@ -1,84 +1,91 @@
 <template>
-  <q-page>
+  <div>
+    <!-- row de filtros-->
     <div class="row">
       <div class="col-12 q-pa-md">
         <div class="row">
-          <div class="col-12">
-            <q-input
+          <q-input
+            class="full-width"
+            rounded
+            standout="bg-blue-11 text-white"
+            bottom-slots
+            v-model="search"
+            label="Buscar por nombre"
+          >
+            <template v-slot:prepend>
+              <q-icon name="search" />
+            </template>
+            <template v-slot:append>
+              <q-icon
+                name="close"
+                @click="search = ''"
+                class="cursor-pointer"
+              />
+            </template>
+          </q-input>
+        </div>
+
+        <div class="row items-center">
+          <div class="col-4">
+            Ordenar por:
+          </div>
+          <div class="col-4">
+            <q-select
+              class="inline"
               rounded
-              bottom-slots
-              v-model="search"
-              label="Buscar por nombre"
+              v-model="orderBy"
+              :options="orderByOptions"
+              dense
             >
               <template v-slot:prepend>
-                <q-icon name="search" />
+                <q-icon name="event" />
               </template>
-              <template v-slot:append>
-                <q-icon
-                  name="close"
-                  @click="search = ''"
-                  class="cursor-pointer"
-                />
-              </template>
-            </q-input>
+            </q-select>
           </div>
-          <div class="col-12 col-sm-10 col-lg-4 col-md-6">
-            <div class="row items-center">
-              <div class="col-4">
-                Ordenar por:
-              </div>
-              <div class="col-4">
-                <q-select
-                  class="inline"
-                  rounded
-                  v-model="orderBy"
-                  :options="orderByOptions"
-                  dense
-                >
-                  <template v-slot:prepend>
-                    <q-icon name="event" />
-                  </template>
-                </q-select>
-              </div>
-              <div class="col-4">
-                <q-btn
-                  round
-                  color="grey"
-                  :icon="
-                    orderDescend == true ? 'arrow_downward' : 'arrow_upward'
-                  "
-                  @click="changeOrder"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-12">
-        <div class="row">
-          <div
-            v-if="$q.screen.width > 599"
-            class="col-12"
-            v-for="paciente in pacientesFiltrados"
-            :key="paciente.id"
-          >
-            <PacienteDesktop :paciente="paciente" />
+          <div class="col-4">
+            <q-btn
+              round
+              color="grey"
+              :icon="orderDescend == true ? 'arrow_downward' : 'arrow_upward'"
+              @click="changeOrder"
+            />
           </div>
         </div>
       </div>
     </div>
-  </q-page>
+    <!-- row de pacientes-->
+    <div class="row">
+      <div
+        v-if="$q.screen.width > 599"
+        class="col-12"
+        v-for="paciente in pacientesFiltrados"
+        :key="paciente.id"
+      >
+        <PacienteDesktop :paciente="paciente" />
+      </div>
+
+      <div
+        v-for="paciente in pacientesFiltrados"
+        :key="paciente.id"
+        class="full-width"
+        v-if="$q.screen.width <= 599"
+      >
+        <PacienteMobile :paciente="paciente" />
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
 import PacienteDesktop from "../components/PacienteDesktop";
+import PacienteMobile from "../components/PacienteMobile";
 export default {
   name: "PageIndex",
   components: {
-    PacienteDesktop
+    PacienteDesktop,
+    PacienteMobile
   },
-  data: function() {
+  data() {
     return {
       search: "",
       orderBy: "",
@@ -643,7 +650,7 @@ export default {
       }
       return edad;
     },
-    getPeso(p){
+    getPeso(p) {
       return p.peso[p.peso.length - 1];
     }
   },
@@ -655,23 +662,29 @@ export default {
       } else if (this.search == "" && this.orderBy != "") {
         //con ordenar sin fintrar
         var ordenado = [];
-        if (this.orderBy == "edad" && this.orderDescend==false) {
-          ordenado = this.pacientes.sort((p1, p2)=>  {
-            return this.getEdad(p1.fechaNacimiento)-this.getEdad(p2.fechaNacimiento); //de menor a mayor
+        if (this.orderBy == "edad" && this.orderDescend == false) {
+          ordenado = this.pacientes.sort((p1, p2) => {
+            return (
+              this.getEdad(p1.fechaNacimiento) -
+              this.getEdad(p2.fechaNacimiento)
+            ); //de menor a mayor
           });
-        } else if (this.orderBy == "edad"  && this.orderDescend==true) {
-           ordenado = this.pacientes.sort((p1, p2)=>  {
-            return this.getEdad(p2.fechaNacimiento)-this.getEdad(p1.fechaNacimiento); //de mayor a menor
+        } else if (this.orderBy == "edad" && this.orderDescend == true) {
+          ordenado = this.pacientes.sort((p1, p2) => {
+            return (
+              this.getEdad(p2.fechaNacimiento) -
+              this.getEdad(p1.fechaNacimiento)
+            ); //de mayor a menor
           });
         }
 
-        if (this.orderBy == "peso" && this.orderDescend==false) {
-          ordenado = this.pacientes.sort((p1, p2)=>  {
-            return this.getPeso(p1)-this.getPeso(p2); //de menor a mayor
+        if (this.orderBy == "peso" && this.orderDescend == false) {
+          ordenado = this.pacientes.sort((p1, p2) => {
+            return this.getPeso(p1) - this.getPeso(p2); //de menor a mayor
           });
-        } else if (this.orderBy == "peso"  && this.orderDescend==true) {
-           ordenado = this.pacientes.sort((p1, p2)=>  {
-            return this.getPeso(p2)-this.getPeso(p1); //de mayor a menor
+        } else if (this.orderBy == "peso" && this.orderDescend == true) {
+          ordenado = this.pacientes.sort((p1, p2) => {
+            return this.getPeso(p2) - this.getPeso(p1); //de mayor a menor
           });
         }
         return ordenado;
@@ -680,23 +693,29 @@ export default {
         var filtrado = [];
         filtrado = this.pacientes.filter(p => p.nombre.includes(this.search));
         var ordenado = [];
-        if (this.orderBy == "edad" && this.orderDescend==false) {
-          ordenado = filtrado.sort((p1, p2)=>  {
-            return this.getEdad(p1.fechaNacimiento)-this.getEdad(p2.fechaNacimiento); //de menor a mayor
+        if (this.orderBy == "edad" && this.orderDescend == false) {
+          ordenado = filtrado.sort((p1, p2) => {
+            return (
+              this.getEdad(p1.fechaNacimiento) -
+              this.getEdad(p2.fechaNacimiento)
+            ); //de menor a mayor
           });
-        } else if (this.orderBy == "edad"  && this.orderDescend==true) {
-           ordenado = filtrado.sort((p1, p2)=>  {
-            return this.getEdad(p2.fechaNacimiento)-this.getEdad(p1.fechaNacimiento); //de mayor a menor
+        } else if (this.orderBy == "edad" && this.orderDescend == true) {
+          ordenado = filtrado.sort((p1, p2) => {
+            return (
+              this.getEdad(p2.fechaNacimiento) -
+              this.getEdad(p1.fechaNacimiento)
+            ); //de mayor a menor
           });
         }
 
-         if (this.orderBy == "peso" && this.orderDescend==false) {
-          ordenado = filtrado.sort((p1, p2)=>  {
-            return this.getPeso(p1)-this.getPeso(p2); //de menor a mayor
+        if (this.orderBy == "peso" && this.orderDescend == false) {
+          ordenado = filtrado.sort((p1, p2) => {
+            return this.getPeso(p1) - this.getPeso(p2); //de menor a mayor
           });
-        } else if (this.orderBy == "peso"  && this.orderDescend==true) {
-           ordenado = filtrado.sort((p1, p2)=>  {
-            return this.getPeso(p2)-this.getPeso(p1); //de mayor a menor
+        } else if (this.orderBy == "peso" && this.orderDescend == true) {
+          ordenado = filtrado.sort((p1, p2) => {
+            return this.getPeso(p2) - this.getPeso(p1); //de mayor a menor
           });
         }
         return ordenado;
