@@ -688,12 +688,12 @@ export default {
         }
 
         if (this.orderBy == "peso" && this.orderDescend==false) {
-          ordenado = filtrado.sort((p1, p2)=>  {
-            return p1.peso-p2.peso; //de menor a mayor
+          ordenado = this.pacientes.sort((p1, p2)=>  {
+            return p1[p1.peso.length - 1]-p2[p2.peso.length - 1]; //de menor a mayor
           });
         } else if (this.orderBy == "peso"  && this.orderDescend==true) {
-           ordenado = filtrado.sort((p1, p2)=>  {
-            return p2.peso-p1.peso; //de mayor a menor
+           ordenado = this.pacientes.sort((p1, p2)=>  {
+            return p2[p2.peso.length - 1]-p1[p1.peso.length - 1]; //de mayor a menor
           });
         }
         return ordenado;
