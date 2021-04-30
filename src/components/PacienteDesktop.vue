@@ -6,6 +6,7 @@
           <div class="col-12">
             <q-avatar size="5rem" class="justify-center">
           <img :src="paciente.foto" />
+
         </q-avatar>
           </div>
         </div>
@@ -32,7 +33,7 @@
                 {{ paciente.tipoSangre }} <br />
                 <br />
                 <q-icon name="monitor_weight" style="font-size: 2em" />
-                {{ paciente.peso[paciente.peso.length - 1] }}
+                {{ paciente.peso[paciente.peso.length - 1] }} Lb.
               </div>
               <div class="col-lg-2 col-4">
                 <q-btn color="blue-9" push sm>
