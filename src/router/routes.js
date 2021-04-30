@@ -9,12 +9,26 @@ const routes = [
         path: '/auth',
         component: () => import('pages/PageAuth.vue')
       },
+      { 
+        path: '/plantilla', 
+        component: () => import('pages/Plantilla.vue') 
+      },
       {
-        path: '/plantilla',
-        component: () => import('pages/Plantilla.vue')
-      }
+        path: "/paciente",
+        component: ()=> import('layouts/PacienteLayout.vue'),
+        children: [
+          {
+            path: '/paciente/informacion-personal',
+            component: () => import('./../pages/ExpedientePaciente/InformacionPersonal.vue')
+          },
+          {
+            path: '/paciente/antecedentes',
+            component: () => import('./../pages/ExpedientePaciente/Antecedentes.vue')
+          }
+        ]
+      },
     ]
-  },
+    },
 
   // Always leave this as last one,
   // but you can also remove it
