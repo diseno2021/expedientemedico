@@ -12,68 +12,60 @@
         />
 
         <q-toolbar-title>
-          Aplicación de ejemplo
+          Sistema ABC
         </q-toolbar-title>
 
-        <div>Quasar</div>
+        <div>V1.0</div>
       </q-toolbar>
     </q-header>
 
     <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
       <q-list>
         <q-item>
-          <q-item-label
-            header
-            class="text-grey-8"
-            @click.prevent="leftDrawerOpen = false"
-          >
-            <q-btn
+          <q-item-section header>
+            <q-card
+              class="row text-primary text-h5 text-bold q-my-md justify-center items-center"
               flat
-              color="primary"
-              icon="book"
-              size="lg"
-              class="full-width text-capitalize text-bold	"
-              >Sistema ABC</q-btn
+              @click.prevent="leftDrawerOpen = false"
             >
-          </q-item-label>
+              <q-icon name="health_and_safety" style="font-size: 2.5rem;" />
+              Sistema ABC
+            </q-card>
+          </q-item-section>
         </q-item>
         <q-separator />
-        <q-item>
-          <div v-if="usuario != null">
-            <q-item to="#">
-              <q-item-section avatar>
-                <q-avatar>
-                  <img :src="usuario.photoURL" />
-                </q-avatar>
-              </q-item-section>
-              <q-item-section>
-                <q-item-label>{{ usuario.displayName }}</q-item-label>
-                <q-item-label caption>{{ usuario.email }}</q-item-label>
-              </q-item-section>
-            </q-item>
-            <q-item>
-              <q-btn
-                outline
-                rounded
-                color="primary"
-                size="sm"
-                class="absolute-center"
-                label="Cerrar sesión"
-                @click="logout"
-              />
-            </q-item>
+
+        <q-card flat class="row q-my-md items-center" v-if="usuario != null">
+          <div class="col-3 text-center">
+            <q-avatar>
+              <img :src="usuario.photoURL" />
+            </q-avatar>
           </div>
-        </q-item>
+          <div class="col">
+            <div class="row  ">{{ usuario.displayName }}</div>
+            <div class="row text-caption text-weight-light">
+              {{ usuario.email }}
+            </div>
+          </div>
+          <div class="col-2">
+            <q-btn flat round color="primary" icon="logout" @click="logout">
+              <q-tooltip anchor="center right" self="center left">
+                Cerrar Sesion
+              </q-tooltip>
+            </q-btn>
+          </div>
+        </q-card>
         <q-separator />
-        <q-item>
-          <q-item-label>
-            Modo oscuro
-            <q-btn
-              @click.prevent="cambiarModoDark"
-              icon="nights_stay"
-              rounded
-            />
-          </q-item-label>
+        <q-item >
+          <q-item-section avatar>
+            <q-icon name="nights_stay" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>Modo Oscuro</q-item-label>
+          </q-item-section>
+          <q-item-section side>
+            <q-toggle color="blue" v-model="dark" @input="cambiarModoDark" />
+          </q-item-section>
         </q-item>
         <q-separator />
         <q-item to="/" clickable v-ripple>
@@ -82,13 +74,22 @@
           </q-item-section>
           <q-item-section>Pacientes</q-item-section>
         </q-item>
-        <q-item to="/plantilla" clickable v-ripple>
+        <q-item to="" clickable v-ripple>
           <q-item-section avatar>
             <q-icon name="person_add" />
           </q-item-section>
           <q-item-section>Nuevo Paciente</q-item-section>
         </q-item>
       </q-list>
+      <div class="fixed-bottom q-mb-xl">
+        <q-separator />
+        <q-card class="text-center q-mt-xl" flat>
+          <q-icon name="people" style="font-size: 2.5rem;" />
+          <div class="full-width ">
+            20 pacientes registrados
+          </div>
+        </q-card>
+      </div>
     </q-drawer>
 
     <q-page-container>
@@ -106,7 +107,8 @@ export default {
   data() {
     return {
       leftDrawerOpen: false,
-      usuario: null
+      usuario: null,
+      dark: false
     };
   },
   methods: {
