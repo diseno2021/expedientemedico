@@ -1,7 +1,7 @@
 <template>
     <div>
         <q-drawer show-if-above bordered side="right">
-      <div class="q-pt-lg q-mt-lg">
+      <div>
         <q-list dense padding>
           <q-item clickable v-ripple to="/paciente/informacion-personal">
             <q-item-section>

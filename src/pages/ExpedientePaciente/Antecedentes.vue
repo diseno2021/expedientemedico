@@ -1,6 +1,5 @@
 <template>
     <div>
-        <BannerPrincipal/>
         <div class="row justify-center">
             <div class="col-md-10">
                 <q-editor v-model="editor" min-height="5rem" />

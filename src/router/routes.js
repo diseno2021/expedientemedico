@@ -9,9 +9,9 @@ const routes = [
         path: '/auth',
         component: () => import('pages/PageAuth.vue')
       },
-      { 
-        path: '/plantilla', 
-        component: () => import('pages/Plantilla.vue') 
+      {
+        path: '/plantilla',
+        component: () => import('pages/Plantilla.vue')
       },
       {
         path: "/paciente",
