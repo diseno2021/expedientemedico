@@ -1,5 +1,7 @@
 <template>
-
+<!-- arrows
+      transition-prev="slide-right"
+      transition-next="slide-left" -->
   <div class="q-pa-md">
     <q-carousel
       swipeable
@@ -8,12 +10,10 @@
       thumbnails
       infinite
       :autoplay="autoplay"
-      arrows
-      transition-prev="slide-right"
-      transition-next="slide-left"
       @mouseenter="autoplay = false"
       @mouseleave="autoplay = true"
-      :fullscreen.sync="fullscreen"     
+      :fullscreen.sync="fullscreen"
+      :navigation-position="fullscreen ? 'left' : 'bottom' "     
       
     >
       <q-carousel-slide :name="1" img-src="https://cdn.quasar.dev/img/mountains.jpg" />
@@ -24,20 +24,19 @@
 
       <template v-slot:control>
         <q-carousel-control
-          position="bottom-right"
+          :position="fullscreen ? 'bottom-right' : 'top-right'"
           :offset="[18, 18]"
         >
+          <q-btn round color="black" icon="add_circle" class="q-mx-sm "></q-btn>
           <q-btn
             push round dense color="white" text-color="primary"
             :icon="fullscreen ? 'fullscreen_exit' : 'fullscreen'"
             @click="fullscreen = !fullscreen"
           />          
-          <q-btn round color="black" icon="add_circle"></q-btn>
         </q-carousel-control>
       </template>
 
     </q-carousel>
-     <hr>
     
 
   </div>
@@ -52,7 +51,7 @@ export default {
      data () {
     return {
       slide: 1,
-      autoplay: 400,
+      autoplay: true,
       fullscreen: false
     }
   }

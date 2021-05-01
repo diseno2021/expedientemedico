@@ -30,7 +30,7 @@ const routes = [
       },
       { 
         path: '/expediente', 
-        component: () => import('pages/Archivos.vue') 
+        component: () => import('src/pages/testGaleria.vue') 
       }
     ]
     },
