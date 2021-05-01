@@ -25,8 +25,13 @@ const routes = [
             path: '/paciente/antecedentes',
             component: () => import('./../pages/ExpedientePaciente/Antecedentes.vue')
           }
+
         ]
       },
+      { 
+        path: '/expediente', 
+        component: () => import('pages/Archivos.vue') 
+      }
     ]
     },
 
