@@ -4,13 +4,13 @@ import "firebase/auth"
 
 // Agregar configuración firebase:
 var firebaseConfig = {
-    apiKey: "AIzaSyCPgfJHSrhN-s-lP-uFLUu1oeVmwtUzrzI",
-    authDomain: "fpi2020ues.firebaseapp.com",
+    apiKey: "AIzaSyD-S8huH8K6xbbNiMYFruzeUfu6KLPeKLY",
+    authDomain: "sistemamedico-b3d66.firebaseapp.com",
     databaseURL: "https://fpi2020ues.firebaseio.com",
-    projectId: "fpi2020ues",
-    storageBucket: "fpi2020ues.appspot.com",
-    messagingSenderId: "408122200746",
-    appId: "1:408122200746:web:87480d461d32a37755b6d3"
+    projectId: "sistemamedico-b3d66",
+    storageBucket: "sistemamedico-b3d66.appspot.com",
+    messagingSenderId: "187184703055",
+    appId: "1:187184703055:web:56a0a19a52bd0e875e2c3a"
 }
 
 
