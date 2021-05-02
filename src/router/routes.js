@@ -9,30 +9,30 @@ const routes = [
         path: '/auth',
         component: () => import('pages/PageAuth.vue')
       },
-      { 
-        path: '/plantilla', 
-        component: () => import('pages/Plantilla.vue') 
+      {
+        path: '/plantilla',
+        component: () => import('pages/Plantilla.vue')
       },
       {
-        path: "/paciente",
-        component: ()=> import('layouts/PacienteLayout.vue'),
-        children: [
-          {
-            path: '/paciente/informacion-personal',
-            component: () => import('./../pages/ExpedientePaciente/InformacionPersonal.vue')
-          },
-          {
-            path: '/paciente/antecedentes',
-            component: () => import('./../pages/ExpedientePaciente/Antecedentes.vue')
-          }
-
-        ]
-      },
-      { 
-        path: '/expediente', 
-        component: () => import('src/pages/testGaleria.vue') 
+        path: '/galeria',
+        component: () => import('src/pages/testGaleria.vue')
       }
     ]
+    },
+    {
+      path: "/paciente",
+      component: ()=> import('layouts/PacienteLayout.vue'),
+      children: [
+        {
+          path: 'informacion-personal',
+          component: () => import('./../pages/ExpedientePaciente/InformacionPersonal.vue')
+        },
+        {
+          path: 'antecedentes',
+          component: () => import('./../pages/ExpedientePaciente/Antecedentes.vue')
+        }
+
+      ]
     },
 
   // Always leave this as last one,

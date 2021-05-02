@@ -1,9 +1,5 @@
 <template>
   <div>
-    <div class="pt-md">
-
-    </div>
-    <BannerPrincipal />
     <div class="row justify-center">
       <div class="col-md-10">
         <p class="text">Nombre Completo</p>
