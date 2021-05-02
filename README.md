@@ -2,18 +2,18 @@
 
 Ejercicio de prueba
 
-## Install the dependencies
+## Paso uno luego de clonar el repositorio Install the dependencies
 ```bash
 npm install
 ```
 
-### Start the app in development mode (hot-code reloading, error reporting, etc.)
+### Paso dos: Start the app in development mode (hot-code reloading, error reporting, etc.)
 ```bash
 quasar dev
 ```
+una vez hecho esto, debería abrirse en una nueva ventana
 
-
-### Build the app for production
+### Build the app for production(no se necesario en este momento)
 ```bash
 quasar build
 ```
