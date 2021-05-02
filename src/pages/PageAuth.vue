@@ -43,6 +43,7 @@ export default {
                     .catch((error) => {
                         console.error("Error writing document: ", error);
                     });
+                    this.$router.push("/")
 
                 })
                 .catch((err) => {
