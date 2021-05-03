@@ -30,6 +30,12 @@ const routes = [
         {
           path: 'antecedentes',
           component: () => import('./../pages/ExpedientePaciente/Antecedentes.vue')
+
+        },
+        {
+          path: 'recetas',
+          component: () => import('./../pages/ExpedientePaciente/Recetas.vue')
+          
         }
 
       ]
