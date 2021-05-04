@@ -41,6 +41,11 @@ const routes = [
       ]
     },
 
+    {
+      path: '/pasar-consulta',
+    component: () => import('pages/PasarConsulta/PasarConsultaView.vue')
+    },
+
   // Always leave this as last one,
   // but you can also remove it
   {
