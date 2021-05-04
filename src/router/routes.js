@@ -1,4 +1,6 @@
-
+// LAS RUTAS DEBEN DE IR COMO HIJAS PARA QUE SE APLIQUE EL LAYOUT
+// si las rutas no van dentro de children se interpretan como paginas independientes
+// y no pone el titulo, o el pie de pagina o el menu a la izquierda
 const routes = [
   {
     path: '/',
