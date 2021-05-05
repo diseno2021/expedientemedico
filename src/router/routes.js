@@ -42,6 +42,10 @@ const routes = [
         {
           path: 'consultas',
           component: () => import('./../pages/ExpedientePaciente/Consultas.vue')
+        },
+        {
+          path: 'medicamentos-permanentes',
+          component: () => import('./../pages/ExpedientePaciente/MedicamentosPermanentes.vue')
         }
       ]
     },
