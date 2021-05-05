@@ -38,8 +38,11 @@ const routes = [
           path: 'recetas',
           component: () => import('./../pages/ExpedientePaciente/Recetas.vue')
           
+        },
+        {
+          path: 'consultas',
+          component: () => import('./../pages/ExpedientePaciente/Consultas.vue')
         }
-
       ]
     },
 
