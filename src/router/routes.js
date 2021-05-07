@@ -8,10 +8,6 @@ const routes = [
     children: [
       { path: '', name:"home", component: () => import('pages/Index.vue') },
       {
-        path: '/auth',
-        component: () => import('pages/PageAuth.vue')
-      },
-      {
         path: '/plantilla',
         component: () => import('pages/Plantilla.vue')
       },
@@ -58,6 +54,17 @@ const routes = [
     {
       path: '/pasar-consulta',
     component: () => import('pages/PasarConsulta/PasarConsultaView.vue')
+    },
+    {
+      path: '/auth',
+        component: () => import('layouts/Login.vue'),
+        
+        children: [
+          {
+            path: '',
+            component: () => import('pages/PageAuth.vue'),
+          },
+        ],
     },
 
   // Always leave this as last one,
