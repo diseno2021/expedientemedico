@@ -82,7 +82,7 @@
             color="primary"
             label="Ver Expediente"
             icon="assignment"
-            to=""
+            to="/paciente"
           />
         </q-card-actions>
       </q-card>

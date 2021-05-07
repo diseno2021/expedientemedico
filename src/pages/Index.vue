@@ -77,8 +77,8 @@
 </template>
 
 <script>
-import PacienteDesktop from "../components/PacienteDesktop";
-import PacienteMobile from "../components/PacienteMobile";
+import PacienteDesktop from "../components/Dashboard/PacienteDesktop";
+import PacienteMobile from "../components/Dashboard/PacienteMobile";
 export default {
   name: "PageIndex",
   components: {

@@ -36,7 +36,7 @@
                 {{ paciente.peso[paciente.peso.length - 1] }} Lb.
               </div>
               <div class="col-lg-2 col-4">
-                <q-btn color="blue-9" push sm>
+                <q-btn color="blue-9" push sm to="/paciente">
                   <div class="row items-center">
                     <q-icon left name="more" />
                     <div class="text-center">Ver expediente</div>
