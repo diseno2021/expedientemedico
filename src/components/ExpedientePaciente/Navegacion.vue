@@ -33,9 +33,9 @@
             </q-item-section>
           </q-item>
 
-          <q-item clickable v-ripple to="/pacientes/archivos">
+          <q-item clickable v-ripple to="/paciente/enfermedades-cronicas">
             <q-item-section>
-              Archivos
+              Enfermedades Cronicas
             </q-item-section>
           </q-item>
         </q-list>

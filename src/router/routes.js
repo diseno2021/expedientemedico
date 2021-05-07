@@ -40,13 +40,18 @@ const routes = [
           
         },
         {
+          path: 'enfermedades-cronicas',
+          component: () => import('./../pages/ExpedientePaciente/EnfermedadesCronicas.vue')
+        },
+        {
           path: 'consultas',
           component: () => import('./../pages/ExpedientePaciente/Consultas.vue')
         },
         {
           path: 'medicamentos-permanentes',
           component: () => import('./../pages/ExpedientePaciente/MedicamentosPermanentes.vue')
-        }
+        },
+       
       ]
     },
 
