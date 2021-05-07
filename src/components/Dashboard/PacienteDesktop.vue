@@ -1,13 +1,12 @@
 <template>
   <q-card class="q-ml-md q-mr-md q-mt-md">
     <q-card-section horizontal>
-      <q-card-section class="bg-blue-grey-1  items-center">
+      <q-card-section class="bg-blue-grey-1 items-center">
         <div class="row full-height items-center">
           <div class="col-12">
             <q-avatar size="5rem" class="justify-center">
-          <img :src="paciente.foto" />
-
-        </q-avatar>
+              <img :src="paciente.foto" />
+            </q-avatar>
           </div>
         </div>
       </q-card-section>
@@ -19,17 +18,32 @@
           <div class="col-12">
             <div class="row text-weight-light">
               <div class="col-lg-5 col-4">
-                <q-icon name="cake" style="font-size: 2em" />
-                {{ fechaNacimiento }}, {{ edad }} años <br />
+                <q-icon
+                  name="cake"
+                  style="font-size: 2em"
+                  class="text-indigo"
+                />
+                {{ fechaNacimiento }},
+                <span class="text-weight-regular" style="font-size: 1em">
+                  {{ edad }} años</span
+                >
+                <br />
                 <br />
                 <q-icon
                   :name="paciente.genero == 'Masculino' ? 'male' : 'female'"
+                  :class="
+                    paciente.genero == 'Masculino' ? 'text-blue' : 'text-pink'
+                  "
                   style="font-size: 2em"
                 />
                 {{ paciente.genero }}
               </div>
               <div class="col-lg-5 col-4">
-                <q-icon name="bloodtype" style="font-size: 2em" />
+                <q-icon
+                  name="bloodtype"
+                  style="font-size: 2em"
+                  class="text-red"
+                />
                 {{ paciente.tipoSangre }} <br />
                 <br />
                 <q-icon name="monitor_weight" style="font-size: 2em" />
@@ -38,7 +52,7 @@
               <div class="col-lg-2 col-4">
                 <q-btn color="blue-9" push sm to="/paciente">
                   <div class="row items-center">
-                    <q-icon left name="more" />
+                    <q-icon left name="assignment" />
                     <div class="text-center">Ver expediente</div>
                   </div>
                 </q-btn>
@@ -57,7 +71,7 @@ import { date } from "quasar";
 export default {
   name: "PacienteComponent",
   props: {
-    paciente: Object,
+    paciente: Object
   },
   computed: {
     fechaNacimiento() {
@@ -73,10 +87,9 @@ export default {
         edad--;
       }
       return edad;
-    },
-  },
+    }
+  }
 };
 </script>
 
-<style>
-</style>
+<style></style>
