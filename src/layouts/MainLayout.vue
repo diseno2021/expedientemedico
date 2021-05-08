@@ -29,7 +29,7 @@
               @click.prevent="leftDrawerOpen = false"
             >
               <q-icon name="health_and_safety" style="font-size: 2.5rem;" />
-              Sistema ABC d
+              Sistema ABC 
             </q-card>
           </q-item-section>
         </q-item>
