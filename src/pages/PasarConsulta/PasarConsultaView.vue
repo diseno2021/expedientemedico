@@ -1,5 +1,12 @@
 <template>
-  <div class="q-pa-md">
+
+  <div>
+    Hello
+    esto es para pasar consulta
+
+  </div>
+  
+  <!-- <div class="q-pa-md">
     <q-layout view="lHh Lpr lff">
       <q-drawer v-model="drawer" show-if-above :width="200" :breakpoint="400">
         <div>
@@ -12,7 +19,7 @@
         </div>
       </q-drawer>
     </q-layout>
-  </div>
+  </div> -->
 </template>
 
 <script>

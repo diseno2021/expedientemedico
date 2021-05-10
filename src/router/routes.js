@@ -52,14 +52,14 @@ const routes = [
           path: 'medicamentos-permanentes',
           component: () => import('./../pages/ExpedientePaciente/MedicamentosPermanentes.vue')
         },
-       
+        {
+          path: 'pasar-consulta',
+        component: () => import('./../pages/PasarConsulta/PasarConsultaView.vue')
+        }   
       ]
     },
 
-    {
-      path: '/pasar-consulta',
-    component: () => import('pages/PasarConsulta/PasarConsultaView.vue')
-    },
+    ,
     {
       path: '/auth',
         component: () => import('layouts/Login.vue'),
