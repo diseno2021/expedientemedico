@@ -14,9 +14,31 @@
         <q-input outlined class=" q-mb-lg" v-model="form_data.proximaCita" filled type="date" hint="Próxima Cita" />
 
       </div>
-      <div class="col-md-8"></div>
+      <div class="col-md-8">
+        
+          <div class="q-pa-md q-gutter-sm">
+            <p>Exploracion fisica</p>
+            <q-editor v-model="form_data.exploracionFisica" min-height="5rem"></q-editor>
+            <p>Motivo de Consulta</p>
+            <q-editor v-model="form_data.editor" min-height="5rem"></q-editor>
+            <p>Sintomas subjetivos</p>
+            <q-editor v-model="form_data.sintomasSubjetivos" min-height="5rem"></q-editor>
+            
+          </div>
+        
+      </div>
     </div>
+    <div class="q-pa-md q-gutter-sm">
+        <p>Diagnostigo</p>
+        <q-editor v-model="form_data.diagnostico" min-height="5rem"></q-editor>
+    </div>
+    <div class="q-pa-md q-gutter-sm">
+      <q-btn color="primary" label="Primary" to=""></q-btn>
+    </div>
+    
+
   </div>
+
 </template>
 
 <script>
@@ -44,6 +66,11 @@ export default {
         diagnostico: "",
         receta: "",
         examenes: "",
+        editor: 'un texto <b>en negrita</b> de ejemplo ',
+        exploracionFisica: "Item1 </br> Item2 </br> Item3",
+        sintomasSubjetivos: "",
+        diagnostico:"",
+        
         proximaCita: undefined
       }
     };

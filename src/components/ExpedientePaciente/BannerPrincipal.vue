@@ -19,8 +19,8 @@
                 <div class="text-h5 gt-xs">Id: {{paciente.id}}</div>
               </div>
               <div class="col-auto">
-                <q-btn round color="secondary" icon="add" size="lg" class="gt-xs" to="/paciente/pasar-consulta" ></q-btn>
-                <q-btn round color="secondary" icon="add" size="md" class="lt-sm"></q-btn>
+                <q-btn round color="secondary" icon="add" size="lg" class="gt-xs" to="paciente/pasar-consulta"></q-btn>
+                <q-btn round color="secondary" icon="add" size="md" class="lt-sm" to="paciente/pasar-consulta"></q-btn>
               </div>
               <div class="col-auto lt-md">
                 <q-btn round color="primary" icon="arrow_drop_down"></q-btn>
