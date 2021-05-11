@@ -19,7 +19,7 @@
                 <div class="text-h5 gt-xs">Id: {{paciente.id}}</div>
               </div>
               <div class="col-auto">
-                <q-btn round color="secondary" icon="add" size="lg" class="gt-xs"></q-btn>
+                <q-btn round color="secondary" icon="add" size="lg" class="gt-xs" to="/paciente/pasar-consulta" ></q-btn>
                 <q-btn round color="secondary" icon="add" size="md" class="lt-sm"></q-btn>
               </div>
               <div class="col-auto lt-md">
