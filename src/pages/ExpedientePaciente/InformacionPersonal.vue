@@ -52,7 +52,9 @@
       <div class="col-md-5">
         <q-input v-model="text" label="Tipo de sangre">
           <template v-slot:prepend>
-            <q-icon name="water" />
+            <q-icon
+                  name="bloodtype"
+                />
           </template>
         </q-input>
       </div>
@@ -62,7 +64,7 @@
       <div class="col-md-4">
         <q-input v-model="text" label="Peso">
           <template v-slot:prepend>
-            <q-icon name="person" />
+            <q-icon name="monitor_weight"/>
           </template>
         </q-input>
       </div>
