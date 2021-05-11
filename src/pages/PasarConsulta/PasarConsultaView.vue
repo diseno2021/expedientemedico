@@ -1,25 +1,22 @@
 <template>
+  <div id="pasar-consulta">
+    <div class="row">
+      <div class="col-md-4">
 
-  <div>
-    Hello
-    esto es para pasar consulta
+        <q-input class="q-my-md" type="number" min="0" outlined suffix="lb" v-model="form_data.peso" label="peso" ></q-input>
+        <q-input class="q-my-md" type="number" min="0" outlined suffix="cm" v-model="form_data.estatura" label="estatura" ></q-input>
+        <q-input class="q-my-md" type="number" min="0" outlined suffix="°C" v-model="form_data.temperatura" label="temperatura" ></q-input>
+        <q-input class="q-my-md" type="number" min="0" outlined suffix="kg/m2" v-model="form_data.imc" label="imc" ></q-input>        
+        <q-input class="q-my-md" type="number" min="0" outlined suffix="mmHg" v-model="form_data.presionArterial" label="presión" ></q-input>        
 
+        <hr>        
+        
+        <q-input outlined class=" q-mb-lg" v-model="form_data.proximaCita" filled type="date" hint="Próxima Cita" />
+
+      </div>
+      <div class="col-md-8"></div>
+    </div>
   </div>
-  
-  <!-- <div class="q-pa-md">
-    <q-layout view="lHh Lpr lff">
-      <q-drawer v-model="drawer" show-if-above :width="200" :breakpoint="400">
-        <div>
-          <div class="absolute-top">
-            <perfil />
-          </div>
-          <div class="absolute-bottom">
-            <navegacionConsulta />
-          </div>
-        </div>
-      </q-drawer>
-    </q-layout>
-  </div> -->
 </template>
 
 <script>
@@ -29,12 +26,29 @@ import navegacionConsulta from "components/PasarConsulta/NavegacionConsulta.vue"
 export default {
   components: {
     perfil,
-    navegacionConsulta,
+    navegacionConsulta
   },
   data() {
     return {
-      drawer: false,
+      form_data: {
+        id: "",
+        idPaciente: "",
+        peso: 0,
+        estatura: 0,
+        temperatura: 0,
+        imc: 0,
+        presionArterial: 0,
+        exploracionFisica: "",
+        motivoConsulta: "",
+        sintomas: "",
+        diagnostico: "",
+        receta: "",
+        examenes: "",
+        proximaCita: undefined
+      }
     };
-  },
+  }
 };
 </script>
+
+<style scoped></style>
