@@ -685,11 +685,14 @@ export default {
   computed: {
     //computed que devuelve el arreglo de pacientes despues de filtrarlos
     pacientesFiltrados() {
-      var ordenado = [];
 
-      //sin ordenar sin filtrar entonces es en orden alfabetico
-      if (this.search == "" && this.orderBy == "") {
-        ordenado = this.pacientes.sort((p1, p2) => {
+      var filtrado = [];
+
+      //PRIMERO EVALUA LA BUSQUEDA POR NOMBRE
+
+      //si no esta filtrado por busqueda los ordena alfabeticamente
+      if (this.search == "" && this.orderBy=="") {
+        filtrado = this.pacientes.sort((p1, p2) => {
           if (p1.nombre > p2.nombre) {
             return 1;
           }
@@ -698,11 +701,15 @@ export default {
           }
           return 0;
         });
-        //con ordenar sin fintrar
-      } else if (this.search == "" && this.orderBy != "") {
-        //si es con ordenar por edad ascendente
-        if (this.orderBy == "edad" && this.orderDescend == false) {
-          ordenado = this.pacientes.sort((p1, p2) => {
+        //si esta filtrado por busqueda lo filtra por nombre
+      }else{
+         filtrado = this.pacientes.filter((p) => p.nombre.includes(this.search));
+      }
+
+      //AHORA LOS ORDENA
+    //si es ordenado por edad
+      if (this.orderBy == "edad" && this.orderDescend == false) {
+          filtrado = this.pacientes.sort((p1, p2) => {
             return (
               this.getEdad(p1.fechaNacimiento) -
               this.getEdad(p2.fechaNacimiento)
@@ -710,70 +717,34 @@ export default {
           });
           //si es con ordenar por edad descendente
         } else if (this.orderBy == "edad" && this.orderDescend == true) {
-          ordenado = this.pacientes.sort((p1, p2) => {
+          filtrado = this.pacientes.sort((p1, p2) => {
             return (
               this.getEdad(p2.fechaNacimiento) -
               this.getEdad(p1.fechaNacimiento)
             ); //de mayor a menor
           });
         }
-        //si es con ordenar por peso ascendente
+
+        //si es ordenado por peso
         if (this.orderBy == "peso" && this.orderDescend == false) {
-          ordenado = this.pacientes.sort((p1, p2) => {
+          filtrado = this.pacientes.sort((p1, p2) => {
             return this.getPeso(p1) - this.getPeso(p2); //de menor a mayor
           });
           //si es con ordenar por peso descendente
         } else if (this.orderBy == "peso" && this.orderDescend == true) {
-          ordenado = this.pacientes.sort((p1, p2) => {
+          filtrado = this.pacientes.sort((p1, p2) => {
             return this.getPeso(p2) - this.getPeso(p1); //de mayor a menor
           });
         }
-        //con ordenar con filtrar
-      } else if (this.search != "" && this.orderBy != "") {
-        var filtrado = [];
-        //filtra por el nombre
-        filtrado = this.pacientes.filter((p) => p.nombre.includes(this.search));
-        //si es ordenar por edad
-        if (this.orderBy == "edad" && this.orderDescend == false) {
-          ordenado = filtrado.sort((p1, p2) => {
-            return (
-              this.getEdad(p1.fechaNacimiento) -
-              this.getEdad(p2.fechaNacimiento)
-            ); //de menor a mayor
-          });
-        } else if (this.orderBy == "edad" && this.orderDescend == true) {
-          ordenado = filtrado.sort((p1, p2) => {
-            return (
-              this.getEdad(p2.fechaNacimiento) -
-              this.getEdad(p1.fechaNacimiento)
-            ); //de mayor a menor
-          });
-        }
-        //si es ordenar por peso
-        if (this.orderBy == "peso" && this.orderDescend == false) {
-          ordenado = filtrado.sort((p1, p2) => {
-            return this.getPeso(p1) - this.getPeso(p2); //de menor a mayor
-          });
-        } else if (this.orderBy == "peso" && this.orderDescend == true) {
-          ordenado = filtrado.sort((p1, p2) => {
-            return this.getPeso(p2) - this.getPeso(p1); //de mayor a menor
-          });
-        }
-        //sin ordenar con filtrar
-      } else if (this.search != "" && this.orderBy == "") {
-        var filtrado = [];
-        filtrado = this.pacientes.filter((p) => p.nombre.includes(this.search));
-        ordenado=filtrado;
-      }
 
-      //ahora filtramos entre Masculino y Femenino
+      //FILTRO DE MASCULINO Y FEMENINO
       if(this.filterBy=="Masculino"){
-        ordenado= ordenado.filter(p=>{return p.genero=="Masculino"});
+        filtrado= filtrado.filter(p=>{return p.genero=="Masculino"});
       }else if(this.filterBy=="Femenino"){
-        ordenado= ordenado.filter(p=>{return p.genero=="Femenino"});
+        filtrado= filtrado.filter(p=>{return p.genero=="Femenino"});
       }
 
-      return ordenado; //devolvemos filtrado
+      return filtrado; //devolvemos filtrado
     },
   },
 };
