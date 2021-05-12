@@ -1,6 +1,4 @@
 <template>
-  <div>
-    <q-drawer show-if-above bordered side="right">
       <div>
         <q-list dense padding>
           <q-item clickable v-ripple to="/paciente/informacion-personal">
@@ -58,8 +56,6 @@
           </q-item>
         </q-list>
       </div>
-    </q-drawer>
-  </div>
 </template>
 
 <script>
