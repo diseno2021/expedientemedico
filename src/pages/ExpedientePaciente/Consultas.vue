@@ -1,18 +1,35 @@
 <template>
   <div class="row">
-      <div class="col-12 col-md-6 q-pa-sm" v-for="consulta in consultas" :key="consulta.id">
+      <div class="col-12 q-pa-sm" v-for="consulta in consultas" :key="consulta.id">
         <q-card>
-            <q-card-section>
+            <q-card-section class="text-center">
                 <div class="text-h6">Motivo: {{ consulta.motivoConsulta }}</div>
             </q-card-section>
             <q-separator inset></q-separator>
-            <q-card-section>
-                <div class="text-body1">Sintomas: {{ consulta.sintomas }}</div>
-                <div class="text-body1">Diagnostico: {{ consulta.diagnostico }}</div>
-                <div class="text-body1">Receta: {{ consulta.receta }}</div>
-            </q-card-section>
+            <div class="row">
+                <div class="col-12 col-md-8">
+                    <q-card-section>
+                        <div class="text-body1">Sintomas: {{ consulta.sintomas }}</div>
+                        <div class="text-body1">Exploración Física: {{ consulta.exploracionFisica }}</div>
+                        <div class="text-body1">Diagnostico: {{ consulta.diagnostico }}</div>
+                        <div class="text-body1">Receta: {{ consulta.receta }}</div>
+                        <div class="text-body1">Examenes: {{ consulta.examenes }}</div>
+                    </q-card-section>
+                </div>
+                <div class="col-12 lt-md"><q-separator inset /></div>
+                <q-separator inset vertical class="gt-sm" />
+                <div class="col-12 col-md-auto">
+                    <q-card-section>
+                        <div class="text-body1">Peso: {{ consulta.peso }}</div>
+                        <div class="text-body1">Estatura: {{ consulta.estatura }}</div>
+                        <div class="text-body1">Temperatura: {{ consulta.temperatura }}</div>
+                        <div class="text-body1">IMC: {{ consulta.imc }}</div>
+                        <div class="text-body1">Presión Arterial: {{ consulta.presionArterial }}</div>
+                    </q-card-section>
+                </div>
+            </div>
             <q-separator inset></q-separator>
-            <q-card-section>
+            <q-card-section class="text-center">
                 <div class="text-subtitle2">Próxima cita: {{ consulta.proximaCita }}</div>
             </q-card-section>
         </q-card>
