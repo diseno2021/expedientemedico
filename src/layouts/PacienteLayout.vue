@@ -15,7 +15,7 @@
           Aplicación de ejemplo
         </q-toolbar-title>
 
-        <div>Quasar</div>
+        <q-btn class="lt-md" flat @click="drawerRight = !drawerRight" round dense icon="menu" />
       </q-toolbar>
     </q-header>
 
@@ -90,7 +90,65 @@
         </q-item>
       </q-list>
     </q-drawer>
-    <Navegacion/>
+    <q-drawer v-model="drawerRight" show-if-above bordered side="right">
+      <div>
+        <q-list dense padding>
+          <q-item clickable v-ripple to="/paciente/informacion-personal">
+            <q-item-section avatar>
+              <q-icon name="person" />
+            </q-item-section>
+            <q-item-section>
+              Información personal
+            </q-item-section>
+          </q-item>
+
+          <q-item clickable v-ripple to="/paciente/antecedentes">
+            <q-item-section avatar>
+              <q-icon name="book" />
+            </q-item-section>
+            <q-item-section>
+              Antecedentes
+            </q-item-section>
+          </q-item>
+
+          <q-item clickable v-ripple to="/paciente/medicamentos-permanentes">
+            <q-item-section avatar>
+              <q-icon name="medication" />
+            </q-item-section>
+            <q-item-section>
+              Medicamentos permanentes
+            </q-item-section>
+          </q-item>
+
+          <q-item clickable v-ripple to="/paciente/consultas">
+          <q-item-section avatar>
+              <q-icon name="healing" />
+            </q-item-section>
+            <q-item-section>
+              Consultas
+            </q-item-section>
+          </q-item>
+
+          <q-item clickable v-ripple to="/paciente/recetas">
+          <q-item-section avatar>
+              <q-icon name="description" />
+            </q-item-section>
+            <q-item-section>
+              Recetas
+            </q-item-section>
+          </q-item>
+
+          <q-item clickable v-ripple to="/paciente/enfermedades-cronicas">
+            <q-item-section avatar>
+              <q-icon name="local_hospital" />
+            </q-item-section>
+            <q-item-section>
+              Enfermedades Cronicas
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </div>
+    </q-drawer>
     <q-page-container>
       <q-page padding style="padding-top: 146px">
         <router-view />
@@ -106,7 +164,7 @@
 import Navegacion from './../components/ExpedientePaciente/Navegacion';
 import BannerPrincipal from './../components/ExpedientePaciente/BannerPrincipal';
 import { auth } from "../boot/firebase";
-export default{
+export default {
  components:{
    Navegacion,
    BannerPrincipal
@@ -114,7 +172,8 @@ export default{
  data() {
     return {
       leftDrawerOpen: false,
-      usuario: null
+      usuario: null,
+      drawerRight: false,
     };
   },
   methods: {
