@@ -9,7 +9,8 @@
       <div class="header">
         <!--Content before waves-->
         <div class="inner-header flex">
-          <q-icon name="medication" size="2rem" /><h4 style="margin:0">Sistema de consultas</h4>
+          <q-icon name="medication" size="2rem" />
+          <h4 style="margin: 0">Sistema de consultas</h4>
         </div>
 
         <!--Waves Container-->
@@ -70,11 +71,62 @@
           @click="googleAutenticar"
         />
         <br />
+        <br />
+        <q-checkbox v-model="valCheckbox" />
+        <a href="#" v-on:click.prevent="persistent = true" style="display: inline"
+          >Aceptar términos y condiciones</a
+        >
+
+        <br />
         <label>
           ¿Todavía no tienes una cuenta?
           <a href="" style="display: inline">Registrate</a>
         </label>
       </div>
+      <q-dialog
+        v-model="persistent"
+        persistent
+        transition-show="scale"
+        transition-hide="scale"
+      >
+        <q-card class="bg-primary text-white">
+          <q-card-section>
+            <div class="text-h6">TÉRMINOS Y CONDICIONES</div>
+          </q-card-section>
+
+          <q-card-section class="q-pt-none" style="text-align: justify;text-justify: inter-word;"> 
+            <p>
+
+            
+Licencia MIT
+<br><br>
+Copyright (c) 2021 diseno2021
+<br><br>
+Por la presente se otorga permiso, sin cargo, a cualquier persona que obtenga una copia.
+de este software y los archivos de documentación asociados (el "Software"), para tratar
+en el Software sin restricciones, incluidos, entre otros, los derechos
+para usar, copiar, modificar, fusionar, publicar, distribuir, sublicenciar y / o vender
+copias del Software, y para permitir a las personas a las que el Software es
+amueblado para ello, sujeto a las siguientes condiciones:
+<br><br>
+El aviso de copyright anterior y este aviso de permiso se incluirán en todos
+copias o partes sustanciales del Software.
+<br><br>
+EL SOFTWARE SE PROPORCIONA "TAL CUAL", SIN GARANTÍA DE NINGÚN TIPO, EXPRESA O
+IMPLÍCITAS, INCLUIDAS PERO NO LIMITADAS A LAS GARANTÍAS DE COMERCIABILIDAD,
+APTITUD PARA UN PROPÓSITO PARTICULAR Y NO INFRACCIÓN. EN NINGÚN CASO
+LOS AUTORES O TITULARES DE LOS DERECHOS DE AUTOR SERÁN RESPONSABLES DE CUALQUIER RECLAMO, DAÑOS U OTROS
+RESPONSABILIDAD, YA SEA EN UNA ACCIÓN DE CONTRATO, AGRAVIO O DE OTRO MODO, QUE SURJA DE,
+FUERA O EN RELACIÓN CON EL SOFTWARE O EL USO U OTROS NEGOCIOS EN EL
+SOFTWARE.
+</p>
+          </q-card-section>
+
+          <q-card-actions align="right" class="bg-white text-primary">
+            <q-btn flat label="OK" v-close-popup />
+          </q-card-actions>
+        </q-card>
+      </q-dialog>
     </div>
     <div class="rightDiv">
       <q-carousel
@@ -132,6 +184,8 @@ export default {
     return {
       slide: 1,
       autoplay: 5000,
+      valCheckbox: false,
+      persistent: false,
     };
   },
   methods: {
