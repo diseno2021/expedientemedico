@@ -15,6 +15,13 @@
           <div class="col-12">
             <p class="text-h6">{{ paciente.nombre }}</p>
           </div>
+          <div class="col-12 q-mb-md">
+             <q-icon
+                  name="location_on"
+                  style="font-size: 1.5em"
+                  class="text-green"
+              /><span class="text-caption q-mb-md text-grey-7" style="font-size: 0.8em">{{ paciente.direccion }}</span>
+          </div>
           <div class="col-12">
             <div class="row text-weight-light">
               <div class="col-lg-5 col-4">
