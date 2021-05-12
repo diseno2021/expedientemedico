@@ -1,6 +1,8 @@
 <template>
+<!-- card de paciente -->
   <q-card class="q-ml-md q-mr-md q-mt-md">
     <q-card-section horizontal>
+      <!-- imagen del paciente -->
       <q-card-section class="bg-blue-grey-1 items-center">
         <div class="row full-height items-center">
           <div class="col-12">
@@ -10,11 +12,15 @@
           </div>
         </div>
       </q-card-section>
+      <!-- fin imagen -->
+      <!-- informacion del paciente -->
       <q-card-section class="full-width">
         <div class="row">
+          <!-- nombre -->
           <div class="col-12">
             <p class="text-h6">{{ paciente.nombre }}</p>
           </div>
+          <!-- direccion -->
           <div class="col-12 q-mb-md">
              <q-icon
                   name="location_on"
@@ -22,8 +28,10 @@
                   class="text-green"
               /><span class="text-caption q-mb-md text-grey-7" style="font-size: 0.8em">{{ paciente.direccion }}</span>
           </div>
+          <!-- informacion del estado de salud -->
           <div class="col-12">
             <div class="row text-weight-light">
+              <!-- fecha de nacimiento y genero -->
               <div class="col-lg-5 col-4">
                 <q-icon
                   name="cake"
@@ -45,6 +53,7 @@
                 />
                 {{ paciente.genero }}
               </div>
+              <!-- tipo de sangre y peso -->
               <div class="col-lg-5 col-4">
                 <q-icon
                   name="bloodtype"
@@ -56,6 +65,7 @@
                 <q-icon name="monitor_weight" style="font-size: 2em" />
                 {{ paciente.peso[paciente.peso.length - 1] }} Lb.
               </div>
+              <!-- boton de ver expediente -->
               <div class="col-lg-2 col-4">
                 <q-btn color="blue-9" push sm to="/paciente">
                   <div class="row items-center">
@@ -68,6 +78,7 @@
           </div>
         </div>
       </q-card-section>
+      <!-- fin informacion del paciente -->
     </q-card-section>
   </q-card>
 </template>
@@ -81,9 +92,11 @@ export default {
     paciente: Object
   },
   computed: {
+    //computen que devuelve la fecha de nacimiento
     fechaNacimiento() {
       return date.formatDate(this.paciente.fechaNacimiento, "YYYY-MM-DD");
     },
+     //funcion que devuelve la edad con la fecha de nacimiento
     edad() {
       var hoy = new Date();
       var cumpleanos = new Date(this.paciente.fechaNacimiento);
