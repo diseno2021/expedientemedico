@@ -57,7 +57,7 @@
       <!--Header ends-->
 
       <div class="horizontalCenter">
-        <h1 style="color: primary">VirtualDoc</h1>
+        <h1 style="color: primary" class="mediaQuery970">VirtualDoc</h1>
         <q-avatar>
           <img src="/login/logo.jpg" class="logo" />
         </q-avatar>
@@ -73,7 +73,10 @@
         <br />
         <br />
         <q-checkbox v-model="valCheckbox" />
-        <a href="#" v-on:click.prevent="persistent = true" style="display: inline"
+        <a
+          href="#"
+          v-on:click.prevent="persistent = true"
+          style="display: inline"
           >Aceptar términos y condiciones</a
         >
 
@@ -94,32 +97,36 @@
             <div class="text-h6">TÉRMINOS Y CONDICIONES</div>
           </q-card-section>
 
-          <q-card-section class="q-pt-none" style="text-align: justify;text-justify: inter-word;"> 
+          <q-card-section
+            class="q-pt-none"
+            style="text-align: justify; text-justify: inter-word"
+          >
             <p>
-
-            
-Licencia MIT
-<br><br>
-Copyright (c) 2021 diseno2021
-<br><br>
-Por la presente se otorga permiso, sin cargo, a cualquier persona que obtenga una copia.
-de este software y los archivos de documentación asociados (el "Software"), para tratar
-en el Software sin restricciones, incluidos, entre otros, los derechos
-para usar, copiar, modificar, fusionar, publicar, distribuir, sublicenciar y / o vender
-copias del Software, y para permitir a las personas a las que el Software es
-amueblado para ello, sujeto a las siguientes condiciones:
-<br><br>
-El aviso de copyright anterior y este aviso de permiso se incluirán en todos
-copias o partes sustanciales del Software.
-<br><br>
-EL SOFTWARE SE PROPORCIONA "TAL CUAL", SIN GARANTÍA DE NINGÚN TIPO, EXPRESA O
-IMPLÍCITAS, INCLUIDAS PERO NO LIMITADAS A LAS GARANTÍAS DE COMERCIABILIDAD,
-APTITUD PARA UN PROPÓSITO PARTICULAR Y NO INFRACCIÓN. EN NINGÚN CASO
-LOS AUTORES O TITULARES DE LOS DERECHOS DE AUTOR SERÁN RESPONSABLES DE CUALQUIER RECLAMO, DAÑOS U OTROS
-RESPONSABILIDAD, YA SEA EN UNA ACCIÓN DE CONTRATO, AGRAVIO O DE OTRO MODO, QUE SURJA DE,
-FUERA O EN RELACIÓN CON EL SOFTWARE O EL USO U OTROS NEGOCIOS EN EL
-SOFTWARE.
-</p>
+              Licencia MIT
+              <br /><br />
+              Copyright (c) 2021 diseno2021
+              <br /><br />
+              Por la presente se otorga permiso, sin cargo, a cualquier persona
+              que obtenga una copia. de este software y los archivos de
+              documentación asociados (el "Software"), para tratar en el
+              Software sin restricciones, incluidos, entre otros, los derechos
+              para usar, copiar, modificar, fusionar, publicar, distribuir,
+              sublicenciar y / o vender copias del Software, y para permitir a
+              las personas a las que el Software es amueblado para ello, sujeto
+              a las siguientes condiciones:
+              <br /><br />
+              El aviso de copyright anterior y este aviso de permiso se
+              incluirán en todos copias o partes sustanciales del Software.
+              <br /><br />
+              EL SOFTWARE SE PROPORCIONA "TAL CUAL", SIN GARANTÍA DE NINGÚN
+              TIPO, EXPRESA O IMPLÍCITAS, INCLUIDAS PERO NO LIMITADAS A LAS
+              GARANTÍAS DE COMERCIABILIDAD, APTITUD PARA UN PROPÓSITO PARTICULAR
+              Y NO INFRACCIÓN. EN NINGÚN CASO LOS AUTORES O TITULARES DE LOS
+              DERECHOS DE AUTOR SERÁN RESPONSABLES DE CUALQUIER RECLAMO, DAÑOS U
+              OTROS RESPONSABILIDAD, YA SEA EN UNA ACCIÓN DE CONTRATO, AGRAVIO O
+              DE OTRO MODO, QUE SURJA DE, FUERA O EN RELACIÓN CON EL SOFTWARE O
+              EL USO U OTROS NEGOCIOS EN EL SOFTWARE.
+            </p>
           </q-card-section>
 
           <q-card-actions align="right" class="bg-white text-primary">
@@ -348,7 +355,7 @@ h1 {
 }
 /* fin del wave header */
 /*Shrinking for mobile*/
-@media (max-width: 768px) {
+@media (max-width: 974px) and (min-width: 751px) {
   .waves {
     height: 40px;
     min-height: 40px;
@@ -356,8 +363,22 @@ h1 {
   .content {
     height: 30vh;
   }
-  h1 {
-    font-size: 24px;
+  .mediaQuery970 {
+    margin-bottom: 1rem;
+    font-size: 4rem;
+  }
+}
+@media (max-width: 750px) {
+  .rightDiv {
+    display: none;
+    visibility: hidden;
+  }
+  .leftDiv {
+    width: 100vw;
+  }
+  .mediaQuery970 {
+    margin-bottom: 1rem;
+    font-size: 4rem;
   }
 }
 </style>
