@@ -1,7 +1,7 @@
 <template>
   <div class="q-ma-md">
     <div class="row q-mt-md">
-      <div class="col-md-12 q-mt-md">
+      <div class="col-12 q-mt-md">
         <q-input v-model="text" label="Nombre completo">
           <template v-slot:prepend>
             <q-icon name="person" />
@@ -10,7 +10,7 @@
       </div>
     </div>
     <div class="row justify-between q-mt-md">
-      <div class="col-md-5">
+      <div class="col-12 col-sm-5 col-md-5">
         <q-input
           label="fecha de nacimiento"
           filled
@@ -35,7 +35,7 @@
           </template>
         </q-input>
       </div>
-      <div class="col-md-5">
+      <div class="col-12 col-sm-5 col-md-5 q-mt-md">
         <q-input v-model="text" label="Edad"
           ><template v-slot:prepend>
             <q-icon name="cake" />
@@ -44,12 +44,21 @@
       </div>
     </div>
 
-    <div class="row justify-between">
-      <div class="col-md-5">
+    <div class="row justify-between q-mt-md">
+      <div class="col-12 col-md-5 ">
+        <div class="row justify-between">
+
+        <div class="col-6 col-sm-5">
         <q-radio v-model="genero" val="masculino" label="Masculino" />
+
+        </div>
+        <div class="col-6 col-sm-5 ">
         <q-radio v-model="genero" val="femenino" label="Femenino" />
+
+        </div>
+        </div>
       </div>
-      <div class="col-md-5">
+      <div class="col-12 col-md-5">
         <q-input v-model="text" label="Tipo de sangre">
           <template v-slot:prepend>
             <q-icon
@@ -60,8 +69,8 @@
       </div>
     </div>
 
-    <div class="row justify-between">
-      <div class="col-md-4">
+    <div class="row justify-between q-mt-md">
+      <div class="col-12 col-md-4">
         <q-input v-model="text" label="Peso">
           <template v-slot:prepend>
             <q-icon name="monitor_weight"/>
@@ -71,7 +80,7 @@
       <div class="col-md-6"></div>
     </div>
 
-    <div class="col-md-12 q-mt-md">
+    <div class="col-md-12 q-mt-md q-mt-md">
       <q-input v-model="text" label="Dirección">
         <template v-slot:prepend>
           <q-icon name="directions" />
@@ -79,7 +88,7 @@
       </q-input>
     </div>
 
-    <div class="col-md-12 q-mt-md">
+    <div class="col-md-12 q-mt-md q-mt-md">
       <q-input v-model="text" label="Teléfono">
         <template v-slot:prepend>
           <q-icon name="phone" />
@@ -87,7 +96,7 @@
       </q-input>
     </div>
 
-    <div class="col-md-12 q-mt-md">
+    <div class="col-md-12 q-mt-md q-my-md ">
       <q-input v-model="text" label="Caso de emergencia">
         <template v-slot:prepend>
           <q-icon name="warning" />
