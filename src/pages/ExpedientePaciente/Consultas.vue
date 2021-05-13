@@ -1,5 +1,5 @@
 <template>
-  <div class="row">
+  <div class="row q-ma-md">
       <div class="col-12 q-pa-sm" v-for="consulta in consultas" :key="consulta.id">
         <q-card>
             <q-card-section class="text-center">

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="q-ma-md">
       <q-editor v-model="medicamento" min-height="10rem" />
       <div class="row q-mt-sm">
           <q-btn>Guardar</q-btn>

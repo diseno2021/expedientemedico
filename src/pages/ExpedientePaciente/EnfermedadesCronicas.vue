@@ -1,5 +1,5 @@
 <template>
-  <div >
+  <div class="q-ma-md">
     <q-card flat bordered class="my-card">
       <q-card-section>
         <div class="text-h6">Datos</div>
