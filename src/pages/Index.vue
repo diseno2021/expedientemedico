@@ -27,10 +27,11 @@
         </div>
         <!-- Row de opciones para buscar -->
         <div class="row items-center justify-center">
-          <div class="col-md-3 col-sm-3 col-2">Ordenar por:</div>
-          <div class="col-md-3 col-sm-3 col-3">
+          <!-- <div class="col-md-3 col-sm-3 col-2">Ordenar por:</div> -->
+          <div class="col-12">
+            <span class="q-ml-xl"  v-if="$q.screen.width > 599">Ordenar por:</span>
             <q-select
-              class="inline"
+              class="inline q-mx-md"
               rounded
               v-model="orderBy"
               :options="orderByOptions"
@@ -40,32 +41,32 @@
                 <q-icon name="sort" />
               </template>
             </q-select>
-          </div>
-          <div class="col-md-3 col-sm-2 col-2">
             <q-btn
-              :disabled="orderBy==''"
+            class="q-mr-xl"
+              :disabled="orderBy == ''"
               round
               color="grey"
+              size="sm"
               :icon="orderDescend == true ? 'arrow_downward' : 'arrow_upward'"
               @click="changeOrder"
             />
-          </div>
-          <div class="col-md-3 col-sm-4 col-5" >
+             <span   v-if="$q.screen.width > 599">Filtrar género:</span>
             <q-btn-toggle
+            class="q-ml-md"
               v-model="filterBy"
               toggle-color="grey-5"
               size="sm"
               :options="optionFilters"
             >
-            <template v-slot:todos>
-                <q-icon name="male" class="text-blue"/>
-                <q-icon name="female" class="text-pink"/>
+              <template v-slot:todos>
+                <q-icon name="male" class="text-blue" />
+                <q-icon name="female" class="text-pink" />
               </template>
               <template v-slot:Masculino>
-                <q-icon name="male" class="text-blue"/>
+                <q-icon name="male" class="text-blue" />
               </template>
               <template v-slot:Femenino>
-                <q-icon name="female" class="text-pink"/>
+                <q-icon name="female" class="text-pink" />
               </template>
             </q-btn-toggle>
           </div>
@@ -102,19 +103,19 @@ export default {
   name: "PageIndex",
   components: {
     PacienteDesktop,
-    PacienteMobile,
+    PacienteMobile
   },
   data() {
     return {
       search: "",
       orderBy: "",
-      orderByOptions: ["edad", "peso"],
+      orderByOptions: ["edad", "peso", "nombre"],
       orderDescend: true,
       filterBy: "todos",
       optionFilters: [
         { slot: "todos", value: "todos" },
         { slot: "Masculino", value: "Masculino" },
-        { slot: "Femenino", value: "Femenino" },
+        { slot: "Femenino", value: "Femenino" }
       ],
       pacientes: [
         {
@@ -141,8 +142,8 @@ export default {
           medicamentosPermanentes: "<br>Rivoflavina</br> una por las noches", //texto html
           archivos: [
             "http://storage/idpaciente/foto01.jpg&#39",
-            "http://storage/idpaciente/foto01.jpg&#39",
-          ],
+            "http://storage/idpaciente/foto01.jpg&#39"
+          ]
         },
         {
           id: "asdsd",
@@ -168,8 +169,8 @@ export default {
           medicamentosPermanentes: "<br>Rivoflavina</br> una por las noches", //texto html
           archivos: [
             "http://storage/idpaciente/foto01.jpg&#39",
-            "http://storage/idpaciente/foto01.jpg&#39",
-          ],
+            "http://storage/idpaciente/foto01.jpg&#39"
+          ]
         },
         {
           id: "fgfgf",
@@ -195,8 +196,8 @@ export default {
           medicamentosPermanentes: "<br>Rivoflavina</br> una por las noches", //texto html
           archivos: [
             "http://storage/idpaciente/foto01.jpg&#39",
-            "http://storage/idpaciente/foto01.jpg&#39",
-          ],
+            "http://storage/idpaciente/foto01.jpg&#39"
+          ]
         },
         {
           id: "asdas",
@@ -222,8 +223,8 @@ export default {
           medicamentosPermanentes: "<br>Rivoflavina</br> una por las noches", //texto html
           archivos: [
             "http://storage/idpaciente/foto01.jpg&#39",
-            "http://storage/idpaciente/foto01.jpg&#39",
-          ],
+            "http://storage/idpaciente/foto01.jpg&#39"
+          ]
         },
         {
           id: "fdsfsdf",
@@ -249,8 +250,8 @@ export default {
           medicamentosPermanentes: "<br>Rivoflavina</br> una por las noches", //texto html
           archivos: [
             "http://storage/idpaciente/foto01.jpg&#39",
-            "http://storage/idpaciente/foto01.jpg&#39",
-          ],
+            "http://storage/idpaciente/foto01.jpg&#39"
+          ]
         },
         {
           id: "asdasdas",
@@ -276,8 +277,8 @@ export default {
           medicamentosPermanentes: "<br>Rivoflavina</br> una por las noches", //texto html
           archivos: [
             "http://storage/idpaciente/foto01.jpg&#39",
-            "http://storage/idpaciente/foto01.jpg&#39",
-          ],
+            "http://storage/idpaciente/foto01.jpg&#39"
+          ]
         },
         {
           id: "zxczczczx",
@@ -303,8 +304,8 @@ export default {
           medicamentosPermanentes: "<br>Rivoflavina</br> una por las noches", //texto html
           archivos: [
             "http://storage/idpaciente/foto01.jpg&#39",
-            "http://storage/idpaciente/foto01.jpg&#39",
-          ],
+            "http://storage/idpaciente/foto01.jpg&#39"
+          ]
         },
         {
           id: "asdasdsd",
@@ -330,8 +331,8 @@ export default {
           medicamentosPermanentes: "<br>Rivoflavina</br> una por las noches", //texto html
           archivos: [
             "http://storage/idpaciente/foto01.jpg&#39",
-            "http://storage/idpaciente/foto01.jpg&#39",
-          ],
+            "http://storage/idpaciente/foto01.jpg&#39"
+          ]
         },
         {
           id: "zczxczczx",
@@ -357,8 +358,8 @@ export default {
           medicamentosPermanentes: "<br>Rivoflavina</br> una por las noches", //texto html
           archivos: [
             "http://storage/idpaciente/foto01.jpg&#39",
-            "http://storage/idpaciente/foto01.jpg&#39",
-          ],
+            "http://storage/idpaciente/foto01.jpg&#39"
+          ]
         },
         {
           id: "sdasdasdas",
@@ -384,8 +385,8 @@ export default {
           medicamentosPermanentes: "<br>Rivoflavina</br> una por las noches", //texto html
           archivos: [
             "http://storage/idpaciente/foto01.jpg&#39",
-            "http://storage/idpaciente/foto01.jpg&#39",
-          ],
+            "http://storage/idpaciente/foto01.jpg&#39"
+          ]
         },
         {
           id: "hjghh",
@@ -411,8 +412,8 @@ export default {
           medicamentosPermanentes: "<br>Rivoflavina</br> una por las noches", //texto html
           archivos: [
             "http://storage/idpaciente/foto01.jpg&#39",
-            "http://storage/idpaciente/foto01.jpg&#39",
-          ],
+            "http://storage/idpaciente/foto01.jpg&#39"
+          ]
         },
         {
           id: "zxczczczxc",
@@ -438,8 +439,8 @@ export default {
           medicamentosPermanentes: "<br>Rivoflavina</br> una por las noches", //texto html
           archivos: [
             "http://storage/idpaciente/foto01.jpg&#39",
-            "http://storage/idpaciente/foto01.jpg&#39",
-          ],
+            "http://storage/idpaciente/foto01.jpg&#39"
+          ]
         },
         {
           id: "zzxczxczczxc",
@@ -465,8 +466,8 @@ export default {
           medicamentosPermanentes: "<br>Rivoflavina</br> una por las noches", //texto html
           archivos: [
             "http://storage/idpaciente/foto01.jpg&#39",
-            "http://storage/idpaciente/foto01.jpg&#39",
-          ],
+            "http://storage/idpaciente/foto01.jpg&#39"
+          ]
         },
         {
           id: "asdasdasdas",
@@ -492,8 +493,8 @@ export default {
           medicamentosPermanentes: "<br>Rivoflavina</br> una por las noches", //texto html
           archivos: [
             "http://storage/idpaciente/foto01.jpg&#39",
-            "http://storage/idpaciente/foto01.jpg&#39",
-          ],
+            "http://storage/idpaciente/foto01.jpg&#39"
+          ]
         },
         {
           id: "czxczczxc",
@@ -519,8 +520,8 @@ export default {
           medicamentosPermanentes: "<br>Rivoflavina</br> una por las noches", //texto html
           archivos: [
             "http://storage/idpaciente/foto01.jpg&#39",
-            "http://storage/idpaciente/foto01.jpg&#39",
-          ],
+            "http://storage/idpaciente/foto01.jpg&#39"
+          ]
         },
         {
           id: "asdasdasdad",
@@ -546,8 +547,8 @@ export default {
           medicamentosPermanentes: "<br>Rivoflavina</br> una por las noches", //texto html
           archivos: [
             "http://storage/idpaciente/foto01.jpg&#39",
-            "http://storage/idpaciente/foto01.jpg&#39",
-          ],
+            "http://storage/idpaciente/foto01.jpg&#39"
+          ]
         },
         {
           id: "zczczczxc",
@@ -573,8 +574,8 @@ export default {
           medicamentosPermanentes: "<br>Rivoflavina</br> una por las noches", //texto html
           archivos: [
             "http://storage/idpaciente/foto01.jpg&#39",
-            "http://storage/idpaciente/foto01.jpg&#39",
-          ],
+            "http://storage/idpaciente/foto01.jpg&#39"
+          ]
         },
         {
           id: "sdasdasdasd",
@@ -600,8 +601,8 @@ export default {
           medicamentosPermanentes: "<br>Rivoflavina</br> una por las noches", //texto html
           archivos: [
             "http://storage/idpaciente/foto01.jpg&#39",
-            "http://storage/idpaciente/foto01.jpg&#39",
-          ],
+            "http://storage/idpaciente/foto01.jpg&#39"
+          ]
         },
         {
           id: "zczczczxczx",
@@ -627,8 +628,8 @@ export default {
           medicamentosPermanentes: "<br>Rivoflavina</br> una por las noches", //texto html
           archivos: [
             "http://storage/idpaciente/foto01.jpg&#39",
-            "http://storage/idpaciente/foto01.jpg&#39",
-          ],
+            "http://storage/idpaciente/foto01.jpg&#39"
+          ]
         },
         {
           id: "asdfasdfasdfa987asdfasdf76as",
@@ -654,10 +655,10 @@ export default {
           medicamentosPermanentes: "<br>Rivoflavina</br> una por las noches", //texto html
           archivos: [
             "http://storage/idpaciente/foto01.jpg&#39",
-            "http://storage/idpaciente/foto01.jpg&#39",
-          ],
-        },
-      ],
+            "http://storage/idpaciente/foto01.jpg&#39"
+          ]
+        }
+      ]
     };
   },
   methods: {
@@ -680,19 +681,25 @@ export default {
     //funcion que devuelve el valor mas reciente del arreglo de peso
     getPeso(p) {
       return p.peso[p.peso.length - 1];
-    },
+    }
   },
   computed: {
     //computed que devuelve el arreglo de pacientes despues de filtrarlos
     pacientesFiltrados() {
+      var filtrado = this.pacientes;
 
-      var filtrado = [];
+      if (this.search != "") {
+        console.log(this.search);
+        filtrado = filtrado.filter(p => p.nombre.includes(this.search));
+      } else {
+        filtrado = this.pacientes;
+      }
 
       //PRIMERO EVALUA LA BUSQUEDA POR NOMBRE
 
       //si no esta filtrado por busqueda los ordena alfabeticamente
-      if (this.search == "" && this.orderBy=="") {
-        filtrado = this.pacientes.sort((p1, p2) => {
+      if (this.orderBy == "nombre" && this.orderDescend == false) {
+        filtrado = filtrado.sort((p1, p2) => {
           if (p1.nombre > p2.nombre) {
             return 1;
           }
@@ -701,51 +708,62 @@ export default {
           }
           return 0;
         });
-        //si esta filtrado por busqueda lo filtra por nombre
-      }else{
-         filtrado = this.pacientes.filter((p) => p.nombre.includes(this.search));
+        //si no esta filtrado por busqueda lo filtra por nombre
+      } else if (this.orderBy == "nombre" && this.orderDescend == true) {
+        filtrado = filtrado.sort((p1, p2) => {
+          if (p1.nombre > p2.nombre) {
+            return -1;
+          }
+          if (p1.nombre < p2.nombre) {
+            return 1;
+          }
+          return 0;
+        });
       }
 
       //AHORA LOS ORDENA
-    //si es ordenado por edad
+      //si es ordenado por edad
       if (this.orderBy == "edad" && this.orderDescend == false) {
-          filtrado = this.pacientes.sort((p1, p2) => {
-            return (
-              this.getEdad(p1.fechaNacimiento) -
-              this.getEdad(p2.fechaNacimiento)
-            ); //de menor a mayor
-          });
-          //si es con ordenar por edad descendente
-        } else if (this.orderBy == "edad" && this.orderDescend == true) {
-          filtrado = this.pacientes.sort((p1, p2) => {
-            return (
-              this.getEdad(p2.fechaNacimiento) -
-              this.getEdad(p1.fechaNacimiento)
-            ); //de mayor a menor
-          });
-        }
+        filtrado = filtrado.sort((p1, p2) => {
+          return (
+            this.getEdad(p1.fechaNacimiento) - this.getEdad(p2.fechaNacimiento)
+          ); //de menor a mayor
+        });
+        //si es con ordenar por edad descendente
+      } else if (this.orderBy == "edad" && this.orderDescend == true) {
+        filtrado = filtrado.sort((p1, p2) => {
+          return (
+            this.getEdad(p2.fechaNacimiento) - this.getEdad(p1.fechaNacimiento)
+          ); //de mayor a menor
+        });
+      }
 
-        //si es ordenado por peso
-        if (this.orderBy == "peso" && this.orderDescend == false) {
-          filtrado = this.pacientes.sort((p1, p2) => {
-            return this.getPeso(p1) - this.getPeso(p2); //de menor a mayor
-          });
-          //si es con ordenar por peso descendente
-        } else if (this.orderBy == "peso" && this.orderDescend == true) {
-          filtrado = this.pacientes.sort((p1, p2) => {
-            return this.getPeso(p2) - this.getPeso(p1); //de mayor a menor
-          });
-        }
+      //si es ordenado por peso
+      if (this.orderBy == "peso" && this.orderDescend == false) {
+        filtrado = filtrado.sort((p1, p2) => {
+          return this.getPeso(p1) - this.getPeso(p2); //de menor a mayor
+        });
+        //si es con ordenar por peso descendente
+      } else if (this.orderBy == "peso" && this.orderDescend == true) {
+        filtrado = filtrado.sort((p1, p2) => {
+          return this.getPeso(p2) - this.getPeso(p1); //de mayor a menor
+        });
+      }
+
 
       //FILTRO DE MASCULINO Y FEMENINO
-      if(this.filterBy=="Masculino"){
-        filtrado= filtrado.filter(p=>{return p.genero=="Masculino"});
-      }else if(this.filterBy=="Femenino"){
-        filtrado= filtrado.filter(p=>{return p.genero=="Femenino"});
+      if (this.filterBy == "Masculino") {
+        filtrado = filtrado.filter(p => {
+          return p.genero == "Masculino";
+        });
+      } else if (this.filterBy == "Femenino") {
+        filtrado = filtrado.filter(p => {
+          return p.genero == "Femenino";
+        });
       }
 
       return filtrado; //devolvemos filtrado
-    },
-  },
+    }
+  }
 };
 </script>

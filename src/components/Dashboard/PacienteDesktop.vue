@@ -17,11 +17,11 @@
       <q-card-section class="full-width">
         <div class="row">
           <!-- nombre -->
-          <div class="col-12">
+          <div class="col-12" style="margin-top:-10px;margin-bottom:-10px">
             <p class="text-h6">{{ paciente.nombre }}</p>
           </div>
           <!-- direccion -->
-          <div class="col-12 q-mb-md">
+          <div class="col-12 q-mb-md" style="height:20px">
              <q-icon
                   name="location_on"
                   style="font-size: 1.5em"
@@ -29,7 +29,7 @@
               /><span class="text-caption q-mb-md text-grey-7" style="font-size: 0.8em">{{ paciente.direccion }}</span>
           </div>
           <!-- informacion del estado de salud -->
-          <div class="col-12">
+          <div class="col-12" >
             <div class="row text-weight-light">
               <!-- fecha de nacimiento y genero -->
               <div class="col-lg-5 col-4">
