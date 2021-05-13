@@ -2,7 +2,7 @@
       <div>
         
         <q-list dense padding>
-          <q-item clickable v-ripple :to="{hash: '#informacion-personal'}">
+          <q-item clickable v-ripple :to="{path: '/paciente', hash: '#informacion-personal'}">
             <q-item-section avatar>
               <q-icon name="person" />
             </q-item-section>
@@ -11,7 +11,7 @@
             </q-item-section>
           </q-item>
 
-          <q-item clickable v-ripple :to="{hash: '#antecedentes'}">
+          <q-item clickable v-ripple :to="{path: '/paciente', hash: '#antecedentes'}">
             <q-item-section avatar>
               <q-icon name="book" />
             </q-item-section>
@@ -19,7 +19,7 @@
               Antecedentes
             </q-item-section>
           </q-item>
-          <q-item clickable v-ripple :to="{hash: '#medicamentos-permanentes'}">
+          <q-item clickable v-ripple :to="{path: '/paciente', hash: '#medicamentos-permanentes'}">
             <q-item-section avatar>
               <q-icon name="medication" />
             </q-item-section>
@@ -28,7 +28,7 @@
             </q-item-section>
           </q-item>
 
-          <q-item clickable v-ripple :to="{hash: '#consultas'}">
+          <q-item clickable v-ripple :to="{path: '/paciente', hash: '#consultas'}">
           <q-item-section avatar>
               <q-icon name="healing" />
             </q-item-section>
@@ -37,7 +37,7 @@
             </q-item-section>
           </q-item>
 
-          <q-item clickable v-ripple :to="{hash: '#recetas'}">
+          <q-item clickable v-ripple :to="{path: '/paciente', hash: '#recetas'}">
           <q-item-section avatar>
               <q-icon name="description" />
             </q-item-section>
@@ -46,7 +46,7 @@
             </q-item-section>
           </q-item>
 
-          <q-item clickable v-ripple :to="{hash: '#enfermedades-cronicas'}">
+          <q-item clickable v-ripple :to="{path: '/paciente', hash: '#enfermedades-cronicas'}">
             <q-item-section avatar>
               <q-icon name="local_hospital" />
             </q-item-section>

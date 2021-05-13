@@ -27,8 +27,12 @@ const routes = [
       component: ()=> import('layouts/PacienteLayout.vue'),
       children: [
         {
+          path: '',
+          component: () => import('./../pages/ExpedientePaciente/Expediente.vue')
+        },  
+        {
           path: 'pasar-consulta',
-        component: () => import('./../pages/PasarConsulta/PasarConsultaView.vue')
+          component: () => import('./../pages/PasarConsulta/PasarConsultaView.vue')
         }   
       ]
     },

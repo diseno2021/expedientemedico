@@ -95,12 +95,7 @@
     </q-drawer>
     <q-page-container>
       <q-page padding style="padding-top: 146px">
-        <InformacionPersonal id="informacion-personal" />
-        <Antecedentes id="antecedentes" />
-        <MedicamentosPermanentes id="medicamentos-permanentes" />
-        <Consultas id="consultas" />
-        <Recetas id="recetas" />
-        <EnfermedadesCronicas id="enfermedades-cronicas" />
+        <router-view></router-view>
         <q-page-sticky position="top" expand>
           <BannerPrincipal />
         </q-page-sticky>
@@ -112,23 +107,11 @@
 <script>
 import Navegacion from './../components/ExpedientePaciente/Navegacion';
 import BannerPrincipal from './../components/ExpedientePaciente/BannerPrincipal';
-import InformacionPersonal from '../pages/ExpedientePaciente/InformacionPersonal';
-import Antecedentes from '../pages/ExpedientePaciente/Antecedentes';
-import MedicamentosPermanentes from '../pages/ExpedientePaciente/MedicamentosPermanentes';
-import Consultas from '../pages/ExpedientePaciente/Consultas';
-import Recetas from '../pages/ExpedientePaciente/Recetas';
-import EnfermedadesCronicas from '../pages/ExpedientePaciente/EnfermedadesCronicas';
 import { auth } from "../boot/firebase";
 export default {
  components:{
    Navegacion,
    BannerPrincipal,
-   InformacionPersonal,
-   Antecedentes,
-   MedicamentosPermanentes,
-   Consultas,
-   Recetas,
-   EnfermedadesCronicas,
  },
  data() {
     return {
