@@ -19,6 +19,14 @@ export default function (/* { store, ssrContext } */) {
     scrollBehavior: () => ({ x: 0, y: 0 }),
     routes,
 
+    scrollBehavior: function (to) {
+      if (to.hash) {
+        return {
+          selector: to.hash
+        }
+      }
+    },
+
     // Leave these as they are and change in quasar.conf.js instead!
     // quasar.conf.js -> build -> vueRouterMode
     // quasar.conf.js -> build -> publicPath

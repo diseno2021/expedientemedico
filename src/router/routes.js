@@ -27,32 +27,6 @@ const routes = [
       component: ()=> import('layouts/PacienteLayout.vue'),
       children: [
         {
-          path: 'informacion-personal',
-          component: () => import('./../pages/ExpedientePaciente/InformacionPersonal.vue')
-        },
-        {
-          path: 'antecedentes',
-          component: () => import('./../pages/ExpedientePaciente/Antecedentes.vue')
-
-        },
-        {
-          path: 'recetas',
-          component: () => import('./../pages/ExpedientePaciente/Recetas.vue')
-          
-        },
-        {
-          path: 'enfermedades-cronicas',
-          component: () => import('./../pages/ExpedientePaciente/EnfermedadesCronicas.vue')
-        },
-        {
-          path: 'consultas',
-          component: () => import('./../pages/ExpedientePaciente/Consultas.vue')
-        },
-        {
-          path: 'medicamentos-permanentes',
-          component: () => import('./../pages/ExpedientePaciente/MedicamentosPermanentes.vue')
-        },
-        {
           path: 'pasar-consulta',
         component: () => import('./../pages/PasarConsulta/PasarConsultaView.vue')
         }   
