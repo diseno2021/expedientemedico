@@ -30,7 +30,7 @@
           :position="fullscreen ? 'bottom-right' : 'top-right'"
           :offset="[18, 18]"
         >
-          <q-btn round color="black" size="md" icon="add_circle" class="q-mx-sm ">
+          <q-btn v-show="fullscreen ? false : true" round color="black" size="md" icon="add_circle" class="q-mx-sm ">
             <q-tooltip v-model="showing" content-class="bg-green" content-style="font-size: 16px">
               <bold>Agregar nuevo archivo</bold>
             </q-tooltip>
