@@ -12,7 +12,7 @@
         />
 
         <q-toolbar-title>
-          Sistema ABC
+          VirtualDoc
         </q-toolbar-title>
 
         <div>V1.0</div>
@@ -29,7 +29,7 @@
               @click.prevent="leftDrawerOpen = false"
             >
               <q-icon name="health_and_safety" style="font-size: 2.5rem;" />
-              Sistema ABC 
+              VirtualDoc
             </q-card>
           </q-item-section>
         </q-item>
@@ -42,7 +42,7 @@
             </q-avatar>
           </div>
           <div class="col">
-            <div class="row  ">{{ usuario.displayName }}</div>
+            <div class="row  ">Dr. {{ usuario.displayName }}</div>
             <div class="row text-caption text-weight-light">
               {{ usuario.email }}
             </div>
@@ -74,7 +74,7 @@
           </q-item-section>
           <q-item-section v-if="usuario != null">Pacientes</q-item-section>
         </q-item>
-        <q-item to="" clickable v-ripple v-if="usuario != null">
+        <q-item to="/nuevopaciente" clickable v-ripple v-if="usuario != null">
           <q-item-section avatar>
             <q-icon name="person_add" />
           </q-item-section>
@@ -91,7 +91,6 @@
         </q-card>
       </div>
     </q-drawer>
-
     <q-page-container>
       <router-view />
     </q-page-container>
@@ -135,6 +134,7 @@ export default {
   created() {
     auth.onAuthStateChanged(user => {
       this.usuario = user;
+      console.log(this.usuario);
     });
   }
 };

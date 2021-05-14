@@ -107,7 +107,7 @@ export default {
   data() {
     return {
       search: "",
-      orderBy: "",
+      orderBy: "nombre",
       orderByOptions: ["edad", "peso", "nombre"],
       orderDescend: true,
       filterBy: "todos",
