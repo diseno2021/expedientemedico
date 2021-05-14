@@ -3,6 +3,7 @@
     <!-- row de filtros-->
     <div class="row">
       <div class="col-12 q-pa-md">
+        <!-- row Barra de busqueda -->
         <div class="row">
           <q-input
             class="full-width"
@@ -24,31 +25,49 @@
             </template>
           </q-input>
         </div>
-
-        <div class="row items-center">
-          <div class="col-4">
-            Ordenar por:
-          </div>
-          <div class="col-4">
+        <!-- Row de opciones para buscar -->
+        <div class="row items-center justify-center">
+          <div class="col-12">
+            <span class="q-ml-xl"  v-if="$q.screen.width > 599">Ordenar por:</span>
             <q-select
-              class="inline"
+              class="inline q-mx-md"
               rounded
               v-model="orderBy"
               :options="orderByOptions"
               dense
             >
               <template v-slot:prepend>
-                <q-icon name="event" />
+                <q-icon name="sort" />
               </template>
             </q-select>
-          </div>
-          <div class="col-4">
             <q-btn
+            class="q-mr-xl"
+              :disabled="orderBy == ''"
               round
               color="grey"
+              size="sm"
               :icon="orderDescend == true ? 'arrow_downward' : 'arrow_upward'"
               @click="changeOrder"
             />
+             <span   v-if="$q.screen.width > 599">Filtrar género:</span>
+            <q-btn-toggle
+            class="q-ml-md"
+              v-model="filterBy"
+              toggle-color="grey-5"
+              size="sm"
+              :options="optionFilters"
+            >
+              <template v-slot:todos>
+                <q-icon name="male" class="text-blue" />
+                <q-icon name="female" class="text-pink" />
+              </template>
+              <template v-slot:Masculino>
+                <q-icon name="male" class="text-blue" />
+              </template>
+              <template v-slot:Femenino>
+                <q-icon name="female" class="text-pink" />
+              </template>
+            </q-btn-toggle>
           </div>
         </div>
       </div>
@@ -57,7 +76,7 @@
     <div class="row">
       <div
         v-if="$q.screen.width > 599"
-        class="col-12"
+        class="col-12 col-md-6 col-lg-4"
         v-for="paciente in pacientesFiltrados"
         :key="paciente.id"
       >
@@ -77,8 +96,8 @@
 </template>
 
 <script>
-import PacienteDesktop from "../components/PacienteDesktop";
-import PacienteMobile from "../components/PacienteMobile";
+import PacienteDesktop from "../components/Dashboard/PacienteDesktop";
+import PacienteMobile from "../components/Dashboard/PacienteMobile";
 export default {
   name: "PageIndex",
   components: {
@@ -89,8 +108,14 @@ export default {
     return {
       search: "",
       orderBy: "",
-      orderByOptions: ["edad", "peso"],
+      orderByOptions: ["edad", "peso", "nombre"],
       orderDescend: true,
+      filterBy: "todos",
+      optionFilters: [
+        { slot: "todos", value: "todos" },
+        { slot: "Masculino", value: "Masculino" },
+        { slot: "Femenino", value: "Femenino" }
+      ],
       pacientes: [
         {
           id: "asasa",
@@ -636,9 +661,11 @@ export default {
     };
   },
   methods: {
+    //funcion para cambiar de ordenar ascendente a descentende y viceversa
     changeOrder() {
       this.orderDescend = !this.orderDescend;
     },
+    //funcion que devuelve la edad con la fecha de nacimiento
     getEdad(date) {
       var hoy = new Date();
       var cumpleanos = new Date(date);
@@ -650,81 +677,91 @@ export default {
       }
       return edad;
     },
+    //funcion que devuelve el valor mas reciente del arreglo de peso
     getPeso(p) {
       return p.peso[p.peso.length - 1];
     }
   },
   computed: {
+    //computed que devuelve el arreglo de pacientes despues de filtrarlos
     pacientesFiltrados() {
-      if (this.search == "" && this.orderBy == "") {
-        //sin ordenar sin filtrar
-        return this.pacientes;
-      } else if (this.search == "" && this.orderBy != "") {
-        //con ordenar sin fintrar
-        var ordenado = [];
-        if (this.orderBy == "edad" && this.orderDescend == false) {
-          ordenado = this.pacientes.sort((p1, p2) => {
-            return (
-              this.getEdad(p1.fechaNacimiento) -
-              this.getEdad(p2.fechaNacimiento)
-            ); //de menor a mayor
-          });
-        } else if (this.orderBy == "edad" && this.orderDescend == true) {
-          ordenado = this.pacientes.sort((p1, p2) => {
-            return (
-              this.getEdad(p2.fechaNacimiento) -
-              this.getEdad(p1.fechaNacimiento)
-            ); //de mayor a menor
-          });
-        }
+      var filtrado = this.pacientes;
 
-        if (this.orderBy == "peso" && this.orderDescend == false) {
-          ordenado = this.pacientes.sort((p1, p2) => {
-            return this.getPeso(p1) - this.getPeso(p2); //de menor a mayor
-          });
-        } else if (this.orderBy == "peso" && this.orderDescend == true) {
-          ordenado = this.pacientes.sort((p1, p2) => {
-            return this.getPeso(p2) - this.getPeso(p1); //de mayor a menor
-          });
-        }
-        return ordenado;
-      } else if (this.search != "" && this.orderBy != "") {
-        //con ordenar con filtrar
-        var filtrado = [];
-        filtrado = this.pacientes.filter(p => p.nombre.includes(this.search));
-        var ordenado = [];
-        if (this.orderBy == "edad" && this.orderDescend == false) {
-          ordenado = filtrado.sort((p1, p2) => {
-            return (
-              this.getEdad(p1.fechaNacimiento) -
-              this.getEdad(p2.fechaNacimiento)
-            ); //de menor a mayor
-          });
-        } else if (this.orderBy == "edad" && this.orderDescend == true) {
-          ordenado = filtrado.sort((p1, p2) => {
-            return (
-              this.getEdad(p2.fechaNacimiento) -
-              this.getEdad(p1.fechaNacimiento)
-            ); //de mayor a menor
-          });
-        }
-
-        if (this.orderBy == "peso" && this.orderDescend == false) {
-          ordenado = filtrado.sort((p1, p2) => {
-            return this.getPeso(p1) - this.getPeso(p2); //de menor a mayor
-          });
-        } else if (this.orderBy == "peso" && this.orderDescend == true) {
-          ordenado = filtrado.sort((p1, p2) => {
-            return this.getPeso(p2) - this.getPeso(p1); //de mayor a menor
-          });
-        }
-        return ordenado;
-      } else if (this.search != "" && this.orderBy == "") {
-        //sin ordenar con filtrar
-        var filtrado = [];
-        filtrado = this.pacientes.filter(p => p.nombre.includes(this.search));
-        return filtrado;
+      if (this.search != "") {
+        console.log(this.search);
+        filtrado = filtrado.filter(p => p.nombre.includes(this.search));
+      } else {
+        filtrado = this.pacientes;
       }
+
+      //PRIMERO EVALUA LA BUSQUEDA POR NOMBRE
+
+      //si no esta filtrado por busqueda los ordena alfabeticamente
+      if (this.orderBy == "nombre" && this.orderDescend == false) {
+        filtrado = filtrado.sort((p1, p2) => {
+          if (p1.nombre > p2.nombre) {
+            return 1;
+          }
+          if (p1.nombre < p2.nombre) {
+            return -1;
+          }
+          return 0;
+        });
+        //si no esta filtrado por busqueda lo filtra por nombre
+      } else if (this.orderBy == "nombre" && this.orderDescend == true) {
+        filtrado = filtrado.sort((p1, p2) => {
+          if (p1.nombre > p2.nombre) {
+            return -1;
+          }
+          if (p1.nombre < p2.nombre) {
+            return 1;
+          }
+          return 0;
+        });
+      }
+
+      //AHORA LOS ORDENA
+      //si es ordenado por edad
+      if (this.orderBy == "edad" && this.orderDescend == false) {
+        filtrado = filtrado.sort((p1, p2) => {
+          return (
+            this.getEdad(p1.fechaNacimiento) - this.getEdad(p2.fechaNacimiento)
+          ); //de menor a mayor
+        });
+        //si es con ordenar por edad descendente
+      } else if (this.orderBy == "edad" && this.orderDescend == true) {
+        filtrado = filtrado.sort((p1, p2) => {
+          return (
+            this.getEdad(p2.fechaNacimiento) - this.getEdad(p1.fechaNacimiento)
+          ); //de mayor a menor
+        });
+      }
+
+      //si es ordenado por peso
+      if (this.orderBy == "peso" && this.orderDescend == false) {
+        filtrado = filtrado.sort((p1, p2) => {
+          return this.getPeso(p1) - this.getPeso(p2); //de menor a mayor
+        });
+        //si es con ordenar por peso descendente
+      } else if (this.orderBy == "peso" && this.orderDescend == true) {
+        filtrado = filtrado.sort((p1, p2) => {
+          return this.getPeso(p2) - this.getPeso(p1); //de mayor a menor
+        });
+      }
+
+
+      //FILTRO DE MASCULINO Y FEMENINO
+      if (this.filterBy == "Masculino") {
+        filtrado = filtrado.filter(p => {
+          return p.genero == "Masculino";
+        });
+      } else if (this.filterBy == "Femenino") {
+        filtrado = filtrado.filter(p => {
+          return p.genero == "Femenino";
+        });
+      }
+
+      return filtrado; //devolvemos filtrado
     }
   }
 };

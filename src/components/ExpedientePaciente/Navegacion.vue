@@ -1,57 +1,65 @@
 <template>
-    <div>
-        <q-drawer show-if-above bordered side="right">
-      <div class="q-pt-lg q-mt-lg">
+      <div>
+        
         <q-list dense padding>
-          <q-item clickable v-ripple to="/paciente/informacion-personal">
+          <q-item clickable v-ripple :to="{path: '/paciente', hash: '#informacion-personal'}">
+            <q-item-section avatar>
+              <q-icon name="person" />
+            </q-item-section>
             <q-item-section>
-              Información personal
+              Informacion personal
             </q-item-section>
           </q-item>
 
-          <q-item clickable v-ripple to="/paciente/antecedentes">
+          <q-item clickable v-ripple :to="{path: '/paciente', hash: '#antecedentes'}">
+            <q-item-section avatar>
+              <q-icon name="book" />
+            </q-item-section>
             <q-item-section>
               Antecedentes
             </q-item-section>
           </q-item>
-
-          <q-item clickable v-ripple to="/paciente/medicamentos-permanentes">
+          <q-item clickable v-ripple :to="{path: '/paciente', hash: '#medicamentos-permanentes'}">
+            <q-item-section avatar>
+              <q-icon name="medication" />
+            </q-item-section>
             <q-item-section>
               Medicamentos permanentes
             </q-item-section>
           </q-item>
 
-          <q-item clickable v-ripple to="/paciente/consultas">
+          <q-item clickable v-ripple :to="{path: '/paciente', hash: '#consultas'}">
+          <q-item-section avatar>
+              <q-icon name="healing" />
+            </q-item-section>
             <q-item-section>
               Consultas
             </q-item-section>
           </q-item>
 
-          <q-item clickable v-ripple to="/paciente/recetas">
+          <q-item clickable v-ripple :to="{path: '/paciente', hash: '#recetas'}">
+          <q-item-section avatar>
+              <q-icon name="description" />
+            </q-item-section>
             <q-item-section>
               Recetas
             </q-item-section>
           </q-item>
 
-          <q-item clickable v-ripple to="/pacientes/archivos">
+          <q-item clickable v-ripple :to="{path: '/paciente', hash: '#enfermedades-cronicas'}">
+            <q-item-section avatar>
+              <q-icon name="local_hospital" />
+            </q-item-section>
             <q-item-section>
-              Archivos
+            Enfermedades cronicas
             </q-item-section>
           </q-item>
         </q-list>
-
-
       </div>
-    </q-drawer>
-    </div>
 </template>
 
 <script>
-    export default {
-        
-    }
+export default {};
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

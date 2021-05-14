@@ -1,4 +1,6 @@
-
+// LAS RUTAS DEBEN DE IR COMO HIJAS PARA QUE SE APLIQUE EL LAYOUT
+// si las rutas no van dentro de children se interpretan como paginas independientes
+// y no pone el titulo, o el pie de pagina o el menu a la izquierda
 const routes = [
   {
     path: '/',
@@ -6,28 +8,46 @@ const routes = [
     children: [
       { path: '', name:"home", component: () => import('pages/Index.vue') },
       {
-        path: '/auth',
-        component: () => import('pages/PageAuth.vue')
-      },
-      { 
-        path: '/plantilla', 
-        component: () => import('pages/Plantilla.vue') 
+        path: '/plantilla',
+        component: () => import('pages/Plantilla.vue')
       },
       {
-        path: "/paciente",
-        component: ()=> import('layouts/PacienteLayout.vue'),
+        path: '/galeria',
+        component: () => import('src/pages/testGaleria.vue')
+      },
+      {
+      path: '/sitioweb',
+      component: () => import('pages/SitioWeb.vue')
+      }
+      
+    ]
+    },
+    {
+      path: "/paciente",
+      component: ()=> import('layouts/PacienteLayout.vue'),
+      children: [
+        {
+          path: '',
+          component: () => import('./../pages/ExpedientePaciente/Expediente.vue')
+        },  
+        {
+          path: 'pasar-consulta',
+          component: () => import('./../pages/PasarConsulta/PasarConsultaView.vue')
+        }   
+      ]
+    },
+
+    ,
+    {
+      path: '/auth',
+        component: () => import('layouts/Login.vue'),
+        
         children: [
           {
-            path: '/paciente/informacion-personal',
-            component: () => import('./../pages/ExpedientePaciente/InformacionPersonal.vue')
+            path: '',
+            component: () => import('pages/PageAuth.vue'),
           },
-          {
-            path: '/paciente/antecedentes',
-            component: () => import('./../pages/ExpedientePaciente/Antecedentes.vue')
-          }
-        ]
-      },
-    ]
+        ],
     },
 
   // Always leave this as last one,

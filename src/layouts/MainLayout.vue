@@ -20,7 +20,7 @@
     </q-header>
 
     <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
-      <q-list>
+      <q-list >
         <q-item>
           <q-item-section header>
             <q-card
@@ -29,7 +29,7 @@
               @click.prevent="leftDrawerOpen = false"
             >
               <q-icon name="health_and_safety" style="font-size: 2.5rem;" />
-              Sistema ABC
+              Sistema ABC 
             </q-card>
           </q-item-section>
         </q-item>
@@ -68,20 +68,20 @@
           </q-item-section>
         </q-item>
         <q-separator />
-        <q-item to="/" clickable v-ripple>
+        <q-item to="/" clickable v-ripple v-if="usuario != null">
           <q-item-section avatar>
             <q-icon name="people" />
           </q-item-section>
-          <q-item-section>Pacientes</q-item-section>
+          <q-item-section v-if="usuario != null">Pacientes</q-item-section>
         </q-item>
-        <q-item to="" clickable v-ripple>
+        <q-item to="" clickable v-ripple v-if="usuario != null">
           <q-item-section avatar>
             <q-icon name="person_add" />
           </q-item-section>
-          <q-item-section>Nuevo Paciente</q-item-section>
+          <q-item-section >Nuevo Paciente</q-item-section>
         </q-item>
       </q-list>
-      <div class="fixed-bottom q-mb-xl">
+      <div class="fixed-bottom q-mb-xl" v-if="usuario != null">
         <q-separator />
         <q-card class="text-center q-mt-xl" flat>
           <q-icon name="people" style="font-size: 2.5rem;" />

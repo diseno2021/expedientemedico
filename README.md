@@ -20,3 +20,8 @@ quasar build
 
 ### Customize the configuration
 See [Configuring quasar.conf.js](https://v1.quasar.dev/quasar-cli/quasar-conf-js).
+
+### COMANDO PARA HACER PULL si no te funciona el git desktop
+git push origin
+
+luego te va pedir loguearte
