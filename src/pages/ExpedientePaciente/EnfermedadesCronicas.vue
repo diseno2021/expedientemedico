@@ -1,12 +1,13 @@
 <template>
   <div class="q-ma-md">
+    <h3 class="text-h3">Enfermedades Crónicas</h3>
     <q-card flat bordered class="my-card">
       <q-card-section>
         <div class="text-h6">Datos</div>
       </q-card-section>
 
       <q-card-section class="q-pt-none">
-       Discapacidad
+       Discapacidad: Ninguna
       </q-card-section>
 
       <q-separator inset />

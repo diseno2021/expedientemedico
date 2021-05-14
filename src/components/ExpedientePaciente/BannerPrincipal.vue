@@ -40,7 +40,7 @@
                 to="paciente/pasar-consulta"
               >
                 <q-tooltip>
-                  Pasar Consulta
+                  Nueva Consulta
                 </q-tooltip></q-btn
               >
             </div>
