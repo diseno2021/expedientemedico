@@ -16,9 +16,9 @@
               <div class="text-subtitle1 lt-sm">{{ paciente.nombre }}</div>
               <div class="text-subtitle2 lt-sm">Id: {{ paciente.id }}</div>
               <div class="text-h6 gt-xs">{{ paciente.nombre }}</div>
-              <div class=".text-subtitle1 gt-xs">Id: {{ paciente.id }}</div>
+              <div class="text-subtitle1 gt-xs">Id: {{ paciente.id }}</div>
             </div>
-            <div class="col-auto">
+            <div v-if="$route.path != '/paciente/pasar-consulta'" class="col-auto">
               <q-btn
                 round
                 color="secondary"
@@ -28,7 +28,7 @@
                 to="paciente/pasar-consulta"
               >
                 <q-tooltip>
-                  Pasar Consulta
+                  Nueva Consulta
                 </q-tooltip>
               </q-btn>
               <q-btn
