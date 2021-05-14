@@ -27,7 +27,6 @@
         </div>
         <!-- Row de opciones para buscar -->
         <div class="row items-center justify-center">
-          <!-- <div class="col-md-3 col-sm-3 col-2">Ordenar por:</div> -->
           <div class="col-12">
             <span class="q-ml-xl"  v-if="$q.screen.width > 599">Ordenar por:</span>
             <q-select
@@ -77,7 +76,7 @@
     <div class="row">
       <div
         v-if="$q.screen.width > 599"
-        class="col-12"
+        class="col-12 col-md-6 col-lg-4"
         v-for="paciente in pacientesFiltrados"
         :key="paciente.id"
       >
