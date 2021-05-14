@@ -54,6 +54,15 @@
             Enfermedades cronicas
             </q-item-section>
           </q-item>
+
+          <q-item clickable v-ripple :to="{path: '/paciente', hash: '#examenes'}">
+            <q-item-section avatar>
+              <q-icon name="collections" />
+            </q-item-section>
+            <q-item-section>
+            Examenes
+            </q-item-section>
+          </q-item>
         </q-list>
       </div>
 </template>
