@@ -9,7 +9,12 @@
         </q-item-section>
         <q-separator vertical inset class="q-mr-sm" />
         <q-item-section>
-          {{ paciente.nombre }}
+          <q-item-label>
+            {{ paciente.nombre }}
+          </q-item-label>
+          <q-item-label caption lines="1">
+            <q-icon name="place" class="text-green" style="font-size: 1.5em"/> {{ paciente.direccion }}
+          </q-item-label>
         </q-item-section>
       </template>
       <q-separator inset />
@@ -27,7 +32,9 @@
                 </div>
                 <div class="col">
                   <div class="row  justify-center">{{ fechaNacimiento }}</div>
-                  <div class="row text-caption justify-center">{{ edad }} años</div>
+                  <div class="row text-caption justify-center">
+                    {{ edad }} años
+                  </div>
                 </div>
               </div>
             </div>
