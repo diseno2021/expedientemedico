@@ -3,21 +3,21 @@
       <h3 class="text-h3">Consultas</h3>
         <q-list bordered class="rounded-borders">
             <div class="row">
-                <div class="col-12 q-pa-sm" v-for="(consulta,index) in consultas" :key="consulta.id">
+                <div class="col-12 col-md-6 q-pa-sm" v-for="(consulta,index) in consultas" :key="consulta.id">
                     <q-expansion-item>
                         <template v-slot:header>
-                            <q-item-section class="text-h6">
+                            <q-item-section class="text-subtitle2">
                                 Motivo: {{ consulta.motivoConsulta }}
                             </q-item-section>
-                            <q-item-section side class="text-subtitle1">
+                            <q-item-section class="text-body2">
                                 {{ consulta.fecha }}
                             </q-item-section>
                         </template>
-                        <q-card>
+                        <q-card bordered>
                             <q-separator inset />
                             <q-card-section horizontal>
-                                <q-card-section>
-                                    <q-tabs dense v-model="tab[index]" vertical class="text-primary">
+                                <q-card-section class="col-3 q-pr-none">
+                                    <q-tabs dense v-model="tab[index]" vertical no-caps align="left" class="text-primary">
                                         <q-tab :name="'sintomas'+index" label="Sintomas" />
                                         <q-tab :name="'ef'+index" label="Exploracion fisica" />
                                         <q-tab :name="'diagnostico'+index" label="Diagnostico" />
@@ -25,25 +25,25 @@
                                         <q-tab :name="'examenes'+index" label="Examenes" />
                                     </q-tabs>
                                 </q-card-section>
-                                <q-card-section>
+                                <q-card-section class="col-6">
                                     <q-tab-panels v-model="tab[index]" animated swipeable vertical transition-prev="jump-up" transition-next="jump-up">
-                                        <q-tab-panel :name="'sintomas'+index">
+                                        <q-tab-panel class="q-pa-none" :name="'sintomas'+index">
                                             <div class="text-h6 q-mb-md">Sintomas</div>
                                             <div class="text-body2" v-html="consulta.sintomas"></div>
                                         </q-tab-panel>
-                                        <q-tab-panel :name="'ef'+index">
+                                        <q-tab-panel class="q-pa-none" :name="'ef'+index">
                                             <div class="text-h6 q-mb-md">Exploracion Fisica</div>
                                             <div class="text-body2" v-html="consulta.exploracionFisica"></div>
                                         </q-tab-panel>
-                                        <q-tab-panel :name="'diagnostico'+index">
+                                        <q-tab-panel class="q-pa-none" :name="'diagnostico'+index">
                                             <div class="text-h6 q-mb-md">Diagnostico</div>
                                             <div class="text-body2" v-html="consulta.diagnostico"></div>
                                         </q-tab-panel>
-                                        <q-tab-panel :name="'receta'+index">
+                                        <q-tab-panel class="q-pa-none" :name="'receta'+index">
                                             <div class="text-h6 q-mb-md">Receta</div>
                                             <div class="text-body2" v-html="consulta.receta"></div>
                                         </q-tab-panel>
-                                        <q-tab-panel :name="'examenes'+index">
+                                        <q-tab-panel class="q-pa-none" :name="'examenes'+index">
                                             <div class="text-h6 q-mb-md">Examenes</div>
                                             <div class="text-body2" v-html="consulta.examenes"></div>
                                         </q-tab-panel>
@@ -51,7 +51,7 @@
                                 </q-card-section>
                                 <q-space></q-space>
                                 <q-separator vertical />
-                                <q-card-section>
+                                <q-card-section class="col-3">
                                     <div>
                                         <span class="text-subtitle2">Peso: </span>
                                         <span class="text-body2" v-html="consulta.peso"></span>
@@ -105,11 +105,11 @@ export default {
             temperatura: 36.5,
             imc:23.3,
             presionArterial: "180/40",
-            exploracionFisica:"", //texto html
+            exploracionFisica:"las amígdalas están enrojecidas", //texto html
             motivoConsulta:"Molestias en la garganta",
-            sintomas:"Sensación de picazón en la garganta <br />Voz ronca", //texto html
-            diagnostico:"", //texto html
-            receta:"", //texto html
+            sintomas:"Sensación de picazón en la garganta <br />Voz ronca <br />Dolor e inflamación de los ganglios en la zona del cuello o la mandíbula", //texto html
+            diagnostico:"Faringo-amigdalitis aguda", //texto html
+            receta:"Paracetamol - 1 por las noches", //texto html
             examenes:"", //texto html
             proximaCita: "2021-05-30T12:21:21",
         }
@@ -127,8 +127,8 @@ export default {
             exploracionFisica:"", //texto html
             motivoConsulta:"Temperatura corporal alta",
             sintomas:"Deshidratación <br />Dolor de cabeza", //texto html
-            diagnostico:"", //texto html
-            receta:"", //texto html
+            diagnostico:"Febrícula", //texto html
+            receta:"Ibuprofeno - 1 al dia <br />Paracetamol - 1 por las noches", //texto html
             examenes:"", //texto html
             proximaCita: "2021-04-30T12:21:21",
         }
@@ -146,8 +146,8 @@ export default {
             exploracionFisica:"", //texto html
             motivoConsulta:"Temperatura corporal alta",
             sintomas:"Escalofríos y temblores <br />Sudoración", //texto html
-            diagnostico:"", //texto html
-            receta:"", //texto html
+            diagnostico:"Febrícula", //texto html
+            receta:"Ibuprofeno - 1 al dia <br />Paracetamol - 1 por las noches", //texto html
             examenes:"", //texto html
             proximaCita: "2021-03-30T12:21:21",
         }
