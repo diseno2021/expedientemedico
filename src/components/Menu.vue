@@ -55,18 +55,18 @@
           </q-item-section>
           <q-item-section v-if="usuario != null">Pacientes</q-item-section>
         </q-item>
-        <q-item to="/nuevopaciente" clickable v-ripple v-if="usuario != null">
+        <q-item clickable v-ripple v-if="usuario != null">
           <q-item-section avatar>
             <q-icon name="person_add" />
           </q-item-section>
-          <q-item-section>Nuevo Paciente</q-item-section>
+          <agregar_paciente></agregar_paciente>
         </q-item>
       </q-list>
       <div class="fixed-bottom q-mb-xl" v-if="usuario != null">
         <q-separator />
         <q-card class="text-center q-mt-xl" flat>
           <q-icon name="people" style="font-size: 2.5rem;" />
-          <div class="full-width ">
+          <div  class="full-width ">
             20 pacientes registrados
           </div>
         </q-card>
@@ -76,8 +76,10 @@
 </template>
 
 <script>
+import Agregar_paciente from "../components/Agregar_paciente.vue";
 import { auth } from "../boot/firebase";
 export default {
+  components: { Agregar_paciente },
   props: {
     leftDrawerOpen: {
       type: Boolean,
