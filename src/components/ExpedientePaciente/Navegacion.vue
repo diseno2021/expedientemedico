@@ -1,6 +1,7 @@
 <template>
       <div>
-        
+        <BannerPrincipal />
+        <q-separator></q-separator>
         <q-list dense padding>
           <q-item clickable v-ripple :to="{path: '/paciente', hash: '#informacion-personal'}">
             <q-item-section avatar>
@@ -68,7 +69,12 @@
 </template>
 
 <script>
-export default {};
+import BannerPrincipal from './BannerPrincipal';
+export default {
+  components: {
+    BannerPrincipal
+  }
+};
 </script>
 
 <style lang="scss" scoped></style>
