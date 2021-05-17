@@ -49,24 +49,21 @@
           </q-item-section>
         </q-item>
         <q-separator />
-        <q-item to="/" clickable v-ripple v-if="usuario != null">
-          <q-item-section avatar>
-            <q-icon name="people" />
-          </q-item-section>
-          <q-item-section v-if="usuario != null">Pacientes</q-item-section>
-        </q-item>
-        <q-item clickable v-ripple v-if="usuario != null">
-          <q-item-section avatar>
-            <q-icon name="person_add" />
-          </q-item-section>
-          <agregar_paciente></agregar_paciente>
-        </q-item>
+        <div v-if="usuario != null">
+          <q-item to="/" clickable v-ripple >
+            <q-item-section avatar>
+              <q-icon name="people" />
+            </q-item-section>
+            <q-item-section >Pacientes</q-item-section>
+          </q-item>    
+            <agregar_paciente></agregar_paciente>
+        </div>
       </q-list>
       <div class="fixed-bottom q-mb-xl" v-if="usuario != null">
         <q-separator />
         <q-card class="text-center q-mt-xl" flat>
           <q-icon name="people" style="font-size: 2.5rem;" />
-          <div  class="full-width ">
+          <div class="full-width ">
             20 pacientes registrados
           </div>
         </q-card>
@@ -115,7 +112,7 @@ export default {
     },
     openCloseDrawer() {
       this.state = !this.state;
-    },
+    }
   },
   created() {
     auth.onAuthStateChanged(user => {

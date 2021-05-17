@@ -1,8 +1,14 @@
 <template>
   <div>
-      <q-item-section class="q-my-xs" @click="formulario = true">
-            Nuevo Paciente
+    <q-item @click="formulario = true" clickable v-ripple>
+      <q-item-section avatar>
+        <q-icon name="person_add" />
       </q-item-section>
+      <q-item-section @click="formulario = true">
+        Nuevo Paciente
+      </q-item-section>
+    </q-item>
+     
    
 
     <q-dialog v-model="formulario" :maximized="true">
