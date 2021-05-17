@@ -1,6 +1,8 @@
 <template>
   <div class="q-ma-md">
+    <div class="row">
       <h3 class="text-h3">Medicamentos Permanentes</h3>
+    </div>
       <q-editor v-model="paciente.medicamentosPermanentes" :definitions="{
           save: {
           tip: 'Guarda los cambios',
@@ -11,7 +13,8 @@
       }"
       :toolbar="[
         ['bold', 'italic', 'strike', 'underline'],
-        ['upload', 'save']
+        ['undo', 'redo'],
+        ['save']
       ]"
       min-height="10rem" />
   </div>

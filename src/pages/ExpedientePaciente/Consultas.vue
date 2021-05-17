@@ -1,9 +1,11 @@
 <template>
   <div class="q-ma-md">
-      <h3 class="text-h3">Consultas</h3>
-        <q-list bordered class="rounded-borders">
-            <div class="row">
-                <div class="col-12 col-md-6 q-pa-sm" v-for="(consulta,index) in consultas" :key="consulta.id">
+      <div class="row">
+          <h3 class="text-h3">Consultas</h3>
+      </div>
+       <div class="row">
+            <div class="col-12 col-md-6 q-pa-sm" v-for="(consulta,index) in consultas" :key="consulta.id">
+                <q-card flat bordered>
                     <q-expansion-item>
                         <template v-slot:header>
                             <q-item-section class="text-subtitle2">
@@ -13,77 +15,79 @@
                                 {{ consulta.fecha }}
                             </q-item-section>
                         </template>
-                        <q-card bordered>
-                            <q-separator inset />
-                            <q-card-section horizontal>
-                                <q-card-section class="col-3 q-pr-none">
-                                    <q-tabs dense v-model="tab[index]" vertical no-caps align="left" class="text-primary">
-                                        <q-tab :name="'sintomas'+index" label="Sintomas" />
-                                        <q-tab :name="'ef'+index" label="Exploracion fisica" />
-                                        <q-tab :name="'diagnostico'+index" label="Diagnostico" />
-                                        <q-tab :name="'receta'+index" label="Receta" />
-                                        <q-tab :name="'examenes'+index" label="Examenes" />
-                                    </q-tabs>
-                                </q-card-section>
-                                <q-card-section class="col-6">
-                                    <q-tab-panels v-model="tab[index]" animated swipeable vertical transition-prev="jump-up" transition-next="jump-up">
-                                        <q-tab-panel class="q-pa-none" :name="'sintomas'+index">
-                                            <div class="text-h6 q-mb-md">Sintomas</div>
-                                            <div class="text-body2" v-html="consulta.sintomas"></div>
-                                        </q-tab-panel>
-                                        <q-tab-panel class="q-pa-none" :name="'ef'+index">
-                                            <div class="text-h6 q-mb-md">Exploracion Fisica</div>
-                                            <div class="text-body2" v-html="consulta.exploracionFisica"></div>
-                                        </q-tab-panel>
-                                        <q-tab-panel class="q-pa-none" :name="'diagnostico'+index">
-                                            <div class="text-h6 q-mb-md">Diagnostico</div>
-                                            <div class="text-body2" v-html="consulta.diagnostico"></div>
-                                        </q-tab-panel>
-                                        <q-tab-panel class="q-pa-none" :name="'receta'+index">
-                                            <div class="text-h6 q-mb-md">Receta</div>
-                                            <div class="text-body2" v-html="consulta.receta"></div>
-                                        </q-tab-panel>
-                                        <q-tab-panel class="q-pa-none" :name="'examenes'+index">
-                                            <div class="text-h6 q-mb-md">Examenes</div>
-                                            <div class="text-body2" v-html="consulta.examenes"></div>
-                                        </q-tab-panel>
-                                    </q-tab-panels>
-                                </q-card-section>
-                                <q-space></q-space>
-                                <q-separator vertical />
-                                <q-card-section class="col-3">
-                                    <div>
+                        <q-separator></q-separator>
+                        <div class="row">
+                            <div class="col-auto q-py-md q-pl-md q-pr-none">
+                                <q-tabs dense v-model="tab[index]" vertical no-caps align="left" class="text-primary">
+                                    <q-tab :name="'sintomas'+index" label="Sintomas" />
+                                    <q-tab :name="'ef'+index" label="E. Fisica" />
+                                    <q-tab :name="'diagnostico'+index" label="Diagnostico" />
+                                    <q-tab :name="'receta'+index" label="Receta" />
+                                    <q-tab :name="'examenes'+index" label="Examenes" />
+                                </q-tabs>
+                            </div>
+                            <q-separator vertical inset color="primary"/>
+                            <div class="col q-pa-md">
+                                <q-tab-panels v-model="tab[index]" animated swipeable vertical transition-prev="jump-up" transition-next="jump-up">
+                                    <q-tab-panel class="q-pa-none" :name="'sintomas'+index">
+                                        <div class="text-h6 q-mb-md">Sintomas</div>
+                                        <div class="text-body2" v-html="consulta.sintomas"></div>
+                                    </q-tab-panel>
+                                    <q-tab-panel class="q-pa-none" :name="'ef'+index">
+                                        <div class="text-h6 q-mb-md">Exploracion Fisica</div>
+                                        <div class="text-body2" v-html="consulta.exploracionFisica"></div>
+                                    </q-tab-panel>
+                                    <q-tab-panel class="q-pa-none" :name="'diagnostico'+index">
+                                        <div class="text-h6 q-mb-md">Diagnostico</div>
+                                        <div class="text-body2" v-html="consulta.diagnostico"></div>
+                                    </q-tab-panel>
+                                    <q-tab-panel class="q-pa-none" :name="'receta'+index">
+                                        <div class="text-h6 q-mb-md">Receta</div>
+                                        <div class="text-body2" v-html="consulta.receta"></div>
+                                    </q-tab-panel>
+                                    <q-tab-panel class="q-pa-none" :name="'examenes'+index">
+                                        <div class="text-h6 q-mb-md">Examenes</div>
+                                        <div class="text-body2" v-html="consulta.examenes"></div>
+                                    </q-tab-panel>
+                                </q-tab-panels>
+                            </div>
+                            <q-separator vertical class="gt-md" />
+                            <q-separator vertical class="lt-md gt-xs" />
+                            <div class="col-12 col-sm-4 col-md-12 col-lg-4 q-pa-md">
+                                <q-separator class="lt-lg gt-sm"></q-separator>
+                                <q-separator class="lt-sm"></q-separator>
+                                <div class="row q-pt-md">
+                                    <div class="col-6 col-sm-12 col-md-6 col-lg-12">
                                         <span class="text-subtitle2">Peso: </span>
                                         <span class="text-body2" v-html="consulta.peso"></span>
                                     </div>
-                                    <div>
+                                    <div class="col-6 col-sm-12 col-md-6 col-lg-12">
                                         <span class="text-subtitle2">Estatura: </span>
                                         <span class="text-body2" v-html="consulta.estatura"></span>
                                     </div>
-                                    <div>
+                                    <div class="col-6 col-sm-12 col-md-6 col-lg-12">
                                         <span class="text-subtitle2">Temperatura: </span>
                                         <span class="text-body2" v-html="consulta.temperatura"></span>
                                     </div>
-                                    <div>
+                                    <div class="col-6 col-sm-12 col-md-6 col-lg-12">
                                         <span class="text-subtitle2">IMC: </span>
                                         <span class="text-body2" v-html="consulta.imc"></span>
                                     </div>
-                                    <div>
+                                    <div class="col-12">
                                         <span class="text-subtitle2">Presion arterial: </span>
                                         <span class="text-body2" v-html="consulta.presionArterial"></span>
                                     </div>
-                                </q-card-section>
-                            </q-card-section>
-                            <q-separator inset/>
-                            <q-card-section class="text-center">
-                                Proxima cita: {{ consulta.proximaCita }}
-                            </q-card-section>
-                        </q-card>
+                                </div>
+                            </div>
+                        </div>
+                        <q-separator />
+                        <q-card-section class="text-center">
+                            Proxima cita: {{ consulta.proximaCita }}
+                        </q-card-section>
                     </q-expansion-item>
-                    <q-separator v-if="index < consultas.length-1"></q-separator>
-                </div>
+                </q-card>
             </div>
-       </q-list>
+       </div>
   </div>
 </template>
 

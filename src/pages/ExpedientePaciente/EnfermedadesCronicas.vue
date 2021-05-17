@@ -1,6 +1,8 @@
 <template>
   <div class="q-ma-md">
-    <h3 class="text-h3">Enfermedades Crónicas</h3>
+    <div class="row">
+      <h3 class="text-h3">Enfermedades Crónicas</h3>
+    </div>
     <q-card flat bordered class="my-card">
       <q-card-section>
         <div class="text-h6">Datos</div>

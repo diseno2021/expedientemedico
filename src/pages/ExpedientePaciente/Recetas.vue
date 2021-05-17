@@ -1,6 +1,8 @@
 <template>
   <div>
-    <h3 class="text-h3">Recetas</h3>
+    <div class="row">
+      <h3 class="text-h3">Recetas</h3>
+    </div>
     <div class="q-pa-md q-gutter-sm">
       <q-editor v-model="editor"
         :definitions="{

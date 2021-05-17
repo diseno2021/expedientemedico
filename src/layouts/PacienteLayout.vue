@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="lHh LpR lFf">
+  <q-layout view="lHh LpR lFf" @scroll="onScroll">
     <q-header elevated>
       <q-toolbar>
         <q-btn
@@ -15,12 +15,12 @@
           Expediente del paciente
         </q-toolbar-title>
 
-        <q-btn class="lt-md" flat @click="drawerRight = !drawerRight" round dense icon="menu" />
+        <q-btn class="lt-md" flat @click="test" round dense icon="menu" />
       </q-toolbar>
     </q-header>
     <Menu ref="menu" />
     <q-drawer v-model="drawerRight" show-if-above bordered side="right">
-      <Navegacion />
+      <Navegacion ref="nav" />
     </q-drawer>
     <q-page-container>
       <q-page padding>
@@ -44,7 +44,29 @@ export default {
   data() {
     return {
       drawerRight: false,
+      scrollInfo: {},
+      spyMovil: false,
     };
   },
+  methods: {
+    onScroll(info){
+      if (this.spyMovil == false) {
+        this.scrollInfo = info;
+        this.$refs.nav.scrollspy(info.position);
+      }
+    },
+    test(){
+      this.spyMovil = true;
+      this.$refs.nav.scrollspy(this.scrollInfo.position);
+      this.drawerRight = !this.drawerRight;
+    }
+  },
+  watch: {
+    drawerRight: function (val) {
+      if (this.drawerRight == false && this.spyMovil) {
+        this.spyMovil = false;
+      }
+    }
+  }
 }
 </script>

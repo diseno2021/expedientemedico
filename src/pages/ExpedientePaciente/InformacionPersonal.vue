@@ -1,6 +1,8 @@
 <template>
   <div class="q-ma-md">
-    <h3 class="text-h3">Información Personal</h3>
+    <div class="row">
+      <h3 class="text-h3">Información Personal</h3>
+    </div>
     <div class="row q-mt-md">
       <div class="col-12 q-mt-md">
         <q-input v-model="paciente.nombre" label="Nombre completo">
