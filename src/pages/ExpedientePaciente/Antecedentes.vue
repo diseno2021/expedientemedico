@@ -3,8 +3,20 @@
     <div class="row">
       <div class="col-12">
       <h3 class="text-h3">Antecedentes</h3>
-        <q-editor v-model="paciente.antecedentes" min-height="5rem" />
-        <q-btn class="q-mt-sm">Guardar</q-btn>
+        <q-editor v-model="paciente.antecedentes" :definitions="{
+          save: {
+          tip: 'Guarda los cambios',
+          icon: 'save',
+          label: 'Guardar',
+          handler: saveWork
+        },
+      }"
+      :toolbar="[
+        ['bold', 'italic', 'strike', 'underline'],
+        ['undo', 'redo'],
+        ['save']
+      ]"
+      min-height="10rem" />
       </div>
     </div>
   </div>
@@ -41,6 +53,16 @@ export default {
           ]
           }
     };
+  },
+  methods:{
+    saveWork () {
+            this.$q.notify({
+                message: 'Antecedentes guardados en local storage',
+                color: 'green-4',
+                textColor: 'white',
+                icon: 'cloud_done'
+            })
+        },
   },
   components: {
     BannerPrincipal

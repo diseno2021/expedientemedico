@@ -101,6 +101,13 @@
         </template>
       </q-input>
     </div>
+    <q-btn
+                color="secondary"
+                icon="save"
+                label="Guardar Información"
+                class="full-width"
+                @click="guardarInformacion"
+              ></q-btn>
   </div>
 </template>
 
@@ -157,6 +164,16 @@ export default {
       }
       return edad;
     }
+  },
+  methods:{
+    guardarInformacion () {
+            this.$q.notify({
+                message: 'Información personal guardada en local storage',
+                color: 'green-4',
+                textColor: 'white',
+                icon: 'cloud_done'
+            })
+        },
   }
 };
 </script>
