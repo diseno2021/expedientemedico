@@ -65,7 +65,6 @@
             </q-item-section>
           </q-item>
         </q-list>
-        {{ pos }}
       </div>
 </template>
 
@@ -77,11 +76,9 @@ export default {
   },
   data: () => ({
     observer: '',
-    pos: 0,
   }),
   methods: {
     scrollspy(posicion){
-      this.pos = posicion;
       if (posicion <= 650) {
         this.observer = 'i-personal';
       } else if (posicion > 650 && posicion <= 1000) {
