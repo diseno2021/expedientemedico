@@ -71,7 +71,6 @@
           @click="googleAutenticar"
         />
         <br />
-        <br />
         <q-checkbox v-model="valCheckbox" />
         <a
           href="#"
@@ -83,7 +82,12 @@
         <br />
         <label>
           ¿Todavía no tienes una cuenta?
-          <a href="" style="display: inline">Registrate</a>
+          <a
+            href="#"
+            style="display: inline"
+            v-on:click.prevent="googleAutenticar"
+            >Registrate</a
+          >
         </label>
       </div>
       <q-dialog
@@ -173,10 +177,46 @@
             @click="onClick"
           />
         </template>
-        <q-carousel-slide :name="1" img-src="/login/lady-in-white.png" />
-        <q-carousel-slide :name="2" img-src="/login/doc.jpg" />
-        <q-carousel-slide :name="3" img-src="/login/nayib-amor.jpg" />
-        <q-carousel-slide :name="4" img-src="/login/consulta.jpg" />
+        <q-carousel-slide :name="1" img-src="/login/lady-in-white.png">
+          <div class="q-mt-md text-center text_carrusel">
+            VirtualDoc es un proyecto que traza una ayuda en el manejo y control
+            de pacientes para muchos doctores y ambientes de servicio médico.
+            <br />
+            <br />
+            Los clientes de este proyecto procuran de este proyecto una ayuda en
+            el registro de pacientes, consultas, acceso a la información médica
+            que deben disponer de sus pacientes como medicamentos, enfermedades
+            tratadas anteriormente o actuales y además tener un fácil acceso a
+            estos a través de la web y de app móvil.
+          </div></q-carousel-slide
+        >
+        <q-carousel-slide :name="2" img-src="/login/doc.jpg">
+          <div class="q-mt-md text-center text_carrusel">
+            En esta versión contempla el manejo de los clientes principales
+            (doctores, médicos) en el que estos a través de una interfaz podrán
+            loguearse, luego de eso tendrán acceso datos de sus pacientes,
+            registrar nuevos pacientes, o una nueva consulta médica, dispondrán
+            de campos para establecer observaciones médicas y/o escribir y
+            revisar sobre medicamentos de necesidad hacia el paciente. Pondrán
+            ver acceso a un historial de sus pacientes, campos que les
+            permitirán realizar búsquedas de sus pacientes y por consiguiente
+            terminar una consulta; si fuera necesario también se le permitirá
+            modificar.
+          </div></q-carousel-slide
+        >
+        <q-carousel-slide :name="3" img-src="/login/consulta.jpg">
+          <div class="q-mt-md text-center text_carrusel">
+            Se incorporarán en las siguientes versiones que el sistema haga
+            impresión de recetas, se implemente un sistema de pagos, e
+            incorporar módulos de citas y tele consultas; entre otros, que cabe
+            aclarar que todo esto no es parte de esta versión.
+            <br />
+            <br />
+            Se ha planificado para la arquitectura del sistema Firebase para la
+            gestión de base de datos y que además nos permite el ahorro de un
+            BackEnd, Quasar y Vue JS para el FrontEnd.
+          </div></q-carousel-slide
+        >
       </q-carousel>
     </div>
   </div>
@@ -273,13 +313,13 @@ h1 {
 .q-avatar {
   height: 10rem;
   width: 10rem;
-  margin-bottom: 4rem;
+  margin-bottom: 0;
 }
 .horizontalCenter {
-  padding: 2rem;
-  position: relative;
+  padding: 1rem;
+  /* position: relative;
   top: 50%;
-  transform: translateY(-70%);
+  transform: translateY(-70%); */
 }
 .q-btn {
   margin: 1rem;
@@ -302,6 +342,7 @@ h1 {
   width: 100%;
   margin: 0;
   padding: 0;
+  padding-bottom: 3rem;
 }
 
 .flex {
@@ -380,5 +421,19 @@ h1 {
     margin-bottom: 1rem;
     font-size: 4rem;
   }
+}
+.q-carousel__slide {
+  padding: 0%;
+}
+.text_carrusel {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 4rem;
+  background: #0000004d;
+  margin: 0;
+  color: white;
+  text-align: justify;
 }
 </style>
