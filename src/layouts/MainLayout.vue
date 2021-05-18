@@ -12,10 +12,9 @@
         />
 
         <q-toolbar-title>
-          VirtualDoc
+          Pacientes
         </q-toolbar-title>
 
-        <div>V1.0</div>
       </q-toolbar>
     </q-header>
     <Menu ref="menu" />
