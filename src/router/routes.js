@@ -36,18 +36,27 @@ const routes = [
         }   
       ]
     },
-
-    ,
     {
       path: '/auth',
-        component: () => import('layouts/Login.vue'),
-        
-        children: [
-          {
-            path: '',
-            component: () => import('pages/PageAuth.vue'),
-          },
-        ],
+      component: () => import('layouts/Login.vue'),
+      children: [
+        {
+          path: '',
+          name: "Login",
+          component: () => import('pages/PageAuth.vue'),
+        }
+      ]
+    },
+    {
+      path: '/registrar',
+      component: () => import('layouts/Login.vue'),
+      children: [
+        {
+          path: '',
+          name: "Registrar",
+          component: () => import('pages/Registrar.vue'),
+        }
+      ]
     },
 
   // Always leave this as last one,
