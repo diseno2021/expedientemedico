@@ -1,5 +1,6 @@
 <template>
   <div id="pasar-consulta">
+    <div class="row"><h3 class="text-h3">Nueva Consulta</h3></div>
     <div class="row">
       <div class="col-md-4">
 
