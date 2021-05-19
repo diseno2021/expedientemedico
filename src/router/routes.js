@@ -18,7 +18,11 @@ const routes = [
       {
       path: '/sitioweb',
       component: () => import('pages/SitioWeb.vue')
-      }
+      },
+      {
+        path: 'pasar-consulta',
+        component: () => import('./../pages/PasarConsulta/PasarConsultaView.vue')
+      } 
       
     ]
     },
@@ -29,11 +33,8 @@ const routes = [
         {
           path: '',
           component: () => import('./../pages/ExpedientePaciente/Expediente.vue')
-        },  
-        {
-          path: 'pasar-consulta',
-          component: () => import('./../pages/PasarConsulta/PasarConsultaView.vue')
-        }   
+        }  
+          
       ]
     },
     {
