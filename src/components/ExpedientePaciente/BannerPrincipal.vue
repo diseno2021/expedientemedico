@@ -14,7 +14,7 @@
                 icon="medical_services"
                 label="Nueva Consulta"
                 class="full-width"
-                to="/pasar-consulta"
+                to="pasar-consulta/nueva-consulta"
               >
               </q-btn>
         </q-card-section>

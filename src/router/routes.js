@@ -34,7 +34,16 @@ const routes = [
           path: '',
           component: () => import('./../pages/ExpedientePaciente/Expediente.vue')
         }  
-          
+      ]
+    },
+    {
+      path: "/pasar-consulta",
+      component: ()=>import('layouts/ConsultaLayout.vue'),
+      children: [
+        {
+        path: 'nueva-consulta',
+        component: ()=>import('./../pages/PasarConsulta/PasarConsultaView.vue')
+        }
       ]
     },
     {
