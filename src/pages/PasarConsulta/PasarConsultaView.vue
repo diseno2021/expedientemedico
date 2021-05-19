@@ -71,11 +71,16 @@
           ></q-editor>
           <p>Diagnostigo</p>
           <q-editor v-model="form_data.diagnostico" min-height="5rem"></q-editor>
-        </div>
+          <p>Recetas</p>
+          <q-editor v-model="form_data.receta" min-height="5rem"></q-editor>
+          <p>Examenes</p>
+          <q-editor v-model="form_data.examenes" min-height="5rem"></q-editor>
+          </div>          
       </div>
     </div>
     <hr />
     <div class="row justify-center items-baseline">
+      
       <q-input
         outlined
         class=" q-mb-lg"
