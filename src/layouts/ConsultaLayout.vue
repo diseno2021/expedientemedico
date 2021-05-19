@@ -18,6 +18,9 @@
       </q-toolbar>
     </q-header>
     <Menu ref="menu" />
+    <q-drawer v-model="drawerRight" show-if-above bordered side="right">
+      <NavegacionConsulta ref="nav" />
+    </q-drawer>
     <q-page-container>
         <q-page padding>
          <router-view />
@@ -28,12 +31,25 @@
 
 <script>
 import Menu from "components/Menu";
-//import Menu from "components/PasarConsulta/NavegacionConsulta.vue"
+import NavegacionConsulta from "components/PasarConsulta/NavegacionConsulta.vue"
 
 export default {
   name: "MainLayout",
   components: {
-    Menu
+    Menu,
+    NavegacionConsulta
+  },
+  data() {
+      return{
+          drawerRigth: false
+      };
+  },
+  watch: {
+      drawerRigth: function(val){
+          if (this.drawerRight == false) {
+        
+      }
+      }
   }
 };
 </script>
