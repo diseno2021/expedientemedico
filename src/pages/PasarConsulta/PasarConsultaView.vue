@@ -1,6 +1,6 @@
 <template>
   <div id="pasar-consulta">
-    <div class="row"><h3 class="text-h3">Nueva Consulta</h3></div>
+    <div class="row justify-center"><h3 class="text-h3">Nueva Consulta</h3></div>
     <div class="row justify-center">
       <div class="col-md-4">
         <q-input
@@ -69,12 +69,10 @@
             v-model="form_data.sintomasSubjetivos"
             min-height="5rem"
           ></q-editor>
+          <p>Diagnostigo</p>
+          <q-editor v-model="form_data.diagnostico" min-height="5rem"></q-editor>
         </div>
       </div>
-    </div>
-    <div class="q-pa-md q-gutter-sm">
-      <p>Diagnostigo</p>
-      <q-editor v-model="form_data.diagnostico" min-height="5rem"></q-editor>
     </div>
     <hr />
     <div class="row justify-center items-baseline">
