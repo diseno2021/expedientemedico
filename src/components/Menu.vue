@@ -9,7 +9,7 @@
               flat
               @click.prevent="state = false"
             >
-              <q-icon name="health_and_safety" style="font-size: 2.5rem;" />
+              <q-icon name="health_and_safety" style="font-size: 2.5rem" />
               VirtualDoc
             </q-card>
           </q-item-section>
@@ -23,7 +23,7 @@
             </q-avatar>
           </div>
           <div class="col">
-            <div class="row  ">Dr. {{ usuario.displayName }}</div>
+            <div class="row">{{ prefix }} {{ usuario.displayName }}</div>
             <div class="row text-caption text-weight-light">
               {{ usuario.email }}
             </div>
@@ -50,22 +50,20 @@
         </q-item>
         <q-separator />
         <div v-if="usuario != null">
-          <q-item to="/" clickable v-ripple >
+          <q-item to="/" clickable v-ripple>
             <q-item-section avatar>
               <q-icon name="people" />
             </q-item-section>
-            <q-item-section >Pacientes</q-item-section>
-          </q-item>    
-            <agregar_paciente></agregar_paciente>
+            <q-item-section>Pacientes</q-item-section>
+          </q-item>
+          <agregar_paciente></agregar_paciente>
         </div>
       </q-list>
       <div class="fixed-bottom q-mb-xl" v-if="usuario != null">
         <q-separator />
         <q-card class="text-center q-mt-xl" flat>
-          <q-icon name="people" style="font-size: 2.5rem;" />
-          <div class="full-width ">
-            20 pacientes registrados
-          </div>
+          <q-icon name="people" style="font-size: 2.5rem" />
+          <div class="full-width">20 pacientes registrados</div>
         </q-card>
       </div>
     </q-drawer>
@@ -74,20 +72,21 @@
 
 <script>
 import Agregar_paciente from "../components/Agregar_paciente.vue";
-import { auth } from "../boot/firebase";
+import { auth, db } from "../boot/firebase";
 export default {
   components: { Agregar_paciente },
   props: {
     leftDrawerOpen: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   data() {
     return {
       usuario: null,
       state: this.leftDrawerOpen,
-      dark: false
+      dark: false,
+      prefix: "",
     };
   },
   methods: {
@@ -96,13 +95,14 @@ export default {
       //this.$q.notify(this.user.displayName)
     },
     logout() {
+      localStorage.removeItem("prefijo");
       auth
         .signOut()
         .then(() => {
           // Sign-out successful.
           this.$q.notify("Se ha cerrado la sesión");
         })
-        .catch(error => {
+        .catch((error) => {
           // An error happened.
           this.$q.notify(error);
         });
@@ -112,14 +112,43 @@ export default {
     },
     openCloseDrawer() {
       this.state = !this.state;
-    }
+    },
+    prefijo() {
+      try {
+        db.collection("usuarios")
+          .doc(this.usuario.uid)
+          .get()
+          .then((doc) => {
+            if (doc.exists) {
+              let pref = doc.data().prefijo;
+              localStorage.setItem("prefijo", pref);
+              this.prefix = pref;
+            } else {
+              console.log("No existe Doc");
+            }
+          })
+          .catch((error) => {
+            console.log("Error al tratar de obtener el documento", error);
+          });
+      } catch (error) {}
+    },
   },
   created() {
-    auth.onAuthStateChanged(user => {
+    var user = auth.currentUser;
+    console.log("Flag 1", user);
+    if (user) {
+      // User is signed in.
       this.usuario = user;
-      console.log(this.usuario);
-    });
-  }
+      var prefijo = localStorage.getItem("prefijo");
+      if (prefijo != null) {
+        this.prefix = prefijo;
+      } else {
+        this.prefijo();
+      }
+    } else {
+      // No user is signed in.
+    }
+  },
 };
 </script>
 

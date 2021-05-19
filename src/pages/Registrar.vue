@@ -130,6 +130,8 @@ export default {
         foto: this.user.photoURL,
         prefijo: this.prefix,
       };
+      //guardando en el local storage
+      localStorage.setItem("prefijo", this.prefix);
       //guardando en firestone
       db.collection("usuarios")
         .doc(usuario.uid)
