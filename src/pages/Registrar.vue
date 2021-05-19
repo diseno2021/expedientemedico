@@ -7,15 +7,15 @@
         <h2 style="display: inline-block">VirtualDoc</h2>
       </div>
       <div class="inputs">
-        <q-avatar> <img src="/login/logo.jpg" syt /> </q-avatar><br />
-        {{correo}} <br>
+        <q-avatar> <img :src="user.photoURL" /> </q-avatar><br />
+        {{ user.email }} <br />
         <q-input
           v-model="prefix"
           label="Prefijo"
           style="max-width: 100px; display: inline-block"
         />
         <q-input
-          v-model="name"
+          v-model="user.displayName"
           label="Nombre"
           style="min-width: 400px; display: inline-block; margin-left: 1rem"
         />
@@ -31,11 +31,12 @@
           >Aceptar términos y condiciones</a
         >
         <div class="q-pa-md q-gutter-sm" style="text-align: center">
-          <q-btn color="red" label="Cancelar" />
+          <q-btn color="red" label="Cancelar" @click="cancelarSub()" />
           <q-btn
             color="primary"
             label="Enviar"
             :class="{ not_allowed: !valCheckbox }"
+            @click="aceptar()"
           />
         </div>
 
@@ -93,21 +94,74 @@
   </div>
 </template>
 <script>
+import { firebase, db } from "../boot/firebase";
+
 export default {
   name: "Registrar",
   data() {
     return {
-      name: "",
+      user: {
+        displayName: "",
+        email: "correo.prueba@ues.edu.sv",
+      },
       prefix: "",
-      correo:"correo.prueba@ues.edu.sv",
       valCheckbox: false,
       persistent: false,
     };
   },
   methods: {
     cancelarSub() {
+      this.user
+        .delete()
+        .then(function () {
+          console.log("Se cancela el registro");
+        })
+        .catch(function (error) {
+          console.log("Problemas al tratar de cancelar el registro.", error);
+        });
       this.$router.push("/auth");
     },
+    aceptar() {
+      //Construir usuario
+      const usuario = {
+        uid: this.user.uid,
+        nombre: this.user.displayName,
+        correo: this.user.email,
+        foto: this.user.photoURL,
+        prefijo: this.prefix,
+      };
+      //guardando en firestone
+      db.collection("usuarios")
+        .doc(usuario.uid)
+        .set(usuario)
+        .then(() => {
+          console.log("usuario guardado");
+          this.$router.push("/");
+        })
+        .catch((error) => {
+          console.error("Error writing document: ", error);
+        });
+    },
+  },
+  mounted() {
+    //Se carga la información del usuario
+    this.user = firebase.auth().currentUser;
+    // console.log(this.user);
+
+    //Esto sirve para verificar si el usuario ya estaba loguiado o si es nuevo.
+    var docRef = db.collection("usuarios").doc(this.user.uid);
+    docRef
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          this.$router.push("/");
+        } else {
+          console.log("Registrate por favor");
+        }
+      })
+      .catch((error) => {
+        console.log("Error al tratar de obtener el documento", error);
+      });
   },
 };
 </script>

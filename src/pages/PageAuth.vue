@@ -81,7 +81,6 @@
           >
         </label>
       </div>
-      
     </div>
     <div class="rightDiv">
       <q-carousel
@@ -167,7 +166,7 @@
 </template>
 
 <script>
-import { firebase, auth, db } from "../boot/firebase";
+import { firebase } from "../boot/firebase";
 
 export default {
   name: "PageAuth",
@@ -186,29 +185,13 @@ export default {
         .auth()
         .signInWithPopup(provider)
         .then((result) => {
-          let token = result.credential.accessToken;
-          let user = result.user;
-          //console.log(token) // Token
-          console.log(user); // User that was authenticated
-          //Construir usuario
-          const usuario = {
-            uid: user.uid,
-            nombre: user.displayName,
-            correo: user.email,
-            foto: user.photoURL,
-          };
-          //guardando en firestone
-          db.collection("usuarios")
-            .doc(usuario.uid)
-            .set(usuario)
-            .then(() => {
-              console.log("usuario guardado");
-              this.$router.push("/");
-            })
-            .catch((error) => {
-              console.error("Error writing document: ", error);
-            });
-          this.$router.push("/");
+          // if (user.metadata.creationTime === user.metadata.lastSignInTime) {
+          if (result.additionalUserInfo.isNewUser) {
+            console.log("Nuevo usuario");
+            this.$router.push("/registrar");
+          } else {
+            this.$router.push("/");
+          }
         })
         .catch((err) => {
           console.log(err); // This will give you all the information needed to further debug any errors
