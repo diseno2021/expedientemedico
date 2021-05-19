@@ -28,7 +28,7 @@
 
 <script>
 import Menu from "components/Menu";
-import Menu from "components/PasarConsulta/NavegacionConsulta.vue"
+//import Menu from "components/PasarConsulta/NavegacionConsulta.vue"
 
 export default {
   name: "MainLayout",
