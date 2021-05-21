@@ -6,48 +6,32 @@
     <div class="q-pa-md q-gutter-sm">
       <q-editor v-model="editor"
         :definitions="{
-          save: {
-            tip: 'Guardar',
-            icon: 'save',
-            label: 'Guardar',
-            handler: saveWork,
-          },
         }"
-        :toolbar="[
+       :toolbar="[
           ['bold', 'italic', 'strike', 'underline'],
-          ['upload', 'save'],
-        ]"
+          [
+            {
+              label: $q.lang.editor.fontSize,
+              icon: $q.iconSet.editor.fontSize,
+              fixedLabel: true,
+              fixedIcon: true,
+              list: 'no-icons',
+              options: [
+                'size-1',
+                'size-2',
+                'size-3',
+                'size-4',
+                'size-5',
+                'size-6',
+                'size-7'
+              ]
+            },
+          ],
+      ]"
         min-height="10rem"
       />
     </div>
-    <div class="row justify-between">
-      <div class="col-md-5 q-mx-md">
-        <p class="text-h6">Medicamentos Permanentes</p>
-        <q-card
-          class="my-card text-black"
-          style="background: white(circle, #35a2ff 0%, #014a88 100%)"
-        >
-          <q-card-section>
-            <div class="text-subtitle2">Fecha 03/05/2021</div>
-            <div class="text-subtitle2">Acetaminofén cada 8 horas</div>
-            <div class="text-subtitle2">Fecha 14/05/2021</div>
-          </q-card-section>
-        </q-card>
-      </div>
-      <div class="col-md-5 q-mx-md">
-        <p class="text-h6">Historicos</p>
-        <q-card
-          class="my-card text-black"
-          style="background: white(circle, #35a2ff 0%, #014a88 100%)"
-        >
-          <q-card-section>
-            <div class="text-subtitle2">Fecha 03/05/2021</div>
-            <div class="text-subtitle2">Loratadina</div>
-            <div class="text-subtitle2">Dosis:1 cada 8 horas</div>
-          </q-card-section>
-        </q-card>
-      </div>
-    </div>
+    
   </div>
 </template>
 <script>
