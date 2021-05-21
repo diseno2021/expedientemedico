@@ -1,7 +1,27 @@
 <template>
   <div class="q-ma-md">
-    <div class="row">
-      <h4 class="text-h4">Información Personal</h4>
+    <div class="row items-center">
+      <div class="col-12 col-sm-7 justify-between">
+        <h4 class="text-h4">Información Personal</h4>
+      </div>
+      <div class="col-12 col-sm-5 justify-between">
+        <q-btn
+          outline
+          color="primary"
+          icon="home"
+          label="Inicio"
+          to="/"
+          class="q-mx-sm"
+        ></q-btn>
+        <q-btn
+          outline
+          color="secondary"
+          icon="save"
+          label="Guardar"
+          @click="guardarInformacion"
+          class="q-mx-sm"
+        ></q-btn>
+      </div>
     </div>
     <div class="row q-mt-md">
       <div class="col-12 q-mt-md">
@@ -51,10 +71,18 @@
       <div class="col-12 col-md-5 ">
         <div class="row justify-between">
           <div class="col-6 col-sm-5">
-            <q-radio v-model="paciente.genero" val="Masculino" label="Masculino" />
+            <q-radio
+              v-model="paciente.genero"
+              val="Masculino"
+              label="Masculino"
+            />
           </div>
           <div class="col-6 col-sm-5 ">
-            <q-radio v-model="paciente.genero" val="Femenino" label="Femenino" />
+            <q-radio
+              v-model="paciente.genero"
+              val="Femenino"
+              label="Femenino"
+            />
           </div>
         </div>
       </div>
@@ -68,14 +96,24 @@
     </div>
 
     <div class="row justify-between q-mt-md">
-      <div class="col-12 col-md-4">
+      <div class="col-12 col-md-5">
         <q-input v-model="paciente.peso" label="Peso">
           <template v-slot:prepend>
             <q-icon name="monitor_weight" />
           </template>
         </q-input>
+        <q-img src="../../assets/img/estatura.png">
+
+        </q-img>
       </div>
-      <div class="col-md-6"></div>
+      <div class="col-12 col-md-5">
+        <q-input v-model="paciente.estatura" label="Estatura">
+          <template v-slot:prepend>
+            <q-icon name="accessibility" />
+          </template>
+        </q-input>
+        <q-img src="../../assets/img/peso.png"></q-img>
+      </div>
     </div>
 
     <div class="col-md-12 q-mt-md q-mt-md">
@@ -85,13 +123,22 @@
         </template>
       </q-input>
     </div>
+    <div class="row justify-between">
+      <div class="col-12 col-md-5 q-mt-md q-mt-md">
+        <q-input v-model="paciente.telefono" label="Teléfono">
+          <template v-slot:prepend>
+            <q-icon name="phone" />
+          </template>
+        </q-input>
+      </div>
 
-    <div class="col-md-12 q-mt-md q-mt-md">
-      <q-input v-model="paciente.telefono" label="Teléfono">
-        <template v-slot:prepend>
-          <q-icon name="phone" />
-        </template>
-      </q-input>
+      <div class="col-12 col-md-5 q-mt-md q-mt-md">
+        <q-input v-model="paciente.whatsapp" label="Whatsapp">
+          <template v-slot:prepend>
+            <q-icon name="smartphone" />
+          </template>
+        </q-input>
+      </div>
     </div>
 
     <div class="col-md-12 q-mt-md q-my-md ">
@@ -101,13 +148,6 @@
         </template>
       </q-input>
     </div>
-    <q-btn
-                color="secondary"
-                icon="save"
-                label="Guardar Información"
-                class="full-width"
-                @click="guardarInformacion"
-              ></q-btn>
   </div>
 </template>
 
@@ -116,33 +156,34 @@ import { date } from "quasar";
 import BannerPrincipal from "./../../components/ExpedientePaciente/BannerPrincipal.vue";
 export default {
   data() {
-    return {
-          paciente: { id:"asdfasdfasdfa987asdfasdf76as",
-          idMedico:"asdfasd88asd7fas6dfasd", //este campo relaciona al medico al cual pertenece
-          nombre: "Juan Santiago Perez Lima",
-          fechaNacimiento: "1998-03-06T00:00:00",
-          genero:"Masculino",
-          peso:[170,150,140,135], //el peso se lleva en un arreglo para poder graficarlo
-          estatura:[123,125,135],
-          foto:"http://storage/123231.jpg&quot;",
-          tipoSangre:"O RH+",
-          direccion:"Final avenida fray felipe de jesus moraga casa #23",
-          telefono:"7366-2344",
-          dui:"",
-          whatsapp:"1242-1234",
-          email:"paciente@outlook.com",
-          enCasoEmergencia:"Esposa Juana Salazar 7346454",
-          comentario:"",
-          antecedentes:"Padre diabético<br> Tía materna hipertensa", //texto html
-          alergias:"Penicilina Procainica, picadas de abejas",
-          enfermedadesCronicas:"Cancer de Seno, Diabetes tipo 2", //texto html
-          medicamentosPermanentes:"<br>Rivoflavina</br> una por las noches", //texto html
-          archivos:['http://storage/idpaciente/foto01.jpg&#39;',
-          'http://storage/idpaciente/foto01.jpg&#39;',
-          ]
-          }
-
-  }
+    return {      
+      paciente: {
+        id: "asdfasdfasdfa987asdfasdf76as",
+        idMedico: "asdfasd88asd7fas6dfasd", //este campo relaciona al medico al cual pertenece
+        nombre: "Juan Santiago Perez Lima",
+        fechaNacimiento: "1998-03-06T00:00:00",
+        genero: "Masculino",
+        peso: [170, 150, 140, 135], //el peso se lleva en un arreglo para poder graficarlo
+        estatura: [123, 125, 135],
+        foto: "http://storage/123231.jpg&quot;",
+        tipoSangre: "O RH+",
+        direccion: "Final avenida fray felipe de jesus moraga casa #23",
+        telefono: "7366-2344",
+        dui: "",
+        whatsapp: "1242-1234",
+        email: "paciente@outlook.com",
+        enCasoEmergencia: "Esposa Juana Salazar 7346454",
+        comentario: "",
+        antecedentes: "Padre diabético<br> Tía materna hipertensa", //texto html
+        alergias: "Penicilina Procainica, picadas de abejas",
+        enfermedadesCronicas: "Cancer de Seno, Diabetes tipo 2", //texto html
+        medicamentosPermanentes: "<br>Rivoflavina</br> una por las noches", //texto html
+        archivos: [
+          "http://storage/idpaciente/foto01.jpg&#39;",
+          "http://storage/idpaciente/foto01.jpg&#39;"
+        ]
+      }
+    };
   },
   components: {
     BannerPrincipal
@@ -152,7 +193,7 @@ export default {
     fechaNacimiento() {
       return date.formatDate(this.paciente.fechaNacimiento, "YYYY-MM-DD");
     },
-     //funcion que devuelve la edad con la fecha de nacimiento
+    //funcion que devuelve la edad con la fecha de nacimiento
     edad() {
       var hoy = new Date();
       var cumpleanos = new Date(this.paciente.fechaNacimiento);
@@ -165,16 +206,17 @@ export default {
       return edad;
     }
   },
-  methods:{
-    guardarInformacion () {
-            this.$q.notify({
-                message: 'Información personal guardada en local storage',
-                color: 'green-4',
-                textColor: 'white',
-                icon: 'cloud_done'
-            })
-        },
-  }
+  methods: {
+    guardarInformacion() {
+      this.$q.notify({
+        message: "Información personal guardada en local storage",
+        color: "green-4",
+        textColor: "white",
+        icon: "cloud_done"
+      });
+    }
+
+  },
 };
 </script>
 
