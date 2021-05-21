@@ -1,7 +1,7 @@
 <template>
   <div class="q-ma-md">
     <div class="row">
-      <h3 class="text-h3">Información Personal</h3>
+      <h4 class="text-h4">Información Personal</h4>
     </div>
     <div class="row q-mt-md">
       <div class="col-12 q-mt-md">
