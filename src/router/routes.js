@@ -16,6 +16,10 @@ const routes = [
         component: () => import('src/pages/testGaleria.vue')
       },
       {
+        path: '/galeria/component',
+        component: () => import('src/pages/testGaleriaComponent.vue')
+      },
+      {
       path: '/sitioweb',
       component: () => import('pages/SitioWeb.vue')
       },

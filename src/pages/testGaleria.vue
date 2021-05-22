@@ -32,7 +32,7 @@
         >
           <q-btn v-show="fullscreen ? false : true" round color="black" size="md" icon="add_circle" class="q-mx-sm ">
             <q-tooltip v-model="showing" content-class="bg-green" content-style="font-size: 16px">
-              <bold>Agregar nuevo archivo</bold>
+              <bold>Agregar nueva imagen</bold>
             </q-tooltip>
           </q-btn>
           <q-btn  round color="red" size="md" icon="delete_forever" class="q-mx-sm " @click="confirm = true">
