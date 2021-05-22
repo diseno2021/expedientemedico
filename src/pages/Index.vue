@@ -20,7 +20,7 @@
             <template v-slot:append>
               <q-icon
                 name="close"
-                @click="search = ''"
+                @click="clearSearch"
                 class="cursor-pointer"
               />
             </template>
@@ -56,7 +56,7 @@
             <span v-if="$q.screen.width > 599">Filtrar género:</span>
             <q-btn-toggle
               @input="filtrarPacientes"
-              class="q-ml-md"
+              class="q-ml-md q-mr-lg"
               v-model="filterBy"
               toggle-color="grey-5"
               size="sm"
@@ -73,6 +73,16 @@
                 <q-icon name="female" class="text-pink" />
               </template>
             </q-btn-toggle>
+            <span  v-if="$q.screen.width > 599">Ver: </span>
+            <q-select
+              @input="filtrarPacientes"
+              class="inline q-mx-md"
+              outlined
+              v-model="pacientesPorPagina"
+              :options="pacientesPorPaginaOptions"
+              dense
+            >
+            </q-select>
           </div>
         </div>
       </div>
@@ -130,7 +140,8 @@ export default {
       orderDescend: true,
       paginaActual: 1,
       numPaginas: 6,
-      pacientesPorPagina: 5,
+      pacientesPorPagina: 15,
+      pacientesPorPaginaOptions:[5,10,15,20],
       totalPacientes: 0,
       pacientesFiltrados: [],
       pacientesFiltradosPaginados: [],
@@ -688,9 +699,15 @@ export default {
     this.filtrarPacientes();
   },
   methods: {
+    //cuando presiona la x de borrar busqueda
+    clearSearch(){
+      this.search="";
+      this.filtrarPacientes();
+    },
     //funcion para cambiar de ordenar ascendente a descentende y viceversa
     changeOrder() {
       this.orderDescend = !this.orderDescend;
+      this.filtrarPacientes();
     },
     //funcion que devuelve la edad con la fecha de nacimiento
     getEdad(date) {
