@@ -26,7 +26,8 @@
                 dense
                 flat
                 icon="upload"
-                @click="agregarImagenes"
+               @click="triggerPositive" 
+                
               />
               <q-tooltip
                 anchor="center right"
@@ -60,7 +61,7 @@
                 >
                   <q-tooltip
                     v-model="showing2"
-                    content-class="bg-green"
+                    content-class="bg-negative"
                     content-style="font-size: 16px"
                   >
                     <bold>Eliminar imagen</bold>
@@ -84,7 +85,7 @@
                 >
                   <q-tooltip
                     v-model="showing3"
-                    content-class="bg-green"
+                    content-class="bg-negative"
                     content-style="font-size: 16px"
                   >
                     <bold>Eliminar imagen</bold>
@@ -108,7 +109,7 @@
                 >
                   <q-tooltip
                     v-model="showing4"
-                    content-class="bg-green"
+                    content-class="bg-negative"
                     content-style="font-size: 16px"
                   >
                     <bold>Eliminar imagen</bold>
@@ -150,9 +151,14 @@ export default {
     };
   },
   methods: {
-    agregarImagenes() {
-      alert("Imagen agregada con exito");
-    }
+    agregarImagenes() {      
+    },
+  triggerPositive () {
+      this.$q.notify({
+        type: 'positive',
+        message: `Imagen agregada con exito!`
+      })
+  }
   }
 };
 </script>

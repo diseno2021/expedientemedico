@@ -69,12 +69,12 @@
             v-model="form_data.sintomasSubjetivos"
             min-height="5rem"
           ></q-editor>
-          <p>Diagnostigo</p>
+          <p>Diagnostico</p>
           <q-editor v-model="form_data.diagnostico" min-height="5rem"></q-editor>
           <p>Recetas</p>
           <q-editor v-model="form_data.receta" min-height="5rem"></q-editor>
           <p>Examenes</p>
-          <q-editor v-model="form_data.examenes" min-height="5rem"></q-editor>
+          <Examenes/>
           </div>          
       </div>
     </div>
@@ -99,11 +99,13 @@
 <script>
 import perfil from "components/PasarConsulta/Perfil.vue";
 import navegacionConsulta from "components/PasarConsulta/NavegacionConsulta.vue";
+import Examenes from "pages/testGaleriaComponent.vue";
 
 export default {
   components: {
     perfil,
-    navegacionConsulta
+    navegacionConsulta,
+    Examenes
   },
   data() {
     return {
