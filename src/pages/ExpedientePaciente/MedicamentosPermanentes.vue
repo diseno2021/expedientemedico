@@ -3,14 +3,7 @@
     <div class="row">
       <h4 class="text-h4">Medicamentos Permanentes</h4>
     </div>
-      <q-editor v-model="paciente.medicamentosPermanentes" :definitions="{
-          save: {
-          tip: 'Guarda los cambios',
-          icon: 'save',
-          label: 'Guardar',
-          handler: saveWork
-        },
-      }"
+      <q-editor v-model="paciente.medicamentosPermanentes"
       :toolbar="[
           ['bold', 'italic', 'strike', 'underline'],
           [
