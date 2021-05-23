@@ -1,12 +1,22 @@
 <template>
   <div>
+    <q-card flat>
+        <q-card-section>
+          <div class="row justify-center q-pb-xs">
+            <q-avatar square rounded size="85px" class="q-mx-auto">
+                <img :src="paciente.foto" />
+              </q-avatar>
+          </div>
+              <div class="text-h6 q-pb-xs">{{ paciente.nombre }}</div>
+              <div class="text-caption text-grey-7 q-pb-sm">Id: {{ paciente.id }}</div>
+        </q-card-section>
+      </q-card>
     <q-list bordered class="rounded-borders">
       <q-expansion-item
         icon="book"
         expand-separator
         label="Antecedentes"
         class="shadow-1 overflow-hidden"
-        style="border-radius: 15px"
         header-class="bg-primary text-white"
         expand-icon-class="text-white"
       >
@@ -20,7 +30,6 @@
         expand-separator
         label="Medicamentos Permantentes"
         class="shadow-1 overflow-hidden"
-        style="border-radius: 15px"
         header-class="bg-primary text-white"
         expand-icon-class="text-white"
       >
@@ -35,7 +44,6 @@
         expand-separator
         label="Consultas"
         class="shadow-1 overflow-hidden"
-        style="border-radius: 15px"
         header-class="bg-primary text-white"
         expand-icon-class="text-white"
       >
@@ -49,7 +57,6 @@
         label="Recetas"
         expand-separator
         class="shadow-1 overflow-hidden"
-        style="border-radius: 15px"
         header-class="bg-primary text-white"
         expand-icon-class="text-white"
       >
@@ -63,7 +70,6 @@
         label="Archivos"
         expand-separator
         class="shadow-1 overflow-hidden"
-        style="border-radius: 15px"
         header-class="bg-primary text-white"
         expand-icon-class="text-white"
       >
@@ -77,7 +83,6 @@
         label="Peso"
         expand-separator
         class="shadow-1 overflow-hidden"
-        style="border-radius: 15px"
         header-class="bg-primary text-white"
         expand-icon-class="text-white"
       >
@@ -107,7 +112,7 @@ components: {
       genero: "Masculino",
       peso: [170, 150, 140, 135], //el peso se lleva en un arreglo para poder graficarlo
       estatura: [123, 125, 135],
-      foto: "http://storage/123231.jpg&quot;",
+      foto: "https://cdn.quasar.dev/img/avatar6.jpg",
       tipoSangre: "O RH+",
       direccion: "Final avenida fray felipe de jesus moraga casa #23",
       telefono: "7366-2344",

@@ -41,7 +41,7 @@ export default {
   },
   data() {
       return{
-          drawerRigth: false
+          drawerRight: false
       };
   },
   watch: {
