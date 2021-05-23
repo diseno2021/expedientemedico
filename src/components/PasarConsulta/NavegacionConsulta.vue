@@ -1,41 +1,88 @@
 <template>
   <div>
     <q-list bordered class="rounded-borders">
-      <q-expansion-item expand-separator label="Antecedentes">
+      <q-expansion-item
+        icon="book"
+        expand-separator
+        label="Antecedentes"
+        class="shadow-1 overflow-hidden"
+        style="border-radius: 15px"
+        header-class="bg-primary text-white"
+        expand-icon-class="text-white"
+      >
         <q-card>
           <q-card-section v-html="paciente.antecedentes"> </q-card-section>
         </q-card>
       </q-expansion-item>
 
-      <q-expansion-item expand-separator label="Medicamentos">
+      <q-expansion-item
+        icon="medication"
+        expand-separator
+        label="Medicamentos Permantentes"
+        class="shadow-1 overflow-hidden"
+        style="border-radius: 15px"
+        header-class="bg-primary text-white"
+        expand-icon-class="text-white"
+      >
         <q-card>
           <q-card-section v-html="paciente.medicamentosPermanentes">
-            
           </q-card-section>
         </q-card>
       </q-expansion-item>
 
-      <q-expansion-item expand-separator label="Consultas">
+      <q-expansion-item
+        icon="healing"
+        expand-separator
+        label="Consultas"
+        class="shadow-1 overflow-hidden"
+        style="border-radius: 15px"
+        header-class="bg-primary text-white"
+        expand-icon-class="text-white"
+      >
         <q-card>
           <q-card-section> Hola </q-card-section>
         </q-card>
       </q-expansion-item>
 
-      <q-expansion-item label="Recetas" expand-separator > 
+      <q-expansion-item
+        icon="description"
+        label="Recetas"
+        expand-separator
+        class="shadow-1 overflow-hidden"
+        style="border-radius: 15px"
+        header-class="bg-primary text-white"
+        expand-icon-class="text-white"
+      >
         <q-card>
-          <q-card-section v-html="consultas.receta">  </q-card-section>
+          <q-card-section v-html="consultas.receta"> </q-card-section>
         </q-card>
       </q-expansion-item>
 
-      <q-expansion-item label="Archivos" expand-separator>
+      <q-expansion-item
+        icon="collections"
+        label="Archivos"
+        expand-separator
+        class="shadow-1 overflow-hidden"
+        style="border-radius: 15px"
+        header-class="bg-primary text-white"
+        expand-icon-class="text-white"
+      >
         <q-card>
-          <q-card-section> {{paciente.archivos}} </q-card-section>
+          <q-card-section>  <galeriaConsulta/>  </q-card-section>
         </q-card>
       </q-expansion-item>
 
-      <q-expansion-item label="Peso" expand-separator>
+      <q-expansion-item
+        icon="monitor_weight"
+        label="Peso"
+        expand-separator
+        class="shadow-1 overflow-hidden"
+        style="border-radius: 15px"
+        header-class="bg-primary text-white"
+        expand-icon-class="text-white"
+      >
         <q-card>
-          <q-card-section> Hola </q-card-section>
+          <q-card-section> <center> <img src="https://www.enpeso.com/wp-content/uploads/2016/06/graf-peso.png" style="height: 200px; max-width: 200px"> </center> </q-card-section>
         </q-card>
       </q-expansion-item>
     </q-list>
@@ -43,7 +90,14 @@
 </template>
 
 <script>
+
+import galeriaConsulta from "components/PasarConsulta/GaleriaConsulta";
+
 export default {
+components: {
+    galeriaConsulta
+  },
+
   data: () => ({
     paciente: {
       id: "asdfasdfasdfa987asdfasdf76as",
@@ -83,7 +137,8 @@ export default {
       motivoConsulta: "",
       sintomas: "", //texto html
       diagnostico: "", //texto html
-      receta: "<br>2 pastillas de Paracetamol</br> <br>1 tableta de rivotril </br>", //texto html
+      receta:
+        "<br>2 pastillas de Paracetamol</br> <br>1 tableta de rivotril </br>", //texto html
       examenes: "", //texto html
       proximaCita: "2021-04-30T12:21:21",
     },
