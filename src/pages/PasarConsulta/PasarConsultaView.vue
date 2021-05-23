@@ -1,8 +1,11 @@
 <template>
-  <div id="pasar-consulta">
-    <div class="row justify-center"><h3 class="text-h3">Nueva Consulta</h3></div>
+  <div id="pasar-consulta">   
+        <div class="row justify-center">
+      <h3 class="text-h3" >Nueva Consulta</h3> 
+      </div>
     <div class="row justify-center">
-      <div class="col-md-4">
+      
+     <div class="col-md-2">
         <q-input
           class="q-mx-md q-my-md"
           type="number"
@@ -12,6 +15,8 @@
           v-model="form_data.peso"
           label="peso"
         ></q-input>
+     </div>
+        <div class="col-md-2">
         <q-input
           class="q-mx-md q-my-md"
           type="number"
@@ -21,8 +26,8 @@
           v-model="form_data.estatura"
           label="estatura"
         ></q-input>
-      </div>
-      <div class="col-md-4">
+    </div>
+      <div class="col-md-2">
         <q-input
           class="q-mx-md q-my-md"
           type="number"
@@ -32,6 +37,8 @@
           v-model="form_data.temperatura"
           label="temperatura"
         ></q-input>
+    </div>
+        <div class="col-md-2">
         <q-input
           class="q-mx-md q-my-md"
           type="number"
@@ -41,8 +48,8 @@
           v-model="form_data.imc"
           label="imc"
         ></q-input>
-      </div>
-      <div class="col-md-4">
+        </div>
+      <div class="col-md-2">
         <q-input
           class="q-mx-md q-my-md"
           type="number"
@@ -54,16 +61,13 @@
         ></q-input>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-12">
+    <div class="row justify-center">
+      <div class="col-md-6">
         <div class="q-pa-md q-gutter-sm">
-          <p>Exploracion fisica</p>
-          <q-editor
-            v-model="form_data.exploracionFisica"
-            min-height="5rem"
-          ></q-editor>
           <p>Motivo de Consulta</p>
           <q-editor v-model="form_data.editor" min-height="5rem"></q-editor>
+          
+          
           <p>Sintomas subjetivos</p>
           <q-editor
             v-model="form_data.sintomasSubjetivos"
@@ -71,12 +75,23 @@
           ></q-editor>
           <p>Diagnostico</p>
           <q-editor v-model="form_data.diagnostico" min-height="5rem"></q-editor>
-          <p>Recetas</p>
-          <q-editor v-model="form_data.receta" min-height="5rem"></q-editor>
+        </div>
+      </div>
+         <div class="col-md-6">
+           <div class="q-pa-md q-gutter-sm"> 
+          <p>Exploracion fisica</p>
+          <q-editor
+            v-model="form_data.exploracionFisica"
+            min-height="5rem"
+          ></q-editor>
           <p>Examenes</p>
           <Examenes/>
+           
+          <p>Recetas</p>
+          <q-editor v-model="form_data.receta" min-height="5rem"></q-editor>
+          </div>
           </div>          
-      </div>
+      
     </div>
     <hr />
     <div class="row justify-center items-baseline">
@@ -94,6 +109,7 @@
       </div>
     </div>
   </div>
+
 </template>
 
 <script>
