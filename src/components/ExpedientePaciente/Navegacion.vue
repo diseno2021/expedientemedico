@@ -21,7 +21,7 @@
         clickable
         v-ripple
         @click="push('antecedentes')"
-        :active="observer == 'antecedentes'"
+        :active="observer == 'antecedentes' || observer == 'antecedentes-alergias'"
       >
         <q-item-section avatar>
           <q-icon name="book" />
@@ -35,7 +35,7 @@
         clickable
         v-ripple
         @click="push('alergias')"
-        :active="observer == 'antecedentes'"
+        :active="observer == 'alergias' || observer == 'antecedentes-alergias'"
       >
         <q-item-section avatar>
           <q-icon name="collections" />
@@ -49,7 +49,7 @@
         clickable
         v-ripple
         @click="push('medicamentos-permanentes')"
-        :active="observer == 'm-permanentes'"
+        :active="observer == 'm-permanentes' || observer == 'm-permanentes-e-cronicas'"
       >
         <q-item-section avatar>
           <q-icon name="medication" />
@@ -63,7 +63,7 @@
         clickable
         v-ripple
         @click="push('enfermedades-cronicas')"
-        :active="observer == 'e-cronicas'"
+        :active="observer == 'e-cronicas' || observer == 'm-permanentes-e-cronicas'"
       >
         <q-item-section avatar>
           <q-icon name="local_hospital" />
@@ -125,24 +125,60 @@ export default {
     BannerPrincipal
   },
   data: () => ({
-    observer: ""
+    observer: "",
   }),
   methods: {
     scrollspy(posicion) {
-      if (posicion <= 650) {
-        this.observer = "i-personal";
-      } else if (posicion > 650 && posicion <= 1000) {
-        this.observer = "antecedentes";
-      } else if (posicion > 1000 && posicion <= 1400) {
-        this.observer = "m-permanentes";
-      } else if (posicion > 1400 && posicion <= 1700) {
-        this.observer = "consultas";
-      } else if (posicion > 1700 && posicion <= 2200) {
+      if (this.$q.screen.gt.sm) {
+        if (posicion <= 900) {
+          this.observer = "i-personal";
+        } else if (posicion > 900 && posicion <= 1200) {
+          this.observer = 'antecedentes-alergias';
+        } else if (posicion > 1200 && posicion <= 1550) {
+          this.observer = "m-permanentes-e-cronicas";
+        } else if (posicion > 1550 && posicion <= 1900) {
+          this.observer = "consultas";
+        } else if (posicion > 1900 && posicion <= 2100) {
+          this.observer = "recetas";
+        } else {
+          this.observer = "examenes";
+        }
+      } else if (this.$q.screen.gt.xs) {
+        if (posicion <= 1650) {
+          this.observer = "i-personal";
+        } else if (posicion > 1650 && posicion <= 2000) {
+          this.observer = "antecedentes";
+        } else if (posicion > 2000 && posicion <= 2400) {
+          this.observer = "alergias";
+        } else if (posicion > 2400 && posicion <= 2750) {
+          this.observer = "m-permanentes";
+        } else if (posicion > 2750 && posicion <= 3000) {
+          this.observer = "e-cronicas";
+        } else if (posicion > 3000 && posicion <= 3550) {
+          this.observer = "consultas";
+        } else if (posicion > 3550 && posicion <= 3750) {
         this.observer = "recetas";
-      } else if (posicion > 2200 && posicion <= 2350) {
-        this.observer = "e-cronicas";
+        } else {
+          this.observer = "examenes";
+        }
       } else {
-        this.observer = "examenes";
+        if (posicion <= 1350) {
+          this.observer = "i-personal";
+        } else if (posicion > 1350 && posicion <= 1850) {
+          this.observer = "antecedentes";
+        } else if (posicion > 1850 && posicion <= 2150) {
+          this.observer = "alergias";
+        } else if (posicion > 2150 && posicion <= 2450) {
+          this.observer = "m-permanentes";
+        } else if (posicion > 2450 && posicion <= 2850) {
+          this.observer = "e-cronicas";
+        } else if (posicion > 2850 && posicion <= 3300) {
+          this.observer = "consultas";
+        } else if (posicion > 3300 && posicion <= 3500) {
+        this.observer = "recetas";
+        } else {
+          this.observer = "examenes";
+        }
       }
     },
     push(hash) {
