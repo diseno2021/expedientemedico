@@ -48,10 +48,10 @@
     </q-card>
 
     <q-dialog v-model="cambiarFotografia" persistent>
-      <q-card class="my-card">
+      <q-card class="my-card" style="width: 300px">
         <q-card-section>
           <div class="text-h6">Cambiar fotografía</div>
-          <div class="text-subtitle2">Has click o arrastra la imagen</div>
+          <div class="text-subtitle2">Haz click o arrastra la imagen</div>
         </q-card-section>
         <q-card-section>
           <q-file v-model="nuevaImagen" label="Cambiar fotografía">
