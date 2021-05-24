@@ -25,7 +25,8 @@
             },
           ],
       ]"
-      min-height="5rem" />
+      min-height="8rem"
+      max-height="8rem" />
   </div>
 </template>
 

@@ -35,13 +35,6 @@
         <q-btn
           outline
           color="primary"
-          icon="expand_less"
-          :to="{hash: 'informacion-personal'}"
-          class="q-mx-sm"
-        ></q-btn>
-        <q-btn
-          outline
-          color="primary"
           icon="home"
           label="Inicio"
           to="/"
