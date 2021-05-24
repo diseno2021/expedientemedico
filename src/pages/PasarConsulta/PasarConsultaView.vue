@@ -1,11 +1,10 @@
 <template>
-  <div id="pasar-consulta">   
-        <div class="row justify-center">
-      <h3 class="text-h3" >Nueva Consulta</h3> 
-      </div>
+  <div id="pasar-consulta">
     <div class="row justify-center">
-      
-     <div class="col-md-2">
+      <h3 class="text-h3">Nueva Consulta</h3>
+    </div>
+    <div class="row justify-center">
+      <div class="col-md-2">
         <q-input
           class="q-mx-md q-my-md"
           type="number"
@@ -15,8 +14,8 @@
           v-model="form_data.peso"
           label="peso"
         ></q-input>
-     </div>
-        <div class="col-md-2">
+      </div>
+      <div class="col-md-2">
         <q-input
           class="q-mx-md q-my-md"
           type="number"
@@ -26,7 +25,7 @@
           v-model="form_data.estatura"
           label="estatura"
         ></q-input>
-    </div>
+      </div>
       <div class="col-md-2">
         <q-input
           class="q-mx-md q-my-md"
@@ -37,8 +36,8 @@
           v-model="form_data.temperatura"
           label="temperatura"
         ></q-input>
-    </div>
-        <div class="col-md-2">
+      </div>
+      <div class="col-md-2">
         <q-input
           class="q-mx-md q-my-md"
           type="number"
@@ -48,7 +47,7 @@
           v-model="form_data.imc"
           label="imc"
         ></q-input>
-        </div>
+      </div>
       <div class="col-md-2">
         <q-input
           class="q-mx-md q-my-md"
@@ -66,50 +65,50 @@
         <div class="q-pa-md q-gutter-sm">
           <p>Motivo de Consulta</p>
           <q-editor v-model="form_data.editor" min-height="5rem"></q-editor>
-          
-          
+
           <p>Sintomas subjetivos</p>
           <q-editor
             v-model="form_data.sintomasSubjetivos"
             min-height="5rem"
           ></q-editor>
           <p>Diagnostico</p>
-          <q-editor v-model="form_data.diagnostico" min-height="5rem"></q-editor>
+          <q-editor
+            v-model="form_data.diagnostico"
+            min-height="5rem"
+          ></q-editor>
         </div>
       </div>
-         <div class="col-md-6">
-           <div class="q-pa-md q-gutter-sm"> 
+      <div class="col-md-6">
+        <div class="q-pa-md q-gutter-sm">
           <p>Exploracion fisica</p>
           <q-editor
             v-model="form_data.exploracionFisica"
             min-height="5rem"
           ></q-editor>
           <p>Examenes</p>
-          <Examenes/>
-           
+          <q-editor v-model="form_data.examenes" min-height="5rem"></q-editor>
+
           <p>Recetas</p>
           <q-editor v-model="form_data.receta" min-height="5rem"></q-editor>
-          </div>
-          </div>          
-      
+        </div>
+      </div>
     </div>
-    <hr />
-    <div class="row justify-center items-baseline">
-      
+    <hr class="lt-md" />
+    <div class="row justify-center items-baseline lt-md ">
       <q-input
         outlined
         class=" q-mb-lg"
         v-model="form_data.proximaCita"
         filled
         type="date"
-        hint="Próxima Cita"
+        label="Próxima Cita"
+        stack-label
       />
       <div class="q-pa-md q-gutter-sm">
         <q-btn color="primary" label="Guardar" to=""></q-btn>
       </div>
     </div>
   </div>
-
 </template>
 
 <script>

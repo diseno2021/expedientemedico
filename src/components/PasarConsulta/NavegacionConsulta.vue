@@ -1,24 +1,25 @@
 <template>
   <div>
     <q-card flat>
-        <q-card-section>
-          <div class="row justify-center q-pb-xs">
-            <q-avatar square rounded size="85px" class="q-mx-auto">
-                <img :src="paciente.foto" />
-              </q-avatar>
-          </div>
-              <div class="text-h6 q-pb-xs">{{ paciente.nombre }}</div>
-              <div class="text-caption text-grey-7 q-pb-sm">Id: {{ paciente.id }}</div>
-        </q-card-section>
-      </q-card>
-    <q-list bordered class="rounded-borders">
+      <q-card-section>
+        <div class="row justify-center q-pb-xs">
+          <q-avatar square rounded size="85px" class="q-mx-auto">
+            <img :src="paciente.foto" />
+          </q-avatar>
+        </div>
+        <div class="text-h6 q-pb-xs">{{ paciente.nombre }}</div>
+        <div class="text-caption text-grey-7 q-pb-sm">
+          Id: {{ paciente.id }}
+        </div>
+      </q-card-section>
+    </q-card>
+    <q-list>
       <q-expansion-item
         icon="book"
         expand-separator
         label="Antecedentes"
-        class="shadow-1 overflow-hidden"
-        header-class="bg-primary text-white"
-        expand-icon-class="text-white"
+        class=" overflow-hidden"
+        header-class=""
       >
         <q-card>
           <q-card-section v-html="paciente.antecedentes"> </q-card-section>
@@ -29,9 +30,8 @@
         icon="medication"
         expand-separator
         label="Medicamentos Permantentes"
-        class="shadow-1 overflow-hidden"
-        header-class="bg-primary text-white"
-        expand-icon-class="text-white"
+        class=" overflow-hidden"
+        header-class=""
       >
         <q-card>
           <q-card-section v-html="paciente.medicamentosPermanentes">
@@ -43,9 +43,8 @@
         icon="healing"
         expand-separator
         label="Consultas"
-        class="shadow-1 overflow-hidden"
-        header-class="bg-primary text-white"
-        expand-icon-class="text-white"
+        class=" overflow-hidden"
+        header-class=""
       >
         <q-card>
           <q-card-section> Hola </q-card-section>
@@ -56,9 +55,8 @@
         icon="description"
         label="Recetas"
         expand-separator
-        class="shadow-1 overflow-hidden"
-        header-class="bg-primary text-white"
-        expand-icon-class="text-white"
+        class=" overflow-hidden"
+        header-class=""
       >
         <q-card>
           <q-card-section v-html="consultas.receta"> </q-card-section>
@@ -69,12 +67,11 @@
         icon="collections"
         label="Archivos"
         expand-separator
-        class="shadow-1 overflow-hidden"
-        header-class="bg-primary text-white"
-        expand-icon-class="text-white"
+        class=" overflow-hidden"
+        header-class=""
       >
         <q-card>
-          <q-card-section>  <galeriaConsulta/>  </q-card-section>
+          <q-card-section> <galeriaConsulta /> </q-card-section>
         </q-card>
       </q-expansion-item>
 
@@ -82,12 +79,18 @@
         icon="monitor_weight"
         label="Peso"
         expand-separator
-        class="shadow-1 overflow-hidden"
-        header-class="bg-primary text-white"
-        expand-icon-class="text-white"
+        class=" overflow-hidden"
+        header-class=""
       >
         <q-card>
-          <q-card-section> <center> <img src="https://www.enpeso.com/wp-content/uploads/2016/06/graf-peso.png" style="height: 200px; max-width: 200px"> </center> </q-card-section>
+          <q-card-section>
+            <center>
+              <img
+                src="https://www.enpeso.com/wp-content/uploads/2016/06/graf-peso.png"
+                style="height: 200px; max-width: 200px"
+              />
+            </center>
+          </q-card-section>
         </q-card>
       </q-expansion-item>
     </q-list>
@@ -95,11 +98,10 @@
 </template>
 
 <script>
-
 import galeriaConsulta from "components/PasarConsulta/GaleriaConsulta";
 
 export default {
-components: {
+  components: {
     galeriaConsulta
   },
 
@@ -127,8 +129,8 @@ components: {
       medicamentosPermanentes: "<br>Rivoflavina</br> una por las noches", //texto html
       archivos: [
         "http://storage/idpaciente/foto01.jpg&#39;",
-        "http://storage/idpaciente/foto01.jpg&#39;",
-      ],
+        "http://storage/idpaciente/foto01.jpg&#39;"
+      ]
     },
     consultas: {
       id: "asdfasdlkjjash9783789asdf",
@@ -145,8 +147,8 @@ components: {
       receta:
         "<br>2 pastillas de Paracetamol</br> <br>1 tableta de rivotril </br>", //texto html
       examenes: "", //texto html
-      proximaCita: "2021-04-30T12:21:21",
-    },
-  }),
+      proximaCita: "2021-04-30T12:21:21"
+    }
+  })
 };
 </script>
