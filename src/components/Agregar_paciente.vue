@@ -19,7 +19,7 @@
             flat
             round
             dense
-            v-close-popup
+            @click="cancelar()"
             style="font-size: 1.5em"
           >
             <q-tooltip
@@ -317,7 +317,7 @@
               >
             </q-btn>
 
-            <q-btn class="q-mx-md" color="negative" @click="formulario = false"
+            <q-btn class="q-mx-md" color="negative" @click="cancelar()"
               >Cancelar
               <q-tooltip
                 content-class="bg-accent text-white"
@@ -379,14 +379,18 @@ export default {
       this.paciente.observaciones='';
       this.imagen=null;
       this.mostrar_imagen=false;
-      this.showNotif();
+      this.showNotif("Nuevo paciente guardado.", "accent");
     },
-    showNotif () {
+    showNotif (mensaje, color) {
       this.$q.notify({
-        message: 'Nuevo paciente guardado.',
-        color: 'accent',
+        message: mensaje,
+        color: color,
         timeout: 1000
       })
+    },
+    cancelar(){
+      this.formulario=false;
+      this.showNotif("Registro de nuevo paciente cancelado.", "negative")
     }
   }
  
