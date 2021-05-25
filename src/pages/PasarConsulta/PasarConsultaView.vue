@@ -1,7 +1,7 @@
 <template>
   <div id="pasar-consulta">   
         <div class="row justify-center">
-      <h3 class="text-h3" >Nueva Consulta</h3> 
+      <h3 class="text-h3" style="line-height:0rem" >Nueva Consulta</h3> 
       </div>
     <div class="row justify-center">
       
@@ -65,12 +65,10 @@
       <div class="col-md-6">
         <div class="q-pa-md q-gutter-sm">
           <p>Motivo de Consulta</p>
-          <q-editor v-model="form_data.editor" min-height="5rem"></q-editor>
-          
-          
-          <p>Sintomas subjetivos</p>
+          <q-editor v-model="form_data.motivoConsulta" min-height="5rem"></q-editor>                    
+          <p>Sintomas</p>
           <q-editor
-            v-model="form_data.sintomasSubjetivos"
+            v-model="form_data.sintomas"
             min-height="5rem"
           ></q-editor>
           <p>Diagnostico</p>
@@ -84,11 +82,10 @@
             v-model="form_data.exploracionFisica"
             min-height="5rem"
           ></q-editor>
-          <p>Examenes</p>
-          <Examenes/>
-           
           <p>Recetas</p>
           <q-editor v-model="form_data.receta" min-height="5rem"></q-editor>
+          <p>Examenes</p>
+          <Examenes/>                    
           </div>
           </div>          
       
@@ -138,10 +135,7 @@ export default {
         sintomas: "",
         diagnostico: "",
         receta: "",
-        examenes: "",
-        editor: "un texto <b>en negrita</b> de ejemplo ",
-        exploracionFisica: "Item1 </br> Item2 </br> Item3",
-        sintomasSubjetivos: "",
+        examenes: "",          
         diagnostico: "",
 
         proximaCita: undefined
