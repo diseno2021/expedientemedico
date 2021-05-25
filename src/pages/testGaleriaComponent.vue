@@ -160,7 +160,7 @@ export default {
     triggerPositive() {
       this.$q.notify({
         type: "positive",
-        message: `Imagen agregada con exito!`,
+        message: `Imagen agregada con exito!!`,
       });
     },
   },
