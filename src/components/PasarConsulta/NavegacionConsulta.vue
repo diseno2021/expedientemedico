@@ -164,10 +164,25 @@ export default {
       email: "paciente@outlook.com",
       enCasoEmergencia: "Esposa Juana Salazar 7346454",
       comentario: "",
-      antecedentes: "Padre diabético<br> Tía materna hipertensa", //texto html
+      antecedentes: `
+      <ul>
+      <li>
+      Padre diabético
+      </li>
+      <li>
+      Tía materna hipertensa
+      </li>
+      </ul>
+      `, //texto html
       alergias: "Penicilina Procainica, picadas de abejas",
       enfermedadesCronicas: "Cancer de Seno, Diabetes tipo 2", //texto html
-      medicamentosPermanentes: "<br>Rivoflavina</br> una por las noches", //texto html
+      medicamentosPermanentes: `
+        <ul>
+        <li>
+          <strong>Rivoflavina</strong>
+          </br> una por las noches
+        </li>
+        </ul>`, //texto html
       archivos: [
         "http://storage/idpaciente/foto01.jpg&#39;",
         "http://storage/idpaciente/foto01.jpg&#39;"
@@ -185,8 +200,16 @@ export default {
       motivoConsulta: "",
       sintomas: "", //texto html
       diagnostico: "", //texto html
-      receta:
-        "2 pastillas de Paracetamol</br> <br>1 tableta de rivotril </br>", //texto html
+      receta: `
+        <ul>
+        <li>
+        2 pastillas de Paracetamol
+        </li>
+        <li>
+        1 tableta de rivotril 
+        </li>
+        </ul>
+        `, //texto html
       examenes: "", //texto html
       proximaCita: "2021-04-30T12:21:21"
     }

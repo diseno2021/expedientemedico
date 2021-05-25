@@ -68,51 +68,18 @@
         <div class="q-pa-md q-gutter-sm">
           <p>Motivo de Consulta</p>
           <q-input filled v-model="form_data.motivoConsulta" label="Motivo de consulta" 
-          type="textarea" />                   
-          <p>Sintomas</p>
+          type="textarea" /> 
+
+          <p>Sintomas subjetivos</p>
           <q-editor
-            v-model="form_data.sintomas"
-            :toolbar="[
-            ['bold', 'italic', 'strike', 'underline'],[{
-            label: $q.lang.editor.fontSize,
-            icon: $q.iconSet.editor.fontSize,
-            fixedLabel: true,
-            fixedIcon: true,
-            list: 'no-icons',
-            options: [
-              'size-1',
-              'size-2',
-              'size-3',
-              'size-4',
-              'size-5',
-              'size-6',
-              'size-7'
-            ]
-            }],['unordered', 'ordered']
-            ]"
+            :toolbar="toolbar"
+            v-model="form_data.sintomasSubjetivos"
             min-height="7rem"
           ></q-editor>
           <p>Diagnostico</p>
           <q-editor
+            :toolbar="toolbar"
             v-model="form_data.diagnostico"
-            :toolbar="[
-            ['bold', 'italic', 'strike', 'underline'],[{
-            label: $q.lang.editor.fontSize,
-            icon: $q.iconSet.editor.fontSize,
-            fixedLabel: true,
-            fixedIcon: true,
-            list: 'no-icons',
-            options: [
-              'size-1',
-              'size-2',
-              'size-3',
-              'size-4',
-              'size-5',
-              'size-6',
-              'size-7'
-            ]
-            }],['unordered', 'ordered']
-            ]"
             min-height="7rem"
           ></q-editor>
         </div>
@@ -121,75 +88,28 @@
         <div class="q-pa-md q-gutter-sm">
           <p>Exploracion fisica</p>
           <q-editor
+            :toolbar="toolbar"
             v-model="form_data.exploracionFisica"
-            :toolbar="[
-            ['bold', 'italic', 'strike', 'underline'],[{
-            label: $q.lang.editor.fontSize,
-            icon: $q.iconSet.editor.fontSize,
-            fixedLabel: true,
-            fixedIcon: true,
-            list: 'no-icons',
-            options: [
-              'size-1',
-              'size-2',
-              'size-3',
-              'size-4',
-              'size-5',
-              'size-6',
-              'size-7'
-            ]
-            }],['unordered', 'ordered']
-            ]"
             min-height="7rem"
           ></q-editor>
           <p>Examenes</p>
-          <q-editor 
-          v-model="form_data.examenes"
-          :toolbar="[
-            ['bold', 'italic', 'strike', 'underline'],[{
-            label: $q.lang.editor.fontSize,
-            icon: $q.iconSet.editor.fontSize,
-            fixedLabel: true,
-            fixedIcon: true,
-            list: 'no-icons',
-            options: [
-              'size-1',
-              'size-2',
-              'size-3',
-              'size-4',
-              'size-5',
-              'size-6',
-              'size-7'
-            ]
-            }],['unordered', 'ordered']
-            ]"          
-          min-height="7rem"></q-editor>
+          <q-editor
+            :toolbar="toolbar"
+            v-model="form_data.examenes"
+            min-height="7rem"
+          ></q-editor>
 
           <p>Recetas</p>
-          <q-editor 
-          v-model="form_data.receta"
-          :toolbar="[
-            ['bold', 'italic', 'strike', 'underline'],[{
-            label: $q.lang.editor.fontSize,
-            icon: $q.iconSet.editor.fontSize,
-            fixedLabel: true,
-            fixedIcon: true,
-            list: 'no-icons',
-            options: [
-              'size-1',
-              'size-2',
-              'size-3',
-              'size-4',
-              'size-5',
-              'size-6',
-              'size-7'
-            ]
-            }],['unordered', 'ordered']
-            ]" 
-          min-height="7rem"></q-editor>
+          <q-editor
+            :toolbar="toolbar"
+            v-model="form_data.receta"
+            min-height="7rem"
+          ></q-editor>
         </div>
       </div>
     </div>
+    
+
     <hr class="lt-md" />
     
     <div class="row justify-center items-baseline lt-md ">
@@ -240,7 +160,11 @@ export default {
         diagnostico: "",
 
         proximaCita: undefined
-      }
+      },
+      toolbar: [
+        ["bold", "italic", "strike", "underline"],
+        ["unordered", "ordered", "outdent", "indent"]      
+      ]
     };
   }
 };
