@@ -1,6 +1,7 @@
 <template>
-  <div class="row" style="border: 4px solid black">
-    <div class="col-12">
+  <div class="row justify-center">
+    <div class="col-12 text-center"><p>Agregar imágenes</p></div>
+    <div class="col-12 col-md-3">
       <div class="q-pa-md">
         <div class="q-gutter-md" style="max-width: 300px">
           <q-file
@@ -26,8 +27,7 @@
                 dense
                 flat
                 icon="upload"
-               @click="triggerPositive"
-
+                @click="triggerPositive"
               />
               <q-tooltip
                 anchor="center right"
@@ -44,75 +44,83 @@
         </div>
       </div>
     </div>
-
-    <div class="col-12 q-pa-md">
+    <div class="col-12 col-md-6 q-pa-md">
       <div class="row">
-        <div class="col-6 q-pa-sm">
+        <div class="col-3" style="margin: 3px">
           <q-card class="my-card">
-            <q-img src="https://www.deidiagnostico.com/wp-content/uploads/2016/03/caso-66-rx-tc3b3rax-inicial.jpg" basic>
+            <q-img
+              src="https://www.deidiagnostico.com/wp-content/uploads/2016/03/caso-66-rx-tc3b3rax-inicial.jpg"
+              basic
+            >
               <q-btn
-                  round
-                  color="red"
-                  size="sm"
-                  icon="delete_forever"
-                  class="q-mx-sm"
-                  @click="confirm = true"
-                  position-x
+                round
+                color="red"
+                size="sm"
+                icon="delete_forever"
+                class="q-mx-sm"
+                @click="confirm = true"
+                position-x
+              >
+                <q-tooltip
+                  v-model="showing2"
+                  content-class="bg-negative"
+                  content-style="font-size: 16px"
                 >
-                  <q-tooltip
-                    v-model="showing2"
-                    content-class="bg-negative"
-                    content-style="font-size: 16px"
-                  >
-                    <bold>Eliminar imagen</bold>
-                  </q-tooltip>
-                </q-btn>
+                  <bold>Eliminar imagen</bold>
+                </q-tooltip>
+              </q-btn>
             </q-img>
           </q-card>
         </div>
-        <div class="col-6 q-pa-sm">
+        <div class="col-3" style="margin: 3px">
           <q-card class="my-card">
-            <q-img src="https://www.deidiagnostico.com/wp-content/uploads/2016/03/caso-66-rx-tc3b3rax-inicial.jpg" basic>
+            <q-img
+              src="https://www.deidiagnostico.com/wp-content/uploads/2016/03/caso-66-rx-tc3b3rax-inicial.jpg"
+              basic
+            >
               <q-btn
-                  round
-                  color="red"
-                  size="sm"
-                  icon="delete_forever"
-                  class="q-mx-sm"
-                  @click="confirm = true"
-                  position-x
+                round
+                color="red"
+                size="sm"
+                icon="delete_forever"
+                class="q-mx-sm"
+                @click="confirm = true"
+                position-x
+              >
+                <q-tooltip
+                  v-model="showing3"
+                  content-class="bg-negative"
+                  content-style="font-size: 16px"
                 >
-                  <q-tooltip
-                    v-model="showing3"
-                    content-class="bg-negative"
-                    content-style="font-size: 16px"
-                  >
-                    <bold>Eliminar imagen</bold>
-                  </q-tooltip>
-                </q-btn>
+                  <bold>Eliminar imagen</bold>
+                </q-tooltip>
+              </q-btn>
             </q-img>
           </q-card>
         </div>
-        <div class="col-6 q-pa-sm">
+        <div class="col-3" style="margin: 3px">
           <q-card class="my-card">
-            <q-img src="https://www.deidiagnostico.com/wp-content/uploads/2016/03/caso-66-rx-tc3b3rax-inicial.jpg" basic>
+            <q-img
+              src="https://www.deidiagnostico.com/wp-content/uploads/2016/03/caso-66-rx-tc3b3rax-inicial.jpg"
+              basic
+            >
               <q-btn
-                  round
-                  color="red"
-                  size="sm"
-                  icon="delete_forever"
-                  class="q-mx-sm"
-                  @click="confirm = true"
-                  position-x
+                round
+                color="red"
+                size="sm"
+                icon="delete_forever"
+                class="q-mx-sm"
+                @click="confirm = true"
+                position-x
+              >
+                <q-tooltip
+                  v-model="showing4"
+                  content-class="bg-negative"
+                  content-style="font-size: 16px"
                 >
-                  <q-tooltip
-                    v-model="showing4"
-                    content-class="bg-negative"
-                    content-style="font-size: 16px"
-                  >
-                    <bold>Eliminar imagen</bold>
-                  </q-tooltip>
-                </q-btn>
+                  <bold>Eliminar imagen</bold>
+                </q-tooltip>
+              </q-btn>
             </q-img>
           </q-card>
         </div>
@@ -144,19 +152,18 @@ export default {
       showing3: false,
       showing4: false,
       confirm: false,
-      guardarImagen: []
+      guardarImagen: []     
     };
   },
   methods: {
-    agregarImagenes() {
-    },
-  triggerPositive () {
+    agregarImagenes() {},
+    triggerPositive() {
       this.$q.notify({
-        type: 'positive',
-        message: `Imagen agregada con exito!`
-      })
-  }
-  }
+        type: "positive",
+        message: `Imagen agregada con exito!!`,
+      });
+    },
+  },
 };
 </script>
 

@@ -89,10 +89,16 @@
           <q-editor v-model="form_data.examenes" min-height="5rem"></q-editor>
 
           <p>Recetas</p>
-          <q-editor v-model="form_data.receta" min-height="5rem"></q-editor>
+          <q-editor v-model="form_data.receta" min-height="5rem"></q-editor>          
         </div>
-      </div>
+      </div>     
     </div>
+    <div class="row">
+      <div class="col-12">
+     <Examenes/>
+    </div>
+  </div>
+
     <hr class="lt-md" />
     <div class="row justify-center items-baseline lt-md ">
       <q-input

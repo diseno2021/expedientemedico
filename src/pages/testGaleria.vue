@@ -30,13 +30,13 @@
           position="top-right"
           :offset="[18, 18]"
         >
-          <q-btn v-show="fullscreen ? false : true" round color="black" size="md" icon="add_circle" class="q-mx-sm ">
+          <q-btn @click="triggerPositive" v-show="fullscreen ? false : true" round color="black" size="md" icon="add_circle" class="q-mx-sm ">
             <q-tooltip v-model="showing" content-class="bg-green" content-style="font-size: 16px">
               <bold>Agregar nueva imagen</bold>
             </q-tooltip>
           </q-btn>
           <q-btn  round color="red" size="md" icon="delete_forever" class="q-mx-sm " @click="confirm = true">
-            <q-tooltip v-model="showing3" content-class="bg-green" content-style="font-size: 16px">
+            <q-tooltip v-model="showing3" content-class="bg-negative" content-style="font-size: 16px">
               <bold>Eliminar imagen</bold>
             </q-tooltip>
           </q-btn>
@@ -44,7 +44,7 @@
             push round dense color="black" text-color="primary"
             :icon="fullscreen ? 'fullscreen_exit' : 'fullscreen'"
             @click="fullscreenmethod" @keypress.esc="fullscreen = false">
-            <q-tooltip v-model="showing2" content-class="bg-green" content-style="font-size: 16px">
+            <q-tooltip v-model="showing2" content-class="bg-secondary" content-style="font-size: 16px">
               <bold>{{ fullscreen ? 'Minimizar' : 'Maximizar' }}</bold>
             </q-tooltip>
           </q-btn>
@@ -90,7 +90,13 @@ export default {
   methods: {
     fullscreenmethod(){
       this.fullscreen = ! this.fullscreen
-    }
+    },
+    triggerPositive() {
+      this.$q.notify({
+        type: "positive",
+        message: `Imagen agregada con exito!`,
+      });
+    },
   }
 }
 </script>

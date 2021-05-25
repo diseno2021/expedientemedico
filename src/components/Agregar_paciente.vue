@@ -81,7 +81,15 @@
                     text-color="white"
                     round
                     icon="cloud_upload"
-                  />
+                  ></q-btn>
+                  <q-tooltip
+                  content-class="bg-accent text-white"
+                  content-style="font-size: 12px"
+                  anchor="top left"
+                  self="bottom left"
+                  :offset="[0, 8]"
+                  >Cargar imagen</q-tooltip
+                >
                 </template>
                 <q-tooltip
                   content-class="bg-accent text-white"
@@ -167,7 +175,7 @@
                 <q-input
                   class="q-mx-md q-my-md"
                   v-model="paciente.telefono"
-                  label="Numero telefonico"
+                  label="Número telefónico"
                   mask="####-####"
                 >
                   <template v-slot:before>
@@ -179,7 +187,7 @@
                     anchor="top left"
                     self="bottom left"
                     :offset="[0, 8]"
-                    >Numero de contacto personal</q-tooltip
+                    >Número de contacto personal</q-tooltip
                   >
                 </q-input>
               </div>
@@ -187,7 +195,7 @@
                 <q-input
                   class="q-mx-md q-my-md"
                   v-model="paciente.whatsapp"
-                  label="Numero whatsapp"
+                  label="Número whatsapp"
                   mask="####-####"
                 >
                   <template v-slot:before>
@@ -199,7 +207,7 @@
                     anchor="top left"
                     self="bottom left"
                     :offset="[0, 8]"
-                    >Numero de contacto de whatsapp</q-tooltip
+                    >Número de contacto de whatsapp</q-tooltip
                   >
                 </q-input>
               </div>
@@ -224,7 +232,7 @@
                     self="bottom left"
                     :offset="[0, 8]"
                   >
-                    Direcccion de correo electrónico</q-tooltip
+                    Direccción de correo electrónico</q-tooltip
                   >
                 </q-input>
               </div>
@@ -255,7 +263,7 @@
             <q-input
               class="q-mx-md"
               v-model="paciente.direccion"
-              label="Direccion de residencia"
+              label="Dirección de residencia"
             >
               <q-tooltip
                 content-class="bg-accent text-white"
@@ -263,7 +271,7 @@
                 anchor="top left"
                 self="bottom left"
                 :offset="[0, 8]"
-                >Direccion de actual residencia del paciente</q-tooltip
+                >Dirección de actual residencia del paciente</q-tooltip
               >
               <template v-slot:before>
                 <q-icon name="assistant_direction" />
@@ -272,7 +280,8 @@
             <q-input
               class="q-mx-md"
               v-model="paciente.caso_emergencia"
-              label="Persona encargada"
+              label="En caso de emergencia"
+              placeholder="Jose Hernandez  7744-7192"
             >
               <q-tooltip
                 content-class="bg-accent text-white"
@@ -280,7 +289,7 @@
                 anchor="top left"
                 self="bottom left"
                 :offset="[0, 8]"
-                >En caso de emergecia llamar a:</q-tooltip
+                >A quien llamar en caso de emergencia:</q-tooltip
               >
               <template v-slot:before>
                 <q-icon name="report_problem" />
