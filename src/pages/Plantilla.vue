@@ -4,7 +4,7 @@
             <div class="col-6 offset-1" v-if="usuario!=null">
                 <p>{{usuario.displayName}}</p>
                 <p>{{usuario.email}}</p>
-                <p>{{usuario.uid}}</p>
+                <p>{{usuario.id}}</p>
                 <p >
                 <q-btn icon="warning" @click="mostrarMensaje">mostrar mensaje</q-btn>
                 

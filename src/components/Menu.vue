@@ -115,7 +115,7 @@ export default {
     },
     prefijo() {
       try {
-        db.collection("usuarios")
+        db.collection("medicos")
           .doc(this.usuario.uid)
           .get()
           .then((doc) => {

@@ -124,7 +124,7 @@ export default {
     aceptar() {
       //Construir usuario
       const usuario = {
-        uid: this.user.uid,
+        id: this.user.uid,
         nombre: this.user.displayName,
         correo: this.user.email,
         foto: this.user.photoURL,
@@ -133,8 +133,8 @@ export default {
       //guardando en el local storage
       localStorage.setItem("prefijo", this.prefix);
       //guardando en firestone
-      db.collection("usuarios")
-        .doc(usuario.uid)
+      db.collection("medicos")
+        .doc(usuario.id)
         .set(usuario)
         .then(() => {
           console.log("usuario guardado");
@@ -151,7 +151,7 @@ export default {
     // console.log(this.user);
 
     //Esto sirve para verificar si el usuario ya estaba loguiado o si es nuevo.
-    var docRef = db.collection("usuarios").doc(this.user.uid);
+    var docRef = db.collection("medicos").doc(this.user.id);
     docRef
       .get()
       .then((doc) => {
