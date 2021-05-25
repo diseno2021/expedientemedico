@@ -1,5 +1,8 @@
 <template>
   <div class="q-pa-md" style="max-width: 450px">
+    <div class="row">
+          <h4 class="text-h4">Recetas</h4>
+      </div>
     <q-list bordered class="rounded-borders">
       <q-expansion-item expand-separator class="text-weight-bold text-subtitle1" label="Recetas">
         <q-card>
