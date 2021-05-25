@@ -9,8 +9,7 @@
               flat
               @click.prevent="state = false"
             >
-              <q-icon name="health_and_safety" style="font-size: 2.5rem" />
-              VirtualDoc
+              <q-img src="../../src/assets/img/doctoresvirtual.png" style="height: 50px; max-width: 150px" />
             </q-card>
           </q-item-section>
         </q-item>
