@@ -73,7 +73,7 @@
                 <q-icon name="female" class="text-pink" />
               </template>
             </q-btn-toggle>
-            <span  v-if="$q.screen.width > 599">Ver: </span>
+            <span v-if="$q.screen.width > 599">Ver: </span>
             <q-select
               @input="filtrarPacientes"
               class="inline q-mx-md"
@@ -95,7 +95,7 @@
         v-for="paciente in pacientesFiltradosPaginados"
         :key="paciente.id"
       >
-        <PacienteDesktop :paciente="paciente" />
+        <PacienteDesktop :paciente="paciente" :loading="loading" />
       </div>
 
       <div
@@ -124,7 +124,7 @@
 </template>
 
 <script>
-import { firebase, auth, db } from '../boot/firebase';
+import { firebase, auth, db, st } from "../boot/firebase";
 import PacienteDesktop from "../components/Dashboard/PacienteDesktop";
 import PacienteMobile from "../components/Dashboard/PacienteMobile";
 export default {
@@ -142,7 +142,7 @@ export default {
       paginaActual: 1,
       numPaginas: 6,
       pacientesPorPagina: 15,
-      pacientesPorPaginaOptions:[5,10,15,20],
+      pacientesPorPaginaOptions: [5, 10, 15, 20],
       totalPacientes: 0,
       pacientesFiltrados: [],
       pacientesFiltradosPaginados: [],
@@ -152,19 +152,17 @@ export default {
         { slot: "Masculino", value: "Masculino" },
         { slot: "Femenino", value: "Femenino" }
       ],
-      pacientes: [],
+      pacientes: []
     };
   },
   //se le pone async para que no filtre antes de que este lleno el array de pacientes
   async created() {
-   await this.traerPacientes();
     this.filtrarPacientes();
-
   },
   methods: {
     //cuando presiona la x de borrar busqueda
-    clearSearch(){
-      this.search="";
+    clearSearch() {
+      this.search = "";
       this.filtrarPacientes();
     },
     //funcion para cambiar de ordenar ascendente a descentende y viceversa
@@ -190,44 +188,55 @@ export default {
     },
     //cada vez que hace un cambio de pagina vuelve a partir el array de pacientes filtrados y solo devuelve el trozo dependiendo de la pagina
     cambioPagina() {
-        this.pacientesFiltradosPaginados = this.pacientesFiltrados.slice(
+      this.pacientesFiltradosPaginados = this.pacientesFiltrados.slice(
         this.paginaActual * this.pacientesPorPagina - this.pacientesPorPagina,
         this.paginaActual * this.pacientesPorPagina
       );
     },
-    async traerPacientes(){
-      var pacientesdb=[];
+    async traerPacientes() {
+      this.loading = true;
+      this.contador = 0;
+      this.pacientesFiltrados = [];
       try {
         //primero traemos los pacientes
-        const snapshot=await db.collection('pacientes').get();
-        snapshot.forEach(e=>{
-          pacientesdb.push(e.data());
+        const snapshot = await db
+          .collection("pacientes")
+          .where("idMedico", "==", auth.currentUser.uid)
+          .get();
+        snapshot.forEach(e => {
+          var paciente = {
+            id: e.id,
+            nombre: e.data().nombre,
+            direccion: e.data().direccion,
+            fechaNacimiento: e.data().fechaNacimiento,
+            peso: e.data().peso,
+            tipoSangre: e.data().tipoSangre,
+            genero: e.data().genero
+          };
+          this.pacientesFiltrados.push(paciente);
         });
-
+        this.pacientesFiltrados.forEach(async paciente => {
+          paciente.foto = await st
+            .ref()
+            .child(paciente.id + "/perfil.jpg")
+            .getDownloadURL();
+        });
         //ahora debemos buscar la imagen perfil.jpg de cada paciente e insertarla en cada objeto
-
-        this.pacientes=pacientesdb;
-        console.log(this.pacientes);
       } catch (error) {
         console.error(error);
       }
     },
-    //primero filtra el arreglo de pacientes por los parametros y al final solo delvuelve el primer trozo
-    filtrarPacientes() {
-      this.pacientesFiltrados = this.pacientes;
 
+    //primero filtra el arreglo de pacientes por los parametros y al final solo delvuelve el primer trozo
+    async filtrarPacientes() {
+      await this.traerPacientes();
+      console.log(this.pacientesFiltrados);
       if (this.search != "") {
-        console.log(this.search);
         this.pacientesFiltrados = this.pacientesFiltrados.filter(p =>
           p.nombre.includes(this.search)
         );
-      } else {
-        this.pacientesFiltrados = this.pacientes;
       }
-
       //PRIMERO EVALUA LA BUSQUEDA POR NOMBRE
-
-      //si no esta this.pacientesFiltrados por busqueda los ordena alfabeticamente
       if (this.orderBy == "nombre" && this.orderDescend == false) {
         this.pacientesFiltrados = this.pacientesFiltrados.sort((p1, p2) => {
           if (p1.nombre > p2.nombre) {

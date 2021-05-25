@@ -6,7 +6,7 @@
       <q-card-section class="bg-blue-grey-1 ">
         <div class="row justify-center">
           <q-avatar size="5rem" class="justify-center">
-            <img :src="paciente.foto" />
+            <q-img :src="paciente.foto" />
           </q-avatar>
         </div>
         <div class="row">
