@@ -1,5 +1,6 @@
 <template>
   <div>
+  <div class="q-pa-md">
     <q-card flat>
       <q-card-section>
         <div class="row justify-center q-pb-xs">
@@ -10,30 +11,36 @@
         <div class="text-h6 q-pb-xs">{{ paciente.nombre }}</div>
         <div class="text-caption text-grey-7 q-pb-sm">
           Id: {{ paciente.id }}
-        </div>
+        </div>        
       </q-card-section>
+      
     </q-card>
-    <q-list>
+  </div>
+  <div class="q-pa-md" style="max-width: 350px">
+    <q-list >
       <q-expansion-item
         icon="book"
         expand-separator
+        group="somegroup"
         label="Antecedentes"
-        class=" overflow-hidden"
-        header-class=""
+        class="overflow-hidden"
+        
       >
-        <q-card>
+        <q-card class="bg-grey-3">
           <q-card-section v-html="paciente.antecedentes"> </q-card-section>
         </q-card>
       </q-expansion-item>
 
       <q-expansion-item
         icon="medication"
+        group="somegroup"
         expand-separator
         label="Medicamentos Permantentes"
         class=" overflow-hidden"
-        header-class=""
+       
+        
       >
-        <q-card>
+        <q-card class="bg-grey-3">
           <q-card-section v-html="paciente.medicamentosPermanentes">
           </q-card-section>
         </q-card>
@@ -41,48 +48,67 @@
 
       <q-expansion-item
         icon="healing"
+        group="somegroup"
         expand-separator
         label="Consultas"
         class=" overflow-hidden"
-        header-class=""
+        header-class="claseheader"
       >
-        <q-card>
-          <q-card-section> Hola </q-card-section>
+        <q-card class="bg-grey-3">
+          <q-card-section>
+        <div class="text-h6">05-23-2021</div>
+        <div class="text-subtitle2">fecha de ultima consulta</div>
+      </q-card-section>
+
+      <q-card-section class="q-pt-none">
+        Este es el diagnostico de la ultima consulta con el paciente
+        puede ser extenso como se desee
+      </q-card-section>
         </q-card>
       </q-expansion-item>
 
       <q-expansion-item
         icon="description"
+        group="somegroup"
         label="Recetas"
         expand-separator
         class=" overflow-hidden"
-        header-class=""
+        header-class="claseheader"
       >
-        <q-card>
+        <q-card class="bg-grey-3"> 
+          <q-card-section>
+        <div class="text-h6">05-23-2021</div>
+        <div class="text-subtitle2">Receta de la ultima consulta</div>
+        
+      </q-card-section>
+     
           <q-card-section v-html="consultas.receta"> </q-card-section>
         </q-card>
       </q-expansion-item>
 
       <q-expansion-item
         icon="collections"
+        group="somegroup"
         label="Archivos"
         expand-separator
         class=" overflow-hidden"
-        header-class=""
+        header-class="claseheader"
       >
-        <q-card>
+        <q-card class="bg-grey-3">
           <q-card-section> <galeriaConsulta /> </q-card-section>
         </q-card>
       </q-expansion-item>
 
       <q-expansion-item
         icon="monitor_weight"
+        group="somegroup"
         label="Peso"
         expand-separator
         class=" overflow-hidden"
-        header-class=""
+        header-class="claseheader"
+        active="bg-teal text-white"
       >
-        <q-card>
+        <q-card class="bg-grey-3">
           <q-card-section>
             <center>
               <img
@@ -93,7 +119,22 @@
           </q-card-section>
         </q-card>
       </q-expansion-item>
+      <br>
+      <div class="column align-center ">
+        <q-input filled type="date" stack-label label="Próxima Cita" />
+        <br>
+        <q-btn color="primary" label="Guardar" to="/paciente"></q-btn>
+        <br>
+        <q-btn
+          color="secondary"          
+          label="Cancelar consulta"
+          class="full-width"
+          to="/paciente"
+        ></q-btn>
+      </div>
+      
     </q-list>
+  </div>
   </div>
 </template>
 
@@ -145,7 +186,7 @@ export default {
       sintomas: "", //texto html
       diagnostico: "", //texto html
       receta:
-        "<br>2 pastillas de Paracetamol</br> <br>1 tableta de rivotril </br>", //texto html
+        "2 pastillas de Paracetamol</br> <br>1 tableta de rivotril </br>", //texto html
       examenes: "", //texto html
       proximaCita: "2021-04-30T12:21:21"
     }

@@ -5,7 +5,7 @@
     <q-list dense padding>
       <q-item
         clickable
-        v-ripple
+        
         @click="push('informacion-personal')"
         :active="observer == 'i-personal'"
       >

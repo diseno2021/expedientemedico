@@ -19,10 +19,7 @@
     <Menu ref="menu" />
     <q-drawer v-model="drawerRight" show-if-above bordered side="right">
       <NavegacionConsulta ref="nav" />
-      <div class="column align-center ">
-        <q-input filled type="date" stack-label label="Próxima Cita" />
-        <q-btn color="primary" label="Guardar" to=""></q-btn>
-      </div>
+      
     </q-drawer>
     <q-page-container>
       <q-page padding>
@@ -40,16 +37,32 @@ export default {
   name: "MainLayout",
   components: {
     Menu,
-    NavegacionConsulta
+    NavegacionConsulta,    
   },
   data() {
     return {
-      drawerRight: false
+      drawerRight: false,
+      scrollInfo: {},
+      spyMovil: false
     };
+  },
+  methods: {
+      onScroll(info){
+      if (this.spyMovil == false) {
+        this.scrollInfo = info;
+        this.$refs.nav.scrollspy(info.position);
+      }
+    },
+    test(){
+      this.spyMovil = true;
+      this.$refs.nav.scrollspy(this.scrollInfo.position);
+      this.drawerRight = !this.drawerRight;
+    }
   },
   watch: {
     drawerRigth: function(val) {
-      if (this.drawerRight == false) {
+      if (this.drawerRight == false && this.spyMovil) {
+        this.spyMovil=false;
       }
     }
   }
