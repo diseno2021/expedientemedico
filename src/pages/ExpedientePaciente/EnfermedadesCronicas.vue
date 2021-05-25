@@ -3,14 +3,7 @@
     <div class="row">
       <h4 class="text-h4">Enfermedades Crónicas</h4>
     </div>
-      <q-editor v-model="editor" :definitions="{
-          save: {
-          tip: 'Guarda los cambios',
-          icon: 'save',
-          label: 'Guardar',
-          handler: saveWork
-        },
-      }"
+      <q-editor v-model="editor"
       :toolbar="[
           ['bold', 'italic', 'strike', 'underline'],
           [
@@ -32,7 +25,8 @@
             },
           ],
       ]"
-      min-height="5rem" />
+      min-height="8rem"
+      max-height="8rem" />
   </div>
 </template>
 <script>

@@ -31,7 +31,7 @@
     <Examenes id="examenes" />
     <q-separator></q-separator>
     <div class="row  justify-end q-mt-md">
-      <div class="col-12 col-sm-5">
+      <div class="col-12 col-sm-6 col-lg-4">
         <q-btn
           outline
           color="primary"

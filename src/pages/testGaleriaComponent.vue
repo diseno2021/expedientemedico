@@ -1,6 +1,6 @@
 <template>
-  <div class="row">
-    <div class="col-4">
+  <div class="row" style="border: 4px solid black">
+    <div class="col-12">
       <div class="q-pa-md">
         <div class="q-gutter-md" style="max-width: 300px">
           <q-file
@@ -26,8 +26,8 @@
                 dense
                 flat
                 icon="upload"
-               @click="triggerPositive" 
-                
+               @click="triggerPositive"
+
               />
               <q-tooltip
                 anchor="center right"
@@ -45,19 +45,19 @@
       </div>
     </div>
 
-    <div class="col-8 q-pa-md">
+    <div class="col-12 q-pa-md">
       <div class="row">
-        <div class="col-4">
+        <div class="col-6 q-pa-sm">
           <q-card class="my-card">
             <q-img src="https://www.deidiagnostico.com/wp-content/uploads/2016/03/caso-66-rx-tc3b3rax-inicial.jpg" basic>
-              <div class="absolute-bottom text-subtitle2 text-center">
-                <q-btn
+              <q-btn
                   round
                   color="red"
-                  size="md"
+                  size="sm"
                   icon="delete_forever"
-                  class="q-mx-sm "
+                  class="q-mx-sm"
                   @click="confirm = true"
+                  position-x
                 >
                   <q-tooltip
                     v-model="showing2"
@@ -67,21 +67,20 @@
                     <bold>Eliminar imagen</bold>
                   </q-tooltip>
                 </q-btn>
-              </div>
             </q-img>
           </q-card>
         </div>
-        <div class="col-4">
+        <div class="col-6 q-pa-sm">
           <q-card class="my-card">
             <q-img src="https://www.deidiagnostico.com/wp-content/uploads/2016/03/caso-66-rx-tc3b3rax-inicial.jpg" basic>
-              <div class="absolute-bottom text-subtitle2 text-center">
-                <q-btn
+              <q-btn
                   round
                   color="red"
-                  size="md"
+                  size="sm"
                   icon="delete_forever"
-                  class="q-mx-sm "
+                  class="q-mx-sm"
                   @click="confirm = true"
+                  position-x
                 >
                   <q-tooltip
                     v-model="showing3"
@@ -91,21 +90,20 @@
                     <bold>Eliminar imagen</bold>
                   </q-tooltip>
                 </q-btn>
-              </div>
             </q-img>
           </q-card>
         </div>
-        <div class="col-4">
+        <div class="col-6 q-pa-sm">
           <q-card class="my-card">
             <q-img src="https://www.deidiagnostico.com/wp-content/uploads/2016/03/caso-66-rx-tc3b3rax-inicial.jpg" basic>
-              <div class="absolute-bottom text-subtitle2 text-center">
-                <q-btn
+              <q-btn
                   round
                   color="red"
-                  size="md"
+                  size="sm"
                   icon="delete_forever"
-                  class="q-mx-sm "
+                  class="q-mx-sm"
                   @click="confirm = true"
+                  position-x
                 >
                   <q-tooltip
                     v-model="showing4"
@@ -115,7 +113,6 @@
                     <bold>Eliminar imagen</bold>
                   </q-tooltip>
                 </q-btn>
-              </div>
             </q-img>
           </q-card>
         </div>
@@ -151,7 +148,7 @@ export default {
     };
   },
   methods: {
-    agregarImagenes() {      
+    agregarImagenes() {
     },
   triggerPositive () {
       this.$q.notify({
