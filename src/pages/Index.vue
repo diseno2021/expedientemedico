@@ -12,6 +12,7 @@
             bottom-slots
             v-model="search"
             label="Buscar por nombre"
+            @input="filtrarPacientes"
           >
             <template v-slot:prepend>
               <q-icon name="search" />
@@ -19,7 +20,7 @@
             <template v-slot:append>
               <q-icon
                 name="close"
-                @click="search = ''"
+                @click="clearSearch"
                 class="cursor-pointer"
               />
             </template>
@@ -28,8 +29,11 @@
         <!-- Row de opciones para buscar -->
         <div class="row items-center justify-center">
           <div class="col-12">
-            <span class="q-ml-xl"  v-if="$q.screen.width > 599">Ordenar por:</span>
+            <span class="q-ml-xl" v-if="$q.screen.width > 599"
+              >Ordenar por:</span
+            >
             <q-select
+              @input="filtrarPacientes"
               class="inline q-mx-md"
               rounded
               v-model="orderBy"
@@ -41,7 +45,7 @@
               </template>
             </q-select>
             <q-btn
-            class="q-mr-xl"
+              class="q-mr-xl"
               :disabled="orderBy == ''"
               round
               color="grey"
@@ -49,9 +53,10 @@
               :icon="orderDescend == true ? 'arrow_downward' : 'arrow_upward'"
               @click="changeOrder"
             />
-             <span   v-if="$q.screen.width > 599">Filtrar género:</span>
+            <span v-if="$q.screen.width > 599">Filtrar género:</span>
             <q-btn-toggle
-            class="q-ml-md"
+              @input="filtrarPacientes"
+              class="q-ml-md q-mr-lg"
               v-model="filterBy"
               toggle-color="grey-5"
               size="sm"
@@ -68,6 +73,16 @@
                 <q-icon name="female" class="text-pink" />
               </template>
             </q-btn-toggle>
+            <span  v-if="$q.screen.width > 599">Ver: </span>
+            <q-select
+              @input="filtrarPacientes"
+              class="inline q-mx-md"
+              outlined
+              v-model="pacientesPorPagina"
+              :options="pacientesPorPaginaOptions"
+              dense
+            >
+            </q-select>
           </div>
         </div>
       </div>
@@ -77,20 +92,33 @@
       <div
         v-if="$q.screen.width > 599"
         class="col-12 col-md-6 col-lg-4"
-        v-for="paciente in pacientesFiltrados"
+        v-for="paciente in pacientesFiltradosPaginados"
         :key="paciente.id"
       >
         <PacienteDesktop :paciente="paciente" />
       </div>
 
       <div
-        v-for="paciente in pacientesFiltrados"
+        v-for="paciente in pacientesFiltradosPaginados"
         :key="paciente.id"
         class="full-width"
         v-if="$q.screen.width <= 599"
       >
         <PacienteMobile :paciente="paciente" />
       </div>
+    </div>
+    <div class="q-pa-lg flex flex-center">
+      <q-pagination
+        v-model="paginaActual"
+        :max="numPaginas"
+        @input="cambioPagina"
+        direction-links
+        boundary-links
+        icon-first="skip_previous"
+        icon-last="skip_next"
+        icon-prev="fast_rewind"
+        icon-next="fast_forward"
+      />
     </div>
   </div>
 </template>
@@ -110,6 +138,13 @@ export default {
       orderBy: "nombre",
       orderByOptions: ["edad", "peso", "nombre"],
       orderDescend: true,
+      paginaActual: 1,
+      numPaginas: 6,
+      pacientesPorPagina: 15,
+      pacientesPorPaginaOptions:[5,10,15,20],
+      totalPacientes: 0,
+      pacientesFiltrados: [],
+      pacientesFiltradosPaginados: [],
       filterBy: "todos",
       optionFilters: [
         { slot: "todos", value: "todos" },
@@ -660,10 +695,19 @@ export default {
       ]
     };
   },
+  created() {
+    this.filtrarPacientes();
+  },
   methods: {
+    //cuando presiona la x de borrar busqueda
+    clearSearch(){
+      this.search="";
+      this.filtrarPacientes();
+    },
     //funcion para cambiar de ordenar ascendente a descentende y viceversa
     changeOrder() {
       this.orderDescend = !this.orderDescend;
+      this.filtrarPacientes();
     },
     //funcion que devuelve la edad con la fecha de nacimiento
     getEdad(date) {
@@ -680,25 +724,32 @@ export default {
     //funcion que devuelve el valor mas reciente del arreglo de peso
     getPeso(p) {
       return p.peso[p.peso.length - 1];
-    }
-  },
-  computed: {
-    //computed que devuelve el arreglo de pacientes despues de filtrarlos
-    pacientesFiltrados() {
-      var filtrado = this.pacientes;
+    },
+    //cada vez que hace un cambio de pagina vuelve a partir el array de pacientes filtrados y solo devuelve el trozo dependiendo de la pagina
+    cambioPagina() {
+        this.pacientesFiltradosPaginados = this.pacientesFiltrados.slice(
+        this.paginaActual * this.pacientesPorPagina - this.pacientesPorPagina,
+        this.paginaActual * this.pacientesPorPagina
+      );
+    },
+    //primero filtra el arreglo de pacientes por los parametros y al final solo delvuelve el primer trozo
+    filtrarPacientes() {
+      this.pacientesFiltrados = this.pacientes;
 
       if (this.search != "") {
         console.log(this.search);
-        filtrado = filtrado.filter(p => p.nombre.includes(this.search));
+        this.pacientesFiltrados = this.pacientesFiltrados.filter(p =>
+          p.nombre.includes(this.search)
+        );
       } else {
-        filtrado = this.pacientes;
+        this.pacientesFiltrados = this.pacientes;
       }
 
       //PRIMERO EVALUA LA BUSQUEDA POR NOMBRE
 
-      //si no esta filtrado por busqueda los ordena alfabeticamente
+      //si no esta this.pacientesFiltrados por busqueda los ordena alfabeticamente
       if (this.orderBy == "nombre" && this.orderDescend == false) {
-        filtrado = filtrado.sort((p1, p2) => {
+        this.pacientesFiltrados = this.pacientesFiltrados.sort((p1, p2) => {
           if (p1.nombre > p2.nombre) {
             return 1;
           }
@@ -707,9 +758,9 @@ export default {
           }
           return 0;
         });
-        //si no esta filtrado por busqueda lo filtra por nombre
+        //si no esta this.pacientesFiltrados por busqueda lo filtra por nombre
       } else if (this.orderBy == "nombre" && this.orderDescend == true) {
-        filtrado = filtrado.sort((p1, p2) => {
+        this.pacientesFiltrados = this.pacientesFiltrados.sort((p1, p2) => {
           if (p1.nombre > p2.nombre) {
             return -1;
           }
@@ -723,14 +774,14 @@ export default {
       //AHORA LOS ORDENA
       //si es ordenado por edad
       if (this.orderBy == "edad" && this.orderDescend == false) {
-        filtrado = filtrado.sort((p1, p2) => {
+        this.pacientesFiltrados = this.pacientesFiltrados.sort((p1, p2) => {
           return (
             this.getEdad(p1.fechaNacimiento) - this.getEdad(p2.fechaNacimiento)
           ); //de menor a mayor
         });
         //si es con ordenar por edad descendente
       } else if (this.orderBy == "edad" && this.orderDescend == true) {
-        filtrado = filtrado.sort((p1, p2) => {
+        this.pacientesFiltrados = this.pacientesFiltrados.sort((p1, p2) => {
           return (
             this.getEdad(p2.fechaNacimiento) - this.getEdad(p1.fechaNacimiento)
           ); //de mayor a menor
@@ -739,30 +790,39 @@ export default {
 
       //si es ordenado por peso
       if (this.orderBy == "peso" && this.orderDescend == false) {
-        filtrado = filtrado.sort((p1, p2) => {
+        this.pacientesFiltrados = this.pacientesFiltrados.sort((p1, p2) => {
           return this.getPeso(p1) - this.getPeso(p2); //de menor a mayor
         });
         //si es con ordenar por peso descendente
       } else if (this.orderBy == "peso" && this.orderDescend == true) {
-        filtrado = filtrado.sort((p1, p2) => {
+        this.pacientesFiltrados = this.pacientesFiltrados.sort((p1, p2) => {
           return this.getPeso(p2) - this.getPeso(p1); //de mayor a menor
         });
       }
 
-
       //FILTRO DE MASCULINO Y FEMENINO
       if (this.filterBy == "Masculino") {
-        filtrado = filtrado.filter(p => {
+        this.pacientesFiltrados = this.pacientesFiltrados.filter(p => {
           return p.genero == "Masculino";
         });
       } else if (this.filterBy == "Femenino") {
-        filtrado = filtrado.filter(p => {
+        this.pacientesFiltrados = this.pacientesFiltrados.filter(p => {
           return p.genero == "Femenino";
         });
       }
 
-      return filtrado; //devolvemos filtrado
+      //despues de filtrar devuelve el primer trozo
+      this.paginaActual = 1;
+      this.total = this.pacientesFiltrados.length;
+      this.numPaginas = Math.ceil(this.total / this.pacientesPorPagina);
+      this.pacientesFiltradosPaginados = this.pacientesFiltrados.slice(
+        0,
+        this.pacientesPorPagina
+      ); //devolvemos filtrado
     }
+  },
+  computed: {
+    //computed que devuelve el arreglo de pacientes despues de filtrarlos
   }
 };
 </script>

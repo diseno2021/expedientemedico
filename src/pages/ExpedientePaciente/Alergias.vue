@@ -1,10 +1,11 @@
 <template>
-  <div class="q-ma-md">
+<div class="q-ma-md">
     <div class="row">
       <div class="col-12">
-      <h4 class="text-h4">Antecedentes</h4>
-        <q-editor v-model="paciente.antecedentes"
-      :toolbar="[
+      <h4 class="text-h4">Alergias</h4>
+        <q-editor v-model="paciente.alergias" 
+      
+     :toolbar="[
           ['bold', 'italic', 'strike', 'underline'],
           [
             {
@@ -33,12 +34,9 @@
 </template>
 
 <script>
-import BannerPrincipal from "./../../components/ExpedientePaciente/BannerPrincipal";
-
-export default {
-  data() {
-    return {
-      paciente: { id:"asdfasdfasdfa987asdfasdf76as",
+    export default {
+        data: () => ({
+            paciente: { id:"asdfasdfasdfa987asdfasdf76as",
           idMedico:"asdfasd88asd7fas6dfasd", //este campo relaciona al medico al cual pertenece
           nombre: "Juan Santiago Perez Lima",
           fechaNacimiento: "1998-03-06T00:00:00",
@@ -62,12 +60,10 @@ export default {
           'http://storage/idpaciente/foto01.jpg&#39;',
           ]
           }
-    };
-  },
-  components: {
-    BannerPrincipal
-  }
-};
+        })
+    }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+
+</style>

@@ -17,7 +17,7 @@ module.exports = function (/* ctx */) {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://v1.quasar.dev/quasar-cli/boot-files
-    boot: [      
+    boot: [
       'axios','firebase','router-auth'
     ],
 
@@ -95,8 +95,9 @@ module.exports = function (/* ctx */) {
       // Quasar plugins
       plugins: [
         'Notify',
-        'Dialog'
-      ]      
+        'Dialog',
+        'AppFullscreen'
+      ]
     },
 
     // animations: 'all', // --- includes all animations

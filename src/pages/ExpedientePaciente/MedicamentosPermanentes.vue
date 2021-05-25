@@ -1,19 +1,32 @@
 <template>
   <div class="q-ma-md">
-      <h3 class="text-h3">Medicamentos Permanentes</h3>
-      <q-editor v-model="paciente.medicamentosPermanentes" :definitions="{
-          save: {
-          tip: 'Guarda los cambios',
-          icon: 'save',
-          label: 'Guardar',
-          handler: saveWork
-        },
-      }"
+    <div class="row">
+      <h4 class="text-h4">Medicamentos Permanentes</h4>
+    </div>
+      <q-editor v-model="paciente.medicamentosPermanentes"
       :toolbar="[
-        ['bold', 'italic', 'strike', 'underline'],
-        ['upload', 'save']
+          ['bold', 'italic', 'strike', 'underline'],
+          [
+            {
+              label: $q.lang.editor.fontSize,
+              icon: $q.iconSet.editor.fontSize,
+              fixedLabel: true,
+              fixedIcon: true,
+              list: 'no-icons',
+              options: [
+                'size-1',
+                'size-2',
+                'size-3',
+                'size-4',
+                'size-5',
+                'size-6',
+                'size-7'
+              ]
+            },
+          ],
       ]"
-      min-height="10rem" />
+      min-height="8rem"
+      max-height="8rem" />
   </div>
 </template>
 
@@ -46,16 +59,6 @@ export default {
           ]
           }
     }),
-    methods: {
-        saveWork () {
-            this.$q.notify({
-                message: 'Medicamentos permanentes guardados en local storage',
-                color: 'green-4',
-                textColor: 'white',
-                icon: 'cloud_done'
-            })
-        },
-    }
 
 }
 </script>

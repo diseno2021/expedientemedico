@@ -1,6 +1,28 @@
 <template>
   <div class="q-ma-md">
-    <h3 class="text-h3">Información Personal</h3>
+    <div class="row items-center">
+      <div class="col-12 col-sm-7 justify-between">
+        <h4 class="text-h4">Información Personal</h4>
+      </div>
+      <div class="col-12 col-sm-5 justify-between">
+        <q-btn
+          outline
+          color="primary"
+          icon="home"
+          label="Inicio"
+          to="/"
+          class="q-mx-sm"
+        ></q-btn>
+        <q-btn
+          outline
+          color="secondary"
+          icon="save"
+          label="Guardar"
+          @click="guardarInformacion"
+          class="q-mx-sm"
+        ></q-btn>
+      </div>
+    </div>
     <div class="row q-mt-md">
       <div class="col-12 q-mt-md">
         <q-input v-model="paciente.nombre" label="Nombre completo">
@@ -49,10 +71,18 @@
       <div class="col-12 col-md-5 ">
         <div class="row justify-between">
           <div class="col-6 col-sm-5">
-            <q-radio v-model="paciente.genero" val="Masculino" label="Masculino" />
+            <q-radio
+              v-model="paciente.genero"
+              val="Masculino"
+              label="Masculino"
+            />
           </div>
           <div class="col-6 col-sm-5 ">
-            <q-radio v-model="paciente.genero" val="Femenino" label="Femenino" />
+            <q-radio
+              v-model="paciente.genero"
+              val="Femenino"
+              label="Femenino"
+            />
           </div>
         </div>
       </div>
@@ -66,14 +96,66 @@
     </div>
 
     <div class="row justify-between q-mt-md">
-      <div class="col-12 col-md-4">
-        <q-input v-model="paciente.peso" label="Peso">
-          <template v-slot:prepend>
-            <q-icon name="monitor_weight" />
-          </template>
-        </q-input>
+      <div class="col-12 col-md-5">
+        <div class="row q-mb-md  justify-between">
+          <div class="col-7">
+            <q-input  label="Nuevo Peso">
+              <template v-slot:prepend>
+                <q-icon name="monitor_weight" />
+              </template>
+            </q-input>
+          </div>
+          <div class="col-5">
+            <q-btn
+              color="primary"
+              label="Pesos"
+              flat
+              class="q-mt-md"              
+              icon="expand_more"
+            >
+              <q-menu max-height="200px">
+                <q-item v-for="peso in paciente.peso" :key="peso" style="min-width: 100px">
+                  <q-item-section>
+                    {{ peso }}
+                  </q-item-section>
+                </q-item>
+              </q-menu>
+            </q-btn>
+          </div>
+        </div>
+
+        <q-img src="../../assets/img/peso.png"> </q-img>
       </div>
-      <div class="col-md-6"></div>
+      <div class="col-12 col-md-5">
+        <div class="row q-mb-md  justify-between">
+          <div class="col-6">
+            <q-input label="Nueva estatura">
+              <template v-slot:prepend>
+                <q-icon name="accessibility" />
+              </template>
+            </q-input>
+          </div>
+          <div class="col-6">
+            <q-btn
+              color="primary"
+              label="Estatura"
+              flat
+              class="q-mt-md"              
+              icon="expand_more"
+            >
+              <q-menu max-height="200px">
+                <q-item v-for="estatura in paciente.estatura" :key="estatura" style="min-width: 100px">
+                  <q-item-section>
+                    {{ estatura }}
+                  </q-item-section>
+                </q-item>
+              </q-menu>
+            </q-btn>
+          </div>
+        </div>
+
+        <q-img src="../../assets/img/estatura.png"></q-img>
+      </div>
     </div>
 
     <div class="col-md-12 q-mt-md q-mt-md">
@@ -83,13 +165,22 @@
         </template>
       </q-input>
     </div>
+    <div class="row justify-between">
+      <div class="col-12 col-md-5 q-mt-md q-mt-md">
+        <q-input v-model="paciente.telefono" label="Teléfono">
+          <template v-slot:prepend>
+            <q-icon name="phone" />
+          </template>
+        </q-input>
+      </div>
 
-    <div class="col-md-12 q-mt-md q-mt-md">
-      <q-input v-model="paciente.telefono" label="Teléfono">
-        <template v-slot:prepend>
-          <q-icon name="phone" />
-        </template>
-      </q-input>
+      <div class="col-12 col-md-5 q-mt-md q-mt-md">
+        <q-input v-model="paciente.whatsapp" label="Whatsapp">
+          <template v-slot:prepend>
+            <q-icon name="smartphone" />
+          </template>
+        </q-input>
+      </div>
     </div>
 
     <div class="col-md-12 q-mt-md q-my-md ">
@@ -108,32 +199,33 @@ import BannerPrincipal from "./../../components/ExpedientePaciente/BannerPrincip
 export default {
   data() {
     return {
-          paciente: { id:"asdfasdfasdfa987asdfasdf76as",
-          idMedico:"asdfasd88asd7fas6dfasd", //este campo relaciona al medico al cual pertenece
-          nombre: "Juan Santiago Perez Lima",
-          fechaNacimiento: "1998-03-06T00:00:00",
-          genero:"Masculino",
-          peso:[170,150,140,135], //el peso se lleva en un arreglo para poder graficarlo
-          estatura:[123,125,135],
-          foto:"http://storage/123231.jpg&quot;",
-          tipoSangre:"O RH+",
-          direccion:"Final avenida fray felipe de jesus moraga casa #23",
-          telefono:"7366-2344",
-          dui:"",
-          whatsapp:"1242-1234",
-          email:"paciente@outlook.com",
-          enCasoEmergencia:"Esposa Juana Salazar 7346454",
-          comentario:"",
-          antecedentes:"Padre diabético<br> Tía materna hipertensa", //texto html
-          alergias:"Penicilina Procainica, picadas de abejas",
-          enfermedadesCronicas:"Cancer de Seno, Diabetes tipo 2", //texto html
-          medicamentosPermanentes:"<br>Rivoflavina</br> una por las noches", //texto html
-          archivos:['http://storage/idpaciente/foto01.jpg&#39;',
-          'http://storage/idpaciente/foto01.jpg&#39;',
-          ]
-          }
-
-  }
+      paciente: {
+        id: "asdfasdfasdfa987asdfasdf76as",
+        idMedico: "asdfasd88asd7fas6dfasd", //este campo relaciona al medico al cual pertenece
+        nombre: "Juan Santiago Perez Lima",
+        fechaNacimiento: "1998-03-06T00:00:00",
+        genero: "Masculino",
+        peso: [170, 150, 140, 135], //el peso se lleva en un arreglo para poder graficarlo
+        estatura: [123, 125, 135],
+        foto: "http://storage/123231.jpg&quot;",
+        tipoSangre: "O RH+",
+        direccion: "Final avenida fray felipe de jesus moraga casa #23",
+        telefono: "7366-2344",
+        dui: "",
+        whatsapp: "1242-1234",
+        email: "paciente@outlook.com",
+        enCasoEmergencia: "Esposa Juana Salazar 7346454",
+        comentario: "",
+        antecedentes: "Padre diabético<br> Tía materna hipertensa", //texto html
+        alergias: "Penicilina Procainica, picadas de abejas",
+        enfermedadesCronicas: "Cancer de Seno, Diabetes tipo 2", //texto html
+        medicamentosPermanentes: "<br>Rivoflavina</br> una por las noches", //texto html
+        archivos: [
+          "http://storage/idpaciente/foto01.jpg&#39;",
+          "http://storage/idpaciente/foto01.jpg&#39;"
+        ]
+      }
+    };
   },
   components: {
     BannerPrincipal
@@ -143,7 +235,7 @@ export default {
     fechaNacimiento() {
       return date.formatDate(this.paciente.fechaNacimiento, "YYYY-MM-DD");
     },
-     //funcion que devuelve la edad con la fecha de nacimiento
+    //funcion que devuelve la edad con la fecha de nacimiento
     edad() {
       var hoy = new Date();
       var cumpleanos = new Date(this.paciente.fechaNacimiento);
@@ -154,6 +246,16 @@ export default {
         edad--;
       }
       return edad;
+    }
+  },
+  methods: {
+    guardarInformacion() {
+      this.$q.notify({
+        message: "Información personal guardada en local storage",
+        color: "green-4",
+        textColor: "white",
+        icon: "cloud_done"
+      });
     }
   }
 };

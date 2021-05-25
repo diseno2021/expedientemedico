@@ -16,9 +16,17 @@ const routes = [
         component: () => import('src/pages/testGaleria.vue')
       },
       {
+        path: '/galeria/component',
+        component: () => import('src/pages/testGaleriaComponent.vue')
+      },
+      {
       path: '/sitioweb',
       component: () => import('pages/SitioWeb.vue')
-      }
+      },
+      {
+        path: 'pasar-consulta',
+        component: () => import('./../pages/PasarConsulta/PasarConsultaView.vue')
+      } 
       
     ]
     },
@@ -29,25 +37,40 @@ const routes = [
         {
           path: '',
           component: () => import('./../pages/ExpedientePaciente/Expediente.vue')
-        },  
-        {
-          path: 'pasar-consulta',
-          component: () => import('./../pages/PasarConsulta/PasarConsultaView.vue')
-        }   
+        }  
       ]
     },
-
-    ,
+    {
+      path: "/pasar-consulta",
+      component: ()=>import('layouts/ConsultaLayout.vue'),
+      children: [
+        {
+        path: 'nueva-consulta',
+        component: ()=>import('./../pages/PasarConsulta/PasarConsultaView.vue')
+        }
+      ]
+    },
     {
       path: '/auth',
-        component: () => import('layouts/Login.vue'),
-        
-        children: [
-          {
-            path: '',
-            component: () => import('pages/PageAuth.vue'),
-          },
-        ],
+      component: () => import('layouts/Login.vue'),
+      children: [
+        {
+          path: '',
+          name: "Login",
+          component: () => import('pages/PageAuth.vue'),
+        }
+      ]
+    },
+    {
+      path: '/registrar',
+      component: () => import('layouts/Login.vue'),
+      children: [
+        {
+          path: '',
+          name: "Registrar",
+          component: () => import('pages/Registrar.vue'),
+        }
+      ]
     },
 
   // Always leave this as last one,

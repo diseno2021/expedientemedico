@@ -1,21 +1,32 @@
 <template>
   <div class="q-ma-md">
-    <h3 class="text-h3">Enfermedades Crónicas</h3>
-    <q-card flat bordered class="my-card">
-      <q-card-section>
-        <div class="text-h6">Datos</div>
-      </q-card-section>
-
-      <q-card-section class="q-pt-none">
-       Discapacidad: Ninguna
-      </q-card-section>
-
-      <q-separator inset />
-
-      <q-card-section>
-       Enfermedad de Taquicardia
-      </q-card-section>
-    </q-card>
+    <div class="row">
+      <h4 class="text-h4">Enfermedades Crónicas</h4>
+    </div>
+      <q-editor v-model="editor"
+      :toolbar="[
+          ['bold', 'italic', 'strike', 'underline'],
+          [
+            {
+              label: $q.lang.editor.fontSize,
+              icon: $q.iconSet.editor.fontSize,
+              fixedLabel: true,
+              fixedIcon: true,
+              list: 'no-icons',
+              options: [
+                'size-1',
+                'size-2',
+                'size-3',
+                'size-4',
+                'size-5',
+                'size-6',
+                'size-7'
+              ]
+            },
+          ],
+      ]"
+      min-height="8rem"
+      max-height="8rem" />
   </div>
 </template>
 <script>
@@ -23,15 +34,14 @@ import BannerPrincipal from "./../../components/ExpedientePaciente/BannerPrincip
 export default {
   data() {
     return {
-      date: "2020/02/01",
-      edad: "",
-      genero: "",
-      editor: "",
-      lorem: ""
+      editor: " Cancer de seno</br>Diabetes tipo 2<br/>" //texto html
     };
   },
   components: {
     BannerPrincipal,
+  },
+  methods: {
+    
   },
 };
 </script>

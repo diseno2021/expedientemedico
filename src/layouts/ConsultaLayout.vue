@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="lHh LpR lFf" @scroll="onScroll">
+  <q-layout view="lHh Lpr lFf">
     <q-header elevated>
       <q-toolbar>
         <q-btn
@@ -12,47 +12,42 @@
         />
 
         <q-toolbar-title>
-          Expediente del paciente
+          Nueva Consulta
         </q-toolbar-title>
-
-        <q-btn class="lt-md" flat @click="test" round dense icon="menu" />
       </q-toolbar>
     </q-header>
     <Menu ref="menu" />
     <q-drawer v-model="drawerRight" show-if-above bordered side="right">
-      <Navegacion ref="nav" />
+      <NavegacionConsulta ref="nav" />
+      
     </q-drawer>
     <q-page-container>
-      <q-page padding class="q-pt-none">
-        <router-view></router-view>
-        <q-page-scroller position="bottom-right" :scroll-offset="150" :offset="[18, 18]">
-            <q-btn fab icon="keyboard_arrow_up" color="primary" />
-          </q-page-scroller>
+      <q-page padding>
+        <router-view />
       </q-page>
     </q-page-container>
   </q-layout>
 </template>
 
 <script>
-import Menu from '../components/Menu';
-import Navegacion from './../components/ExpedientePaciente/Navegacion';
-import BannerPrincipal from './../components/ExpedientePaciente/BannerPrincipal';
-import { auth } from "../boot/firebase";
+import Menu from "components/Menu";
+import NavegacionConsulta from "components/PasarConsulta/NavegacionConsulta.vue";
+
 export default {
- components:{
-   Navegacion,
-   BannerPrincipal,
-   Menu,
- },
+  name: "MainLayout",
+  components: {
+    Menu,
+    NavegacionConsulta,    
+  },
   data() {
     return {
       drawerRight: false,
       scrollInfo: {},
-      spyMovil: false,
+      spyMovil: false
     };
   },
   methods: {
-    onScroll(info){
+      onScroll(info){
       if (this.spyMovil == false) {
         this.scrollInfo = info;
         this.$refs.nav.scrollspy(info.position);
@@ -65,11 +60,11 @@ export default {
     }
   },
   watch: {
-    drawerRight: function (val) {
+    drawerRigth: function(val) {
       if (this.drawerRight == false && this.spyMovil) {
-        this.spyMovil = false;
+        this.spyMovil=false;
       }
     }
   }
-}
+};
 </script>
