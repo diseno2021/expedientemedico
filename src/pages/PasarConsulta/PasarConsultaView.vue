@@ -64,17 +64,23 @@
       <div class="col-md-6">
         <div class="q-pa-md q-gutter-sm">
           <p>Motivo de Consulta</p>
-          <q-editor v-model="form_data.editor" min-height="5rem"></q-editor>
+          <q-editor
+            :toolbar="toolbar"
+            v-model="form_data.editor"
+            min-height="7rem"
+          ></q-editor>
 
           <p>Sintomas subjetivos</p>
           <q-editor
+            :toolbar="toolbar"
             v-model="form_data.sintomasSubjetivos"
-            min-height="5rem"
+            min-height="7rem"
           ></q-editor>
           <p>Diagnostico</p>
           <q-editor
+            :toolbar="toolbar"
             v-model="form_data.diagnostico"
-            min-height="5rem"
+            min-height="7rem"
           ></q-editor>
         </div>
       </div>
@@ -82,22 +88,31 @@
         <div class="q-pa-md q-gutter-sm">
           <p>Exploracion fisica</p>
           <q-editor
+            :toolbar="toolbar"
             v-model="form_data.exploracionFisica"
-            min-height="5rem"
+            min-height="7rem"
           ></q-editor>
           <p>Examenes</p>
-          <q-editor v-model="form_data.examenes" min-height="5rem"></q-editor>
+          <q-editor
+            :toolbar="toolbar"
+            v-model="form_data.examenes"
+            min-height="7rem"
+          ></q-editor>
 
           <p>Recetas</p>
-          <q-editor v-model="form_data.receta" min-height="5rem"></q-editor>          
+          <q-editor
+            :toolbar="toolbar"
+            v-model="form_data.receta"
+            min-height="7rem"
+          ></q-editor>
         </div>
-      </div>     
+      </div>
     </div>
     <div class="row">
       <div class="col-12">
-     <Examenes/>
+        <Examenes />
+      </div>
     </div>
-  </div>
 
     <hr class="lt-md" />
     <div class="row justify-center items-baseline lt-md ">
@@ -150,7 +165,13 @@ export default {
         diagnostico: "",
 
         proximaCita: undefined
-      }
+      },
+      toolbar: [
+        ["bold", "italic", "strike", "underline"],
+        ["unordered", "ordered", "outdent", "indent"],
+        ["undo", "redo"],
+        ["viewsource"]
+      ]
     };
   }
 };
