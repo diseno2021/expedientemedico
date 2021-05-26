@@ -1,6 +1,6 @@
 <template>
   <!-- card de paciente -->
-  <q-card class="q-ml-md q-mr-md q-mt-md">
+  <q-card class="q-ml-md q-mr-md q-mt-md" v-if="loading">
     <q-card-section horizontal>
       <!-- imagen del paciente -->
       <q-card-section class="bg-blue-grey-1 ">
@@ -83,7 +83,11 @@ import { date } from "quasar";
 export default {
   name: "PacienteComponent",
   props: {
-    paciente: Object
+    paciente: Object,
+    loading: {
+      type: Boolean,
+      default: false
+    }
   },
   computed: {
     //computen que devuelve la fecha de nacimiento
