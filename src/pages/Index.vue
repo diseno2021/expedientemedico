@@ -157,6 +157,7 @@ export default {
   },
   //se le pone async para que no filtre antes de que este lleno el array de pacientes
   async created() {
+    await this.traerPacientes();
     this.filtrarPacientes();
   },
   methods: {
@@ -182,10 +183,6 @@ export default {
       }
       return edad;
     },
-    //funcion que devuelve el valor mas reciente del arreglo de peso
-    getPeso(p) {
-      return p.peso[p.peso.length - 1];
-    },
     //cada vez que hace un cambio de pagina vuelve a partir el array de pacientes filtrados y solo devuelve el trozo dependiendo de la pagina
     cambioPagina() {
       this.pacientesFiltradosPaginados = this.pacientesFiltrados.slice(
@@ -194,7 +191,7 @@ export default {
       );
     },
     async traerPacientes() {
-      this.pacientesFiltrados = [];
+      this.pacientes = [];
       try {
         //primero traemos los pacientes
         const snapshot = await db
@@ -207,13 +204,13 @@ export default {
             nombre: e.data().nombre,
             direccion: e.data().direccion,
             fechaNacimiento: e.data().fechaNacimiento,
-            peso: e.data().peso,
+            peso: e.data().peso[e.data().peso.length - 1],
             tipoSangre: e.data().tipoSangre,
             genero: e.data().genero
           };
-          this.pacientesFiltrados.push(paciente);
+          this.pacientes.push(paciente);
         });
-        for (var paciente of this.pacientesFiltrados) {
+        for (var paciente of this.pacientes) {
           paciente.foto = await st
             .ref()
             .child(paciente.id + "/perfil.jpg")
@@ -226,8 +223,8 @@ export default {
     },
 
     //primero filtra el arreglo de pacientes por los parametros y al final solo delvuelve el primer trozo
-    async filtrarPacientes() {
-      await this.traerPacientes();
+    filtrarPacientes() {
+      this.pacientesFiltrados = this.pacientes;
       if (this.search != "") {
         this.pacientesFiltrados = this.pacientesFiltrados.filter(p =>
           p.nombre.includes(this.search)
@@ -277,12 +274,12 @@ export default {
       //si es ordenado por peso
       if (this.orderBy == "peso" && this.orderDescend == false) {
         this.pacientesFiltrados = this.pacientesFiltrados.sort((p1, p2) => {
-          return this.getPeso(p1) - this.getPeso(p2); //de menor a mayor
+          return p1.peso - p2.peso; //de menor a mayor
         });
         //si es con ordenar por peso descendente
       } else if (this.orderBy == "peso" && this.orderDescend == true) {
         this.pacientesFiltrados = this.pacientesFiltrados.sort((p1, p2) => {
-          return this.getPeso(p2) - this.getPeso(p1); //de mayor a menor
+          return p2.peso - p1.peso; //de mayor a menor
         });
       }
 
