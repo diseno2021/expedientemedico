@@ -95,7 +95,7 @@
         v-for="paciente in pacientesFiltradosPaginados"
         :key="paciente.id"
       >
-        <PacienteDesktop :paciente="paciente" :loading="loading" />
+        <PacienteDesktop :paciente="paciente" />
       </div>
 
       <div
@@ -152,9 +152,7 @@ export default {
         { slot: "Masculino", value: "Masculino" },
         { slot: "Femenino", value: "Femenino" }
       ],
-      pacientes: [],
-      contador: 0,
-      loading: false
+      pacientes: []
     };
   },
   //se le pone async para que no filtre antes de que este lleno el array de pacientes
@@ -196,8 +194,6 @@ export default {
       );
     },
     async traerPacientes() {
-      this.loading = true;
-      this.contador = 0;
       this.pacientesFiltrados = [];
       try {
         //primero traemos los pacientes
