@@ -152,7 +152,9 @@ export default {
         { slot: "Masculino", value: "Masculino" },
         { slot: "Femenino", value: "Femenino" }
       ],
-      pacientes: []
+      pacientes: [],
+      contador: 0,
+      loading: false
     };
   },
   //se le pone async para que no filtre antes de que este lleno el array de pacientes
@@ -215,12 +217,12 @@ export default {
           };
           this.pacientesFiltrados.push(paciente);
         });
-        this.pacientesFiltrados.forEach(async paciente => {
+        for (var paciente of this.pacientesFiltrados) {
           paciente.foto = await st
             .ref()
             .child(paciente.id + "/perfil.jpg")
             .getDownloadURL();
-        });
+        }
         //ahora debemos buscar la imagen perfil.jpg de cada paciente e insertarla en cada objeto
       } catch (error) {
         console.error(error);
@@ -230,7 +232,6 @@ export default {
     //primero filtra el arreglo de pacientes por los parametros y al final solo delvuelve el primer trozo
     async filtrarPacientes() {
       await this.traerPacientes();
-      console.log(this.pacientesFiltrados);
       if (this.search != "") {
         this.pacientesFiltrados = this.pacientesFiltrados.filter(p =>
           p.nombre.includes(this.search)
