@@ -9,7 +9,10 @@
               flat
               @click.prevent="state = false"
             >
-              <q-img src="../../src/assets/img/doctoresvirtual.png" style="height: 50px; max-width: 150px" />
+              <q-img
+                src="../../src/assets/img/doctoresvirtual.png"
+                style="height: 50px; max-width: 150px"
+              />
             </q-card>
           </q-item-section>
         </q-item>
@@ -62,7 +65,7 @@
         <q-separator />
         <q-card class="text-center q-mt-xl" flat>
           <q-icon name="people" style="font-size: 2.5rem" />
-          <div class="full-width">20 pacientes registrados</div>
+          <div class="full-width">{{ pacientes }} pacientes registrados</div>
         </q-card>
       </div>
     </q-drawer>
@@ -77,15 +80,16 @@ export default {
   props: {
     leftDrawerOpen: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   data() {
     return {
       usuario: null,
       state: this.leftDrawerOpen,
       dark: false,
-      prefix: "",
+      pacientes: 0,
+      prefix: ""
     };
   },
   methods: {
@@ -101,7 +105,7 @@ export default {
           // Sign-out successful.
           this.$q.notify("Se ha cerrado la sesión");
         })
-        .catch((error) => {
+        .catch(error => {
           // An error happened.
           this.$q.notify(error);
         });
@@ -112,12 +116,23 @@ export default {
     openCloseDrawer() {
       this.state = !this.state;
     },
+    async obtenerCantidadDePaciente() {
+      try {
+        const snapshot = await db
+          .collection("pacientes")
+          .where("idMedico", "==", auth.currentUser.uid)
+          .get();
+        this.pacientes = snapshot.size;
+      } catch (e) {
+        console.log(e);
+      }
+    },
     prefijo() {
       try {
         db.collection("medicos")
           .doc(this.usuario.uid)
           .get()
-          .then((doc) => {
+          .then(doc => {
             if (doc.exists) {
               let pref = doc.data().prefijo;
               localStorage.setItem("prefijo", pref);
@@ -126,16 +141,17 @@ export default {
               console.log("No existe Doc");
             }
           })
-          .catch((error) => {
+          .catch(error => {
             console.log("Error al tratar de obtener el documento", error);
           });
       } catch (error) {}
-    },
+    }
   },
-  created() {
+  async created() {
     var user = auth.currentUser;
     console.log("Flag 1", user);
     if (user) {
+      await this.obtenerCantidadDePaciente();
       // User is signed in.
       this.usuario = user;
       var prefijo = localStorage.getItem("prefijo");
@@ -147,7 +163,7 @@ export default {
     } else {
       // No user is signed in.
     }
-  },
+  }
 };
 </script>
 
