@@ -4,7 +4,7 @@
       <template v-slot:header>
         <q-item-section avatar>
           <q-avatar size="4rem">
-            <img :src="paciente.foto" />
+            <q-img :src="paciente.foto" />
           </q-avatar>
         </q-item-section>
         <q-separator vertical inset class="q-mr-sm" />
