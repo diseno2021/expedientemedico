@@ -140,7 +140,7 @@ export default {
       orderByOptions: ["edad", "peso", "nombre"],
       orderDescend: true,
       paginaActual: 1,
-      numPaginas: 6,
+      numPaginas: 0,
       pacientesPorPagina: 15,
       pacientesPorPaginaOptions: [5, 10, 15, 20],
       totalPacientes: 0,
