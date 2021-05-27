@@ -226,8 +226,10 @@ export default {
     filtrarPacientes() {
       this.pacientesFiltrados = this.pacientes;
       if (this.search != "") {
-        this.pacientesFiltrados = this.pacientesFiltrados.filter(p =>
-          p.nombre.includes(this.search)
+        this.pacientesFiltrados = this.pacientesFiltrados.filter(p =>{
+          let regex=new RegExp(this.search,"i");
+          return regex.test(p.nombre);
+          }
         );
       }
       //PRIMERO EVALUA LA BUSQUEDA POR NOMBRE
