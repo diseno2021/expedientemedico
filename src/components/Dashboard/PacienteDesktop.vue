@@ -68,7 +68,7 @@
           </div>
           <div class="col-6">
             <q-icon name="monitor_weight" style="font-size: 1.5em" />
-            {{ paciente.peso[paciente.peso.length - 1] }} Lb.
+            {{ paciente.peso }} Lb.
           </div>
         </div>
       </q-card-section>

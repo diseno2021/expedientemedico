@@ -8,10 +8,7 @@
             <img :src="paciente.foto" />
           </q-avatar>
         </div>
-        <div class="text-h6 q-pb-xs">{{ paciente.nombre }}</div>
-        <div class="text-caption text-grey-7 q-pb-sm">
-          Id: {{ paciente.id }}
-        </div>        
+        <div class="text-h6 q-pb-xs">{{ paciente.nombre }}</div>      
       </q-card-section>
       
     </q-card>
