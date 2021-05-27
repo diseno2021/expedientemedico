@@ -77,7 +77,7 @@
                   <q-icon name="monitor_weight" style="font-size: 2em" />
                 </div>
                 <div class="col text-center">
-                  {{ paciente.peso[paciente.peso.length - 1] }} lb
+                  {{ paciente.peso }} lb
                 </div>
               </div>
             </div>

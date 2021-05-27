@@ -138,7 +138,7 @@ export default {
       search: "",
       orderBy: "nombre",
       orderByOptions: ["edad", "peso", "nombre"],
-      orderDescend: true,
+      orderDescend: false,
       paginaActual: 1,
       numPaginas: 0,
       pacientesPorPagina: 15,
