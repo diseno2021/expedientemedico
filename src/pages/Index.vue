@@ -138,10 +138,18 @@
       >
     </q-inner-loading>
   </div>
+  <!-- Se muestra si no hay pacientes registrados -->
+  <div v-else class="row items-center justify-center" style="height:100Vh">
+    <div class="col-3 text-center">
+      <q-icon name="priority_high" class="text-grey" style="font-size:5em"/><br>
+      <span>Ningun paciente registrado.</span>
+    </div>
+  </div>
+</div>
 </template>
 
 <script>
-import { firebase, auth, db, st } from "../boot/firebase";
+import {auth, db, st } from "../boot/firebase";
 import PacienteDesktop from "../components/Dashboard/PacienteDesktop";
 import PacienteMobile from "../components/Dashboard/PacienteMobile";
 export default {
@@ -170,7 +178,7 @@ export default {
         { slot: "Masculino", value: "Masculino" },
         { slot: "Femenino", value: "Femenino" }
       ],
-      pacientes: []
+      pacientes: [],
     };
   },
   //se le pone async para que no filtre antes de que este lleno el array de pacientes
@@ -202,13 +210,19 @@ export default {
       return edad;
     },
     //cada vez que hace un cambio de pagina vuelve a partir el array de pacientes filtrados y solo devuelve el trozo dependiendo de la pagina
+    //y el numero de pacientes que quiera por pagina
     cambioPagina() {
       this.pacientesFiltradosPaginados = this.pacientesFiltrados.slice(
         this.paginaActual * this.pacientesPorPagina - this.pacientesPorPagina,
         this.paginaActual * this.pacientesPorPagina
       );
     },
+    //metodo para llenar el array pacientes con todos los pacientes del doctor actual
     async traerPacientes() {
+       this.$q.loading.show({
+        message: 'Cargando Pacientes.<br/><span class="text-orange text-weight-bold">Por favor espere...</span>'
+      });
+
       this.pacientes = [];
       try {
         //primero traemos los pacientes
@@ -241,6 +255,7 @@ export default {
     },
 
     //primero filtra el arreglo de pacientes por los parametros y al final solo delvuelve el primer trozo
+    //despues de aplicar un filtro lo mueve a pa pagina 1 para que no haya problemas
     filtrarPacientes() {
       this.pacientesFiltrados = this.pacientes;
       if (this.search != "") {
@@ -313,18 +328,18 @@ export default {
         });
       }
 
-      //despues de filtrar devuelve el primer trozo
+      //despues de filtrar devuelve el primer trozo, de esta manera cada vez que haya un filtro
+      //lo volvera a la pagina 1 de los resultados
       this.paginaActual = 1;
       this.total = this.pacientesFiltrados.length;
       this.numPaginas = Math.ceil(this.total / this.pacientesPorPagina);
       this.pacientesFiltradosPaginados = this.pacientesFiltrados.slice(
         0,
         this.pacientesPorPagina
-      ); //devolvemos filtrado
+      );
     }
   },
   computed: {
-    //computed que devuelve el arreglo de pacientes despues de filtrarlos
   }
 };
 </script>
