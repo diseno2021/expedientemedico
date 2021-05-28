@@ -14,7 +14,6 @@
         <q-toolbar-title>
           Pacientes
         </q-toolbar-title>
-
       </q-toolbar>
     </q-header>
     <Menu ref="menu" />
