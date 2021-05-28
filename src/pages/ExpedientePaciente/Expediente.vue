@@ -2,13 +2,13 @@
   <div>
     <div class="row">
       <div class="col-12">
-        <InformacionPersonal id="informacion-personal" />
+        <InformacionPersonal id="informacion-personal" :paciente="paciente" v-if="paciente !== null"/>
       </div>
     </div>
     <q-separator></q-separator>
     <div class="row">
       <div class="col-12 col-md-6">
-        <Antecedentes id="antecedentes" />
+        <Antecedentes id="antecedentes" :paciente="paciente" v-if="paciente !== null"/>
       </div>
       <div class="col-12 col-md-6">
         <Alergias id="alergias" />
@@ -29,7 +29,7 @@
     <Recetas id="recetas" />
     <q-separator></q-separator>
     <!-- idPaciente sera donde nos envien el id del paciente del que se esta visualizando expediente -->
-    <Examenes id="examenes" idPaciente="asdfasdfasdfa987asdfasdf76aq"/>
+    <Examenes id="examenes" idPaciente="asdfasdfasdfa987asdfasdf76aq" />
     <q-separator></q-separator>
     <div class="row  justify-end q-mt-md">
       <div class="col-12 col-sm-6 col-lg-4">
@@ -63,7 +63,12 @@ import Consultas from "./Consultas";
 import Recetas from "./Recetas";
 import EnfermedadesCronicas from "./EnfermedadesCronicas";
 import Examenes from "../testGaleria.vue";
+import { db, st } from "../../boot/firebase";
+
 export default {
+  data: () => ({
+    paciente: null,
+  }),
   components: {
     InformacionPersonal,
     Antecedentes,
@@ -74,7 +79,7 @@ export default {
     EnfermedadesCronicas,
     Examenes
   },
-   methods: {
+  methods: {
     guardarInformacion() {
       this.$q.notify({
         message: "Información personal guardada en local storage",
@@ -82,9 +87,28 @@ export default {
         textColor: "white",
         icon: "cloud_done"
       });
+    },
+    obtenerDatosPaciente() {
+      let id = this.$router.currentRoute.params.id
+      var docRef = db.collection("pacientes").doc(id);
+      docRef
+        .get()
+        .then(doc => {
+          if (doc.exists) {
+            this.paciente = doc.data();
+          } else {
+            // doc.data() will be undefined in this case
+            console.log("No such document!");
+          }
+        })
+        .catch(error => {
+          console.log("Error getting document:", error);
+        });
     }
-
   },
+  created(){
+    this.obtenerDatosPaciente();
+  }
 };
 </script>
 
