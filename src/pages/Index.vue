@@ -1,4 +1,5 @@
 <template>
+<div>
   <div class="relative-position" :class="{ 'window-height': visible }">
     <!-- row de filtros-->
     <div class="row" v-if="!visible && pacientes.length > 0">
@@ -138,13 +139,6 @@
       >
     </q-inner-loading>
   </div>
-  <!-- Se muestra si no hay pacientes registrados -->
-  <div v-else class="row items-center justify-center" style="height:100Vh">
-    <div class="col-3 text-center">
-      <q-icon name="priority_high" class="text-grey" style="font-size:5em"/><br>
-      <span>Ningun paciente registrado.</span>
-    </div>
-  </div>
 </div>
 </template>
 
@@ -219,9 +213,6 @@ export default {
     },
     //metodo para llenar el array pacientes con todos los pacientes del doctor actual
     async traerPacientes() {
-       this.$q.loading.show({
-        message: 'Cargando Pacientes.<br/><span class="text-orange text-weight-bold">Por favor espere...</span>'
-      });
 
       this.pacientes = [];
       try {
