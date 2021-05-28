@@ -1,5 +1,5 @@
 <template>
-  <div class="relative-position" :class="{ 'window-height': visible }">
+  <div class="relative-position" :style="visible ? 'height: 92Vh' : ''">
     <!-- row de filtros-->
     <div class="row" v-if="!visible && pacientes.length > 0">
       <div class="col-12 q-pa-md">
@@ -125,7 +125,19 @@
       />
     </div>
     <!-- mensaje si no hay pacientes-->
-    <div class="row"></div>
+    <div
+      class="row  items-center justify-center items-center"
+      v-if="!visible && pacientes.length == 0"
+      style="height: 85Vh"
+    >
+      <div class="col-12 text-center text-primary">
+        <q-icon name="people" style="font-size: 8rem" />
+
+        <div class=" text-h4  text-weight-bolder">
+          No hay pacientes registrados
+        </div>
+      </div>
+    </div>
     <!-- loading-->
     <q-inner-loading :showing="visible">
       <q-spinner-cube size="3rem" color="primary" />
