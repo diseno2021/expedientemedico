@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="relative-position" :class="{ 'window-height': visible }">
     <!-- row de filtros-->
-    <div class="row">
+    <div class="row" v-if="!visible && pacientes.length > 0">
       <div class="col-12 q-pa-md">
         <!-- row Barra de busqueda -->
         <div class="row">
@@ -88,7 +88,7 @@
       </div>
     </div>
     <!-- row de pacientes-->
-    <div class="row">
+    <div class="row" v-if="!visible && pacientes.length > 0">
       <div
         v-if="$q.screen.width > 599"
         class="col-12 col-md-6 col-lg-4"
@@ -107,7 +107,11 @@
         <PacienteMobile :paciente="paciente" />
       </div>
     </div>
-    <div class="q-pa-lg flex flex-center">
+    <!-- paginador-->
+    <div
+      class="q-pa-lg flex flex-center"
+      v-if="!visible && pacientes.length > 0"
+    >
       <q-pagination
         v-model="paginaActual"
         :max="numPaginas"
@@ -120,6 +124,19 @@
         icon-next="fast_forward"
       />
     </div>
+    <!-- mensaje si no hay pacientes-->
+    <div class="row"></div>
+    <!-- loading-->
+    <q-inner-loading :showing="visible">
+      <q-spinner-cube size="3rem" color="primary" />
+      <span
+        class=" text-primary
+        text-uppercase
+        text-overline
+        text-weight-bold"
+        >Cargando Pacientes</span
+      >
+    </q-inner-loading>
   </div>
 </template>
 
@@ -135,6 +152,7 @@ export default {
   },
   data() {
     return {
+      visible: true,
       search: "",
       orderBy: "nombre",
       orderByOptions: ["edad", "peso", "nombre"],
@@ -216,7 +234,7 @@ export default {
             .child(paciente.id + "/perfil.jpg")
             .getDownloadURL();
         }
-        //ahora debemos buscar la imagen perfil.jpg de cada paciente e insertarla en cada objeto
+        this.visible = false;
       } catch (error) {
         console.error(error);
       }
@@ -226,11 +244,10 @@ export default {
     filtrarPacientes() {
       this.pacientesFiltrados = this.pacientes;
       if (this.search != "") {
-        this.pacientesFiltrados = this.pacientesFiltrados.filter(p =>{
-          let regex=new RegExp(this.search,"i");
+        this.pacientesFiltrados = this.pacientesFiltrados.filter(p => {
+          let regex = new RegExp(this.search, "i");
           return regex.test(p.nombre);
-          }
-        );
+        });
       }
       //PRIMERO EVALUA LA BUSQUEDA POR NOMBRE
       if (this.orderBy == "nombre" && this.orderDescend == false) {
