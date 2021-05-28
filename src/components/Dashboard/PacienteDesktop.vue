@@ -11,7 +11,7 @@
         </div>
         <div class="row">
           <div class="col">
-            <q-btn color="blue-9" flat to="/paciente">
+            <q-btn color="blue-9" flat :to="'/paciente/' + paciente.id">
               Expediente
             </q-btn>
           </div>
