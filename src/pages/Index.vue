@@ -134,7 +134,7 @@
 </template>
 
 <script>
-import { firebase, auth, db, st } from "../boot/firebase";
+import {auth, db, st } from "../boot/firebase";
 import PacienteDesktop from "../components/Dashboard/PacienteDesktop";
 import PacienteMobile from "../components/Dashboard/PacienteMobile";
 export default {
@@ -163,7 +163,6 @@ export default {
         { slot: "Femenino", value: "Femenino" }
       ],
       pacientes: [],
-      loading:false
     };
   },
   //se le pone async para que no filtre antes de que este lleno el array de pacientes
@@ -204,7 +203,6 @@ export default {
     },
     //metodo para llenar el array pacientes con todos los pacientes del doctor actual
     async traerPacientes() {
-      this.loading=true;
        this.$q.loading.show({
         message: 'Cargando Pacientes.<br/><span class="text-orange text-weight-bold">Por favor espere...</span>'
       });
