@@ -1,5 +1,5 @@
 <template>
-  <div class="relative-position" :class="{ 'window-height': visible }">
+  <div class="relative-position" :style="visible ? 'height: 92Vh' : ''">
     <!-- row de filtros-->
     <div class="row" v-if="!visible && pacientes.length > 0">
       <div class="col-12 q-pa-md">
@@ -125,7 +125,19 @@
       />
     </div>
     <!-- mensaje si no hay pacientes-->
-    <div class="row"></div>
+    <div
+      class="row  items-center justify-center items-center"
+      v-if="!visible && pacientes.length == 0"
+      style="height: 85Vh"
+    >
+      <div class="col-12 text-center text-primary">
+        <q-icon name="people" style="font-size: 8rem" />
+
+        <div class=" text-h4  text-weight-bolder">
+          No hay pacientes registrados
+        </div>
+      </div>
+    </div>
     <!-- loading-->
     <q-inner-loading :showing="visible">
       <q-spinner-cube size="3rem" color="primary" />
@@ -138,18 +150,10 @@
       >
     </q-inner-loading>
   </div>
-  <!-- Se muestra si no hay pacientes registrados -->
-  <div v-else class="row items-center justify-center" style="height:100Vh">
-    <div class="col-3 text-center">
-      <q-icon name="priority_high" class="text-grey" style="font-size:5em"/><br>
-      <span>Ningun paciente registrado.</span>
-    </div>
-  </div>
-</div>
 </template>
 
 <script>
-import {auth, db, st } from "../boot/firebase";
+import { auth, db, st } from "../boot/firebase";
 import PacienteDesktop from "../components/Dashboard/PacienteDesktop";
 import PacienteMobile from "../components/Dashboard/PacienteMobile";
 export default {
@@ -178,7 +182,7 @@ export default {
         { slot: "Masculino", value: "Masculino" },
         { slot: "Femenino", value: "Femenino" }
       ],
-      pacientes: [],
+      pacientes: []
     };
   },
   //se le pone async para que no filtre antes de que este lleno el array de pacientes
@@ -219,10 +223,6 @@ export default {
     },
     //metodo para llenar el array pacientes con todos los pacientes del doctor actual
     async traerPacientes() {
-       this.$q.loading.show({
-        message: 'Cargando Pacientes.<br/><span class="text-orange text-weight-bold">Por favor espere...</span>'
-      });
-
       this.pacientes = [];
       try {
         //primero traemos los pacientes
@@ -339,7 +339,6 @@ export default {
       );
     }
   },
-  computed: {
-  }
+  computed: {}
 };
 </script>
