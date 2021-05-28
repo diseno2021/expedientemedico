@@ -182,8 +182,8 @@ export default {
       }
     },
     push(hash) {
-      if (this.$route.path + this.$route.hash != "/paciente#" + hash) {
-        this.$router.push("/paciente#" + hash);
+      if (this.$route.path + this.$route.hash != "/paciente/" + this.$router.currentRoute.params.id + '#' + hash) {
+        this.$router.push("/paciente/" + this.$router.currentRoute.params.id + '#' + hash);
       }
     }
   }

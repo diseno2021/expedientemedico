@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div v-if="paciente != null">
     <q-card flat>
       <q-card-section>
         <div class="row justify-center q-pb-xs">
           <q-avatar square rounded size="85px" class="q-mx-auto">
-            <q-img :src="paciente.foto" v-if="nuevaImagen == null">
+            <q-img :src="fotoPerfil" v-if="nuevaImagen == null">
               <q-icon
                 class="absolute all-pointer-events absolute-bottom-right"
                 size="20px"
@@ -72,18 +72,40 @@
 </template>
 
 <script>
+import { db, st } from "../../boot/firebase";
+
 export default {
   data: () => ({
-    paciente: {
-      id: "asdfasdfasdfa987asdfasdf76as",
-      nombre: "Juan Santiago Perez Lima",
-      foto: "https://cdn.quasar.dev/img/avatar6.jpg"
-    },
+    paciente: null,
     cambiarFotografia: false,
     nuevaImagen: null,
-    nuevaImagenUrl: ""
+    nuevaImagenUrl: "",
+    fotoPerfil: '',
   }),
+  created(){
+    this.obtenerDatosPaciente();
+  },
   methods: {
+    obtenerDatosPaciente() {
+      let id = this.$router.currentRoute.params.id
+      var docRef = db.collection("pacientes").doc(id);
+      docRef
+        .get()
+        .then(doc => {
+          if (doc.exists) {
+            this.paciente = doc.data();
+            st.ref(doc.data().foto).getDownloadURL().then( url => {
+              this.fotoPerfil = url;
+            })
+          } else {
+            // doc.data() will be undefined in this case
+            console.log("No such document!");
+          }
+        })
+        .catch(error => {
+          console.log("Error getting document:", error);
+        });
+    },
     cambiarImagen() {
       this.cambiarFotografia = true;
     },
