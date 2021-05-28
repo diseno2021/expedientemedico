@@ -28,7 +28,8 @@
     <q-separator></q-separator>
     <Recetas id="recetas" />
     <q-separator></q-separator>
-    <Examenes id="examenes" />
+    <!-- idPaciente sera donde nos envien el id del paciente del que se esta visualizando expediente -->
+    <Examenes id="examenes" idPaciente="asdfasdfasdfa987asdfasdf76aq"/>
     <q-separator></q-separator>
     <div class="row  justify-end q-mt-md">
       <div class="col-12 col-sm-6 col-lg-4">
