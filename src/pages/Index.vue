@@ -1,5 +1,4 @@
 <template>
-<div>
   <div class="relative-position" :class="{ 'window-height': visible }">
     <!-- row de filtros-->
     <div class="row" v-if="!visible && pacientes.length > 0">
@@ -139,11 +138,10 @@
       >
     </q-inner-loading>
   </div>
-</div>
 </template>
 
 <script>
-import {auth, db, st } from "../boot/firebase";
+import { auth, db, st } from "../boot/firebase";
 import PacienteDesktop from "../components/Dashboard/PacienteDesktop";
 import PacienteMobile from "../components/Dashboard/PacienteMobile";
 export default {
@@ -172,7 +170,7 @@ export default {
         { slot: "Masculino", value: "Masculino" },
         { slot: "Femenino", value: "Femenino" }
       ],
-      pacientes: [],
+      pacientes: []
     };
   },
   //se le pone async para que no filtre antes de que este lleno el array de pacientes
@@ -213,7 +211,6 @@ export default {
     },
     //metodo para llenar el array pacientes con todos los pacientes del doctor actual
     async traerPacientes() {
-
       this.pacientes = [];
       try {
         //primero traemos los pacientes
@@ -330,7 +327,6 @@ export default {
       );
     }
   },
-  computed: {
-  }
+  computed: {}
 };
 </script>
