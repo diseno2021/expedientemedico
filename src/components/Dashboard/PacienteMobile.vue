@@ -89,7 +89,7 @@
             color="primary"
             label="Ver Expediente"
             icon="assignment"
-            to="/paciente"
+            :to="'/paciente/'+paciente.id"
           />
         </q-card-actions>
       </q-card>
