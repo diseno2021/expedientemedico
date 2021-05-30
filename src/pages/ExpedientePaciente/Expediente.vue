@@ -17,19 +17,19 @@
     <q-separator></q-separator>
     <div class="row">
       <div class="col-12 col-md-6">
-        <MedicamentosPermanentes id="medicamentos-permanentes" />
+        <MedicamentosPermanentes id="medicamentos-permanentes" :paciente="paciente" v-if="paciente !== null" />
       </div>
       <div class="col-12 col-md-6">
         <EnfermedadesCronicas id="enfermedades-cronicas" />
       </div>
     </div>
     <q-separator></q-separator>
-    <Consultas id="consultas" />
+    <Consultas id="consultas" :consultas="consultasPaciente" />
     <q-separator></q-separator>
     <Recetas id="recetas" />
     <q-separator></q-separator>
     <!-- idPaciente sera donde nos envien el id del paciente del que se esta visualizando expediente -->
-    <Examenes id="examenes" idPaciente="asdfasdfasdfa987asdfasdf76aq" />
+    <Examenes id="examenes" :idPaciente="this.$router.currentRoute.params.id" />
     <q-separator></q-separator>
     <div class="row  justify-end q-mt-md">
       <div class="col-12 col-sm-6 col-lg-4">
@@ -68,6 +68,7 @@ import { db, st } from "../../boot/firebase";
 export default {
   data: () => ({
     paciente: null,
+    consultasPaciente: [],
   }),
   components: {
     InformacionPersonal,
@@ -104,11 +105,26 @@ export default {
         .catch(error => {
           console.log("Error getting document:", error);
         });
+    },
+    obtenerConsultas(){
+      db.collection('consultas').where('idPaciente', '==', this.$router.currentRoute.params.id).get().then( qs => {
+        qs.docs.forEach(doc => {
+          let consulta = doc.data();
+          Object.defineProperty(consulta, 'id', {
+            value: doc.id,
+            writable: true,
+            enumerable: true,
+            configurable: true
+          });
+          this.consultasPaciente.push(consulta);
+        });
+      });
     }
   },
   created(){
     this.obtenerDatosPaciente();
-  }
+    this.obtenerConsultas();
+  },
 };
 </script>
 

@@ -3,7 +3,7 @@
       <div class="row">
           <h4 class="text-h4">Consultas</h4>
       </div>
-       <div class="row">
+       <div class="row" v-if="consultas.length > 0">
             <div class="col-12 col-md-6 q-pa-sm" v-for="(consulta,index) in consultasPagina" :key="consulta.id">
                 <q-card flat bordered>
                     <q-expansion-item>
@@ -96,7 +96,7 @@
                 </q-card>
             </div>
        </div>
-       <div class="row justify-center">
+       <div class="row justify-center" v-if="consultas.length > 0">
            <div class="col-auto">
                 <q-pagination
                     v-model="pagina"
@@ -111,152 +111,45 @@
                                 />
             </div>
        </div>
+       <div class="row" v-else>
+           <div class="col-12 text-center text-h5">
+               El usuario no tiene consultas registradas
+           </div>
+       </div>
   </div>
 </template>
 
 <script>
 export default {
-    
+    props: {
+        consultas: Array,
+    },
     data: () => ({
-        consultas: [],
         tab: [],
         pagina: 1,
         max: 1,
         consultasPagina: [],
         nConsultasPagina: 4,
     }),
-    created(){
-        let consultaejemplo =
-        {
-            id:"asdfasdlkjjash9783asdf",
-            idPaciente:"asdfasdfasdfa987asdfasdf76as",
-            fecha: "2021-04-30",
-            peso:132.5, //peso en libras
-            estatura: 123, //en centimetros
-            temperatura: 36.5,
-            imc:23.3,
-            presionArterial: "180/40",
-            exploracionFisica:"las amígdalas están enrojecidas", //texto html
-            motivoConsulta:"Molestias en la garganta",
-            sintomas:"Sensación de picazón en la garganta <br />Voz ronca <br />Dolor e inflamación de los ganglios en la zona del cuello o la mandíbula\
-            <br />Sensación de picazón en la garganta <br />Voz ronca <br />Dolor e inflamación de los ganglios en la zona del cuello o la mandíbula", //texto html
-            diagnostico:"Faringo-amigdalitis aguda", //texto html
-            receta:"Paracetamol - 1 por las noches", //texto html
-            examenes:"", //texto html
-            proximaCita: "2021-05-30",
-        }
-        this.consultas.push(consultaejemplo);
-        let consultaejemplo2 =
-        {
-            id:"sdfasdljash9783789asd",
-            idPaciente:"asdfasdfasdfa987asdfasdf76as",
-            fecha: "2021-03-30",
-            peso:132.5, //peso en libras
-            estatura: 123, //en centimetros
-            temperatura: 36.5,
-            imc:23.3,
-            presionArterial: "180/40",
-            exploracionFisica:"", //texto html
-            motivoConsulta:"Temperatura corporal alta",
-            sintomas:"Deshidratación <br />Dolor de cabeza", //texto html
-            diagnostico:"Febrícula", //texto html
-            receta:"Ibuprofeno - 1 al dia <br />Paracetamol - 1 por las noches", //texto html
-            examenes:"", //texto html
-            proximaCita: "2021-04-30",
-        }
-        this.consultas.push(consultaejemplo2);
-        let consultaejemplo3 =
-        {
-            id:"sasdlkjjash9783789asd",
-            idPaciente:"asdfasasdfa987asdfasdf76as",
-            fecha: "2021-02-30",
-            peso:132.5, //peso en libras
-            estatura: 123, //en centimetros
-            temperatura: 36.5,
-            imc:23.3,
-            presionArterial: "180/40",
-            exploracionFisica:"", //texto html
-            motivoConsulta:"Temperatura corporal alta",
-            sintomas:"Escalofríos y temblores <br />Sudoración", //texto html
-            diagnostico:"Febrícula", //texto html
-            receta:"Ibuprofeno - 1 al dia <br />Paracetamol - 1 por las noches", //texto html
-            examenes:"", //texto html
-            proximaCita: "2021-03-30",
-        }
-        this.consultas.push(consultaejemplo3);
-        let consultaejemplo4 =
-        {
-            id:"asdfasjjash9783asdf",
-            idPaciente:"asdfasdfasdfa987asdfasdf76as",
-            fecha: "2021-04-30",
-            peso:132.5, //peso en libras
-            estatura: 123, //en centimetros
-            temperatura: 36.5,
-            imc:23.3,
-            presionArterial: "180/40",
-            exploracionFisica:"las amígdalas están enrojecidas", //texto html
-            motivoConsulta:"Molestias en la garganta",
-            sintomas:"Sensación de picazón en la garganta <br />Voz ronca <br />Dolor e inflamación de los ganglios en la zona del cuello o la mandíbula", //texto html
-            diagnostico:"Faringo-amigdalitis aguda", //texto html
-            receta:"Paracetamol - 1 por las noches", //texto html
-            examenes:"", //texto html
-            proximaCita: "2021-05-30",
-        }
-        this.consultas.push(consultaejemplo4);
-        let otroejemplo =
-        {
-            id:"sasdlkjjash97837sd",
-            idPaciente:"asdfasasdfa987asdfasdf76as",
-            fecha: "2021-01-30",
-            peso:122.5, //peso en libras
-            estatura: 123, //en centimetros
-            temperatura: 36,
-            imc:13.39,
-            presionArterial: "180/40",
-            exploracionFisica:"", //texto html
-            motivoConsulta:"Malestar Estomacal",
-            sintomas:"Dolor en el estomago <br />Acidez <br />Falta de apetito", //texto html
-            diagnostico:"Dolor abdominal agudo", //texto html
-            receta:"subsalicilato de bismuto (Pepto- Bismol) - 100ml 3 veces al dia <br />", //texto html
-            examenes:"", //texto html
-            proximaCita: "2021-03-30",
-        }
-        let otroejemplo2 =
-        {
-            id:"sdlkjjash97837sd",
-            idPaciente:"asdfasasdfa987asdfasdf76as",
-            fecha: "2021-01-30",
-            peso:122.5, //peso en libras
-            estatura: 123, //en centimetros
-            temperatura: 36,
-            imc:13.39,
-            presionArterial: "180/40",
-            exploracionFisica:"", //texto html
-            motivoConsulta:"Malestar Estomacal",
-            sintomas:"Dolor en el estomago <br />Acidez <br />Falta de apetito", //texto html
-            diagnostico:"Dolor abdominal agudo", //texto html
-            receta:"subsalicilato de bismuto (Pepto- Bismol) - 100ml 3 veces al dia <br />", //texto html
-            examenes:"", //texto html
-            proximaCita: "2021-03-30",
-        }
-        this.consultas.push(otroejemplo);
-        this.consultas.push(otroejemplo2);
-        this.max = Math.ceil(this.consultas.length/this.nConsultasPagina);
-        for (let index = 0; index < this.nConsultasPagina; index++) {
-            if (this.consultas.length >= index+1) {
-                    this.consultasPagina.push(this.consultas[index]);   
-            }
-        }
-        this.consultasPagina.forEach((c, index) => {
-            this.tab.push('sintomas' + index);
-        });
-    },
     methods: {
         cambiarPagina(){
             this.consultasPagina.splice(0, this.consultasPagina.length);;
             for (let index = (this.pagina-1)*this.nConsultasPagina; index < this.pagina*this.nConsultasPagina; index++) {
                 if (this.consultas.length >= index+1) {
                     this.consultasPagina.push(this.consultas[index]);   
+                }
+            }
+            this.consultasPagina.forEach((c, index) => {
+                this.tab.push('sintomas' + index);
+            });
+        }
+    },
+    watch: {
+        consultas(newValue, oldValue){
+            this.max = Math.ceil(this.consultas.length/this.nConsultasPagina);
+            for (let index = 0; index < this.nConsultasPagina; index++) {
+                if (this.consultas.length >= index+1) {
+                        this.consultasPagina.push(this.consultas[index]);   
                 }
             }
             this.consultasPagina.forEach((c, index) => {
