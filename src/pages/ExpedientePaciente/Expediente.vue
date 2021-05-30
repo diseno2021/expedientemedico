@@ -2,13 +2,24 @@
   <div>
     <div class="row">
       <div class="col-12">
-        <InformacionPersonal id="informacion-personal" :paciente="paciente" v-if="paciente !== null"/>
+        <InformacionPersonal
+          id="informacion-personal"
+          :paciente="paciente"
+          v-if="paciente !== null"
+          @guardarInformacion="guardarInformacion"
+          ref="refInformacionPersonal"
+        />
       </div>
     </div>
     <q-separator></q-separator>
     <div class="row">
       <div class="col-12 col-md-6">
-        <Antecedentes id="antecedentes" :paciente="paciente" v-if="paciente !== null"/>
+        <Antecedentes
+          id="antecedentes"
+          :paciente="paciente"
+          v-if="paciente !== null"
+          ref="refAntecedentes"
+        />
       </div>
       <div class="col-12 col-md-6">
         <Alergias id="alergias" />
@@ -17,7 +28,11 @@
     <q-separator></q-separator>
     <div class="row">
       <div class="col-12 col-md-6">
-        <MedicamentosPermanentes id="medicamentos-permanentes" :paciente="paciente" v-if="paciente !== null" />
+        <MedicamentosPermanentes
+          id="medicamentos-permanentes"
+          :paciente="paciente"
+          v-if="paciente !== null"
+        />
       </div>
       <div class="col-12 col-md-6">
         <EnfermedadesCronicas id="enfermedades-cronicas" />
@@ -63,12 +78,12 @@ import Consultas from "./Consultas";
 import Recetas from "./Recetas";
 import EnfermedadesCronicas from "./EnfermedadesCronicas";
 import Examenes from "../testGaleria.vue";
-import { db, st } from "../../boot/firebase";
+import { db } from "../../boot/firebase";
 
 export default {
   data: () => ({
     paciente: null,
-    consultasPaciente: [],
+    consultasPaciente: []
   }),
   components: {
     InformacionPersonal,
@@ -82,15 +97,43 @@ export default {
   },
   methods: {
     guardarInformacion() {
-      this.$q.notify({
-        message: "Información personal guardada en local storage",
-        color: "green-4",
-        textColor: "white",
-        icon: "cloud_done"
-      });
+      let actualizarPaciente = {
+        antecedentes: this.$refs.refAntecedentes.paciente.antecedentes,
+        direccion: this.$refs.refInformacionPersonal.paciente.direccion,
+        dui: this.$refs.refInformacionPersonal.paciente.dui,
+        email: this.$refs.refInformacionPersonal.paciente.email,
+        enCasoEmergencia: this.$refs.refInformacionPersonal.paciente
+          .enCasoEmergencia,
+        estatura: this.$refs.refInformacionPersonal.paciente.estatura,
+        fechaNacimiento: this.$refs.refInformacionPersonal.paciente
+          .fechaNacimiento,
+        genero: this.$refs.refInformacionPersonal.paciente.genero,
+        nombre: this.$refs.refInformacionPersonal.paciente.nombre,
+        peso: this.$refs.refInformacionPersonal.paciente.peso,
+        telefono: this.$refs.refInformacionPersonal.paciente.telefono,
+        tipoSangre: this.$refs.refInformacionPersonal.paciente.tipoSangre,
+        whatsapp: this.$refs.refInformacionPersonal.paciente.whatsapp
+      };
+      let id = this.$router.currentRoute.params.id;
+      var usuarioRef = db.collection("pacientes").doc(id);
+      return usuarioRef
+        .update(actualizarPaciente)
+        .then(() => {
+          this.$q.notify({
+            message: "Información personal guardada en local storage",
+            color: "green-4",
+            textColor: "white",
+            icon: "cloud_done"
+          });
+        })
+        .catch(error => {
+          // The document probably doesn't exist.
+          console.error("Error updating document: ", error);
+        });
+      //console.log(actualizarPaciente);
     },
     obtenerDatosPaciente() {
-      let id = this.$router.currentRoute.params.id
+      let id = this.$router.currentRoute.params.id;
       var docRef = db.collection("pacientes").doc(id);
       docRef
         .get()
@@ -106,25 +149,28 @@ export default {
           console.log("Error getting document:", error);
         });
     },
-    obtenerConsultas(){
-      db.collection('consultas').where('idPaciente', '==', this.$router.currentRoute.params.id).get().then( qs => {
-        qs.docs.forEach(doc => {
-          let consulta = doc.data();
-          Object.defineProperty(consulta, 'id', {
-            value: doc.id,
-            writable: true,
-            enumerable: true,
-            configurable: true
+    obtenerConsultas() {
+      db.collection("consultas")
+        .where("idPaciente", "==", this.$router.currentRoute.params.id)
+        .get()
+        .then(qs => {
+          qs.docs.forEach(doc => {
+            let consulta = doc.data();
+            Object.defineProperty(consulta, "id", {
+              value: doc.id,
+              writable: true,
+              enumerable: true,
+              configurable: true
+            });
+            this.consultasPaciente.push(consulta);
           });
-          this.consultasPaciente.push(consulta);
         });
-      });
     }
   },
-  created(){
+  created() {
     this.obtenerDatosPaciente();
     this.obtenerConsultas();
-  },
+  }
 };
 </script>
 

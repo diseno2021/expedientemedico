@@ -34,25 +34,27 @@
     </div>
     <div class="row justify-between q-mt-md">
       <div class="col-12 col-sm-5 col-md-5">
-        <q-input
-          label="fecha de nacimiento"
-          filled
-          v-model="paciente.fechaNacimiento"
-          mask="date"
-          :rules="['date']"
-        >
-          <template v-slot:append>
+        <q-input filled v-model="paciente.fechaNacimiento">
+          <template v-slot:prepend>
             <q-icon name="event" class="cursor-pointer">
-              <q-popup-proxy
-                ref="qDateProxy"
-                transition-show="scale"
-                transition-hide="scale"
-              >
-                <q-date v-model="paciente.fechaNacimiento">
+              <q-popup-proxy transition-show="scale" transition-hide="scale">
+                <q-date v-model="paciente.fechaNacimiento" mask="YYYY-MM-DDTHH:mm:ss">
                   <div class="row items-center justify-end">
                     <q-btn v-close-popup label="Close" color="primary" flat />
                   </div>
                 </q-date>
+              </q-popup-proxy>
+            </q-icon>
+          </template>
+
+          <template v-slot:append>
+            <q-icon name="access_time" class="cursor-pointer">
+              <q-popup-proxy transition-show="scale" transition-hide="scale">
+                <q-time v-model="paciente.fechaNacimiento" mask="YYYY-MM-DDTHH:mm:ss" format24h>
+                  <div class="row items-center justify-end">
+                    <q-btn v-close-popup label="Close" color="primary" flat />
+                  </div>
+                </q-time>
               </q-popup-proxy>
             </q-icon>
           </template>
@@ -99,7 +101,7 @@
       <div class="col-12 col-md-5">
         <div class="row q-mb-md  justify-between">
           <div class="col-7">
-            <q-input  label="Nuevo Peso">
+            <q-input label="Nuevo Peso" v-model="nuevoPeso" type="number">
               <template v-slot:prepend>
                 <q-icon name="monitor_weight" />
               </template>
@@ -110,11 +112,15 @@
               color="primary"
               label="Pesos"
               flat
-              class="q-mt-md"              
+              class="q-mt-md"
               icon="expand_more"
             >
               <q-menu max-height="200px">
-                <q-item v-for="peso in paciente.peso" :key="peso" style="min-width: 100px">
+                <q-item
+                  v-for="peso in paciente.peso"
+                  :key="peso"
+                  style="min-width: 100px"
+                >
                   <q-item-section>
                     {{ peso }}
                   </q-item-section>
@@ -129,7 +135,11 @@
       <div class="col-12 col-md-5">
         <div class="row q-mb-md  justify-between">
           <div class="col-6">
-            <q-input label="Nueva estatura">
+            <q-input
+              label="Nueva estatura"
+              v-model="nuevaEstatura"
+              type="number"
+            >
               <template v-slot:prepend>
                 <q-icon name="accessibility" />
               </template>
@@ -140,11 +150,15 @@
               color="primary"
               label="Estatura"
               flat
-              class="q-mt-md"              
+              class="q-mt-md"
               icon="expand_more"
             >
               <q-menu max-height="200px">
-                <q-item v-for="estatura in paciente.estatura" :key="estatura" style="min-width: 100px">
+                <q-item
+                  v-for="estatura in paciente.estatura"
+                  :key="estatura"
+                  style="min-width: 100px"
+                >
                   <q-item-section>
                     {{ estatura }}
                   </q-item-section>
@@ -182,6 +196,23 @@
         </q-input>
       </div>
     </div>
+    <div class="row justify-between">
+      <div class="col-12 col-md-5 q-mt-md q-mt-md">
+        <q-input v-model="paciente.email" label="Email">
+          <template v-slot:prepend>
+            <q-icon name="email" />
+          </template>
+        </q-input>
+      </div>
+
+      <div class="col-12 col-md-5 q-mt-md q-mt-md">
+        <q-input v-model="paciente.whatsapp" label="DUI">
+          <template v-slot:prepend>
+            <q-icon name="credit_card" />
+          </template>
+        </q-input>
+      </div>
+    </div>
 
     <div class="col-md-12 q-mt-md q-my-md ">
       <q-input v-model="paciente.enCasoEmergencia" label="Caso de emergencia">
@@ -198,7 +229,9 @@ import { date } from "quasar";
 import BannerPrincipal from "./../../components/ExpedientePaciente/BannerPrincipal.vue";
 export default {
   data() {
-    return { 
+    return {
+      nuevoPeso: null,
+      nuevaEstatura: null
     };
   },
   props: ["paciente"],
@@ -225,12 +258,15 @@ export default {
   },
   methods: {
     guardarInformacion() {
-      this.$q.notify({
-        message: "Información personal guardada en local storage",
-        color: "green-4",
-        textColor: "white",
-        icon: "cloud_done"
-      });
+      if (this.nuevoPeso !== null && this.nuevoPeso !== "") {
+        this.paciente.peso.push(parseFloat(this.nuevoPeso));
+        this.nuevoPeso = null;
+      }
+      if (this.nuevaEstatura !== null && this.nuevaEstatura !== "") {
+        this.paciente.estatura.push(parseFloat(this.nuevaEstatura));
+        this.nuevaEstatura = null;
+      }
+      this.$emit("guardarInformacion");
     }
   }
 };
