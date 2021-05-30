@@ -4,20 +4,7 @@
       <q-card-section>
         <div class="row justify-center q-pb-xs">
           <q-avatar square rounded size="85px" class="q-mx-auto">
-            <q-img :src="fotoPerfil" v-if="nuevaImagen == null">
-              <q-icon
-                class="absolute all-pointer-events absolute-bottom-right"
-                size="20px"
-                name="edit"
-                color="white"
-                @click="cambiarImagen"
-              >
-                <q-tooltip>
-                  Cambiar fotografía
-                </q-tooltip>
-              </q-icon>
-            </q-img>
-            <q-img :src="nuevaImagenUrl" v-else>
+            <q-img :src="fotoPerfil">
               <q-icon
                 class="absolute all-pointer-events absolute-bottom-right"
                 size="20px"
@@ -80,23 +67,29 @@ export default {
     cambiarFotografia: false,
     nuevaImagen: null,
     nuevaImagenUrl: "",
-    fotoPerfil: '',
+    fotoPerfil: ""
   }),
-  created(){
+  created() {
     this.obtenerDatosPaciente();
   },
   methods: {
     obtenerDatosPaciente() {
-      let id = this.$router.currentRoute.params.id
+      let id = this.$router.currentRoute.params.id;
       var docRef = db.collection("pacientes").doc(id);
       docRef
         .get()
         .then(doc => {
           if (doc.exists) {
-            this.paciente = doc.data();
-            st.ref(doc.data().foto).getDownloadURL().then( url => {
-              this.fotoPerfil = url;
-            })
+            let datos = doc.data();
+            this.paciente = {
+              id: doc.id,
+              ...datos
+            };
+            st.ref(doc.data().foto)
+              .getDownloadURL()
+              .then(url => {
+                this.fotoPerfil = url;
+              });
           } else {
             // doc.data() will be undefined in this case
             console.log("No such document!");
@@ -113,10 +106,17 @@ export default {
       this.cambiarFotografia = false;
       this.nuevaImagen = null;
     },
-    guardar() {
+    guardar: async function() {
       if (this.nuevaImagen !== null) {
+        //this.nuevaImagenUrl = URL.createObjectURL(this.nuevaImagen);
+        const foto = this.paciente.foto
+        let id = this.$router.currentRoute.params.id;
+        const archivoRef = st.ref(foto);
+        var task = await archivoRef.put(this.nuevaImagen);
+        const urlImage = await task.ref.getDownloadURL();
+        this.fotoPerfil = urlImage;
+        this.nuevaImagen = null;
         this.cambiarFotografia = false;
-        this.nuevaImagenUrl = URL.createObjectURL(this.nuevaImagen);
       }
     }
   }
