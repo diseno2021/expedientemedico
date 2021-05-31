@@ -130,7 +130,7 @@
                 <q-label class="q-mx-md q-my-md">Sexo:</q-label><br />
                 <q-radio
                   class="q-mx-md"
-                  v-model="paciente.sexo"
+                  v-model="paciente.genero"
                   label="Masculino"
                   val="masculino"
                 >
@@ -138,7 +138,7 @@
                 <br />
                 <q-radio
                   class="q-mx-md "
-                  v-model="paciente.sexo"
+                  v-model="paciente.genero"
                   label="Femenino"
                   val="femenino"
                 >
@@ -156,7 +156,7 @@
                 <q-label class="q-mx-md q-my-md">Fecha de nacimiento:</q-label><br />
                 <q-input
                   class="q-mx-md"
-                  v-model="paciente.fecha_nacimiento"
+                  v-model="paciente.fechaNacimiento"
                   type="date"
                 >
                   <q-tooltip
@@ -279,7 +279,7 @@
             </q-input>
             <q-input
               class="q-mx-md"
-              v-model="paciente.caso_emergencia"
+              v-model="paciente.enCasoEmergencia"
               label="En caso de emergencia"
               placeholder="Jose Hernandez  7744-7192"
             >
@@ -297,7 +297,7 @@
             </q-input>
             <q-input
               class="q-mx-md"
-              v-model="paciente.observaciones"
+              v-model="paciente.comentario"
               label="Observaciones"
               type="textarea"
             >
@@ -314,7 +314,7 @@
               </template>
             </q-input>
             <br />
-            <q-btn class="q-mx-md" color="primary" @click="limpiar"
+            <q-btn class="q-mx-md" color="primary" @click="limpiar()"
               >Registrar
               <q-tooltip
                 content-class="bg-accent text-white"
@@ -337,8 +337,7 @@
                 >Cancelar y volver</q-tooltip
               ></q-btn
             >
-
-            <br />
+             <br />
             <br />
             <br />
           </div>
@@ -349,6 +348,8 @@
 </template>
 
 <script>
+import { db } from "../boot/firebase";
+
 export default {
   name: "agregar_paciente",
   data() {
@@ -359,16 +360,28 @@ export default {
         "https://isanidad.com/wp-content/uploads/2017/03/dolencias-cancerigenas_paliativos.jpg",
 
       paciente: {
+        idMedico:"Lnw22pwDcUQtWuTdSqcLmuwrrS12",
         nombre: "",
-        sexo: "",
-        fecha_nacimiento: "",
+        genero: "",
+        fechaNacimiento: "",
         telefono: "",
         whatsapp: "",
         direccion: "",
         email: "",
         dui: "",
-        caso_emergencia: "",
-        observaciones: ""
+        enCasoEmergencia: "",
+        comentario: "",
+        //datos complementarios del documento
+        alergias:"",
+        antecedentes:"",
+        archivos:[],
+        enfermedadesCronicas:"",
+        estatura:[],
+        foto:"",
+        medicamentosPermanentes:"",
+        peso:[],
+        tipoSangre:""
+
       },
       formulario: false
     };
@@ -377,29 +390,44 @@ export default {
     limpiar(){
       this.paciente.nombre='',
       this.formulario=false;
-      this.paciente.fecha_nacimiento='';
-      this.paciente.sexo='';
+      this.paciente.fechaNacimiento='';
+      this.paciente.genero='';
       this.paciente.telefono='';
       this.paciente.whatsapp='';
       this.paciente.direccion='';
       this.paciente.email='';
       this.paciente.dui='';
-      this.paciente.caso_emergencia='';
-      this.paciente.observaciones='';
+      this.paciente.enCasoEmergencia='';
+      this.paciente.comentario='';
       this.imagen=null;
       this.mostrar_imagen=false;
-      this.showNotif("Nuevo paciente guardado.", "accent");
+      this.showNotif("Nuevo paciente guardado.", "accent", "cloud_done");
     },
-    showNotif (mensaje, color) {
+    showNotif (mensaje, color, icono) {
       this.$q.notify({
         message: mensaje,
         color: color,
-        timeout: 1000
+        timeout: 1000,
+      icon: icono
       })
     },
     cancelar(){
       this.formulario=false;
-      this.showNotif("Registro de nuevo paciente cancelado.", "negative")
+      this.showNotif("Registro de nuevo paciente cancelado.", "negative","close")
+    },
+    async agregarPaciente(){
+     try {
+         this.$q.loading.show();
+     
+       const query =await db.collection('pacientes').add(this.paciente);
+       this.limpiar();
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.$q.loading.hide();
+
+      }
+
     }
   }
  
