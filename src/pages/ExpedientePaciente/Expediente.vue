@@ -35,15 +35,17 @@
         />
       </div>
       <div class="col-12 col-md-6">
-        <EnfermedadesCronicas id="enfermedades-cronicas" />
+        <EnfermedadesCronicas id="enfermedades-cronicas" :paciente="paciente" v-if="paciente!== null" />
       </div>
     </div>
     <q-separator></q-separator>
     <Consultas id="consultas" :consultas="consultasPaciente" />
     <q-separator></q-separator>
-    <Recetas id="recetas" />
+    <Recetas id="recetas" :consultas="consultasPaciente"/>
+    
     <q-separator></q-separator>
     <!-- idPaciente sera donde nos envien el id del paciente del que se esta visualizando expediente -->
+
     <Examenes id="examenes" :idPaciente="this.$router.currentRoute.params.id" />
     <q-separator></q-separator>
     <div class="row  justify-end q-mt-md">

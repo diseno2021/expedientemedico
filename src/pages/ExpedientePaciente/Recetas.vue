@@ -1,71 +1,146 @@
 <template>
-  <div class="q-pa-md" style="max-width: 450px">
+  <div class="q-ma-md">
     <div class="row">
-          <h4 class="text-h4">Recetas</h4>
-      </div>
-    <q-list bordered class="rounded-borders">
-      <q-expansion-item expand-separator class="text-weight-bold text-subtitle1" label="Recetas">
-        <q-card>
-          <q-card-section>
-            <div>
-              <q-splitter v-model="splitterModel" style="height: 250px">
-                <template v-slot:before>
-                  <q-tabs v-model="tab" vertical class="text-primary">
-                    <q-tab name="fecha" label="Fecha" />
-                    <q-tab name="recetas" label="Recetas" />
-                  </q-tabs>
-                </template>
-
-                <template v-slot:after>
+      <h4 class="text-h4">Recetas</h4>
+    </div>
+    <div class="row" v-if="consultas.length > 0">
+      <div
+        class="col-12 col-md-6 q-pa-sm"
+        v-for="(consulta, index) in consultasPagina"
+        :key="consulta.id"
+      >
+        <q-card flat bordered>
+          <q-expansion-item>
+            <template v-slot:header>
+              <q-item-section class="text-body2 text-right">
+                {{ consulta.fecha }}
+              </q-item-section>
+            </template>
+            <q-separator></q-separator>
+            <div class="row">
+              <div class="col-auto q-py-none q-pl-sm q-pr-none">
+                <q-tabs
+                  dense
+                  v-model="tab[index]"
+                  vertical
+                  no-caps
+                  align="left"
+                  class="text-primary q-px-none"
+                >
+                  <q-tab :name="'receta' + index" label="Receta" />
+                </q-tabs>
+              </div>
+              <q-separator vertical inset color="primary" />
+              <div class="col q-pl-sm q-pr-xs q-py-xs">
+                <q-scroll-area style="height: 170px">
                   <q-tab-panels
-                    v-model="tab"
+                    v-model="tab[index]"
                     animated
                     swipeable
                     vertical
                     transition-prev="jump-up"
                     transition-next="jump-up"
                   >
-                    <q-tab-panel name="fecha">
-                       <span class="text-weight-bold text-subtitle1">Fecha De Sus Recetas</span> <br>
-                      <span class="text-subtitle2">2021-01-03</span>
+                    <q-tab-panel class="q-pa-none" :name="'receta' + index">
+                      <div class="text-h6 q-mb-md">Receta</div>
+                      <div class="text-body2" v-html="consulta.receta"></div>
                     </q-tab-panel>
-
-                    <q-tab-panel name="recetas">
-                      <span class="text-weight-bold text-subtitle1">Receta por molestia de Garganta</span> <br>
-                      <span class="text-subtitle2"><br>Paracetamol - 1 por las noches</span>
-                      <span class="text-subtitle2"><br>Acetaminofen - 1 por las noches</span>
+                    <q-tab-panel class="q-pa-none" :name="'examenes' + index">
+                      <div class="text-h6 q-mb-md">Fechas</div>
+                      <div
+                        class="text-body2"
+                        v-html="consulta.proximaCita"
+                      ></div>
                     </q-tab-panel>
                   </q-tab-panels>
-                </template>
-              </q-splitter>
+                </q-scroll-area>
+              </div>
+              <q-separator vertical class="gt-md" />
+              <q-separator vertical class="lt-md gt-xs" />
+              <div class="col-12 col-sm-4 col-md-12 col-lg-4 q-py-xs q-px-md">
+                <q-separator class="lt-lg gt-sm"></q-separator>
+                <q-separator class="lt-sm"></q-separator>
+                <div class="row q-pt-xs"></div>
+              </div>
             </div>
-          </q-card-section>
+            <q-separator />
+            <div class="row items-center">
+              <div class="col-auto q-pa-sm">
+                Proxima cita: {{ consulta.proximaCita }}
+              </div>
+              <q-space></q-space>
+              <div class="col-auto q-py-xs q-px-sm">
+                <q-btn flat size="md" color="secondary" dense>Editar</q-btn>
+              </div>
+            </div>
+          </q-expansion-item>
         </q-card>
-      </q-expansion-item>
-    </q-list>
+      </div>
+    </div>
+    <div class="row justify-center" v-if="consultas.length > 0">
+      <div class="col-auto">
+        <q-pagination
+          v-model="pagina"
+          :max="max"
+          @input="cambiarPagina"
+          direction-links
+          boundary-links
+          icon-first="skip_previous"
+          icon-last="skip_next"
+          icon-prev="fast_rewind"
+          icon-next="fast_forward"
+        />
+      </div>
+    </div>
+    <div class="row" v-else>
+      <div class="col-12 text-center text-h5">
+        El usuario no tiene consultas registradas
+      </div>
+    </div>
   </div>
 </template>
 <script>
-import BannerPrincipal from "./../../components/ExpedientePaciente/BannerPrincipal.vue";
 export default {
-  data() {
-    return {
-      tab: "fecha",
-      splitterModel: 20,
-    };
+  props: {
+    consultas: Array,
   },
-  components: {
-    BannerPrincipal,
-  },
+  data: () => ({
+    tab: [],
+    pagina: 1,
+    max: 1,
+    consultasPagina: [],
+    nConsultasPagina: 4,
+  }),
   methods: {
-    saveWork() {
-      this.$q.notify({
-        message: "Recetas guardadas en el local storage",
-        color: "green-4",
-        textColor: "white",
-        icon: "cloud_done",
+    cambiarPagina() {
+      this.consultasPagina.splice(0, this.consultasPagina.length);
+      for (
+        let index = (this.pagina - 1) * this.nConsultasPagina;
+        index < this.pagina * this.nConsultasPagina;
+        index++
+      ) {
+        if (this.consultas.length >= index + 1) {
+          this.consultasPagina.push(this.consultas[index]);
+        }
+      }
+      this.consultasPagina.forEach((c, index) => {
+        this.tab.push("sintomas" + index);
+      });
+    },
+  },
+  watch: {
+    consultas(newValue, oldValue) {
+      this.max = Math.ceil(this.consultas.length / this.nConsultasPagina);
+      for (let index = 0; index < this.nConsultasPagina; index++) {
+        if (this.consultas.length >= index + 1) {
+          this.consultasPagina.push(this.consultas[index]);
+        }
+      }
+      this.consultasPagina.forEach((c, index) => {
+        this.tab.push("sintomas" + index);
       });
     },
   },
 };
 </script>
+
