@@ -28,7 +28,7 @@
           icon="medical_services"
           label="Nueva Consulta"
           class="full-width"
-          to="/pasar-consulta"
+          :to="'/pasar-consulta/' + paciente.id"
         >
         </q-btn>
       </q-card-section>

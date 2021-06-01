@@ -41,7 +41,7 @@ const routes = [
       ]
     },
     {
-      path: "/pasar-consulta",
+      path: "/pasar-consulta/:id",
       component: ()=>import('./../pages/PasarConsulta/PasarConsultaView.vue')
       // children: [
       //   {
