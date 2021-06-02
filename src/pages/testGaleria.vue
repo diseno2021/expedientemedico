@@ -16,14 +16,34 @@
       @mouseleave="autoplay = true"
       :fullscreen.sync="fullscreen"
       :navigation-position="fullscreen ? 'left' : 'bottom'"
-      control-color="blue"
+      control-color="red"
+      arrows
     >
       <q-carousel-slide
         v-for="(item, index) in imagenes"
         :key="index"
         :name="index + 1"
         :img-src="item"
-      />
+      >
+      <q-btn
+            round
+            color="red"
+            size="md"
+            icon="delete_forever"
+            class="q-mx-sm"
+            @click="confirmEli(item)"
+          >
+            <q-tooltip
+              v-model="showing3"
+              content-class="bg-negative"
+              content-style="font-size: 16px"
+            >
+              <bold>Eliminar imagen</bold>
+            </q-tooltip>
+          </q-btn>
+      
+      </q-carousel-slide>
+
 
       <template v-slot:control>
         <q-carousel-control position="top-right" :offset="[18, 18]">
@@ -44,22 +64,7 @@
               <bold>Agregar nueva imagen</bold>
             </q-tooltip>
           </q-btn>
-          <q-btn
-            round
-            color="red"
-            size="md"
-            icon="delete_forever"
-            class="q-mx-sm"
-            @click="confirm = true"
-          >
-            <q-tooltip
-              v-model="showing3"
-              content-class="bg-negative"
-              content-style="font-size: 16px"
-            >
-              <bold>Eliminar imagen</bold>
-            </q-tooltip>
-          </q-btn>
+         
           <q-btn
             push
             round
@@ -90,7 +95,7 @@
 
         <q-card-actions align="right">
           <q-btn flat label="Cancel" color="grey-7" v-close-popup />
-          <q-btn flat label="Confirmar" color="red" v-close-popup />
+          <q-btn flat label="Confirmar" color="red" @click="eliminarImg" />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -148,6 +153,7 @@ export default {
       imagenes: [],
       nameImg: [],
       nameSelect: "",
+      imagenBorrar: ""
     };
   },
   methods: {
@@ -207,8 +213,35 @@ export default {
               });
             }
           });
-        });
+        });       
     },
+     eliminarImg(){
+      let url = this.imagenBorrar;
+      let this2 = this;
+      const carpeta = this.idPaciente;
+      const refer = st.ref();
+      let urll = url;
+
+      this.nameImg.forEach(function (element) {
+        if (urll.includes(element)) {
+          this2.nameSelect = element;
+        }
+      });
+
+      if (this.nameSelect != "") {
+        let newRef = refer.child(carpeta + "/" + this.nameSelect);
+
+        newRef.delete().then(() => {
+          this.traerImg()        
+          this.confirm= false;
+        
+        });
+      }
+    },  
+    confirmEli(url){
+      this.confirm = true;
+      this.imagenBorrar = url;
+    }
   },
   created() {
     this.traerImg();
