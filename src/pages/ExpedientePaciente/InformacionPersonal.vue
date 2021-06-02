@@ -38,7 +38,10 @@
           <template v-slot:prepend>
             <q-icon name="event" class="cursor-pointer">
               <q-popup-proxy transition-show="scale" transition-hide="scale">
-                <q-date v-model="paciente.fechaNacimiento" mask="YYYY-MM-DDTHH:mm:ss">
+                <q-date
+                  v-model="paciente.fechaNacimiento"
+                  mask="YYYY-MM-DDTHH:mm:ss"
+                >
                   <div class="row items-center justify-end">
                     <q-btn v-close-popup label="Close" color="primary" flat />
                   </div>
@@ -50,7 +53,11 @@
           <template v-slot:append>
             <q-icon name="access_time" class="cursor-pointer">
               <q-popup-proxy transition-show="scale" transition-hide="scale">
-                <q-time v-model="paciente.fechaNacimiento" mask="YYYY-MM-DDTHH:mm:ss" format24h>
+                <q-time
+                  v-model="paciente.fechaNacimiento"
+                  mask="YYYY-MM-DDTHH:mm:ss"
+                  format24h
+                >
                   <div class="row items-center justify-end">
                     <q-btn v-close-popup label="Close" color="primary" flat />
                   </div>
@@ -129,8 +136,12 @@
             </q-btn>
           </div>
         </div>
-
-        <q-img src="../../assets/img/peso.png"> </q-img>
+        <Grafica
+          :datosGrafica="datosGraficaPeso"
+          :numerosGrafica="numerosGraficaPeso"
+          :label="'Peso'"
+          v-if="datosGraficaPeso"
+        />
       </div>
       <div class="col-12 col-md-5">
         <div class="row q-mb-md  justify-between">
@@ -168,7 +179,12 @@
           </div>
         </div>
 
-        <q-img src="../../assets/img/estatura.png"></q-img>
+        <Grafica
+          :datosGrafica="datosGraficaEstatura"
+          :numerosGrafica="numerosGraficaEstatura"
+          :label="'Estatura'"
+          v-if="datosGraficaEstatura"
+        />
       </div>
     </div>
 
@@ -227,16 +243,22 @@
 <script>
 import { date } from "quasar";
 import BannerPrincipal from "./../../components/ExpedientePaciente/BannerPrincipal.vue";
+import Grafica from "../../components/ExpedientePaciente/Grafica";
 export default {
   data() {
     return {
       nuevoPeso: null,
-      nuevaEstatura: null
+      nuevaEstatura: null,
+      datosGraficaEstatura: null,
+      numerosGraficaEstatura: [],
+      datosGraficaPeso: null,
+      numerosGraficaPeso: []
     };
   },
   props: ["paciente"],
   components: {
-    BannerPrincipal
+    BannerPrincipal,
+    Grafica
   },
   computed: {
     //computen que devuelve la fecha de nacimiento
@@ -268,6 +290,23 @@ export default {
       }
       this.$emit("guardarInformacion");
     }
+  },
+  mounted() {
+    this.datosGraficaEstatura =
+      this.paciente.estatura > 5
+        ? this.paciente.estatura.slice(-5)
+        : this.paciente.estatura;
+    this.datosGraficaPeso =
+      this.paciente.peso > 5
+        ? this.paciente.peso.slice(-5)
+        : this.paciente.peso;
+    for (let index = 1; index <= this.datosGraficaEstatura.length; index++) {
+      this.numerosGraficaEstatura.push(index);
+    }
+    for (let index = 1; index <= this.datosGraficaPeso.length; index++) {
+      this.numerosGraficaPeso.push(index);
+    }
+    console.log(this.datosGraficaEstatura, this.datosGraficaPeso);
   }
 };
 </script>
