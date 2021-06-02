@@ -25,25 +25,23 @@
         :name="index + 1"
         :img-src="item"
       >
-      <q-btn
-            round
-            color="red"
-            size="md"
-            icon="delete_forever"
-            class="q-mx-sm"
-            @click="confirmEli(item)"
+        <q-btn
+          round
+          color="red"
+          size="md"
+          icon="delete_forever"
+          class="q-mx-sm"
+          @click="confirmEli(item)"
+        >
+          <q-tooltip
+            v-model="showing3"
+            content-class="bg-negative"
+            content-style="font-size: 16px"
           >
-            <q-tooltip
-              v-model="showing3"
-              content-class="bg-negative"
-              content-style="font-size: 16px"
-            >
-              <bold>Eliminar imagen</bold>
-            </q-tooltip>
-          </q-btn>
-      
+            <bold>Eliminar imagen</bold>
+          </q-tooltip>
+        </q-btn>
       </q-carousel-slide>
-
 
       <template v-slot:control>
         <q-carousel-control position="top-right" :offset="[18, 18]">
@@ -64,7 +62,7 @@
               <bold>Agregar nueva imagen</bold>
             </q-tooltip>
           </q-btn>
-         
+
           <q-btn
             push
             round
@@ -131,13 +129,12 @@
   </div>
 </template>
 
-
 <script>
 import { st } from "../boot/firebase";
 
 export default {
   props: {
-    idPaciente: String,
+    idPaciente: String
   },
   data() {
     return {
@@ -167,25 +164,21 @@ export default {
       if (this.archivo) {
         const ref = st.ref();
         const carpeta = this.idPaciente;
-        console.log(this.archivo)
         const imgRef = ref.child(carpeta + "/" + this.archivo.name);
         let this2 = this;
 
         imgRef
           .put(this.archivo)
-          .then(function (snapshot) {
-            console.log("archivo subido");
+          .then(function(snapshot) {
             this2.archivo = null;
             this2.$q.notify({
               type: "positive",
-              message: `Imagen agregada con exito!`,
+              message: `Imagen agregada con exito!`
             });
             this2.traerImg();
-            this2.confirm2 = false
+            this2.confirm2 = false;
           })
-          .catch(function (error) {
-            console.log("se dio un error = " + error);
-          });
+          .catch(function(error) {});
       }
     },
     cancel() {
@@ -201,28 +194,28 @@ export default {
       ref
         .child(carpeta + "/")
         .listAll()
-        .then(function (result) {
-          result.items.forEach(function (imgRefe) {
+        .then(function(result) {
+          result.items.forEach(function(imgRefe) {
             let nombre = imgRefe.name;
             if (nombre == "perfil.jpg") {
             } else {
               this2.nameImg.push(nombre);
               this2.nameSelect = "";
-              imgRefe.getDownloadURL().then(function (url) {
+              imgRefe.getDownloadURL().then(function(url) {
                 this2.imagenes.push(url);
               });
             }
           });
-        });       
+        });
     },
-     eliminarImg(){
+    eliminarImg() {
       let url = this.imagenBorrar;
       let this2 = this;
       const carpeta = this.idPaciente;
       const refer = st.ref();
       let urll = url;
 
-      this.nameImg.forEach(function (element) {
+      this.nameImg.forEach(function(element) {
         if (urll.includes(element)) {
           this2.nameSelect = element;
         }
@@ -232,22 +225,20 @@ export default {
         let newRef = refer.child(carpeta + "/" + this.nameSelect);
 
         newRef.delete().then(() => {
-          this.traerImg()        
-          this.confirm= false;
-        
+          this.traerImg();
+          this.confirm = false;
         });
       }
-    },  
-    confirmEli(url){
+    },
+    confirmEli(url) {
       this.confirm = true;
       this.imagenBorrar = url;
     }
   },
   created() {
     this.traerImg();
-  },
+  }
 };
 </script>
 
-<style>
-</style>
+<style></style>
