@@ -22,7 +22,12 @@
         />
       </div>
       <div class="col-12 col-md-6">
-        <Alergias id="alergias" />
+        <Alergias
+          id="alergias"
+          :paciente="paciente"
+          v-if="paciente !== null"
+          ref="refAlergias"
+        />
       </div>
     </div>
     <q-separator></q-separator>
@@ -35,14 +40,18 @@
         />
       </div>
       <div class="col-12 col-md-6">
-        <EnfermedadesCronicas id="enfermedades-cronicas" :paciente="paciente" v-if="paciente!== null" />
+        <EnfermedadesCronicas
+          id="enfermedades-cronicas"
+          :paciente="paciente"
+          v-if="paciente !== null"
+        />
       </div>
     </div>
     <q-separator></q-separator>
     <Consultas id="consultas" :consultas="consultasPaciente" />
     <q-separator></q-separator>
-    <Recetas id="recetas" :consultas="consultasPaciente"/>
-    
+    <Recetas id="recetas" :consultas="consultasPaciente" />
+
     <q-separator></q-separator>
     <!-- idPaciente sera donde nos envien el id del paciente del que se esta visualizando expediente -->
 
@@ -101,6 +110,7 @@ export default {
     guardarInformacion() {
       let actualizarPaciente = {
         antecedentes: this.$refs.refAntecedentes.paciente.antecedentes,
+        alergias: this.$refs.refAlergias.paciente.alergias,
         direccion: this.$refs.refInformacionPersonal.paciente.direccion,
         dui: this.$refs.refInformacionPersonal.paciente.dui,
         email: this.$refs.refInformacionPersonal.paciente.email,
@@ -122,15 +132,17 @@ export default {
         .update(actualizarPaciente)
         .then(() => {
           this.$q.notify({
-            message: "Información personal guardada en local storage",
+            message: "Información actualizada",
             color: "green-4",
             textColor: "white",
             icon: "cloud_done"
           });
         })
         .catch(error => {
-          // The document probably doesn't exist.
-          console.error("Error updating document: ", error);
+          this.$q.notify({
+            type: 'negative',
+            message: 'Error al actualizar información'
+          });
         });
       //console.log(actualizarPaciente);
     },
