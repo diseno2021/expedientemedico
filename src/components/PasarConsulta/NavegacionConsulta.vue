@@ -92,7 +92,8 @@
         header-class="claseheader"
       >
         <q-card class="bg-grey-3">
-          <q-card-section> <galeriaConsulta /> </q-card-section>
+          <!-- Dejamos nuestro componente, nos deben pasar el id del paciente en la propiedad :idPaciente="" -->
+          <q-card-section> <testGaleriaComponent idPaciente="asdfasdfasdfa987asdfasdf76aw" /> </q-card-section>
         </q-card>
       </q-expansion-item>
 
@@ -136,11 +137,11 @@
 </template>
 
 <script>
-import galeriaConsulta from "components/PasarConsulta/GaleriaConsulta";
+import TestGaleriaComponent from 'src/pages/testGaleriaComponent.vue';
 
 export default {
   components: {
-    galeriaConsulta
+    TestGaleriaComponent
   },
 
   data: () => ({
