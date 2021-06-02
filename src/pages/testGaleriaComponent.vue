@@ -1,76 +1,51 @@
 <template>
-  <div class="row justify-center">
-    <div class="col-12">
-      <div class="q-pa-md">
-        <div class="q-gutter-md" style="max-width: 300px">
-          <q-file
-            filled
-            bottom-slots
-            v-model="model"
-            label="Agregar imágenes"
-            counter
-            max-files="20"
-            bg-color="primary"
-            label-color="white"
-            accept=".jpg, image/*"
-            multiple
-          >
-            <template v-slot:before>
-              <q-icon name="collections" />
-            </template>
+  <div class="q-pa-md">
 
-            <template v-slot:hint> Imágenes agregadas </template>
-            <template v-slot:append>
-              <q-btn
-                color="grey-4"
-                dense
-                flat
-                icon="upload"
-                @click="updateImg"
-              />
-              <q-tooltip
-                anchor="center right"
-                self="center left"
-                :offset="[50, 10]"
-                v-model="showing"
-                content-class="bg-green"
-                content-style="font-size: 16px"
-              >
-                <bold>Agregar nueva imagen</bold>
-              </q-tooltip>
-            </template>
-          </q-file>
-        </div>
-      </div>
-    </div>
-    <div class="col-12 q-pa-md">
-      <q-carousel
-        swipeable
-        animated
-        v-model="slide"
-        infinite
-        :autoplay="autoplay"
-        @mouseenter="autoplay = false"
-        @mouseleave="autoplay = true"
-        :fullscreen.sync="fullscreen"
-        control-color="red"
-        arrows
+    <q-btn
+      @click="triggerPositive"
+      color="primary"
+      size="md"
+      icon="add_circle"
+      label="Agregar"
+      class=" q-my-sm"
+      style="width:100% "
+    >
+      <q-tooltip
+        v-model="showing"
+        content-class="bg-green"
+        content-style="font-size: 16px"
       >
-        <q-carousel-slide
-          v-for="(item, index) in imagenes"
-          :key="index"
-          :name="index + 1"
-          :img-src="item"
-        >
-        </q-carousel-slide>
-        <template v-slot:control>
+        <bold>Agregar nueva imagen</bold>
+      </q-tooltip>
+    </q-btn>
+    <q-carousel
+      swipeable
+      animated
+      v-model="slide"
+      infinite
+      :autoplay="autoplay"
+      @mouseenter="autoplay = false"
+      @mouseleave="autoplay = true"
+      :fullscreen.sync="fullscreen"
+      control-color="red"
+      arrows
+    >
+      <q-carousel-slide
+        v-for="(item, index) in imagenes"
+        :key="index"
+        :name="index + 1"
+        :img-src="item"
+      >
+      </q-carousel-slide>
+
+      <template v-slot:control>
         <q-carousel-control position="bottom-right" :offset="[18, 18]">
           <q-btn
             push
             round
             dense
-            color="black"
-            text-color="primary"
+            color="primary"
+            text-color="white"
             :icon="fullscreen ? 'fullscreen_exit' : 'fullscreen'"
             @click="fullscreenmethod"
             @keypress.esc="fullscreen = false"
@@ -85,8 +60,35 @@
           </q-btn>
         </q-carousel-control>
       </template>
-      </q-carousel>
-    </div>
+    </q-carousel>
+    <q-dialog v-model="confirm2" persistent>
+      <q-card class="my-card">
+        <q-card-section class="row items-center">
+          <q-avatar icon="upload" color="green" text-color="white" />
+          <span class="q-ml-sm">Subir Imagen</span>
+          <q-file
+            filled
+            bottom-slots
+            v-model="archivo"
+            label="Agregar imágenes"
+            counter
+            max-files="20"
+            bg-color="grey"
+            label-color="white"
+            accept=".jpg, image/*"
+          >
+            <template v-slot:before>
+              <q-icon name="collections" />
+            </template>
+          </q-file>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Cancel" color="grey-7" @click="cancel" />
+          <q-btn flat label="Confirmar" color="green" @click="updateImg" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
@@ -99,25 +101,25 @@ export default {
   },
   data() {
     return {
-      model:null,
       slide: 1,
       autoplay: true,
       fullscreen: false,
       showing: false,
       showing2: false,
-      showing3: false,
       confirm: false,
       confirm2: false,
       archivo: null,
       imagenes: [],
       nameImg: [],
-      nameSelect: "",
-      imagenBorrar: ""
+      nameSelect: ""
     };
   },
   methods: {
     fullscreenmethod() {
       this.fullscreen = !this.fullscreen;
+    },
+    triggerPositive() {
+      this.confirm2 = true;
     },
     updateImg() {
       if (this.archivo) {
@@ -174,9 +176,4 @@ export default {
 };
 </script>
 
-<style>
-.my-card {
-  width: 100%;
-  max-width: 250px;
-}
-</style>
+<style></style>

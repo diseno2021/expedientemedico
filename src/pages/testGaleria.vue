@@ -101,7 +101,7 @@
     <q-dialog v-model="confirm2" persistent>
       <q-card class="my-card">
         <q-card-section class="row items-center">
-          <q-avatar icon="upload" color="grey" text-color="white" />
+          <q-avatar icon="upload" color="green" text-color="white" />
           <span class="q-ml-sm">Subir Imagen</span>
           <q-file
             filled
@@ -110,7 +110,7 @@
             label="Agregar imágenes"
             counter
             max-files="20"
-            bg-color="purple-12"
+            bg-color="grey"
             label-color="white"
             accept=".jpg, image/*"
           >
@@ -227,6 +227,10 @@ export default {
         newRef.delete().then(() => {
           this.traerImg();
           this.confirm = false;
+          this2.$q.notify({
+              type: "negative",
+              message: `Imagen eliminada con exito!`
+            });
         });
       }
     },
