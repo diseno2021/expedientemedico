@@ -4,7 +4,7 @@
       transition-next="slide-left" -->
 
   <div class="q-pa-md">
-    <h3>Exámenes del paciente</h3>
+    <h4>Exámenes del paciente</h4>
     <q-carousel
       swipeable
       animated
@@ -228,9 +228,9 @@ export default {
           this.traerImg();
           this.confirm = false;
           this2.$q.notify({
-              type: "negative",
-              message: `Imagen eliminada con exito!`
-            });
+            type: "negative",
+            message: `Imagen eliminada con exito!`
+          });
         });
       }
     },
