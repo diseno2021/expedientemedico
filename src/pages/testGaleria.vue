@@ -15,7 +15,7 @@
       @mouseenter="autoplay = false"
       @mouseleave="autoplay = true"
       :fullscreen.sync="fullscreen"
-      :navigation-position="fullscreen ? 'left' : 'bottom'"
+      navigation-position="bottom"
       control-color="red"
       arrows
     >
