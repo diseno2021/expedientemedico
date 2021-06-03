@@ -5,7 +5,7 @@
         <q-card-section>
           <div class="row justify-center q-pb-xs">
             <q-avatar square rounded size="85px" class="q-mx-auto">
-              <img :src="paciente.foto" />
+              <img :src="fotoPerfil" />
             </q-avatar>
           </div>
           <div class="text-h6 q-pb-xs">{{ paciente.nombre }}</div>
@@ -60,7 +60,7 @@
           </q-card>
         </q-expansion-item>
 
-        <q-expansion-item
+        <!-- <q-expansion-item
           icon="description"
           group="somegroup"
           label="Recetas"
@@ -76,7 +76,7 @@
 
             <q-card-section v-html="consultas.receta"> </q-card-section>
           </q-card>
-        </q-expansion-item>
+        </q-expansion-item> -->
 
         <q-expansion-item
           icon="collections"
@@ -131,6 +131,7 @@
 
 <script>
 import TestGaleriaComponent from "src/pages/testGaleriaComponent.vue";
+import { db, st } from "../../boot/firebase";
 
 export default {
   components: {
@@ -138,72 +139,40 @@ export default {
   },
 
   data: () => ({
-    paciente: {
-      id: "asdfasdfasdfa987asdfasdf76as",
-      idMedico: "asdfasd88asd7fas6dfasd", //este campo relaciona al medico al cual pertenece
-      nombre: "Juan Santiago Perez Lima",
-      fechaNacimiento: "1998-03-06T00:00:00",
-      genero: "Masculino",
-      peso: [170, 150, 140, 135], //el peso se lleva en un arreglo para poder graficarlo
-      estatura: [123, 125, 135],
-      foto: "https://cdn.quasar.dev/img/avatar6.jpg",
-      tipoSangre: "O RH+",
-      direccion: "Final avenida fray felipe de jesus moraga casa #23",
-      telefono: "7366-2344",
-      dui: "",
-      whatsapp: "1242-1234",
-      email: "paciente@outlook.com",
-      enCasoEmergencia: "Esposa Juana Salazar 7346454",
-      comentario: "",
-      antecedentes: `
-      <ul>
-      <li>
-      Padre diabético
-      </li>
-      <li>
-      Tía materna hipertensa
-      </li>
-      </ul>
-      `, //texto html
-      alergias: "Penicilina Procainica, picadas de abejas",
-      enfermedadesCronicas: "Cancer de Seno, Diabetes tipo 2", //texto html
-      medicamentosPermanentes: `
-        <ul>
-        <li>
-          <strong>Rivoflavina</strong>
-          </br> una por las noches
-        </li>
-        </ul>`, //texto html
-      archivos: [
-        "http://storage/idpaciente/foto01.jpg&#39;",
-        "http://storage/idpaciente/foto01.jpg&#39;"
-      ]
+    paciente: null,
+    consultas: null,
+    fotoPerfil:""
+  }),
+  created() {
+    this.obtenerDatosPaciente();
+  },
+  methods: {
+    obtenerDatosPaciente() {
+      let id = this.$router.currentRoute.params.id;
+      var docRef = db.collection("pacientes").doc(id);
+      docRef
+        .get()
+        .then(doc => {
+          if (doc.exists) {
+            let datos = doc.data();
+            this.paciente = {
+              id: doc.id,
+              ...datos
+            };
+            st.ref(doc.data().foto)
+              .getDownloadURL()
+              .then(url => {
+                this.fotoPerfil = url;
+              });
+          } else {
+            // doc.data() will be undefined in this case
+            console.log("No such document!");
+          }
+        })
+        .catch(error => {
+          console.log("Error getting document:", error);
+        });
     },
-    consultas: {
-      id: "asdfasdlkjjash9783789asdf",
-      idPaciente: "asdfasdfasdfa987asdfasdf76as",
-      peso: 132.5, //peso en libras
-      estatura: 123, //en centimetros
-      temperatura: 36.5,
-      imc: 23.3,
-      presionArterial: "180/40",
-      exploracionFisica: "", //texto html
-      motivoConsulta: "",
-      sintomas: "", //texto html
-      diagnostico: "", //texto html
-      receta: `
-        <ul>
-        <li>
-        2 pastillas de Paracetamol
-        </li>
-        <li>
-        1 tableta de rivotril 
-        </li>
-        </ul>
-        `, //texto html
-      examenes: "", //texto html
-      proximaCita: "2021-04-30T12:21:21"
-    }
-  })
+  }
 };
 </script>
