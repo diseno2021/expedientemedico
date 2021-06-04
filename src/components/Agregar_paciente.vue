@@ -36,8 +36,9 @@
 
           <div class="row">
             <br />
-            <div style="text-align: center" class="col-md-3 col-xs-12">
+            <div   style="text-align: center" class="col-md-3 col-xs-12">
               <q-img
+               
                 v-if="foto"
                 v-bind:src="foto"
                 contain
@@ -69,8 +70,8 @@
                   <q-tooltip
                     content-class="bg-accent text-white"
                     content-style="font-size: 12px"
-                    anchor="top left"
-                    self="bottom left"
+                    anchor="bottom left"
+                    self="top left"
                     :offset="[0, 8]"
                     >Borrar imagen</q-tooltip
                   >
@@ -124,6 +125,7 @@
             <div class="col-md-8 col-xs-11 justify-around">
               <br />
               <q-input
+             
                 ref="nombre"
                 class="q-mx-md"
                 v-model="paciente.nombre"
@@ -401,7 +403,6 @@
                   >Cancelar y volver</q-tooltip
                 ></q-btn
               >
-              <q-btn @click="actualizar_paciente">editar</q-btn>
               <br />
               <br />
               <br />
@@ -538,6 +539,7 @@ export default {
       return this.error;
     },
     subir_imagen(tipo) {
+       this.$q.loading.show();
       if (tipo===1) {
         
         try {
