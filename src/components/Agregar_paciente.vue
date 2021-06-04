@@ -38,14 +38,22 @@
             <br />
             <div style="text-align: center" class="col-md-3 col-xs-12">
               <q-img
-                v-if="mostrar_imagen && imagen"
-                v-model="foto"
+                v-if="foto"
                 v-bind:src="foto"
                 contain
                 spinner-color="white"
-                style="height: 170px; max-width: 300px"
+                :ratio="2"
                 class="q-my-md rounded-borders q-mx-md q-mx-xs"
               >
+                <q-tooltip
+                  content-class="bg-accent text-white"
+                  content-style="font-size: 12px"
+                  anchor="top left"
+                  self="bottom left"
+                  :offset="[0, 8]"
+                  >Si desea cambiar la imagen seleccione una nueva y de click en
+                  el boton para subirla.</q-tooltip
+                >
                 <q-btn
                   dense
                   v-close-popup
@@ -53,7 +61,10 @@
                   icon="close"
                   class="float-right"
                   flat
-                  @click="mostrar_imagen = false"
+                  @click="
+                    foto = '';
+                    imagen = '';
+                  "
                 >
                   <q-tooltip
                     content-class="bg-accent text-white"
@@ -68,7 +79,6 @@
               <br />
               <div class="row" style="text-align: center">
                 <q-file
-                  @change="mostrar_imagen = false"
                   filled
                   counter
                   class="q-mx-md col-md-11"
@@ -83,11 +93,8 @@
                   <template v-slot:after>
                     <q-btn
                       push
-                      @click="
-                        mostrar_imagen = false;
-                        mostrar_imagen = true;
-                      "
-                      :disable="!imagen"
+                      @click="subir_imagen(1)"
+                      :disable="imagen"
                       color="secondary"
                       text-color="white"
                       round
@@ -125,9 +132,9 @@
                 pattern="[A-Z]{1,30}"
                 lazy-rules
                 :rules="[
-                  (val) =>
+                  val =>
                     (val && val.length > 3) ||
-                    'Requerido, por favor complete el campo',
+                    'Requerido, por favor complete el campo'
                 ]"
               >
                 <template v-slot:before>
@@ -156,7 +163,7 @@
                   >
                   </q-radio>
                   <br />
-                  <q-radio 
+                  <q-radio
                     class="q-mx-md"
                     v-model="paciente.genero"
                     label="Femenino"
@@ -182,10 +189,10 @@
                     type="date"
                     lazy-rules
                     :rules="[
-                      (val) => !!val || 'Campo requerido',
-                      (val) =>
+                      val => !!val || 'Campo requerido',
+                      val =>
                         edadPaciente() == false ||
-                        'Fecha de nacimiento incorrecta, edad minima 1 año',
+                        'Fecha de nacimiento incorrecta, edad minima 1 año'
                     ]"
                   >
                     <q-tooltip
@@ -208,8 +215,8 @@
                     label="Número telefónico"
                     mask="####-####"
                     :rules="[
-                      (val) => !!val || 'Campo requerido',
-                      (val) => val.length > 8 || 'Numero telefonico invalido',
+                      val => !!val || 'Campo requerido',
+                      val => val.length > 8 || 'Numero telefonico invalido'
                     ]"
                     lazy-rules
                   >
@@ -303,9 +310,9 @@
                 label="Dirección de residencia"
                 lazy-rules
                 :rules="[
-                  (val) =>
+                  val =>
                     !!val ||
-                    'Requerido, por favor digite la direccion de residencia',
+                    'Requerido, por favor digite la direccion de residencia'
                 ]"
               >
                 <q-tooltip
@@ -328,7 +335,7 @@
                 placeholder="Jose Hernandez  7744-7192"
                 lazy-rules
                 :rules="[
-                  (val) => !!val || 'Requerido, por favor complete el campo',
+                  val => !!val || 'Requerido, por favor complete el campo'
                 ]"
               >
                 <q-tooltip
@@ -365,7 +372,7 @@
               <q-btn
                 class="q-mx-md"
                 color="primary"
-                @click="validaciones()"
+                @click="agregarPaciente()"
                 type="submit"
                 disable="error"
                 >Registrar
@@ -394,6 +401,7 @@
                   >Cancelar y volver</q-tooltip
                 ></q-btn
               >
+              <q-btn @click="actualizar_paciente">editar</q-btn>
               <br />
               <br />
               <br />
@@ -406,16 +414,16 @@
 </template>
 
 <script>
-import { db } from "../boot/firebase";
+import { db, st } from "../boot/firebase";
 export default {
   name: "agregar_paciente",
   data() {
     return {
-      mostrar_imagen: false,
-      imagen: null,
-      foto:
-        "https://isanidad.com/wp-content/uploads/2017/03/dolencias-cancerigenas_paliativos.jpg",
-
+      id_paciente: "",
+      carpeta: "imagenes",
+      imagen_defecto: "https://s5.postimg.cc/537jajaxj/default.png",
+      imagen: true,
+      foto: "https://s5.postimg.cc/537jajaxj/default.png",
       paciente: {
         idMedico: "Lnw22pwDcUQtWuTdSqcLmuwrrS12",
         nombre: null,
@@ -438,14 +446,17 @@ export default {
         medicamentosPermanentes: "",
         peso: [],
         tipoSangre: "",
-        error: true,
+        error: true
       },
-      formulario: false,
+      formulario: false
     };
   },
   methods: {
     limpiar() {
-      (this.paciente.nombre = ""), (this.formulario = false);
+      this.carpeta = "imagenes";
+      this.foto = "https://s5.postimg.cc/537jajaxj/default.png";
+      this.paciente.nombre = "";
+      this.formulario = false;
       this.paciente.fechaNacimiento = "";
       this.paciente.genero = "";
       this.paciente.telefono = "";
@@ -464,7 +475,7 @@ export default {
         message: mensaje,
         color: color,
         timeout: 1000,
-        icon: icono,
+        icon: icono
       });
     },
     cancelar() {
@@ -477,9 +488,15 @@ export default {
     },
     async agregarPaciente() {
       try {
+        // validaciones()
         this.$q.loading.show();
 
         const query = await db.collection("pacientes").add(this.paciente);
+        this.carpeta = query.id;
+        this.id_paciente=query.id;
+        this.subir_imagen(1);
+        this.actualizar_paciente();
+        this.foto = "";
         this.limpiar();
       } catch (error) {
         console.log(error);
@@ -520,6 +537,70 @@ export default {
       }
       return this.error;
     },
-  },
+    subir_imagen(tipo) {
+      if (tipo===1) {
+        
+        try {
+          this.foto = "";
+
+          const refs = st.ref();
+          let this2 = this;
+          const imgref = refs.child(this.carpeta).child("perfil.jpg");
+          imgref.put(this.imagen).then(function(snapshot) {});
+
+          refs
+            .child(this.carpeta + "/")
+            .listAll()
+            .then(function(result) {
+              result.items.forEach(function(imgRefe) {
+                let nombre = imgRefe.name;
+                if (nombre == "perfil.jpg") {
+                  imgRefe.getDownloadURL().then(function(url) {
+                    this2.foto = url;
+                    console.log(this2.foto);
+                  });
+                }
+              });
+            });
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
+        console.log(" no entro");
+        try {
+          console.log(this.id_paciente);
+          console.log(this.carpeta);
+          console.log(this.foto);
+          const refs = st.ref();
+          let this2 = this;
+          const imgref = refs.child(this.carpeta).child("perfil.jpg");
+          imgref.put(this.foto).then(function(snapshot) {});
+
+          console.log(imgref.getDownloadURL());
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    },
+    async actualizar_paciente() {
+      console.log(this.id_paciente);
+      try {
+        this.$q.loading.show();
+        this.subir_imagen(2);
+        const query = db.collection("pacientes").doc(this.id_paciente);
+        query
+          .update({
+            foto: "/"+this.carpeta + "/perfil.jpg"
+          })
+          .then(function() {
+            console.log("Paciente actualizado");
+          });
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.$q.loading.hide();
+      }
+    }
+  }
 };
 </script>
