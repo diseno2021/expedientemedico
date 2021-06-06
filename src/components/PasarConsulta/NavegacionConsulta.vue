@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="q-pa-md">
-      <q-card flat>
+      <!-- <q-card flat> -->
         <q-card-section>
           <div class="row justify-center q-pb-xs">
             <q-avatar square rounded size="85px" class="q-mx-auto">
@@ -10,7 +10,7 @@
           </div>
           <div class="text-h6 q-pb-xs">{{ paciente.nombre }}</div>
         </q-card-section>
-      </q-card>
+      <!-- </q-card> -->
     </div>
     <div class="q-pa-md" style="max-width: 350px">
       <q-list>
@@ -21,9 +21,9 @@
           label="Antecedentes"
           class="overflow-hidden"
         >
-          <q-card class="bg-grey-3">
+          <!-- <q-card class="bg-grey-3"> -->
             <q-card-section v-html="paciente.antecedentes"> </q-card-section>
-          </q-card>
+          <!-- </q-card> -->
         </q-expansion-item>
 
         <q-expansion-item
@@ -33,10 +33,10 @@
           label="Medicamentos Permantentes"
           class=" overflow-hidden"
         >
-          <q-card class="bg-grey-3">
+          <!-- <q-card class="bg-grey-3"> -->
             <q-card-section v-html="paciente.medicamentosPermanentes">
             </q-card-section>
-          </q-card>
+          <!-- </q-card> -->
         </q-expansion-item>
 
         <q-expansion-item
@@ -47,7 +47,7 @@
           class=" overflow-hidden"
           header-class="claseheader"
         >
-          <q-card class="bg-grey-3">
+          <!-- <q-card class="bg-grey-3"> -->
             <q-card-section>
               <div class="text-h6">05-23-2021</div>
               <div class="text-subtitle2">fecha de ultima consulta</div>
@@ -57,7 +57,7 @@
               Este es el diagnostico de la ultima consulta con el paciente puede
               ser extenso como se desee
             </q-card-section>
-          </q-card>
+          <!-- </q-card> -->
         </q-expansion-item>
 
         <!-- <q-expansion-item
@@ -100,7 +100,7 @@
           header-class="claseheader"
           active="bg-teal text-white"
         >
-          <q-card class="bg-grey-3">
+          <!-- <q-card class="bg-grey-3"> -->
             <q-card-section>
               <center>
                 <img
@@ -109,7 +109,7 @@
                 />
               </center>
             </q-card-section>
-          </q-card>
+          <!-- </q-card> -->
         </q-expansion-item>
         <br />
         <div class="column align-center ">
