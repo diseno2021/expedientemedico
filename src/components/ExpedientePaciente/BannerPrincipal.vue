@@ -1,5 +1,5 @@
 <template>
-  <div v-if="paciente != null">
+  <div v-if="paciente != null && paciente != 'No pertece al medico'">
     <q-card flat>
       <q-card-section>
         <div class="row justify-center q-pb-xs">
@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import { db, st } from "../../boot/firebase";
+import { auth, db, st } from "../../boot/firebase";
 
 export default {
   data: () => ({
@@ -80,19 +80,22 @@ export default {
         .get()
         .then(doc => {
           if (doc.exists) {
-            let datos = doc.data();
-            this.paciente = {
-              id: doc.id,
-              ...datos
-            };
-            st.ref(doc.data().foto)
-              .getDownloadURL()
-              .then(url => {
-                this.fotoPerfil = url;
-              });
+            if (doc.data().idMedico == auth.currentUser.uid) {
+              let datos = doc.data();
+              this.paciente = {
+                id: doc.id,
+                ...datos
+              };
+              st.ref(doc.data().foto)
+                .getDownloadURL()
+                .then(url => {
+                  this.fotoPerfil = url;
+                });
+            } else {
+              this.paciente = 'No pertece al medico';
+            }
           } else {
-            // doc.data() will be undefined in this case
-            console.log("No such document!");
+            this.paciente == null;
           }
         })
         .catch(error => {

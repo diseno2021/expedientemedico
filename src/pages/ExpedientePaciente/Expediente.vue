@@ -1,80 +1,112 @@
 <template>
   <div>
-    <div class="row">
-      <div class="col-12">
-        <InformacionPersonal
-          id="informacion-personal"
-          :paciente="paciente"
-          v-if="paciente !== null"
-          @guardarInformacion="guardarInformacion"
-          ref="refInformacionPersonal"
-        />
+    <q-inner-loading :showing="cargando">
+      <q-spinner-cube size="3rem" color="primary" />
+      <span
+        class=" text-primary
+        text-uppercase
+        text-overline
+        text-weight-bold"
+        >Cargando informacion del paciente</span
+      >
+    </q-inner-loading>
+    <!--Si no existe el paciente-->
+    <div class="row justify-center" v-if="cargando == false && paciente == null">
+      <div class="col-12 text-h5 q-my-xl text-center">
+        No existe el paciente con id: {{ $router.currentRoute.params.id }}
+      </div>
+      <div class="col-auto">
+        <q-btn icon="people" color="secondary" to="/">Ver Pacientes</q-btn>
       </div>
     </div>
-    <q-separator></q-separator>
-    <div class="row">
-      <div class="col-12 col-md-6">
-        <Antecedentes
-          id="antecedentes"
-          :paciente="paciente"
-          v-if="paciente !== null"
-          ref="refAntecedentes"
-        />
+    <!--Si el paciente no pertenece al medico-->
+    <div class="row justify-center" v-else-if="cargando == false && paciente == 'No pertece al medico'">
+      <div class="col-12 text-h5 q-my-xl text-center">
+        El paciente con id: {{ $router.currentRoute.params.id }} , no pertece a su lista de pacientes
       </div>
-      <div class="col-12 col-md-6">
-        <Alergias
-          id="alergias"
-          :paciente="paciente"
-          v-if="paciente !== null"
-          ref="refAlergias"
-        />
+      <div class="col-auto">
+        <q-btn icon="people" color="secondary" to="/">Ver Pacientes</q-btn>
       </div>
     </div>
-    <q-separator></q-separator>
-    <div class="row">
-      <div class="col-12 col-md-6">
-        <MedicamentosPermanentes
-          id="medicamentos-permanentes"
-          :paciente="paciente"
-          v-if="paciente !== null"
-        />
+    <div v-else-if="cargando == false">
+      <div class="row">
+        <div class="col-12">
+          <InformacionPersonal
+            id="informacion-personal"
+            :paciente="paciente"
+            v-if="paciente !== null"
+            @guardarInformacion="guardarInformacion"
+            ref="refInformacionPersonal"
+          />
+        </div>
       </div>
-      <div class="col-12 col-md-6">
-        <EnfermedadesCronicas
-          id="enfermedades-cronicas"
-          :paciente="paciente"
-          v-if="paciente !== null"
-        />
+      <q-separator></q-separator>
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <Antecedentes
+            id="antecedentes"
+            :paciente="paciente"
+            v-if="paciente !== null"
+            ref="refAntecedentes"
+          />
+        </div>
+        <div class="col-12 col-md-6">
+          <Alergias
+            id="alergias"
+            :paciente="paciente"
+            v-if="paciente !== null"
+            ref="refAlergias"
+          />
+        </div>
       </div>
-    </div>
-    <q-separator></q-separator>
-    <Consultas id="consultas" :consultas="consultasPaciente" />
-    <q-separator></q-separator>
-    <Recetas id="recetas" :consultas="consultasPaciente" />
+      <q-separator></q-separator>
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <MedicamentosPermanentes
+            id="medicamentos-permanentes"
+            :paciente="paciente"
+            v-if="paciente !== null"
+            ref="refMedicamentosPermanentes"
+          />
+        </div>
+        <div class="col-12 col-md-6">
+          <EnfermedadesCronicas
+            id="enfermedades-cronicas"
+            :paciente="paciente"
+            v-if="paciente !== null"
+            ref="refEnfermedadesCronicas"
+          />
+        </div>
+      </div>
+      <q-separator></q-separator>
+      <Consultas id="consultas" :consultas="consultasPaciente" />
+      <q-separator></q-separator>
+      <Recetas id="recetas" :consultas="consultasPaciente" />
 
-    <q-separator></q-separator>
-    <!-- idPaciente sera donde nos envien el id del paciente del que se esta visualizando expediente -->
+      <q-separator></q-separator>
+      <!-- idPaciente sera donde nos envien el id del paciente del que se esta visualizando expediente -->
 
-    <Examenes id="examenes" :idPaciente="this.$router.currentRoute.params.id" />
-    <q-separator></q-separator>
-    <div class="row  justify-end q-mt-md">
-      <div class="col-12 col-sm-6 col-lg-4">
-        <q-btn
-          outline
-          color="primary"
-          icon="home"
-          label="Inicio"
-          to="/"
-          class="q-mx-sm"
-        ></q-btn>
-        <q-btn
-          outline
-          color="secondary"
-          icon="save"
-          label="Guardar"
-          @click="guardarInformacion"
-          class="q-mx-sm"
-        ></q-btn>
+      <Examenes id="examenes" :idPaciente="this.$router.currentRoute.params.id" />
+      <q-separator></q-separator>
+      <div class="row  justify-end q-mt-md">
+        <div class="col-12 col-sm-6 col-lg-4">
+          <q-btn
+            outline
+            color="primary"
+            icon="home"
+            label="Inicio"
+            to="/"
+            class="q-mx-sm"
+          ></q-btn>
+          <q-btn
+            outline
+            color="secondary"
+            icon="save"
+            label="Guardar"
+            @click="guardarInformacion"
+            class="q-mx-sm"
+          ></q-btn>
+        </div>
       </div>
     </div>
   </div>
@@ -89,11 +121,13 @@ import Consultas from "./Consultas";
 import Recetas from "./Recetas";
 import EnfermedadesCronicas from "./EnfermedadesCronicas";
 import Examenes from "../testGaleria.vue";
-import { db } from "../../boot/firebase";
+import { auth, db } from "../../boot/firebase";
 
 export default {
   data: () => ({
+    cargando: true,
     paciente: null,
+    validacionPaciente: '',
     consultasPaciente: []
   }),
   components: {
@@ -111,6 +145,8 @@ export default {
       let actualizarPaciente = {
         antecedentes: this.$refs.refAntecedentes.paciente.antecedentes,
         alergias: this.$refs.refAlergias.paciente.alergias,
+        medicamentosPermanentes: this.$refs.refMedicamentosPermanentes.paciente.medicamentosPermanentes,
+        EnfermedadesCronicas: this.$refs.refEnfermedadesCronicas.paciente.enfermedadesCronicas,
         direccion: this.$refs.refInformacionPersonal.paciente.direccion,
         dui: this.$refs.refInformacionPersonal.paciente.dui,
         email: this.$refs.refInformacionPersonal.paciente.email,
@@ -153,14 +189,20 @@ export default {
         .get()
         .then(doc => {
           if (doc.exists) {
-            this.paciente = doc.data();
+            if (doc.data().idMedico == auth.currentUser.uid) {
+              this.paciente = doc.data();
+            } else {
+              this.paciente = 'No pertece al medico';
+            }
           } else {
-            // doc.data() will be undefined in this case
-            console.log("No such document!");
+            this.paciente = null;
           }
         })
         .catch(error => {
           console.log("Error getting document:", error);
+        })
+        .finally( () => {
+          this.cargando = false;
         });
     },
     obtenerConsultas() {
