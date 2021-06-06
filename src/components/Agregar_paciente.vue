@@ -36,9 +36,8 @@
 
           <div class="row">
             <br />
-            <div   style="text-align: center" class="col-md-3 col-xs-12">
+            <div style="text-align: center" class="col-md-3 col-xs-12">
               <q-img
-               
                 v-if="foto"
                 v-bind:src="foto"
                 contain
@@ -125,13 +124,12 @@
             <div class="col-md-8 col-xs-11 justify-around">
               <br />
               <q-input
-             
                 ref="nombre"
                 class="q-mx-md"
                 v-model="paciente.nombre"
                 label="Nombres y apellidos"
                 required
-                pattern="[A-Z]{1,30}"
+                pattern="[A-Z]"
                 lazy-rules
                 :rules="[
                   val =>
@@ -155,7 +153,8 @@
 
               <div class="row">
                 <div class="col-md-5 col-xs-6">
-                  <q-label class="q-mx-md q-my-md">Sexo:</q-label><br />
+                  <q-label 
+                  class="q-mx-md q-my-md">Sexo:</q-label><br />
                   <q-radio
                     class="q-mx-md"
                     v-model="paciente.genero"
@@ -166,6 +165,8 @@
                   </q-radio>
                   <br />
                   <q-radio
+                  ref="genero"
+                  required
                     class="q-mx-md"
                     v-model="paciente.genero"
                     label="Femenino"
@@ -447,8 +448,8 @@ export default {
         medicamentosPermanentes: "",
         peso: [],
         tipoSangre: "",
-        error: true
       },
+      error: false,
       formulario: false
     };
   },
@@ -476,7 +477,8 @@ export default {
         message: mensaje,
         color: color,
         timeout: 1000,
-        icon: icono
+        icon: icono,
+        position: "top",
       });
     },
     cancelar() {
@@ -488,21 +490,29 @@ export default {
       );
     },
     async agregarPaciente() {
-      try {
-        // validaciones()
-        this.$q.loading.show();
+      this.validaciones();
+      if (this.error === true) {
+        this.showNotif(
+          "Necesita rellenar los campos requeridos.",
+          "negative",
+          "close"
+        );
+      } else {
+        try {
+          this.$q.loading.show();
 
-        const query = await db.collection("pacientes").add(this.paciente);
-        this.carpeta = query.id;
-        this.id_paciente=query.id;
-        this.subir_imagen(1);
-        this.actualizar_paciente();
-        this.foto = "";
-        this.limpiar();
-      } catch (error) {
-        console.log(error);
-      } finally {
-        this.$q.loading.hide();
+          const query = await db.collection("pacientes").add(this.paciente);
+          this.carpeta = query.id;
+          this.id_paciente = query.id;
+          this.subir_imagen(1);
+          this.actualizar_paciente();
+          this.foto = "";
+          this.limpiar();
+        } catch (error) {
+          console.log(error);
+        } finally {
+          this.$q.loading.hide();
+        }
       }
     },
     validaciones() {
@@ -520,10 +530,9 @@ export default {
         this.$refs.direccion.hasError ||
         this.$refs.enCasoEmergencia.hasError
       ) {
-        this.formHasError = true;
+        this.error = true;
       } else {
-        this.formulario = false;
-        this.showNotif("Nuevo paciente guardado.", "accent", "cloud_done");
+       this.error=false;
       }
     },
 
@@ -539,9 +548,7 @@ export default {
       return this.error;
     },
     subir_imagen(tipo) {
-       this.$q.loading.show();
-      if (tipo===1) {
-        
+      if (tipo === 1) {
         try {
           this.foto = "";
 
@@ -587,12 +594,11 @@ export default {
     async actualizar_paciente() {
       console.log(this.id_paciente);
       try {
-        this.$q.loading.show();
         this.subir_imagen(2);
         const query = db.collection("pacientes").doc(this.id_paciente);
         query
           .update({
-            foto: "/"+this.carpeta + "/perfil.jpg"
+            foto: "/" + this.carpeta + "/perfil.jpg"
           })
           .then(function() {
             console.log("Paciente actualizado");
@@ -600,7 +606,6 @@ export default {
       } catch (error) {
         console.log(error);
       } finally {
-        this.$q.loading.hide();
       }
     }
   }
