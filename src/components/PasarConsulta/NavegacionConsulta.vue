@@ -2,14 +2,14 @@
   <div>
     <div class="q-pa-md">
       <!-- <q-card flat> -->
-        <q-card-section>
-          <div class="row justify-center q-pb-xs">
-            <q-avatar square rounded size="85px" class="q-mx-auto">
-              <img :src="fotoPerfil" />
-            </q-avatar>
-          </div>
-          <div class="text-h6 q-pb-xs">{{ paciente.nombre }}</div>
-        </q-card-section>
+      <q-card-section>
+        <div class="row justify-center q-pb-xs">
+          <q-avatar square rounded size="85px" class="q-mx-auto">
+            <img :src="fotoPerfil" />
+          </q-avatar>
+        </div>
+        <div class="text-h6 q-pb-xs">{{ paciente.nombre }}</div>
+      </q-card-section>
       <!-- </q-card> -->
     </div>
     <div class="q-pa-md" style="max-width: 350px">
@@ -22,7 +22,7 @@
           class="overflow-hidden"
         >
           <!-- <q-card class="bg-grey-3"> -->
-            <q-card-section v-html="paciente.antecedentes"> </q-card-section>
+          <q-card-section v-html="paciente.antecedentes"> </q-card-section>
           <!-- </q-card> -->
         </q-expansion-item>
 
@@ -34,8 +34,8 @@
           class=" overflow-hidden"
         >
           <!-- <q-card class="bg-grey-3"> -->
-            <q-card-section v-html="paciente.medicamentosPermanentes">
-            </q-card-section>
+          <q-card-section v-html="paciente.medicamentosPermanentes">
+          </q-card-section>
           <!-- </q-card> -->
         </q-expansion-item>
 
@@ -48,15 +48,15 @@
           header-class="claseheader"
         >
           <!-- <q-card class="bg-grey-3"> -->
-            <q-card-section>
-              <div class="text-h6">05-23-2021</div>
-              <div class="text-subtitle2">fecha de ultima consulta</div>
-            </q-card-section>
+          <q-card-section>
+            <div class="text-h6">05-23-2021</div>
+            <div class="text-subtitle2">fecha de ultima consulta</div>
+          </q-card-section>
 
-            <q-card-section class="q-pt-none">
-              Este es el diagnostico de la ultima consulta con el paciente puede
-              ser extenso como se desee
-            </q-card-section>
+          <q-card-section class="q-pt-none">
+            Este es el diagnostico de la ultima consulta con el paciente puede
+            ser extenso como se desee
+          </q-card-section>
           <!-- </q-card> -->
         </q-expansion-item>
 
@@ -88,7 +88,7 @@
         >
           <!-- Sugerimos eliminar las card para que funcione el modo oscuro y tenga menos padding los elementos -->
           <!-- Dejamos nuestro componente, nos deben pasar el id del paciente en la propiedad :idPaciente="" -->
-          <testGaleriaComponent idPaciente="asdfasdfasdfa987asdfasdf76aw" />
+          <testGaleriaComponent :idPaciente="this.$router.currentRoute.params.id" />
         </q-expansion-item>
 
         <q-expansion-item
@@ -101,14 +101,14 @@
           active="bg-teal text-white"
         >
           <!-- <q-card class="bg-grey-3"> -->
-            <q-card-section>
-              <center>
-                <img
-                  src="https://www.enpeso.com/wp-content/uploads/2016/06/graf-peso.png"
-                  style="height: 200px; max-width: 200px"
-                />
-              </center>
-            </q-card-section>
+          <q-card-section>
+            <Grafica
+              :datosGrafica="datosGraficaPeso"
+              :numerosGrafica="numerosGraficaPeso"
+              :label="'Peso'"
+              v-if="datosGraficaPeso"
+            />
+          </q-card-section>
           <!-- </q-card> -->
         </q-expansion-item>
         <br />
@@ -132,19 +132,25 @@
 <script>
 import TestGaleriaComponent from "src/pages/testGaleriaComponent.vue";
 import { db, st } from "../../boot/firebase";
+import Grafica from "../../components/ExpedientePaciente/Grafica";
 
 export default {
   components: {
-    TestGaleriaComponent
+    TestGaleriaComponent,
+    Grafica
   },
 
   data: () => ({
     paciente: null,
     consultas: null,
-    fotoPerfil:""
+    fotoPerfil: "",
+    datosGraficaPeso: null,
+    numerosGraficaPeso: [], 
+    pacienteid: ""
   }),
   created() {
     this.obtenerDatosPaciente();
+    this.obtenerPacienteId();
   },
   methods: {
     obtenerDatosPaciente() {
@@ -159,6 +165,17 @@ export default {
               id: doc.id,
               ...datos
             };
+            this.datosGraficaPeso =
+              this.paciente.peso > 5
+                ? this.paciente.peso.slice(-5)
+                : this.paciente.peso;
+            for (
+              let index = 1;
+              index <= this.datosGraficaPeso.length;
+              index++
+            ) {
+              this.numerosGraficaPeso.push(index);
+            }
             st.ref(doc.data().foto)
               .getDownloadURL()
               .then(url => {
@@ -173,6 +190,10 @@ export default {
           console.log("Error getting document:", error);
         });
     },
+    obtenerPacienteId(){
+      let id = this.$router.currentRoute.params.id;
+      this.pacienteid = id;
+    }
   }
 };
 </script>
