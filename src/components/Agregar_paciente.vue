@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form @submit.prevent.stop="validaciones">
+    <form>
       <q-item @click="formulario = true" clickable v-ripple>
         <q-item-section avatar>
           <q-icon name="person_add" />
@@ -61,10 +61,7 @@
                   icon="close"
                   class="float-right"
                   flat
-                  @click="
-                    foto = '';
-                    imagen = '';
-                  "
+                  @click="foto = ''"
                 >
                   <q-tooltip
                     content-class="bg-accent text-white"
@@ -84,7 +81,7 @@
                   class="q-mx-md col-md-11"
                   label="Seleccione la imagen"
                   v-model="imagen"
-                  clearable
+                  
                   accept=".jpg, image/*"
                 >
                   <template v-slot:before>
@@ -93,7 +90,7 @@
                   <template v-slot:after>
                     <q-btn
                       push
-                      @click="subir_imagen(1)"
+                      @click="cambiar_imagen()"
                       :disable="imagen"
                       color="secondary"
                       text-color="white"
@@ -153,8 +150,8 @@
 
               <div class="row">
                 <div class="col-md-5 col-xs-6">
-                  <q-label 
-                  class="q-mx-md q-my-md">Sexo:</q-label><br />
+                  <span class="label q-mx-md q-my-md">Sexo:</span>
+                  <br />
                   <q-radio
                     class="q-mx-md"
                     v-model="paciente.genero"
@@ -165,8 +162,8 @@
                   </q-radio>
                   <br />
                   <q-radio
-                  ref="genero"
-                  required
+                    ref="genero"
+                    required
                     class="q-mx-md"
                     v-model="paciente.genero"
                     label="Femenino"
@@ -183,8 +180,11 @@
                   >
                 </div>
                 <div class="col-md-5 col-xs-6">
-                  <q-label class="q-mx-md q-my-md">Fecha de nacimiento:</q-label
-                  ><br />
+                  <span class="label q-mx-md q-my-md"
+                    >Fecha de nacimiento:</span
+                  >
+
+                  <br />
                   <q-input
                     ref="fechaNacimiento"
                     class="q-mx-md"
@@ -377,7 +377,6 @@
                 color="primary"
                 @click="agregarPaciente()"
                 type="submit"
-                disable="error"
                 >Registrar
                 <q-tooltip
                   content-class="bg-accent text-white"
@@ -404,6 +403,7 @@
                   >Cancelar y volver</q-tooltip
                 ></q-btn
               >
+            
               <br />
               <br />
               <br />
@@ -419,15 +419,18 @@
 import { db, st } from "../boot/firebase";
 export default {
   name: "agregar_paciente",
+  props: {
+    id_doctor: String
+  },
   data() {
     return {
       id_paciente: "",
       carpeta: "imagenes",
       imagen_defecto: "https://s5.postimg.cc/537jajaxj/default.png",
-      imagen: true,
+      imagen: "",
       foto: "https://s5.postimg.cc/537jajaxj/default.png",
       paciente: {
-        idMedico: "Lnw22pwDcUQtWuTdSqcLmuwrrS12",
+        idMedico: this.id_doctor,
         nombre: null,
         genero: "",
         fechaNacimiento: "",
@@ -447,7 +450,7 @@ export default {
         foto: "",
         medicamentosPermanentes: "",
         peso: [],
-        tipoSangre: "",
+        tipoSangre: ""
       },
       error: false,
       formulario: false
@@ -456,7 +459,6 @@ export default {
   methods: {
     limpiar() {
       this.carpeta = "imagenes";
-      this.foto = "https://s5.postimg.cc/537jajaxj/default.png";
       this.paciente.nombre = "";
       this.formulario = false;
       this.paciente.fechaNacimiento = "";
@@ -478,7 +480,7 @@ export default {
         color: color,
         timeout: 1000,
         icon: icono,
-        position: "top",
+        position: "top"
       });
     },
     cancelar() {
@@ -500,14 +502,10 @@ export default {
       } else {
         try {
           this.$q.loading.show();
-
           const query = await db.collection("pacientes").add(this.paciente);
-          this.carpeta = query.id;
+        
           this.id_paciente = query.id;
-          this.subir_imagen(1);
           this.actualizar_paciente();
-          this.foto = "";
-          this.limpiar();
         } catch (error) {
           console.log(error);
         } finally {
@@ -532,7 +530,7 @@ export default {
       ) {
         this.error = true;
       } else {
-       this.error=false;
+        this.error = false;
       }
     },
 
@@ -547,61 +545,86 @@ export default {
       }
       return this.error;
     },
-    subir_imagen(tipo) {
-      if (tipo === 1) {
-        try {
-          this.foto = "";
+    async traer_imagen() {
+      const refs = st.ref();
+      let this2 = this;
 
-          const refs = st.ref();
-          let this2 = this;
-          const imgref = refs.child(this.carpeta).child("perfil.jpg");
-          imgref.put(this.imagen).then(function(snapshot) {});
-
-          refs
-            .child(this.carpeta + "/")
-            .listAll()
-            .then(function(result) {
-              result.items.forEach(function(imgRefe) {
-                let nombre = imgRefe.name;
-                if (nombre == "perfil.jpg") {
-                  imgRefe.getDownloadURL().then(function(url) {
-                    this2.foto = url;
-                    console.log(this2.foto);
-                  });
-                }
+      const imgref = refs.child(this.carpeta).child("perfil.jpg");
+      await refs
+        .child(this.carpeta + "/")
+        .listAll()
+        .then(function(result) {
+          result.items.forEach(function(imgRefe) {
+            let nombre = imgRefe.name;
+            if (nombre == "perfil.jpg") {
+              imgRefe.getDownloadURL().then(function(url) {
+                this2.foto = url;
               });
-            });
-        } catch (error) {
-          console.log(error);
-        }
-      } else {
-        console.log(" no entro");
-        try {
-          console.log(this.id_paciente);
-          console.log(this.carpeta);
-          console.log(this.foto);
-          const refs = st.ref();
-          let this2 = this;
-          const imgref = refs.child(this.carpeta).child("perfil.jpg");
-          imgref.put(this.foto).then(function(snapshot) {});
-
-          console.log(imgref.getDownloadURL());
-        } catch (error) {
-          console.log(error);
-        }
+            }
+          });
+        });
+    },
+    cambiar_imagen() {
+      try {
+        const refs = st.ref();
+        let this2 = this;
+        const imgref = refs.child(this.carpeta).child("perfil.jpg");
+        imgref.put(this.imagen).then(function(snapshot) {
+          this2.traer_imagen();
+        });
+      } catch (error) {
+        console.log(error);
       }
     },
+    async subir_imagen(tipo) {
+      var subir = 1;
+      var actualizar = 2;
+        if (!this.foto || this.foto===this.imagen_defecto) {
+          
+          try {
+            const response = await fetch(this.imagen_defecto);
+            const blob = await response.blob();
+            var metadata = {
+              contentType: "image/png"
+            };
+
+            const refs = st.ref();
+            let this2 = this;
+            const imgref = refs.child(this.id_paciente).child("perfil.jpg");
+
+            imgref.put(blob, metadata).then(function(snapshot) {
+              this2.limpiar();
+            });
+          } catch (error) {
+            console.log(error);
+          }
+        } else {
+          try {
+          
+            console.log("entro aqui 2")
+            const refs = st.ref();
+            let this2 = this;
+            const imgref = refs.child(this.id_paciente).child("perfil.jpg");
+
+            imgref.put(this.imagen).then(function(snapshot) {
+              this2.limpiar();
+            });
+          } catch (error) {
+            console.log(error);
+          }
+        }
+      
+    },
     async actualizar_paciente() {
-      console.log(this.id_paciente);
       try {
-        this.subir_imagen(2);
         const query = db.collection("pacientes").doc(this.id_paciente);
+        let this2 = this;
         query
           .update({
-            foto: "/" + this.carpeta + "/perfil.jpg"
+            foto: "/" + this.id_paciente + "/perfil.jpg"
           })
           .then(function() {
-            console.log("Paciente actualizado");
+            this2.subir_imagen();
           });
       } catch (error) {
         console.log(error);

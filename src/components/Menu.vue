@@ -58,7 +58,7 @@
             </q-item-section>
             <q-item-section>Pacientes</q-item-section>
           </q-item>
-          <agregar_paciente></agregar_paciente>
+          <agregar_paciente id_doctor="Lnw22pwDcUQtWuTdSqcLmuwrrS12"></agregar_paciente>
         </div>
       </q-list>
       <div class="fixed-bottom q-mb-xl" v-if="usuario != null">
