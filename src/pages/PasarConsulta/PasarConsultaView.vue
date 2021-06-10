@@ -11,25 +11,43 @@
           @click="$refs.menu.openCloseDrawer()"
         />
 
-        <q-toolbar-title>
-          Nueva Consulta
-        </q-toolbar-title>
+        <q-toolbar-title> Nueva Consulta </q-toolbar-title>
         <q-btn class="lt-md" flat @click="test" round dense icon="menu" />
       </q-toolbar>
     </q-header>
     <Menu ref="menu" />
-    <q-drawer v-model="drawerRight" show-if-above bordered side="right" >
+    <q-drawer v-model="drawerRight" show-if-above bordered side="right">
       <NavegacionConsulta ref="nav" />
     </q-drawer>
     <q-page-container>
       <q-page padding class="q-pt-none">
         <div id="pasar-consulta">
-          <div class="row justify-center">
-            <h3 class="text-h3" style="line-height:0rem">Nueva Consulta</h3>
-          </div>
+           <div class="row items-center">
+      <div class="col-12 col-sm-7 justify-between">
+        <h2 class="text-h2">Pasar Consulta</h2>
+      </div>
+      <div class="col-12 col-sm-5 justify-between">
+        <q-btn
+          outline
+          color="primary"
+          icon="home"
+          label="Regresar al expediente"
+          to="/"
+          class="q-mx-sm"
+        ></q-btn>
+        <q-btn
+          outline
+          color="secondary"
+          icon="save"
+          label="Guardar"
+         
+          class="q-mx-sm"
+        ></q-btn>
+      </div>
+    </div>
           <div class="row justify-center">
             <q-input
-              class="q-mx-md q-my-md "
+              class="q-mx-md q-my-md"
               type="number"
               min="0"
               outlined
@@ -135,10 +153,10 @@
 
           <hr class="lt-md" />
 
-          <div class="row justify-center items-baseline lt-md ">
+          <div class="row justify-center items-baseline lt-md">
             <q-input
               outlined
-              class=" q-mb-lg"
+              class="q-mb-lg"
               v-model="form_data.proximaCita"
               filled
               type="date"
@@ -168,7 +186,7 @@ export default {
     navegacionConsulta,
     Examenes,
     Menu,
-    NavegacionConsulta
+    NavegacionConsulta,
   },
   data() {
     return {
@@ -191,14 +209,15 @@ export default {
         examenes: "",
         diagnostico: "",
 
-        proximaCita: undefined
+        proximaCita: undefined,
       },
       toolbar: [
         ["bold", "italic", "strike", "underline"],
-        ["unordered", "ordered", "outdent", "indent"]
-      ]
+        ["unordered", "ordered", "outdent", "indent"],
+      ],
     };
   },
+
   methods: {
     onScroll(info) {
       if (this.spyMovil == false) {
@@ -210,15 +229,15 @@ export default {
       this.spyMovil = true;
       this.$refs.nav.scrollspy(this.scrollInfo.position);
       this.drawerRight = !this.drawerRight;
-    }
+    },
   },
   watch: {
-    drawerRight: function(val) {
+    drawerRight: function (val) {
       if (this.drawerRight == false && this.spyMovil) {
         this.spyMovil = false;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

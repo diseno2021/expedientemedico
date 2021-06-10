@@ -47,7 +47,6 @@
           class=" overflow-hidden"
           header-class="claseheader"
         >
-          <!-- <q-card class="bg-grey-3"> -->
           <q-card-section>
             <div class="text-h6">05-23-2021</div>
             <div class="text-subtitle2">fecha de ultima consulta</div>
@@ -57,7 +56,6 @@
             Este es el diagnostico de la ultima consulta con el paciente puede
             ser extenso como se desee
           </q-card-section>
-          <!-- </q-card> -->
         </q-expansion-item>
 
         <!-- <q-expansion-item
@@ -121,7 +119,7 @@
             color="secondary"
             label="Cancelar consulta"
             class="full-width"
-            to="/paciente"
+            :to="'/paciente/' + paciente.id"
           ></q-btn>
         </div>
       </q-list>
@@ -142,7 +140,7 @@ export default {
 
   data: () => ({
     paciente: null,
-    consultas: null,
+    consulta: null,
     fotoPerfil: "",
     datosGraficaPeso: null,
     numerosGraficaPeso: [], 
@@ -150,7 +148,7 @@ export default {
   }),
   created() {
     this.obtenerDatosPaciente();
-    this.obtenerPacienteId();
+    this.obtenerConsultas();
   },
   methods: {
     obtenerDatosPaciente() {
@@ -188,6 +186,23 @@ export default {
         })
         .catch(error => {
           console.log("Error getting document:", error);
+        });
+    },
+      obtenerConsultas() {
+      db.collection("consultas")
+        .where("idPaciente", "==", this.$router.currentRoute.params.id)
+        .get()
+        .then(qs => {
+          qs.docs.forEach(doc => {
+            let consulta = doc.data();
+            Object.defineProperty(consulta, "id", {
+              value: doc.id,
+              writable: true,
+              enumerable: true,
+              configurable: true
+            });
+            // this.consultasPaciente.push(consulta);
+          });
         });
     },
     obtenerPacienteId(){
