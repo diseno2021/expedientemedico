@@ -22,29 +22,28 @@
     <q-page-container>
       <q-page padding class="q-pt-none">
         <div id="pasar-consulta">
-           <div class="row items-center">
-      <div class="col-12 col-sm-7 justify-between">
-        <h2 class="text-h2">Pasar Consulta</h2>
-      </div>
-      <div class="col-12 col-sm-5 justify-between">
-        <q-btn
-          outline
-          color="primary"
-          icon="home"
-          label="Regresar al expediente"
-          to="/"
-          class="q-mx-sm"
-        ></q-btn>
-        <q-btn
-          outline
-          color="secondary"
-          icon="save"
-          label="Guardar"
-         
-          class="q-mx-sm"
-        ></q-btn>
-      </div>
-    </div>
+          <div class="row items-center">
+            <div class="col-12 col-sm-7 justify-between">
+              <h2 class="text-h2">Pasar Consulta</h2>
+            </div>
+            <div class="col-12 col-sm-5 justify-between">
+              <q-btn
+                outline
+                color="primary"
+                icon="keyboard_arrow_left"
+                label="Regresar al expediente"
+                :to="'/paciente/' + this.$router.currentRoute.params.id"
+                class="q-mx-sm"
+              ></q-btn>
+              <q-btn
+                outline
+                color="secondary"
+                icon="save"
+                label="Guardar"
+                class="q-mx-sm"
+              ></q-btn>
+            </div>
+          </div>
           <div class="row justify-center">
             <q-input
               class="q-mx-md q-my-md"
@@ -55,6 +54,7 @@
               v-model="form_data.peso"
               label="peso"
               style="max-width: 7rem; min-width: 5rem"
+              required
             ></q-input>
 
             <q-input
@@ -66,6 +66,7 @@
               v-model="form_data.estatura"
               label="estatura"
               style="max-width: 7rem; min-width: 5rem"
+              required
             ></q-input>
 
             <q-input
@@ -77,6 +78,7 @@
               v-model="form_data.temperatura"
               label="temperatura"
               style="max-width: 7rem; min-width: 5rem"
+              required
             ></q-input>
 
             <q-input
@@ -88,6 +90,7 @@
               v-model="form_data.imc"
               label="imc"
               style="max-width: 7rem; min-width: 5rem"
+              required
             ></q-input>
 
             <q-input
@@ -99,6 +102,7 @@
               v-model="form_data.presionArterial"
               label="presión"
               style="width: 7rem; min-width: 5rem"
+              required
             ></q-input>
           </div>
           <div class="row justify-center">
@@ -110,6 +114,7 @@
                   v-model="form_data.motivoConsulta"
                   label="Motivo de consulta"
                   type="textarea"
+                  required
                 />
 
                 <p>Sintomas subjetivos</p>
@@ -117,12 +122,14 @@
                   :toolbar="toolbar"
                   v-model="form_data.sintomasSubjetivos"
                   min-height="7rem"
+                  required
                 ></q-editor>
                 <p>Diagnostico</p>
                 <q-editor
                   :toolbar="toolbar"
                   v-model="form_data.diagnostico"
                   min-height="7rem"
+                  required
                 ></q-editor>
               </div>
             </div>
@@ -133,12 +140,14 @@
                   :toolbar="toolbar"
                   v-model="form_data.exploracionFisica"
                   min-height="7rem"
+                  required
                 ></q-editor>
                 <p>Examenes</p>
                 <q-editor
                   :toolbar="toolbar"
                   v-model="form_data.examenes"
                   min-height="7rem"
+                  required
                 ></q-editor>
 
                 <p>Recetas</p>
@@ -146,6 +155,7 @@
                   :toolbar="toolbar"
                   v-model="form_data.receta"
                   min-height="7rem"
+                  required
                 ></q-editor>
               </div>
             </div>
@@ -162,6 +172,7 @@
               type="date"
               label="Próxima Cita"
               stack-label
+              required
             />
             <div class="q-pa-md q-gutter-sm">
               <q-btn color="primary" label="Guardar" to="paciente"></q-btn>
@@ -190,6 +201,7 @@ export default {
   },
   data() {
     return {
+      error: false,
       drawerRight: false,
       scrollInfo: {},
       spyMovil: false,
@@ -219,6 +231,51 @@ export default {
   },
 
   methods: {
+    limpiarFormulario(){
+       this.form_data.peso = 0,
+       this.form_data.estatura = 0,
+       this.form_data.temperatura = 0,
+       this.form_data.presionArterial = 0,
+       this.form_data.imc = 0,
+       this.form_data.motivoConsulta = "",
+       this.form_data.sintomas = "",
+       this.form_data.exploracionFisica = "",
+       this.form_data.examenes = "",
+       this.form_data.receta = "",
+       this.form_data.diagnostico = ""
+    },
+
+    validarDatos(){
+     this.$refs.motivoConsulta.validate();
+     this.$refs.sintomas.validate();
+     this.$refs.exploracionFisica.validate();
+     this.$refs.examenes.validate();
+     this.$refs.receta.validate();
+     this.$refs.diagnostico.validate();
+     if (
+         this.$refs.motivoConsulta.hasError ||
+         this.$refs.sintomas.hasError ||
+         this.$refs.exploracionFisica.hasError ||
+         this.$refs.examenes.hasError ||
+         this.$refs.receta.hasError ||
+         this.$refs.diagnostico.hasError 
+     ) {
+       this.error = true;
+     } else {
+       this.error = false;
+     }
+    },
+
+      showNotif(mensaje, color, icono) {
+      this.$q.notify({
+        message: mensaje,
+        color: color,
+        timeout: 1000,
+        icon: icono,
+        position: "top"
+      });
+    },
+
     onScroll(info) {
       if (this.spyMovil == false) {
         this.scrollInfo = info;
