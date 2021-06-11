@@ -222,7 +222,7 @@
       </div>
 
       <div class="col-12 col-md-5 q-mt-md q-mt-md">
-        <q-input v-model="paciente.whatsapp" label="DUI">
+        <q-input v-model="paciente.dui" label="DUI">
           <template v-slot:prepend>
             <q-icon name="credit_card" />
           </template>

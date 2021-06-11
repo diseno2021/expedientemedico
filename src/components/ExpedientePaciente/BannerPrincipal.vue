@@ -10,7 +10,7 @@
                 class="absolute all-pointer-events absolute-bottom-right"
                 size="20px"
                 name="edit"
-                color="white"
+                color="secondary"
                 @click="cambiarImagen"
               >
                 <q-tooltip>
