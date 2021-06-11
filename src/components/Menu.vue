@@ -58,7 +58,7 @@
             </q-item-section>
             <q-item-section>Pacientes</q-item-section>
           </q-item>
-          <agregar_paciente id_doctor="Lnw22pwDcUQtWuTdSqcLmuwrrS12"></agregar_paciente>
+          <agregar_paciente :id_doctor="id_usuario"></agregar_paciente>
         </div>
       </q-list>
       <div class="fixed-bottom q-mb-xl" v-if="usuario != null">
@@ -85,6 +85,7 @@ export default {
   },
   data() {
     return {
+      id_usuario: "",
       usuario: null,
       state: this.leftDrawerOpen,
       dark: false,
@@ -149,6 +150,7 @@ export default {
   },
   async created() {
     var user = auth.currentUser;
+    this.id_usuario=user.uid;
     console.log("Flag 1", user);
     if (user) {
       await this.obtenerCantidadDePaciente();
