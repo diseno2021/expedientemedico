@@ -156,7 +156,7 @@
                     class="q-mx-md"
                     v-model="paciente.genero"
                     label="Masculino"
-                    val="masculino"
+                    val="Masculino"
                     required
                   >
                   </q-radio>
@@ -167,7 +167,7 @@
                     class="q-mx-md"
                     v-model="paciente.genero"
                     label="Femenino"
-                    val="femenino"
+                    val="Femenino"
                   >
                   </q-radio>
                   <q-tooltip
