@@ -4,8 +4,9 @@
       <q-card-section>
         <div class="row justify-center q-pb-xs">
           <q-avatar square rounded size="85px" class="q-mx-auto">
-            <q-img :src="fotoPerfil">
-              <q-icon
+            <q-img :src="fotoPerfil">              
+            </q-img>
+            <q-icon
                 class="absolute all-pointer-events absolute-bottom-right"
                 size="20px"
                 name="edit"
@@ -16,7 +17,6 @@
                   Cambiar fotografía
                 </q-tooltip>
               </q-icon>
-            </q-img>
           </q-avatar>
         </div>
         <div class="text-h6 q-pb-xs">{{ paciente.nombre }}</div>

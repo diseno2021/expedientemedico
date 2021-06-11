@@ -283,30 +283,39 @@ export default {
       if (this.nuevoPeso !== null && this.nuevoPeso !== "") {
         this.paciente.peso.push(parseFloat(this.nuevoPeso));
         this.nuevoPeso = null;
+         this.cargarDatosGrafica();
       }
       if (this.nuevaEstatura !== null && this.nuevaEstatura !== "") {
         this.paciente.estatura.push(parseFloat(this.nuevaEstatura));
         this.nuevaEstatura = null;
+         this.cargarDatosGrafica();
       }
+     
       this.$emit("guardarInformacion");
+    },
+    cargarDatosGrafica() {
+      this.datosGraficaEstatura = null;
+      this.numerosGraficaEstatura = [];
+      this.datosGraficaPeso = null;
+      this.numerosGraficaPeso = [];
+      this.datosGraficaEstatura =
+        this.paciente.estatura.length > 5
+          ? this.paciente.estatura.slice(-5)
+          : this.paciente.estatura;
+      this.datosGraficaPeso =
+        this.paciente.peso.length > 5
+          ? this.paciente.peso.slice(-5)
+          : this.paciente.peso;
+      for (let index = 1; index <= this.datosGraficaEstatura.length; index++) {
+        this.numerosGraficaEstatura.push(index);
+      }
+      for (let index = 1; index <= this.datosGraficaPeso.length; index++) {
+        this.numerosGraficaPeso.push(index);
+      }
     }
   },
   mounted() {
-    this.datosGraficaEstatura =
-      this.paciente.estatura > 5
-        ? this.paciente.estatura.slice(-5)
-        : this.paciente.estatura;
-    this.datosGraficaPeso =
-      this.paciente.peso > 5
-        ? this.paciente.peso.slice(-5)
-        : this.paciente.peso;
-    for (let index = 1; index <= this.datosGraficaEstatura.length; index++) {
-      this.numerosGraficaEstatura.push(index);
-    }
-    for (let index = 1; index <= this.datosGraficaPeso.length; index++) {
-      this.numerosGraficaPeso.push(index);
-    }
-    console.log(this.datosGraficaEstatura, this.datosGraficaPeso);
+    this.cargarDatosGrafica()
   }
 };
 </script>
