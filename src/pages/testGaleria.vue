@@ -38,7 +38,7 @@
             content-class="bg-negative"
             content-style="font-size: 16px"
           >
-            <bold>Eliminar imagen</bold>
+            <b>Eliminar imagen</b>
           </q-tooltip>
         </q-btn>
       </q-carousel-slide>
@@ -59,7 +59,7 @@
               content-class="bg-green"
               content-style="font-size: 16px"
             >
-              <bold>Agregar nueva imagen</bold>
+              <b>Agregar nueva imagen</b>
             </q-tooltip>
           </q-btn>
 
@@ -78,7 +78,7 @@
               content-class="bg-secondary"
               content-style="font-size: 16px"
             >
-              <bold>{{ fullscreen ? "Minimizar" : "Maximizar" }}</bold>
+              <b>{{ fullscreen ? "Minimizar" : "Maximizar" }}</b>
             </q-tooltip>
           </q-btn>
         </q-carousel-control>
