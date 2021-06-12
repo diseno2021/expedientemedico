@@ -70,7 +70,14 @@
               </div>
               <q-space></q-space>
               <div class="col-auto q-py-xs q-px-sm">
-                <q-btn flat size="md" color="secondary" dense>Editar</q-btn>
+                <q-btn
+                  flat
+                  size="md"
+                  color="secondary"
+                  dense
+                  :to="'/pasar-consulta/' + consulta.id"
+                  >Editar</q-btn
+                >
               </div>
             </div>
           </q-expansion-item>
@@ -94,7 +101,7 @@
     </div>
     <div class="row" v-else>
       <div class="col-12 text-center text-h5">
-        El usuario no tiene consultas registradas
+        El usuario no tiene recetas registradas
       </div>
     </div>
   </div>
@@ -143,4 +150,3 @@ export default {
   },
 };
 </script>
-
