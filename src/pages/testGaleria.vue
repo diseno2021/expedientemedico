@@ -112,7 +112,7 @@
             max-files="20"
             bg-color="grey"
             label-color="white"
-            accept=".jpg, image/*"
+            accept=".jpg, .png, image/*"
           >
             <template v-slot:before>
               <q-icon name="collections" />
@@ -164,9 +164,11 @@ export default {
       if (this.archivo) {
         const ref = st.ref();
         const carpeta = this.idPaciente;
-        const imgRef = ref.child(carpeta + "/" + this.archivo.name);
+        var nombre = this.archivo.name;
+        var newnombre = nombre.replace(/ /g, "");
+        const imgRef = ref.child(carpeta + "/" + newnombre);
         let this2 = this;
-
+        console.log("archivo" ,this.archivo)
         imgRef
           .put(this.archivo)
           .then(function(snapshot) {
@@ -200,7 +202,6 @@ export default {
             if (nombre == "perfil.jpg") {
             } else {
               this2.nameImg.push(nombre);
-              this2.nameSelect = "";
               imgRefe.getDownloadURL().then(function(url) {
                 this2.imagenes.push(url);
               });
@@ -218,6 +219,7 @@ export default {
       this.nameImg.forEach(function(element) {
         if (urll.includes(element)) {
           this2.nameSelect = element;
+          console.log("nameSEle" ,this2.nameSelect)
         }
       });
 
@@ -227,6 +229,7 @@ export default {
         newRef.delete().then(() => {
           this.traerImg();
           this.confirm = false;
+          this2.nameSelect = "";
           this2.$q.notify({
             type: "negative",
             message: `Imagen eliminada con exito!`
