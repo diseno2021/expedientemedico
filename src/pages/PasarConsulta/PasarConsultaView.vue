@@ -31,17 +31,33 @@
                 outline
                 color="primary"
                 icon="keyboard_arrow_left"
-                label="Regresar al expediente"
                 :to="'/paciente/' + this.$router.currentRoute.params.id"
                 class="q-mx-sm"
-              ></q-btn>
+              > Regresar al expediente 
+              <q-tooltip
+                  content-class="bg-accent text-white"
+                  content-style="font-size: 12px"
+                  anchor="top left"
+                  self="bottom left"
+                  :offset="[0, 8]"
+                  >Regresar al expediente</q-tooltip
+                ></q-btn>
               <q-btn
                 outline
                 color="secondary"
                 icon="save"
-                label="Guardar"
+                @click="agregarConsulta()"
                 class="q-mx-sm"
-              ></q-btn>
+                type="submit"
+              > Registrar Consulta 
+              <q-tooltip
+                  content-class="bg-accent text-white"
+                  content-style="font-size: 12px"
+                  anchor="top left"
+                  self="bottom left"
+                  :offset="[0, 8]"
+                  >Registrar una nueva consulta</q-tooltip
+                ></q-btn>
             </div>
           </div>
           <div class="row justify-center">
@@ -207,7 +223,7 @@ export default {
       spyMovil: false,
       form_data: {
         id: "",
-        idPaciente: "",
+        idPaciente: this.$router.currentRoute.params.id,
         peso: 0,
         estatura: 0,
         temperatura: 0,
@@ -264,6 +280,27 @@ export default {
      } else {
        this.error = false;
      }
+    },
+
+        async agregarConsulta() {
+      this.validaciones();
+      if (this.error === true) {
+        this.showNotif(
+          "Necesita rellenar los campos requeridos.",
+          "negative",
+          "close"
+        );
+      } else {
+        try {
+          this.$q.loading.show();
+          const query = await db.collection("consultas").add(this.form_data);
+        
+        } catch (error) {
+          console.log(error);
+        } finally {
+          this.$q.loading.hide();
+        }
+      }
     },
 
       showNotif(mensaje, color, icono) {
