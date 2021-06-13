@@ -261,36 +261,36 @@ export default {
        this.form_data.diagnostico = ""
     },
 
-    validarDatos(){
-     this.$refs.motivoConsulta.validate();
-     this.$refs.sintomas.validate();
-     this.$refs.exploracionFisica.validate();
-     this.$refs.examenes.validate();
-     this.$refs.receta.validate();
-     this.$refs.diagnostico.validate();
-     if (
-         this.$refs.motivoConsulta.hasError ||
-         this.$refs.sintomas.hasError ||
-         this.$refs.exploracionFisica.hasError ||
-         this.$refs.examenes.hasError ||
-         this.$refs.receta.hasError ||
-         this.$refs.diagnostico.hasError 
-     ) {
-       this.error = true;
-     } else {
-       this.error = false;
-     }
-    },
+    // validarDatos(){
+    //  this.$refs.motivoConsulta.validate();
+    //  this.$refs.sintomas.validate();
+    //  this.$refs.exploracionFisica.validate();
+    //  this.$refs.examenes.validate();
+    //  this.$refs.receta.validate();
+    //  this.$refs.diagnostico.validate();
+    //  if (
+    //      this.$refs.motivoConsulta.hasError ||
+    //      this.$refs.sintomas.hasError ||
+    //      this.$refs.exploracionFisica.hasError ||
+    //      this.$refs.examenes.hasError ||
+    //      this.$refs.receta.hasError ||
+    //      this.$refs.diagnostico.hasError 
+    //  ) {
+    //    this.error = true;
+    //  } else {
+    //    this.error = false;
+    //  }
+    // },
 
         async agregarConsulta() {
-      this.validaciones();
-      if (this.error === true) {
-        this.showNotif(
-          "Necesita rellenar los campos requeridos.",
-          "negative",
-          "close"
-        );
-      } else {
+      // this.validaciones();
+      // if (this.error === true) {
+      //   this.showNotif(
+      //     "Necesita rellenar los campos requeridos.",
+      //     "negative",
+      //     "close"
+      //   );
+      // } else {
         try {
           this.$q.loading.show();
           const query = await db.collection("consultas").add(this.form_data);
@@ -300,7 +300,7 @@ export default {
         } finally {
           this.$q.loading.hide();
         }
-      }
+     // }
     },
 
       showNotif(mensaje, color, icono) {
