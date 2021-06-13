@@ -86,7 +86,9 @@
         >
           <!-- Sugerimos eliminar las card para que funcione el modo oscuro y tenga menos padding los elementos -->
           <!-- Dejamos nuestro componente, nos deben pasar el id del paciente en la propiedad :idPaciente="" -->
-          <testGaleriaComponent :idPaciente="this.$router.currentRoute.params.id" />
+          <testGaleriaComponent
+            :idPaciente="this.$router.currentRoute.params.id"
+          />
         </q-expansion-item>
 
         <q-expansion-item
@@ -111,10 +113,6 @@
         </q-expansion-item>
         <br />
         <div class="column align-center ">
-          <q-input filled type="date" stack-label label="Próxima Cita" />
-          <br />
-          <q-btn color="primary" label="Guardar" to="/paciente"></q-btn>
-          <br />
           <q-btn
             color="secondary"
             label="Cancelar consulta"
@@ -143,7 +141,7 @@ export default {
     consulta: null,
     fotoPerfil: "",
     datosGraficaPeso: null,
-    numerosGraficaPeso: [], 
+    numerosGraficaPeso: [],
     pacienteid: ""
   }),
   created() {
@@ -188,7 +186,7 @@ export default {
           console.log("Error getting document:", error);
         });
     },
-      obtenerConsultas() {
+    obtenerConsultas() {
       db.collection("consultas")
         .where("idPaciente", "==", this.$router.currentRoute.params.id)
         .get()
@@ -205,7 +203,7 @@ export default {
           });
         });
     },
-    obtenerPacienteId(){
+    obtenerPacienteId() {
       let id = this.$router.currentRoute.params.id;
       this.pacienteid = id;
     }

@@ -26,38 +26,54 @@
             <div class="col-12 col-sm-7 justify-between">
               <h2 class="text-h2">Pasar Consulta</h2>
             </div>
-            <div class="col-12 col-sm-5 justify-between">
+            <div class="col-12 col-sm-5 column justify-center">
               <q-btn
+                class="q-my-sm"
                 outline
                 color="primary"
                 icon="keyboard_arrow_left"
                 :to="'/paciente/' + this.$router.currentRoute.params.id"
-                class="q-mx-sm"
-              > Regresar al expediente 
-              <q-tooltip
+              >
+                Regresar al expediente
+                <q-tooltip
                   content-class="bg-accent text-white"
                   content-style="font-size: 12px"
                   anchor="top left"
                   self="bottom left"
                   :offset="[0, 8]"
                   >Regresar al expediente</q-tooltip
-                ></q-btn>
+                ></q-btn
+              >
+
               <q-btn
+                class="q-my-sm"
                 outline
                 color="secondary"
                 icon="save"
                 @click="agregarConsulta()"
-                class="q-mx-sm"
                 type="submit"
-              > Registrar Consulta 
-              <q-tooltip
+              >
+                Registrar Consulta
+                <q-tooltip
                   content-class="bg-accent text-white"
                   content-style="font-size: 12px"
                   anchor="top left"
                   self="bottom left"
                   :offset="[0, 8]"
                   >Registrar una nueva consulta</q-tooltip
-                ></q-btn>
+                ></q-btn
+              >
+              <q-input
+                class="q-my-sm"
+                dense
+                outlined
+                v-model="form_data.proximaCita"
+                filled
+                type="date"
+                label="Próxima Cita"
+                stack-label
+                required
+              />
             </div>
           </div>
           <div class="row justify-center">
@@ -179,21 +195,7 @@
 
           <hr class="lt-md" />
 
-          <div class="row justify-center items-baseline lt-md">
-            <q-input
-              outlined
-              class="q-mb-lg"
-              v-model="form_data.proximaCita"
-              filled
-              type="date"
-              label="Próxima Cita"
-              stack-label
-              required
-            />
-            <div class="q-pa-md q-gutter-sm">
-              <q-btn color="primary" label="Guardar" to="paciente"></q-btn>
-            </div>
-          </div>
+          <div class="row justify-center items-baseline"></div>
         </div>
       </q-page>
     </q-page-container>
@@ -206,14 +208,14 @@ import navegacionConsulta from "components/PasarConsulta/NavegacionConsulta.vue"
 import Examenes from "pages/testGaleriaComponent.vue";
 import Menu from "components/Menu";
 import NavegacionConsulta from "components/PasarConsulta/NavegacionConsulta.vue";
-
+import { db } from "../../boot/firebase";
 export default {
   components: {
     perfil,
     navegacionConsulta,
     Examenes,
     Menu,
-    NavegacionConsulta,
+    NavegacionConsulta
   },
   data() {
     return {
@@ -237,73 +239,49 @@ export default {
         examenes: "",
         diagnostico: "",
 
-        proximaCita: undefined,
+        proximaCita: undefined
       },
       toolbar: [
         ["bold", "italic", "strike", "underline"],
-        ["unordered", "ordered", "outdent", "indent"],
-      ],
+        ["unordered", "ordered", "outdent", "indent"]
+      ]
     };
   },
 
   methods: {
-    limpiarFormulario(){
-       this.form_data.peso = 0,
-       this.form_data.estatura = 0,
-       this.form_data.temperatura = 0,
-       this.form_data.presionArterial = 0,
-       this.form_data.imc = 0,
-       this.form_data.motivoConsulta = "",
-       this.form_data.sintomas = "",
-       this.form_data.exploracionFisica = "",
-       this.form_data.examenes = "",
-       this.form_data.receta = "",
-       this.form_data.diagnostico = ""
+    limpiarFormulario() {
+      (this.form_data.peso = 0),
+        (this.form_data.estatura = 0),
+        (this.form_data.temperatura = 0),
+        (this.form_data.presionArterial = 0),
+        (this.form_data.imc = 0),
+        (this.form_data.motivoConsulta = ""),
+        (this.form_data.sintomas = ""),
+        (this.form_data.exploracionFisica = ""),
+        (this.form_data.examenes = ""),
+        (this.form_data.receta = ""),
+        (this.form_data.diagnostico = "");
     },
 
-    // validarDatos(){
-    //  this.$refs.motivoConsulta.validate();
-    //  this.$refs.sintomas.validate();
-    //  this.$refs.exploracionFisica.validate();
-    //  this.$refs.examenes.validate();
-    //  this.$refs.receta.validate();
-    //  this.$refs.diagnostico.validate();
-    //  if (
-    //      this.$refs.motivoConsulta.hasError ||
-    //      this.$refs.sintomas.hasError ||
-    //      this.$refs.exploracionFisica.hasError ||
-    //      this.$refs.examenes.hasError ||
-    //      this.$refs.receta.hasError ||
-    //      this.$refs.diagnostico.hasError 
-    //  ) {
-    //    this.error = true;
-    //  } else {
-    //    this.error = false;
-    //  }
-    // },
+    async agregarConsulta() {
+      console.info(this.form_data);
 
-        async agregarConsulta() {
-      // this.validaciones();
-      // if (this.error === true) {
-      //   this.showNotif(
-      //     "Necesita rellenar los campos requeridos.",
-      //     "negative",
-      //     "close"
-      //   );
-      // } else {
-        try {
-          this.$q.loading.show();
-          const query = await db.collection("consultas").add(this.form_data);
-        
-        } catch (error) {
-          console.log(error);
-        } finally {
-          this.$q.loading.hide();
-        }
-     // }
+      try {
+        this.$q.loading.show();
+        const query = await db
+          .collection("consultas")
+          .add({
+            ...this.form_data,
+            proximaCita: this.form_data.proximaCita || ""
+          });
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.$q.loading.hide();
+      }
     },
 
-      showNotif(mensaje, color, icono) {
+    showNotif(mensaje, color, icono) {
       this.$q.notify({
         message: mensaje,
         color: color,
@@ -323,15 +301,15 @@ export default {
       this.spyMovil = true;
       this.$refs.nav.scrollspy(this.scrollInfo.position);
       this.drawerRight = !this.drawerRight;
-    },
+    }
   },
   watch: {
-    drawerRight: function (val) {
+    drawerRight: function(val) {
       if (this.drawerRight == false && this.spyMovil) {
         this.spyMovil = false;
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
