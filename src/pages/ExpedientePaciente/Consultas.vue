@@ -89,7 +89,7 @@
                             </div>
                             <q-space></q-space>
                             <div class="col-auto q-py-xs q-px-sm">
-                                <q-btn flat size="md" color="secondary" dense :to="'/pasar-consulta/' + consulta.id">Editar</q-btn>
+                                <q-btn flat size="md" color="secondary" dense :to="'/nueva-consulta/' + consulta.id">Editar</q-btn>
                             </div>
                         </div>
                     </q-expansion-item>

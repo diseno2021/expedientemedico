@@ -51,6 +51,10 @@ const routes = [
       // ]
     },
     {
+      path: "/nueva-consulta/:id",
+      component: ()=>import('./../pages/PasarConsulta/NuevaConsultaView.vue')
+    },
+    {
       path: '/auth',
       component: () => import('layouts/Login.vue'),
       children: [
