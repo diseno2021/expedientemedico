@@ -8,7 +8,7 @@
             <img :src="fotoPerfil" />
           </q-avatar>
         </div>
-        <div class="text-h6 q-pb-xs">{{ paciente.nombre }}</div>
+        <div class="text-h6 q-pb-xs"></div>
       </q-card-section>
       <!-- </q-card> -->
     </div>
@@ -151,6 +151,7 @@ export default {
   methods: {
     obtenerDatosPaciente() {
       let id = this.$router.currentRoute.params.id;
+      console.log("aaaaaaaaaa");
       var docRef = db.collection("pacientes").doc(id);
       docRef
         .get()

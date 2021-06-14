@@ -64,6 +64,7 @@
                 ></q-btn
               >
               <q-input
+                ref="proximaCita"
                 class="q-my-sm"
                 dense
                 outlined
@@ -72,7 +73,10 @@
                 type="date"
                 label="Próxima Cita"
                 stack-label
-                required
+                lazy-rules
+                    :rules="[
+                      val => !!val || 'Campo requerido',
+                    ]"
               />
             </div>
           </div>
@@ -239,7 +243,7 @@ export default {
         examenes: "",
         diagnostico: "",
 
-        proximaCita: undefined
+        proximaCita: ""
       },
       toolbar: [
         ["bold", "italic", "strike", "underline"],
@@ -260,24 +264,56 @@ export default {
         (this.form_data.exploracionFisica = ""),
         (this.form_data.examenes = ""),
         (this.form_data.receta = ""),
+        (this.form_data.proximaCita = ""),
         (this.form_data.diagnostico = "");
     },
-
+cancelar() {
+      
+      this.showNotif(
+        "Consulta cancelada.",
+        "negative",
+        "close"
+      );
+    },
+    validar() {
+      this.$refs.proximaCita.validate();      
+      if (
+        this.$refs.proximaCita.hasError
+      ) {
+        this.error = true;
+      } else {
+        this.error = false;
+      }
+    },
     async agregarConsulta() {
       console.info(this.form_data);
-
+      this.validar();
+      if (this.error === true) {
+        this.showNotif(
+          "Necesita rellenar los campos requeridos.",
+          "negative",
+          "close"
+        );
+      } else {
       try {
+        console.log("HOla");
         this.$q.loading.show();
         const query = await db
           .collection("consultas")
-          .add({
-            ...this.form_data,
-            proximaCita: this.form_data.proximaCita || ""
-          });
+          .add(this.form_data);  
+        this.limpiarFormulario();
+        console.log(this.$router.currentRoute.path);
+        this.showNotif(
+          "Se ha guardado la consulta",
+          "positive",
+          "check"
+        );
+        this.$router.push('/paciente/' + this.$router.currentRoute.params.id);
       } catch (error) {
         console.log(error);
       } finally {
         this.$q.loading.hide();
+      }
       }
     },
 
@@ -294,12 +330,12 @@ export default {
     onScroll(info) {
       if (this.spyMovil == false) {
         this.scrollInfo = info;
-        this.$refs.nav.scrollspy(info.position);
+        
       }
     },
     test() {
       this.spyMovil = true;
-      this.$refs.nav.scrollspy(this.scrollInfo.position);
+      
       this.drawerRight = !this.drawerRight;
     }
   },
