@@ -125,8 +125,7 @@
                 class="q-mx-md"
                 v-model="paciente.nombre"
                 label="Nombres y apellidos"
-                required
-                pattern="[A-Z]"
+                @keypress="soloLetras($event)"
                 lazy-rules
                 :rules="[
                   val =>
@@ -153,23 +152,20 @@
                   <span class="label q-mx-md q-my-md">Sexo:</span>
                   <br />
                   <q-radio
+                  ref="sexo"
                     class="q-mx-md"
                     v-model="paciente.genero"
                     label="Masculino"
                     val="Masculino"
-                    required
-                  >
-                  </q-radio>
+                  />
                   <br />
                   <q-radio
-                    ref="genero"
-                    required
+                    ref="sexo"
                     class="q-mx-md"
                     v-model="paciente.genero"
                     label="Femenino"
                     val="Femenino"
-                  >
-                  </q-radio>
+                  />
                   <q-tooltip
                     content-class="bg-accent text-white"
                     content-style="font-size: 12px"
@@ -194,7 +190,7 @@
                     :rules="[
                       val => !!val || 'Campo requerido',
                       val =>
-                        edadPaciente() == false ||
+                        edadPaciente()== false||
                         'Fecha de nacimiento incorrecta, edad minima 1 año'
                     ]"
                   >
@@ -284,10 +280,12 @@
                 </div>
                 <div class="col-5">
                   <q-input
+                  ref="dui"
                     class="q-mx-md"
                     v-model="paciente.dui"
                     label="DUI"
                     mask="########-#"
+                    :disable= "edad()"
                   >
                     <q-tooltip
                       content-class="bg-accent text-white"
@@ -432,7 +430,7 @@ export default {
       paciente: {
         idMedico: this.id_doctor,
         nombre: null,
-        genero: "",
+        genero: "Masculino",
         fechaNacimiento: "",
         telefono: "",
         whatsapp: "",
@@ -452,8 +450,9 @@ export default {
         peso: [],
         tipoSangre: ""
       },
-      error: false,
-      formulario: false
+      error: true,
+      formulario: false,
+      activar: true,
     };
   },
   methods: {
@@ -513,18 +512,19 @@ export default {
         }
       }
     },
+    /* Varifica que los campos requeridos no esten vacios y en caso de estarlo devuelve la variable como true */
     validaciones() {
       this.$refs.nombre.validate();
       this.$refs.fechaNacimiento.validate();
       this.$refs.telefono.validate();
       this.$refs.direccion.validate();
       this.$refs.enCasoEmergencia.validate();
-      this.$refs.email.validate();
+      this.$refs.dui.validate();
       if (
         this.$refs.nombre.hasError ||
         this.$refs.fechaNacimiento.hasError ||
         this.$refs.telefono.hasError ||
-        this.$refs.email.hasError ||
+        this.$refs.dui.hasError ||
         this.$refs.direccion.hasError ||
         this.$refs.enCasoEmergencia.hasError
       ) {
@@ -533,7 +533,15 @@ export default {
         this.error = false;
       }
     },
+  /*   Metodo que valida el campo nombre para permitir solo letras incluida la ñ, palabras con tilde y espacios */
+    soloLetras(e) {
+      let nombre = String.fromCharCode(e.keyCode);
+      if (/^[a-zA-ZÀ-ÿ\u00f1\u00d1 ]+$/.test(nombre)) return true;
+      else e.preventDefault();
+    },
 
+  /* Si la fecha de nacimiento del paciente es mayor a 0 devolvera false
+  caso contrario sera verdadero y no permitira una fecha de nacimiento incorrecta */
     edadPaciente() {
       const hoy = new Date();
       const fechaN = new Date(this.paciente.fechaNacimiento);
@@ -541,10 +549,24 @@ export default {
       if (anio > 0 && anio <= 100) {
         this.error = false;
       } else {
+        this.error == true;
+      }
+      return this.error;
+    },
+  /*   retorna un booleano, si la edad es mayor o igual a 18 años retornara false 
+    caso contrario retornara true */
+    edad() {
+      const hoy = new Date();
+      const fechaN = new Date(this.paciente.fechaNacimiento);
+      const anio = hoy.getFullYear() - fechaN.getFullYear();
+      if (anio >= 18 && anio <= 100) {
+        this.error = false;
+      } else {
         this.error = true;
       }
       return this.error;
     },
+
     async traer_imagen() {
       const refs = st.ref();
       let this2 = this;
