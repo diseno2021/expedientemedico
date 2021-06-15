@@ -74,9 +74,7 @@
                 label="Próxima Cita"
                 stack-label
                 lazy-rules
-                    :rules="[
-                      val => !!val || 'Campo requerido',
-                    ]"
+                :rules="[val => !!val || 'Campo requerido']"
               />
             </div>
           </div>
@@ -267,19 +265,12 @@ export default {
         (this.form_data.proximaCita = ""),
         (this.form_data.diagnostico = "");
     },
-cancelar() {
-      
-      this.showNotif(
-        "Consulta cancelada.",
-        "negative",
-        "close"
-      );
+    cancelar() {
+      this.showNotif("Consulta cancelada.", "negative", "close");
     },
     validar() {
-      this.$refs.proximaCita.validate();      
-      if (
-        this.$refs.proximaCita.hasError
-      ) {
+      this.$refs.proximaCita.validate();
+      if (this.$refs.proximaCita.hasError) {
         this.error = true;
       } else {
         this.error = false;
@@ -295,25 +286,18 @@ cancelar() {
           "close"
         );
       } else {
-      try {
-        console.log("HOla");
-        this.$q.loading.show();
-        const query = await db
-          .collection("consultas")
-          .add(this.form_data);  
-        this.limpiarFormulario();
-        console.log(this.$router.currentRoute.path);
-        this.showNotif(
-          "Se ha guardado la consulta",
-          "positive",
-          "check"
-        );
-        this.$router.push('/paciente/' + this.$router.currentRoute.params.id);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        this.$q.loading.hide();
-      }
+        try {
+          this.$q.loading.show();
+          const query = await db.collection("consultas").add(this.form_data);
+          this.limpiarFormulario();
+          console.log(this.$router.currentRoute.path);
+          this.showNotif("Se ha guardado la consulta", "positive", "check");
+          this.$router.push("/paciente/" + this.$router.currentRoute.params.id);
+        } catch (error) {
+          console.log(error);
+        } finally {
+          this.$q.loading.hide();
+        }
       }
     },
 
@@ -330,12 +314,11 @@ cancelar() {
     onScroll(info) {
       if (this.spyMovil == false) {
         this.scrollInfo = info;
-        
       }
     },
     test() {
       this.spyMovil = true;
-      
+
       this.drawerRight = !this.drawerRight;
     }
   },
