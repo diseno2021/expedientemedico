@@ -91,7 +91,7 @@
                     <q-btn
                       push
                       @click="cambiar_imagen()"
-                      :disable="imagen"
+                      :disable="imagen==null"
                       color="secondary"
                       text-color="white"
                       round
@@ -401,7 +401,7 @@
                   >Cancelar y volver</q-tooltip
                 ></q-btn
               >
-            
+          
               <br />
               <br />
               <br />
@@ -418,6 +418,7 @@ import { db, st } from "../boot/firebase";
 export default {
   name: "agregar_paciente",
   props: {
+    traer_pacientes: Function,
     id_doctor: String
   },
   data() {
@@ -425,7 +426,7 @@ export default {
       id_paciente: "",
       carpeta: "imagenes",
       imagen_defecto: "https://s5.postimg.cc/537jajaxj/default.png",
-      imagen: "",
+      imagen:null,
       foto: "https://s5.postimg.cc/537jajaxj/default.png",
       paciente: {
         idMedico: this.id_doctor,
@@ -455,13 +456,16 @@ export default {
       activar: true,
     };
   },
+  //limpia los campos del formulario para dejarlo listo para el siguiente paciente igualmente 
+  //para si desea cancelar el registro del paciente.
   methods: {
     limpiar() {
+      this.foto=this.imagen_defecto;
       this.carpeta = "imagenes";
       this.paciente.nombre = "";
       this.formulario = false;
       this.paciente.fechaNacimiento = "";
-      this.paciente.genero = "";
+      this.paciente.genero = "Masculino";
       this.paciente.telefono = "";
       this.paciente.whatsapp = "";
       this.paciente.direccion = "";
@@ -471,8 +475,9 @@ export default {
       this.paciente.comentario = "";
       this.imagen = null;
       this.mostrar_imagen = false;
-      this.showNotif("Nuevo paciente guardado.", "accent", "cloud_done");
+      this.$forceUpdate();
     },
+  //  Muestra una notificacion con color e icono y un mensaje dependiendo de que accion sera ejecutada.
     showNotif(mensaje, color, icono) {
       this.$q.notify({
         message: mensaje,
@@ -482,14 +487,18 @@ export default {
         position: "top"
       });
     },
+    //permite ejecutar ciertas acciones como cerrar y limpiar el formulario aparte de mostrar
+    //una notificacion con informacion de la accion.
     cancelar() {
       this.formulario = false;
+      this.limpiar();
       this.showNotif(
         "Registro de nuevo paciente cancelado.",
         "negative",
         "close"
       );
     },
+    //Se ejecutan acciones que llevaran a guardar el nuevo paciente en nuestra base de datos.
     async agregarPaciente() {
       this.validaciones();
       if (this.error === true) {
@@ -508,11 +517,15 @@ export default {
         } catch (error) {
           console.log(error);
         } finally {
+          this.traer_pacientes();
           this.$q.loading.hide();
+          this.showNotif("Nuevo paciente guardado.", "accent", "cloud_done");
+
         }
       }
     },
-    /* Varifica que los campos requeridos no esten vacios y en caso de estarlo devuelve la variable como true */
+    // Varifica que los campos requeridos no esten vacios y 
+    //en caso de estarlo devuelve la variable como true 
     validaciones() {
       this.$refs.nombre.validate();
       this.$refs.fechaNacimiento.validate();
@@ -533,15 +546,16 @@ export default {
         this.error = false;
       }
     },
-  /*   Metodo que valida el campo nombre para permitir solo letras incluida la ñ, palabras con tilde y espacios */
+  // Metodo que valida el campo nombre para permitir solo letras incluida la ñ, 
+  //palabras con tilde y espacios.
     soloLetras(e) {
       let nombre = String.fromCharCode(e.keyCode);
       if (/^[a-zA-ZÀ-ÿ\u00f1\u00d1 ]+$/.test(nombre)) return true;
       else e.preventDefault();
     },
 
-  /* Si la fecha de nacimiento del paciente es mayor a 0 devolvera false
-  caso contrario sera verdadero y no permitira una fecha de nacimiento incorrecta */
+  // Si la fecha de nacimiento del paciente es mayor a 0 devolvera false
+  //caso contrario sera verdadero y no permitira una fecha de nacimiento incorrecta
     edadPaciente() {
       const hoy = new Date();
       const fechaN = new Date(this.paciente.fechaNacimiento);
@@ -553,8 +567,8 @@ export default {
       }
       return this.error;
     },
-  /*   retorna un booleano, si la edad es mayor o igual a 18 años retornara false 
-    caso contrario retornara true */
+  //   retorna un booleano, si la edad es mayor o igual a 18 años retornara false 
+  //  caso contrario retornara true
     edad() {
       const hoy = new Date();
       const fechaN = new Date(this.paciente.fechaNacimiento);
@@ -566,7 +580,7 @@ export default {
       }
       return this.error;
     },
-
+//permite darle al usuario una vista de la imagen que ha elegido de perfil.
     async traer_imagen() {
       const refs = st.ref();
       let this2 = this;
@@ -586,6 +600,7 @@ export default {
           });
         });
     },
+    //Cambia la imagen en la base de datos permitiendonos mostrar la imagen
     cambiar_imagen() {
       try {
         const refs = st.ref();
@@ -598,6 +613,7 @@ export default {
         console.log(error);
       }
     },
+    //sube la imagen a la carpeta de el usuario creando la carpeta y asignandola con nombre perfil.jpg 
     async subir_imagen(tipo) {
       var subir = 1;
       var actualizar = 2;
@@ -623,7 +639,7 @@ export default {
         } else {
           try {
           
-            console.log("entro aqui 2")
+           
             const refs = st.ref();
             let this2 = this;
             const imgref = refs.child(this.id_paciente).child("perfil.jpg");
@@ -637,6 +653,7 @@ export default {
         }
       
     },
+    //permite actualizar el campo "foto" del paciente con la direccion donde se creo carpeta y foto.
     async actualizar_paciente() {
       try {
         const query = db.collection("pacientes").doc(this.id_paciente);
@@ -656,3 +673,4 @@ export default {
   }
 };
 </script>
+ 
