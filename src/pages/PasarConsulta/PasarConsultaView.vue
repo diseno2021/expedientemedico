@@ -74,9 +74,7 @@
                 label="Próxima Cita"
                 stack-label
                 lazy-rules
-                    :rules="[
-                      val => !!val || 'Campo requerido',
-                    ]"
+                :rules="[val => !!val || 'Campo requerido']"
               />
             </div>
           </div>
@@ -297,13 +295,8 @@ export default {
         (this.form_data.proximaCita = ""),
         (this.form_data.diagnostico = "");
     },
-cancelar() {
-      
-      this.showNotif(
-        "Consulta cancelada.",
-        "negative",
-        "close"
-      );
+    cancelar() {
+      this.showNotif("Consulta cancelada.", "negative", "close");
     },
     validar() {
       this.$refs.proximaCita.validate();
@@ -371,12 +364,11 @@ cancelar() {
     onScroll(info) {
       if (this.spyMovil == false) {
         this.scrollInfo = info;
-        
       }
     },
     test() {
       this.spyMovil = true;
-      
+
       this.drawerRight = !this.drawerRight;
     }
   },

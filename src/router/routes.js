@@ -22,11 +22,7 @@ const routes = [
       {
       path: '/sitioweb',
       component: () => import('pages/SitioWeb.vue')
-      },
-      // {
-      //   path: 'pasar-consulta',
-      //   component: () => import('./../pages/PasarConsulta/PasarConsultaView.vue')
-      // } 
+      }
       
     ]
     },
@@ -43,16 +39,10 @@ const routes = [
     {
       path: "/pasar-consulta/:id",
       component: ()=>import('./../pages/PasarConsulta/PasarConsultaView.vue')
-      // children: [
-      //   {
-      //   path: 'nueva-consulta',
-      //   component: ()=>import('./../pages/PasarConsulta/PasarConsultaView.vue')
-      //   }
-      // ]
-    },
+      },
     {
-      path: "/nueva-consulta/:id",
-      component: ()=>import('./../pages/PasarConsulta/NuevaConsultaView.vue')
+      path: "/editar-consulta/:id",
+      component: ()=>import('../pages/PasarConsulta/EditarConsultaView.vue')
     },
     {
       path: '/auth',
