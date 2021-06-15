@@ -91,18 +91,26 @@
               label="peso"
               style="max-width: 7rem; min-width: 5rem"
               required
+              lazy-rules
+                    :rules="[
+                      val => !!val || 'Campo requerido',
+                    ]"
             ></q-input>
 
             <q-input
               class="q-mx-md q-my-md"
               type="number"
-              min="0"
+              min="1"
               outlined
               suffix="cm"
               v-model="form_data.estatura"
               label="estatura"
               style="max-width: 7rem; min-width: 5rem"
               required
+              lazy-rules
+                    :rules="[
+                      val => !!val || 'Campo requerido',
+                    ]"
             ></q-input>
 
             <q-input
@@ -115,6 +123,10 @@
               label="temperatura"
               style="max-width: 7rem; min-width: 5rem"
               required
+              lazy-rules
+                    :rules="[
+                      val => !!val || 'Campo requerido',
+                    ]"
             ></q-input>
 
             <q-input
@@ -127,18 +139,26 @@
               label="imc"
               style="max-width: 7rem; min-width: 5rem"
               required
+              lazy-rules
+                    :rules="[
+                      val => !!val || 'Campo requerido',
+                    ]"
             ></q-input>
 
             <q-input
               class="q-mx-md q-my-md"
-              type="number"
-              min="0"
+              type="string"
+              min="0/0"
               outlined
               suffix="mmHg"
               v-model="form_data.presionArterial"
               label="presión"
               style="width: 7rem; min-width: 5rem"
               required
+              lazy-rules
+                    :rules="[
+                      val => !!val || 'Campo requerido',
+                    ]"
             ></q-input>
           </div>
           <div class="row justify-center">
@@ -146,17 +166,22 @@
               <div class="q-pa-md q-gutter-sm">
                 <p>Motivo de Consulta</p>
                 <q-input
+                ref="motivo"
                   filled
                   v-model="form_data.motivoConsulta"
                   label="Motivo de consulta"
                   type="textarea"
                   required
+                  lazy-rules
+                    :rules="[
+                      val => !!val || 'Campo requerido',
+                    ]"
                 />
 
                 <p>Sintomas subjetivos</p>
                 <q-editor
                   :toolbar="toolbar"
-                  v-model="form_data.sintomasSubjetivos"
+                  v-model="form_data.sintomas"
                   min-height="7rem"
                   required
                 ></q-editor>
@@ -189,9 +214,14 @@
                 <p>Recetas</p>
                 <q-editor
                   :toolbar="toolbar"
+                  ref="receta"
                   v-model="form_data.receta"
                   min-height="7rem"
                   required
+                  lazy-rules
+                    :rules="[
+                      val => !!val || 'Campo requerido',
+                    ]"
                 ></q-editor>
               </div>
             </div>
@@ -242,7 +272,7 @@ export default {
         receta: "",
         examenes: "",
         diagnostico: "",
-
+        fecha:"",
         proximaCita: ""
       },
       toolbar: [
@@ -276,9 +306,12 @@ cancelar() {
       );
     },
     validar() {
-      this.$refs.proximaCita.validate();      
+      this.$refs.proximaCita.validate();
+      this.$refs.motivo.validate();   
       if (
-        this.$refs.proximaCita.hasError
+        this.$refs.proximaCita.hasError || this.form_data.peso<1
+        || this.form_data.estatura<1 
+        || this.$refs.motivo.hasError
       ) {
         this.error = true;
       } else {
@@ -297,7 +330,15 @@ cancelar() {
       } else {
       try {
         console.log("HOla");
-        this.$q.loading.show();
+        this.$q.loading.show();        
+        var d = new Date();        
+        this.form_data.fecha = d.toString();       
+       // this.form_data.fecha = today.getFullYear()+'-'
+       // +(today.getMonth()+1)+'-'
+       // +today.getDate()+' '
+       // +today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        console.log("esta es la fecha"+this.form_data.fecha);
+        
         const query = await db
           .collection("consultas")
           .add(this.form_data);  

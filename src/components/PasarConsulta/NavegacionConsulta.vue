@@ -8,7 +8,7 @@
             <img :src="fotoPerfil" />
           </q-avatar>
         </div>
-        <div class="text-h6 q-pb-xs"></div>
+        <div class="text-h6 q-pb-xs" v-if="paciente" >{{paciente.nombre}}</div>
       </q-card-section>
       <!-- </q-card> -->
     </div>
@@ -22,7 +22,7 @@
           class="overflow-hidden"
         >
           <!-- <q-card class="bg-grey-3"> -->
-          <q-card-section v-html="paciente.antecedentes"> </q-card-section>
+          <q-card-section v-html="paciente.antecedentes" v-if="paciente"> </q-card-section>
           <!-- </q-card> -->
         </q-expansion-item>
 
@@ -34,7 +34,7 @@
           class=" overflow-hidden"
         >
           <!-- <q-card class="bg-grey-3"> -->
-          <q-card-section v-html="paciente.medicamentosPermanentes">
+          <q-card-section v-html="paciente.medicamentosPermanentes" v-if="paciente">
           </q-card-section>
           <!-- </q-card> -->
         </q-expansion-item>
@@ -48,17 +48,17 @@
           header-class="claseheader"
         >
           <q-card-section>
-            <div class="text-h6">05-23-2021</div>
+            <div class="text-h6" v-if="consulta">{{consulta.fecha}}</div>
             <div class="text-subtitle2">fecha de ultima consulta</div>
           </q-card-section>
 
-          <q-card-section class="q-pt-none">
-            Este es el diagnostico de la ultima consulta con el paciente puede
-            ser extenso como se desee
+          <q-card-section class="q-pt-none" v-if="consulta" dense>
+            <q-card-section v-html="consulta.diagnostico" />
+            
           </q-card-section>
         </q-expansion-item>
 
-        <!-- <q-expansion-item
+        <q-expansion-item
           icon="description"
           group="somegroup"
           label="Recetas"
@@ -68,13 +68,13 @@
         >
           <q-card class="bg-grey-3">
             <q-card-section>
-              <div class="text-h6">05-23-2021</div>
+              <div class="text-h6" v-if="consulta">{{consulta.fecha}}</div>
               <div class="text-subtitle2">Receta de la ultima consulta</div>
             </q-card-section>
 
-            <q-card-section v-html="consultas.receta"> </q-card-section>
+            <q-card-section v-html="consulta.receta" v-if="consulta"> </q-card-section>
           </q-card>
-        </q-expansion-item> -->
+        </q-expansion-item>
 
         <q-expansion-item
           icon="collections"
@@ -118,6 +118,7 @@
             label="Cancelar consulta"
             class="full-width"
             :to="'/paciente/' + paciente.id"
+            v-if="paciente"
           ></q-btn>
         </div>
       </q-list>
@@ -142,6 +143,7 @@ export default {
     fotoPerfil: "",
     datosGraficaPeso: null,
     numerosGraficaPeso: [],
+    diferenciaFechas: [],
     pacienteid: ""
   }),
   created() {
@@ -151,7 +153,7 @@ export default {
   methods: {
     obtenerDatosPaciente() {
       let id = this.$router.currentRoute.params.id;
-      console.log("aaaaaaaaaa");
+      
       var docRef = db.collection("pacientes").doc(id);
       docRef
         .get()
@@ -194,6 +196,7 @@ export default {
         .then(qs => {
           qs.docs.forEach(doc => {
             let consulta = doc.data();
+            this.consulta = consulta;
             Object.defineProperty(consulta, "id", {
               value: doc.id,
               writable: true,
@@ -203,6 +206,7 @@ export default {
             // this.consultasPaciente.push(consulta);
           });
         });
+        
     },
     obtenerPacienteId() {
       let id = this.$router.currentRoute.params.id;
