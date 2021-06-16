@@ -16,7 +16,7 @@
                 Motivo: {{ consulta.motivoConsulta }}
               </q-item-section>
               <q-item-section class="text-body2 text-right">
-                {{ consulta.fecha }}
+                {{ formatoFecha(consulta.fecha) }}
               </q-item-section>
             </template>
             <q-separator></q-separator>
@@ -117,8 +117,16 @@
             </div>
             <q-separator />
             <div class="row items-center">
-              <div class="col-auto q-pa-sm">
-                Proxima cita: {{ consulta.proximaCita }}
+              <div v-if="consulta.proximaCita != undefined">
+                <div v-if="consulta.proximaCita != null && consulta.proximaCita != ''" class="col-auto q-pa-sm">
+                  Proxima cita: {{ formatoFecha(consulta.proximaCita) }}
+                </div>
+                <div v-else class="col-auto q-pa-sm">
+                  Proxima cita: No se programo una proxima cita.
+                </div>
+              </div>
+              <div v-else class="col-auto q-pa-sm">
+                  Proxima cita: No se programo una proxima cita.
               </div>
               <q-space></q-space>
               <div class="col-auto q-py-xs q-px-sm">
@@ -160,6 +168,8 @@
 </template>
 
 <script>
+import { date } from 'quasar';
+
 export default {
   props: {
     consultas: Array
@@ -186,6 +196,11 @@ export default {
       this.consultasPagina.forEach((c, index) => {
         this.tab.push("sintomas" + index);
       });
+    }
+  },
+  computed: {
+    formatoFecha(){
+      return fecha => date.formatDate(fecha, 'DD/MM/YYYY - h:mm');
     }
   },
   watch: {
