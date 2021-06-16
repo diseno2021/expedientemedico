@@ -88,29 +88,27 @@
                 <div class="row q-pt-xs">
                   <div class="col-6 col-sm-12 col-md-6 col-lg-12">
                     <span class="text-subtitle2">Peso: </span>
-                    <span class="text-body2" v-html="consulta.peso"></span>
+                    <span class="text-body2">{{ consulta.peso + " lb"}}</span>
                   </div>
                   <div class="col-6 col-sm-12 col-md-6 col-lg-12">
                     <span class="text-subtitle2">Estatura: </span>
-                    <span class="text-body2" v-html="consulta.estatura"></span>
+                    <span class="text-body2">{{ consulta.estatura + " cm" }}</span>
                   </div>
                   <div class="col-6 col-sm-12 col-md-6 col-lg-12">
                     <span class="text-subtitle2">Temperatura: </span>
                     <span
                       class="text-body2"
-                      v-html="consulta.temperatura"
-                    ></span>
+                    >{{ consulta.temperatura + " °C" }}</span>
                   </div>
                   <div class="col-6 col-sm-12 col-md-6 col-lg-12">
                     <span class="text-subtitle2">IMC: </span>
-                    <span class="text-body2" v-html="consulta.imc"></span>
+                    <span class="text-body2">{{ consulta.imc + " kg/m2" }}</span>
                   </div>
                   <div class="col-12">
                     <span class="text-subtitle2">Presion arterial: </span>
                     <span
                       class="text-body2"
-                      v-html="consulta.presionArterial"
-                    ></span>
+                    >{{ consulta.presionArterial + " mmHg" }}</span>
                   </div>
                 </div>
               </div>
@@ -161,7 +159,7 @@
     </div>
     <div class="row" v-else>
       <div class="col-12 text-center text-h5">
-        El usuario no tiene consultas registradas
+        El paciente no tiene consultas registradas
       </div>
     </div>
   </div>
@@ -200,7 +198,7 @@ export default {
   },
   computed: {
     formatoFecha(){
-      return fecha => date.formatDate(fecha, 'DD/MM/YYYY - h:mm');
+      return fecha => date.formatDate(fecha, 'DD/MM/YYYY - h:mm A');
     }
   },
   watch: {
