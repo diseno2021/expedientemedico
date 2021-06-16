@@ -29,6 +29,8 @@
       :fullscreen.sync="fullscreen"
       control-color="red"
       arrows
+      max-width="70px"
+      height="250px"
     >
       <q-carousel-slide
         v-for="(item, index) in imagenes"
@@ -44,6 +46,7 @@
             push
             round
             dense
+            size="md"
             color="primary"
             text-color="white"
             :icon="fullscreen ? 'fullscreen_exit' : 'fullscreen'"
