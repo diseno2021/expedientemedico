@@ -33,8 +33,8 @@
       </div>
     </div>
     <div class="row justify-between q-mt-md">
-      <div class="col-12  col-md-6 q-px-md">
-        <q-input filled v-model="paciente.fechaNacimiento">
+      <div class="col-12  col-sm-6 q-px-md ">
+        <q-input  v-model="paciente.fechaNacimiento">
           <template v-slot:prepend>
             <q-icon name="event" class="cursor-pointer">
               <q-popup-proxy transition-show="scale" transition-hide="scale">
@@ -51,7 +51,7 @@
           </template>
         </q-input>
       </div>
-      <div class="col-12 col-md-6 q-px-md q-mt-md">
+      <div class="col-12 col-sm-6 q-px-md ">
         <q-input v-model="edad" label="Edad"
           ><template v-slot:prepend>
             <q-icon name="cake" />
@@ -61,7 +61,7 @@
     </div>
 
     <div class="row justify-between q-mt-md">
-      <div class="col-12 col-md-6 q-px-md">
+      <div class="col-12 col-sm-6 q-px-md">
         <div class="row justify-between">
           <div class="col-6 col-sm-5">
             <q-radio
@@ -79,7 +79,7 @@
           </div>
         </div>
       </div>
-      <div class="col-12 col-md-6 q-px-md">
+      <div class="col-12 col-sm-6 q-px-md">
         <q-input v-model="paciente.tipoSangre" label="Tipo de sangre">
           <template v-slot:prepend>
             <q-icon name="bloodtype" />
@@ -120,12 +120,14 @@
             </q-btn>
           </div>
         </div>
+        <div class="q-px-md">
         <Grafica
           :datosGrafica="datosGraficaPeso"
           :numerosGrafica="numerosGraficaPeso"
           :label="'Peso'"
           v-if="datosGraficaPeso"
         />
+        </div>
       </div>
       <div class="col-12 col-md-6 ">
         <div class="row q-mb-md  justify-between q-px-md">
@@ -162,6 +164,7 @@
             </q-btn>
           </div>
         </div>
+        <div class="q-px-md">
 
         <Grafica
           :datosGrafica="datosGraficaEstatura"
@@ -169,6 +172,7 @@
           :label="'Estatura'"
           v-if="datosGraficaEstatura"
         />
+        </div>
       </div>
     </div>
 
@@ -180,7 +184,7 @@
       </q-input>
     </div>
     <div class="row justify-between">
-      <div class="col-12 col-md-6 q-mt-md q-px-md">
+      <div class="col-12 col-sm-6 q-mt-md q-px-md">
         <q-input v-model="paciente.telefono" label="Teléfono" mask="#### - ####">
           <template v-slot:prepend>
             <q-icon name="phone" />
@@ -188,7 +192,7 @@
         </q-input>
       </div>
 
-      <div class="col-12 col-md-6 q-mt-md q-px-md">
+      <div class="col-12 col-sm-6 q-mt-md q-px-md">
         <q-input v-model="paciente.whatsapp" label="Whatsapp" mask="#### - ####">
           <template v-slot:prepend>
             <q-icon name="smartphone" />
