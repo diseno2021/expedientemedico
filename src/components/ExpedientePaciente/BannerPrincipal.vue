@@ -4,20 +4,15 @@
       <q-card-section>
         <div class="row justify-center q-pb-xs">
           <q-avatar square rounded size="85px" class="q-mx-auto">
-            <q-img :src="fotoPerfil">              
-            </q-img>
-            <q-icon
-                class="absolute all-pointer-events absolute-bottom-right"
-                size="20px"
-                name="edit"
-                color="secondary"
-                @click="cambiarImagen"
-              >
-                <q-tooltip>
-                  Cambiar fotografía
-                </q-tooltip>
-              </q-icon>
+            <q-img :src="fotoPerfil"> </q-img>
           </q-avatar>
+        </div>
+        <div class="row justify-center q-pb-xs">
+          <q-btn round size="sm" color="secondary" icon="edit" @click="cambiarImagen"
+            ><q-tooltip>
+              Cambiar fotografía
+            </q-tooltip></q-btn
+          >
         </div>
         <div class="text-h6 q-pb-xs">{{ paciente.nombre }}</div>
         <div class="text-caption text-grey-7 q-pb-sm">
@@ -92,7 +87,7 @@ export default {
                   this.fotoPerfil = url;
                 });
             } else {
-              this.paciente = 'No pertece al medico';
+              this.paciente = "No pertece al medico";
             }
           } else {
             this.paciente == null;
@@ -112,7 +107,7 @@ export default {
     guardar: async function() {
       if (this.nuevaImagen !== null) {
         //this.nuevaImagenUrl = URL.createObjectURL(this.nuevaImagen);
-        const foto = this.paciente.foto
+        const foto = this.paciente.foto;
         let id = this.$router.currentRoute.params.id;
         const archivoRef = st.ref(foto);
         var task = await archivoRef.put(this.nuevaImagen);
