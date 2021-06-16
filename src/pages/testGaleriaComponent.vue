@@ -7,8 +7,8 @@
       size="md"
       icon="add_circle"
       label="Agregar"
-      class=" q-my-sm"
-      style="width:100% "
+      class=" q-my-sm q-mx-xl"
+      style="width:60%"
     >
       <q-tooltip
         v-model="showing"
