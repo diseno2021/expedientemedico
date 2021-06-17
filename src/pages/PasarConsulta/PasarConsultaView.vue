@@ -90,9 +90,7 @@
               style="max-width: 7rem; min-width: 5rem"
               required
               lazy-rules
-                    :rules="[
-                      val => !!val || 'Campo requerido',
-                    ]"
+              :rules="[val => !!val || 'Campo requerido']"
             ></q-input>
 
             <q-input
@@ -106,9 +104,7 @@
               style="max-width: 7rem; min-width: 5rem"
               required
               lazy-rules
-                    :rules="[
-                      val => !!val || 'Campo requerido',
-                    ]"
+              :rules="[val => !!val || 'Campo requerido']"
             ></q-input>
 
             <q-input
@@ -122,9 +118,7 @@
               style="max-width: 7rem; min-width: 5rem"
               required
               lazy-rules
-                    :rules="[
-                      val => !!val || 'Campo requerido',
-                    ]"
+              :rules="[val => !!val || 'Campo requerido']"
             ></q-input>
 
             <q-input
@@ -138,25 +132,21 @@
               style="max-width: 7rem; min-width: 5rem"
               required
               lazy-rules
-                    :rules="[
-                      val => !!val || 'Campo requerido',
-                    ]"
+              :rules="[val => !!val || 'Campo requerido']"
             ></q-input>
 
             <q-input
               class="q-mx-md q-my-md"
-              type="string"
+              mask="###/##"
               min="0/0"
               outlined
               suffix="mmHg"
               v-model="form_data.presionArterial"
               label="presión"
-              style="width: 7rem; min-width: 5rem"
+              style="width: 8rem; min-width: 7rem"
               required
               lazy-rules
-                    :rules="[
-                      val => !!val || 'Campo requerido',
-                    ]"
+              :rules="[val => !!val || 'Campo requerido']"
             ></q-input>
           </div>
           <div class="row justify-center">
@@ -164,16 +154,14 @@
               <div class="q-pa-md q-gutter-sm">
                 <p>Motivo de Consulta</p>
                 <q-input
-                ref="motivo"
+                  ref="motivo"
                   filled
                   v-model="form_data.motivoConsulta"
                   label="Motivo de consulta"
                   type="textarea"
                   required
                   lazy-rules
-                    :rules="[
-                      val => !!val || 'Campo requerido',
-                    ]"
+                  :rules="[val => !!val || 'Campo requerido']"
                 />
 
                 <p>Sintomas subjetivos</p>
@@ -217,9 +205,7 @@
                   min-height="7rem"
                   required
                   lazy-rules
-                    :rules="[
-                      val => !!val || 'Campo requerido',
-                    ]"
+                  :rules="[val => !!val || 'Campo requerido']"
                 ></q-editor>
               </div>
             </div>
@@ -262,7 +248,7 @@ export default {
         estatura: 0,
         temperatura: 0,
         imc: 0,
-        presionArterial: 0,
+        presionArterial: "",
         exploracionFisica: "",
         motivoConsulta: "",
         sintomas: "",
@@ -270,7 +256,7 @@ export default {
         receta: "",
         examenes: "",
         diagnostico: "",
-        fecha:"",
+        fecha: "",
         proximaCita: ""
       },
       toolbar: [
@@ -300,11 +286,12 @@ export default {
     },
     validar() {
       this.$refs.proximaCita.validate();
-      this.$refs.motivo.validate();   
+      this.$refs.motivo.validate();
       if (
-        this.$refs.proximaCita.hasError || this.form_data.peso<1
-        || this.form_data.estatura<1 
-        || this.$refs.motivo.hasError
+        this.$refs.proximaCita.hasError ||
+        this.form_data.peso < 1 ||
+        this.form_data.estatura < 1 ||
+        this.$refs.motivo.hasError
       ) {
         this.error = true;
       } else {
@@ -321,33 +308,27 @@ export default {
           "close"
         );
       } else {
-      try {
-        console.log("HOla");
-        this.$q.loading.show();        
-        var d = new Date();        
-        this.form_data.fecha = d.toString();       
-       // this.form_data.fecha = today.getFullYear()+'-'
-       // +(today.getMonth()+1)+'-'
-       // +today.getDate()+' '
-       // +today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-        console.log("esta es la fecha"+this.form_data.fecha);
-        
-        const query = await db
-          .collection("consultas")
-          .add(this.form_data);  
-        this.limpiarFormulario();
-        console.log(this.$router.currentRoute.path);
-        this.showNotif(
-          "Se ha guardado la consulta",
-          "positive",
-          "check"
-        );
-        this.$router.push('/paciente/' + this.$router.currentRoute.params.id);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        this.$q.loading.hide();
-      }
+        try {
+          console.log("HOla");
+          this.$q.loading.show();
+          var d = new Date();
+          this.form_data.fecha = d.toString();
+          // this.form_data.fecha = today.getFullYear()+'-'
+          // +(today.getMonth()+1)+'-'
+          // +today.getDate()+' '
+          // +today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+          console.log("esta es la fecha" + this.form_data.fecha);
+
+          const query = await db.collection("consultas").add(this.form_data);
+          this.limpiarFormulario();
+          console.log(this.$router.currentRoute.path);
+          this.showNotif("Se ha guardado la consulta", "positive", "check");
+          this.$router.push("/paciente/" + this.$router.currentRoute.params.id);
+        } catch (error) {
+          console.log(error);
+        } finally {
+          this.$q.loading.hide();
+        }
       }
     },
 

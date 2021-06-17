@@ -129,13 +129,13 @@
 
               <q-input
                 class="q-mx-md q-my-md"
-                type="number"
+                mask="###/##"
                 min="0"
                 outlined
                 suffix="mmHg"
                 v-model="form_data.presionArterial"
                 label="presión"
-                style="width: 7rem; min-width: 5rem"
+                style="width: 8rem; min-width: 7rem"
                 required
               ></q-input>
             </div>
