@@ -96,6 +96,10 @@
               <template v-slot:prepend>
                 <q-icon name="monitor_weight" />
               </template>
+              <template v-slot:after>
+                <q-btn :disable="nuevoPeso == null || nuevoPeso == ''"
+                flat label="Agregar" color="primary" class="q-mt-md" @click="agregarPeso"></q-btn>
+              </template>
             </q-input>
           </div>
           <div class="col-4">
@@ -140,12 +144,16 @@
               <template v-slot:prepend>
                 <q-icon name="accessibility" />
               </template>
+              <template v-slot:after>
+                <q-btn :disable="nuevaEstatura == null || nuevaEstatura == ''"
+                flat label="Agregar" color="primary" class="q-mt-md" @click="agregarEstatura"></q-btn>
+              </template>
             </q-input>
           </div>
           <div class="col-4">
             <q-btn
               color="primary"
-              label="Estatura"
+              label="Estaturas"
               flat
               class="q-mt-md"
               icon="expand_more"
@@ -268,17 +276,6 @@ export default {
   },
   methods: {
     guardarInformacion() {
-      if (this.nuevoPeso !== null && this.nuevoPeso !== "") {
-        this.paciente.peso.push(parseFloat(this.nuevoPeso));
-        this.nuevoPeso = null;
-         this.cargarDatosGrafica();
-      }
-      if (this.nuevaEstatura !== null && this.nuevaEstatura !== "") {
-        this.paciente.estatura.push(parseFloat(this.nuevaEstatura));
-        this.nuevaEstatura = null;
-         this.cargarDatosGrafica();
-      }
-     
       this.$emit("guardarInformacion");
     },
     cargarDatosGrafica() {
@@ -299,6 +296,20 @@ export default {
       }
       for (let index = 1; index <= this.datosGraficaPeso.length; index++) {
         this.numerosGraficaPeso.push(index);
+      }
+    },
+    agregarPeso(){
+      if (this.nuevoPeso !== null && this.nuevoPeso !== "") {
+        this.paciente.peso.push(parseFloat(this.nuevoPeso));
+        this.nuevoPeso = null;
+        this.cargarDatosGrafica();
+      }
+    },
+    agregarEstatura(){
+      if (this.nuevaEstatura !== null && this.nuevaEstatura !== "") {
+        this.paciente.estatura.push(parseFloat(this.nuevaEstatura));
+        this.nuevaEstatura = null;
+         this.cargarDatosGrafica();
       }
     }
   },
