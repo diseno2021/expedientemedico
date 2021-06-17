@@ -6,67 +6,39 @@
     <div class="row" v-if="consultas.length > 0">
       <div
         class="col-12 col-md-6 q-pa-sm"
-        v-for="(consulta, index) in consultasPagina"
+        v-for="consulta in consultasPagina"
         :key="consulta.id"
       >
         <q-card flat bordered>
           <q-expansion-item>
             <template v-slot:header>
-              <q-item-section class="text-body2 text-right">
-                {{ consulta.fecha }}
+              <q-item-section class="text-body2 text-center">
+                {{ formatoFecha(consulta.fecha) }}
               </q-item-section>
             </template>
             <q-separator></q-separator>
             <div class="row">
-              <div class="col-auto q-py-none q-pl-sm q-pr-none">
-                <q-tabs
-                  dense
-                  v-model="tab[index]"
-                  vertical
-                  no-caps
-                  align="left"
-                  class="text-primary q-px-none"
-                >
-                  <q-tab :name="'receta' + index" label="Receta" />
-                </q-tabs>
-              </div>
-              <q-separator vertical inset color="primary" />
-              <div class="col q-pl-sm q-pr-xs q-py-xs">
-                <q-scroll-area style="height: 170px">
-                  <q-tab-panels
-                    v-model="tab[index]"
-                    animated
-                    swipeable
-                    vertical
-                    transition-prev="jump-up"
-                    transition-next="jump-up"
-                  >
-                    <q-tab-panel class="q-pa-none" :name="'receta' + index">
+              <div class="col q-pl-sm q-px-md q-py-xs">
+                <q-scroll-area style="height: 150px">
+                    
                       <div class="text-h6 q-mb-md">Receta</div>
                       <div class="text-body2" v-html="consulta.receta"></div>
-                    </q-tab-panel>
-                    <q-tab-panel class="q-pa-none" :name="'examenes' + index">
-                      <div class="text-h6 q-mb-md">Fechas</div>
-                      <div
-                        class="text-body2"
-                        v-html="consulta.proximaCita"
-                      ></div>
-                    </q-tab-panel>
-                  </q-tab-panels>
+                    
                 </q-scroll-area>
-              </div>
-              <q-separator vertical class="gt-md" />
-              <q-separator vertical class="lt-md gt-xs" />
-              <div class="col-12 col-sm-4 col-md-12 col-lg-4 q-py-xs q-px-md">
-                <q-separator class="lt-lg gt-sm"></q-separator>
-                <q-separator class="lt-sm"></q-separator>
-                <div class="row q-pt-xs"></div>
               </div>
             </div>
             <q-separator />
             <div class="row items-center">
-              <div class="col-auto q-pa-sm">
-                Proxima cita: {{ consulta.proximaCita }}
+              <div v-if="consulta.proximaCita != undefined">
+                <div v-if="consulta.proximaCita != null && consulta.proximaCita != ''" class="col-auto q-pa-sm">
+                  Proxima cita: {{ formatoFecha(consulta.proximaCita) }}
+                </div>
+                <div v-else class="col-auto q-pa-sm">
+                  Proxima cita: No se programo una proxima cita.
+                </div>
+              </div>
+              <div v-else class="col-auto q-pa-sm">
+                  Proxima cita: No se programo una proxima cita.
               </div>
               <q-space></q-space>
               <div class="col-auto q-py-xs q-px-sm">
@@ -75,7 +47,7 @@
                   size="md"
                   color="secondary"
                   dense
-                  :to="'/pasar-consulta/' + consulta.id"
+                  :to="'/editar-consulta/' + consulta.id"
                   >Editar</q-btn
                 >
               </div>
@@ -101,12 +73,14 @@
     </div>
     <div class="row" v-else>
       <div class="col-12 text-center text-h5">
-        El usuario no tiene recetas registradas
+        El paciente no tiene recetas registradas
       </div>
     </div>
   </div>
 </template>
 <script>
+import { date } from 'quasar';
+
 export default {
   props: {
     consultas: Array,
@@ -134,6 +108,11 @@ export default {
         this.tab.push("sintomas" + index);
       });
     },
+  },
+  computed: {
+    formatoFecha(){
+      return fecha => date.formatDate(fecha, 'DD/MM/YYYY - h:mm A');
+    }
   },
   watch: {
     consultas(newValue, oldValue) {
