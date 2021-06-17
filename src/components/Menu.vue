@@ -58,7 +58,7 @@
             </q-item-section>
             <q-item-section>Pacientes</q-item-section>
           </q-item>
-          <agregar_paciente :traer_pacientes="obtenerCantidadDePaciente" :id_doctor="id_usuario"></agregar_paciente>
+          <agregar_paciente :id_doctor="id_usuario"></agregar_paciente>
         </div>
       </q-list>
       <div class="fixed-bottom q-mb-xl" v-if="usuario != null">

@@ -81,7 +81,6 @@
                   class="q-mx-md col-md-11"
                   label="Seleccione la imagen"
                   v-model="imagen"
-                  
                   accept=".jpg, image/*"
                 >
                   <template v-slot:before>
@@ -91,7 +90,7 @@
                     <q-btn
                       push
                       @click="cambiar_imagen()"
-                      :disable="imagen==null"
+                      :disable="imagen == null"
                       color="secondary"
                       text-color="white"
                       round
@@ -152,7 +151,7 @@
                   <span class="label q-mx-md q-my-md">Sexo:</span>
                   <br />
                   <q-radio
-                  ref="sexo"
+                    ref="sexo"
                     class="q-mx-md"
                     v-model="paciente.genero"
                     label="Masculino"
@@ -190,7 +189,7 @@
                     :rules="[
                       val => !!val || 'Campo requerido',
                       val =>
-                        edadPaciente()== false||
+                        edadPaciente() == false ||
                         'Fecha de nacimiento incorrecta, edad minima 1 año'
                     ]"
                   >
@@ -201,7 +200,8 @@
                       self="bottom left"
                       :offset="[0, 8]"
                       >Agregar fecha de nacimiento del paciente</q-tooltip
-                    ></q-input
+                    >
+               </q-input
                   >
                 </div>
               </div>
@@ -240,7 +240,7 @@
                     mask="####-####"
                   >
                     <template v-slot:before>
-                      <q-icon name="phone" />
+                     <q-icon name="smartphone" />
                     </template>
                     <q-tooltip
                       content-class="bg-accent text-white"
@@ -280,12 +280,12 @@
                 </div>
                 <div class="col-5">
                   <q-input
-                  ref="dui"
+                    ref="dui"
                     class="q-mx-md"
                     v-model="paciente.dui"
                     label="DUI"
                     mask="########-#"
-                    :disable= "edad()"
+                    :disable="edad()"
                   >
                     <q-tooltip
                       content-class="bg-accent text-white"
@@ -296,7 +296,7 @@
                       >Dui(Documento de identidad personal)</q-tooltip
                     >
                     <template v-slot:before>
-                      <q-icon name="people" />
+                       <q-icon name="credit_card" />
                     </template>
                   </q-input>
                 </div>
@@ -371,27 +371,13 @@
               </q-input>
               <br />
               <q-btn
-                class="q-mx-md"
-                color="primary"
-                @click="agregarPaciente()"
-                type="submit"
-                >Registrar
-                <q-tooltip
-                  content-class="bg-accent text-white"
-                  content-style="font-size: 12px"
-                  anchor="top left"
-                  self="bottom left"
-                  :offset="[0, 8]"
-                  >Registrar un nuevo paciente</q-tooltip
-                >
-              </q-btn>
-
-              <q-btn
+              icon="do_disturb"
                 class="q-mx-md"
                 color="negative"
                 @click="cancelar()"
                 type="submit"
-                >Cancelar
+                label="Cancelar"
+                >
                 <q-tooltip
                   content-class="bg-accent text-white"
                   content-style="font-size: 12px"
@@ -401,7 +387,26 @@
                   >Cancelar y volver</q-tooltip
                 ></q-btn
               >
-          
+              <q-btn icon="person_add_alt_1"
+                class="q-mx-md"
+                color="primary"
+                @click="agregarPaciente()"
+                type="submit"
+                label="Registrar"
+                >
+                <q-tooltip
+                  content-class="bg-accent text-white"
+                  content-style="font-size: 12px"
+                  anchor="top left"
+                  self="bottom left"
+                  :offset="[0, 8]"
+                  >Registrar un nuevo paciente</q-tooltip
+                >
+
+              </q-btn>
+
+              
+
               <br />
               <br />
               <br />
@@ -418,7 +423,7 @@ import { db, st } from "../boot/firebase";
 export default {
   name: "agregar_paciente",
   props: {
-    traer_pacientes: Function,
+    //traer_pacientes: Function,
     id_doctor: String
   },
   data() {
@@ -426,7 +431,7 @@ export default {
       id_paciente: "",
       carpeta: "imagenes",
       imagen_defecto: "https://s5.postimg.cc/537jajaxj/default.png",
-      imagen:null,
+      imagen: null,
       foto: "https://s5.postimg.cc/537jajaxj/default.png",
       paciente: {
         idMedico: this.id_doctor,
@@ -453,14 +458,14 @@ export default {
       },
       error: true,
       formulario: false,
-      activar: true,
+      activar: true
     };
   },
-  //limpia los campos del formulario para dejarlo listo para el siguiente paciente igualmente 
+  //limpia los campos del formulario para dejarlo listo para el siguiente paciente igualmente
   //para si desea cancelar el registro del paciente.
   methods: {
     limpiar() {
-      this.foto=this.imagen_defecto;
+      this.foto = this.imagen_defecto;
       this.carpeta = "imagenes";
       this.paciente.nombre = "";
       this.formulario = false;
@@ -475,9 +480,8 @@ export default {
       this.paciente.comentario = "";
       this.imagen = null;
       this.mostrar_imagen = false;
-      this.$forceUpdate();
     },
-  //  Muestra una notificacion con color e icono y un mensaje dependiendo de que accion sera ejecutada.
+    //  Muestra una notificacion con color e icono y un mensaje dependiendo de que accion sera ejecutada.
     showNotif(mensaje, color, icono) {
       this.$q.notify({
         message: mensaje,
@@ -511,21 +515,21 @@ export default {
         try {
           this.$q.loading.show();
           const query = await db.collection("pacientes").add(this.paciente);
-        
+
           this.id_paciente = query.id;
           this.actualizar_paciente();
         } catch (error) {
           console.log(error);
         } finally {
-          this.traer_pacientes();
-          this.$q.loading.hide();
+          //this.traer_pacientes();
+           this.$q.loading.hide();
           this.showNotif("Nuevo paciente guardado.", "accent", "cloud_done");
-
+        //  location.reload();
         }
       }
     },
-    // Varifica que los campos requeridos no esten vacios y 
-    //en caso de estarlo devuelve la variable como true 
+    // Varifica que los campos requeridos no esten vacios y
+    //en caso de estarlo devuelve la variable como true
     validaciones() {
       this.$refs.nombre.validate();
       this.$refs.fechaNacimiento.validate();
@@ -546,16 +550,16 @@ export default {
         this.error = false;
       }
     },
-  // Metodo que valida el campo nombre para permitir solo letras incluida la ñ, 
-  //palabras con tilde y espacios.
+    // Metodo que valida el campo nombre para permitir solo letras incluida la ñ,
+    //palabras con tilde y espacios.
     soloLetras(e) {
       let nombre = String.fromCharCode(e.keyCode);
       if (/^[a-zA-ZÀ-ÿ\u00f1\u00d1 ]+$/.test(nombre)) return true;
       else e.preventDefault();
     },
 
-  // Si la fecha de nacimiento del paciente es mayor a 0 devolvera false
-  //caso contrario sera verdadero y no permitira una fecha de nacimiento incorrecta
+    // Si la fecha de nacimiento del paciente es mayor a 0 devolvera false
+    //caso contrario sera verdadero y no permitira una fecha de nacimiento incorrecta
     edadPaciente() {
       const hoy = new Date();
       const fechaN = new Date(this.paciente.fechaNacimiento);
@@ -567,8 +571,8 @@ export default {
       }
       return this.error;
     },
-  //   retorna un booleano, si la edad es mayor o igual a 18 años retornara false 
-  //  caso contrario retornara true
+    //   retorna un booleano, si la edad es mayor o igual a 18 años retornara false
+    //  caso contrario retornara true
     edad() {
       const hoy = new Date();
       const fechaN = new Date(this.paciente.fechaNacimiento);
@@ -580,7 +584,7 @@ export default {
       }
       return this.error;
     },
-//permite darle al usuario una vista de la imagen que ha elegido de perfil.
+    //permite darle al usuario una vista de la imagen que ha elegido de perfil.
     async traer_imagen() {
       const refs = st.ref();
       let this2 = this;
@@ -613,47 +617,44 @@ export default {
         console.log(error);
       }
     },
-    //sube la imagen a la carpeta de el usuario creando la carpeta y asignandola con nombre perfil.jpg 
+    //sube la imagen a la carpeta de el usuario creando la carpeta y asignandola con nombre
     async subir_imagen(tipo) {
       var subir = 1;
       var actualizar = 2;
-        if (!this.foto || this.foto===this.imagen_defecto) {
-          
-          try {
-            const response = await fetch(this.imagen_defecto);
-            const blob = await response.blob();
-            var metadata = {
-              contentType: "image/png"
-            };
+      if (!this.foto || this.foto === this.imagen_defecto) {
+        try {
+          const response = await fetch(this.imagen_defecto);
+          const blob = await response.blob();
+          var metadata = {
+            contentType: "image/png"
+          };
 
-            const refs = st.ref();
-            let this2 = this;
-            const imgref = refs.child(this.id_paciente).child("perfil.jpg");
+          const refs = st.ref();
+          let this2 = this;
+          const imgref = refs.child(this.id_paciente).child("perfil.jpg");
 
-            imgref.put(blob, metadata).then(function(snapshot) {
-              this2.limpiar();
-            });
-          } catch (error) {
-            console.log(error);
-          }
-        } else {
-          try {
-          
-           
-            const refs = st.ref();
-            let this2 = this;
-            const imgref = refs.child(this.id_paciente).child("perfil.jpg");
-
-            imgref.put(this.imagen).then(function(snapshot) {
-              this2.limpiar();
-            });
-          } catch (error) {
-            console.log(error);
-          }
+          imgref.put(blob, metadata).then(function(snapshot) {
+           // this2.limpiar();
+            location.reload();
+          });
+        } catch (error) {
+          console.log(error);
         }
-      
+      } else {
+        try {
+          const refs = st.ref();
+          let this2 = this;
+          const imgref = refs.child(this.id_paciente).child("perfil.jpg");
+
+          imgref.put(this.imagen).then(function(snapshot) {
+         //   this2.limpiar();
+            location.reload();
+          });
+        } catch (error) {
+          console.log(error);
+        }
+      }
     },
-    //permite actualizar el campo "foto" del paciente con la direccion donde se creo carpeta y foto.
     async actualizar_paciente() {
       try {
         const query = db.collection("pacientes").doc(this.id_paciente);
@@ -673,4 +674,3 @@ export default {
   }
 };
 </script>
- 
