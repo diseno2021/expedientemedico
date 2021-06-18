@@ -90,7 +90,7 @@
               style="max-width: 7rem; min-width: 5rem"
               required
               lazy-rules
-              :rules="[val => !!val || 'Campo requerido']"
+              
             ></q-input>
 
             <q-input
@@ -104,7 +104,7 @@
               style="max-width: 7rem; min-width: 5rem"
               required
               lazy-rules
-              :rules="[val => !!val || 'Campo requerido']"
+              
             ></q-input>
 
             <q-input
@@ -118,7 +118,7 @@
               style="max-width: 7rem; min-width: 5rem"
               required
               lazy-rules
-              :rules="[val => !!val || 'Campo requerido']"
+              
             ></q-input>
 
             <q-input
@@ -132,7 +132,7 @@
               style="max-width: 7rem; min-width: 5rem"
               required
               lazy-rules
-              :rules="[val => !!val || 'Campo requerido']"
+              
             ></q-input>
 
             <q-input
@@ -146,7 +146,7 @@
               style="width: 8rem; min-width: 7rem"
               required
               lazy-rules
-              :rules="[val => !!val || 'Campo requerido']"
+              
             ></q-input>
           </div>
           <div class="row justify-center">
@@ -337,8 +337,9 @@ export default {
       this.$refs.motivo.validate();
       if (
         this.$refs.proximaCita.hasError ||
-        this.form_data.peso < 1 ||
-        this.form_data.estatura < 1 ||
+        this.form_data.peso < 0 ||
+        this.form_data.estatura < 0 ||
+        this.form_data.receta == "" ||
         this.$refs.motivo.hasError
       ) {
         this.error = true;
