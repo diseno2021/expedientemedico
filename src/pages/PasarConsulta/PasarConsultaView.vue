@@ -63,7 +63,7 @@
                   >Registrar una nueva consulta</q-tooltip
                 ></q-btn
               >
-              <q-input
+              <!-- <q-input
                 ref="proximaCita"
                 class="q-my-sm"
                 dense
@@ -75,7 +75,7 @@
                 stack-label
                 lazy-rules
                 :rules="[val => !!val || 'Campo requerido']"
-              />
+              /> -->
             </div>
           </div>
           <div class="row justify-center">
@@ -210,6 +210,54 @@
               </div>
             </div>
           </div>
+          <q-input
+                ref="proximaCita"
+                class="q-my-sm"
+                dense
+                outlined
+                v-model="form_data.proximaCita"
+                filled
+                type="date"
+                label="Próxima Cita"
+                stack-label
+                lazy-rules
+                
+              />
+          <q-btn
+                class="q-my-sm"
+                outline
+                color="primary"
+                icon="keyboard_arrow_left"
+                :to="'/paciente/' + this.$router.currentRoute.params.id"
+              >
+                Regresar al expediente
+                <q-tooltip
+                  content-class="bg-accent text-white"
+                  content-style="font-size: 12px"
+                  anchor="top left"
+                  self="bottom left"
+                  :offset="[0, 8]"
+                  >Regresar al expediente</q-tooltip
+                ></q-btn
+              >
+
+              <q-btn
+                class="q-my-sm"
+                outline
+                color="secondary"
+                icon="save"
+                @click="agregarConsulta()"
+                type="submit"
+              >
+                Registrar Consulta
+                <q-tooltip
+                  content-class="bg-accent text-white"
+                  content-style="font-size: 12px"
+                  anchor="top left"
+                  self="bottom left"
+                  :offset="[0, 8]"
+                  >Registrar una nueva consulta</q-tooltip
+                ></q-btn>
 
           <hr class="lt-md" />
 
