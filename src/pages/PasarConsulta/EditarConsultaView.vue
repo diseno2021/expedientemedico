@@ -32,8 +32,7 @@
                 outline
                 color="primary"
                 icon="keyboard_arrow_left"
-                @click="obtenerConsulta()"
-                :to="'/paciente/'"
+                @click="obtenerIdPaciente()"
               >
                 Regresar al expediente
                 <q-tooltip
@@ -212,8 +211,7 @@
                 outline
                 color="primary"
                 icon="keyboard_arrow_left"
-                @click="obtenerConsulta()"
-                :to="'/paciente/'"
+                @click="obtenerIdPaciente()"
               >
                 Regresar al expediente
                 <q-tooltip
@@ -304,6 +302,10 @@ export default {
           `consulta-no-encontrada/${this.$router.currentRoute.params.id}`
         );
       }
+    },
+
+    obtenerIdPaciente(){
+      this.$router.push("/paciente/" + this.form_data.idPaciente);
     },
 
     validar() {

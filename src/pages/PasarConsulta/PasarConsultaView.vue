@@ -352,7 +352,7 @@ export default {
       this.validar();
       if (this.error === true) {
         this.showNotif(
-          "Necesita rellenar los campos requeridos.",
+          "Necesita rellenar los campos requeridos (Motivo Consulta y Receta).",
           "negative",
           "close"
         );
