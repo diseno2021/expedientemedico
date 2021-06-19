@@ -289,6 +289,9 @@ export default {
       drawerRight: false,
       scrollInfo: {},
       spyMovil: false,
+      paciente: {},  
+      pesos: [],
+      estaturas: [],
       form_data: {
         id: "",
         idPaciente: this.$router.currentRoute.params.id,
@@ -312,6 +315,23 @@ export default {
         ["unordered", "ordered", "outdent", "indent"]
       ]
     };
+  },
+  created() {
+    var usuarioUpdate = db.collection("pacientes").doc(this.$router.currentRoute.params.id).get().then(
+            doc => {
+              if (doc.exists){
+                  let datos = doc.data();
+                  this.paciente = {
+                      id: doc.id,
+                      ...datos
+                  };
+              }
+              this.pesos = this.paciente.peso;
+              this.estaturas = this.paciente.estatura;
+              console.log(this.paciente);
+            }
+          );
+          
   },
 
   methods: {
@@ -360,7 +380,13 @@ export default {
         try {
           console.log("HOla");
           this.$q.loading.show();
+          
+
+          this.pesos.push(this.form_data.peso);
+          this.estaturas.push(this.form_data.estatura);
           var d = new Date();
+          var c = new Date(d.toString());
+          console.log(c);
           this.form_data.fecha = d.toString();
           // this.form_data.fecha = today.getFullYear()+'-'
           // +(today.getMonth()+1)+'-'
@@ -368,7 +394,10 @@ export default {
           // +today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
           console.log("esta es la fecha" + this.form_data.fecha);
 
-          const query = await db.collection("consultas").add(this.form_data);
+          const query = await db.collection("consultas").add(this.form_data);          
+
+          this.actualizarPesos();
+          
           this.limpiarFormulario();
           console.log(this.$router.currentRoute.path);
           this.showNotif("Se ha guardado la consulta", "positive", "check");
@@ -380,7 +409,21 @@ export default {
         }
       }
     },
-
+    actualizarPesos(){
+          
+          console.log("Estos son los pesos "+this.paciente);
+          
+          return db.collection("pacientes").doc(this.$router.currentRoute.params.id).update({
+                peso: this.pesos,
+                estatura: this.estaturas
+          }).then(function(){
+              console.log("peso actualizado");
+          }).catch(function(error) {
+              console.log("no se pudo actualizar peso", error);
+          }); 
+           
+    },
+    
     showNotif(mensaje, color, icono) {
       this.$q.notify({
         message: mensaje,

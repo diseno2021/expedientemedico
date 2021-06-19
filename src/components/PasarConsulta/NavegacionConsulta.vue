@@ -47,15 +47,15 @@
           class=" overflow-hidden"
           header-class="claseheader"
         >
-          <q-card-section>
-            <div class="text-h6" v-if="consulta">{{consulta.fecha}}</div>
-            <div class="text-subtitle2">fecha de ultima consulta</div>
+          <q-card-section dense>
+            <div class="text-h6" dense v-if="consulta">{{fechaSimp}}</div>
+            <div class="text-subtitle2" dense>fecha de ultima consulta</div>
           </q-card-section>
 
           <q-card-section class="q-pt-none" v-if="consulta" dense>
-            <q-card-section v-html="consulta.diagnostico" />
-            
+            <q-card-section v-html="consulta.diagnostico" dense />            
           </q-card-section>
+
         </q-expansion-item>
 
         <q-expansion-item
@@ -65,15 +65,13 @@
           expand-separator
           class=" overflow-hidden"
           header-class="claseheader"
-        >
-          <q-card class="bg-grey-3">
-            <q-card-section>
-              <div class="text-h6" v-if="consulta">{{consulta.fecha}}</div>
+        >          
+            <q-card-section dense>
+              <div class="text-h6" v-if="consulta">{{fechaSimp}}</div>
               <div class="text-subtitle2">Receta de la ultima consulta</div>
             </q-card-section>
-
-            <q-card-section v-html="consulta.receta" v-if="consulta"> </q-card-section>
-          </q-card>
+            <q-card-section v-html="consulta.receta" v-if="consulta" dense> </q-card-section>
+          
         </q-expansion-item>
 
         <q-expansion-item
@@ -86,9 +84,12 @@
         >
           <!-- Sugerimos eliminar las card para que funcione el modo oscuro y tenga menos padding los elementos -->
           <!-- Dejamos nuestro componente, nos deben pasar el id del paciente en la propiedad :idPaciente="" -->
+          
           <testGaleriaComponent
-            :idPaciente="this.$router.currentRoute.params.id"
+            :idPaciente="this.$router.currentRoute.params.id" 
           />
+   
+          
         </q-expansion-item>
 
         <q-expansion-item
@@ -144,13 +145,20 @@ export default {
     datosGraficaPeso: null,
     numerosGraficaPeso: [],
     diferenciaFechas: [],
-    pacienteid: ""
+    pacienteid: "",
+    fechaSimp: "",
+    report: "",
+    style: { width: '200px', height: '200px' },
   }),
   created() {
     this.obtenerDatosPaciente();
     this.obtenerConsultas();
   },
   methods: {
+    onResize(size){
+      console.log(size);
+      this.report = size;
+    },
     obtenerDatosPaciente() {
       let id = this.$router.currentRoute.params.id;
       
@@ -203,9 +211,19 @@ export default {
               enumerable: true,
               configurable: true
             });
+            console.log(this.consulta.fecha);
+            var c = new Date(this.consulta.fecha.toString());
+       
+            this.fechaSimp = c.getDay() + "/" + c.getMonth() + "/" + c.getFullYear();
+            console.log(this.fechaSimp);
             // this.consultasPaciente.push(consulta);
           });
         });
+       //var c = new Date(this.consulta.fecha.toString());
+       
+        //this.fechaSimp = c.getDay() + "/" + c.getMonth() + "/" + c.getFullYear();
+    },
+    obtenerFecha(){
         
     },
     obtenerPacienteId() {
