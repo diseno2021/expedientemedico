@@ -65,12 +65,21 @@
               <template v-slot:todos>
                 <q-icon name="male" class="text-blue" />
                 <q-icon name="female" class="text-pink" />
+                <q-tooltip>
+                  Todos
+                </q-tooltip>
               </template>
               <template v-slot:Masculino>
                 <q-icon name="male" class="text-blue" />
+                 <q-tooltip>
+                  Solo Hombres
+                </q-tooltip>
               </template>
               <template v-slot:Femenino>
                 <q-icon name="female" class="text-pink" />
+                 <q-tooltip>
+                  Solo Mujeres
+                </q-tooltip>
               </template>
             </q-btn-toggle>
             <span v-if="$q.screen.width > 599">Ver: </span>
