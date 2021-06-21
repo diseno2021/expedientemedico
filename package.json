@@ -2,8 +2,8 @@
   "name": "prueba",
   "version": "0.0.1",
   "description": "Ejercicio de prueba",
-  "productName": "Sistema ABC",
-  "author": "Ernesto Alexander Calderon Peraza <calderonperaza@gmail.com>",
+  "productName": "VirtualDoc",
+  "author": "Estudiantes de Diseño de Sistemas",
   "private": true,
   "scripts": {
     "test": "echo \"No test specified\" && exit 0",
