@@ -359,7 +359,6 @@ export default {
         this.$refs.proximaCita.hasError ||
         this.form_data.peso < 0 ||
         this.form_data.estatura < 0 ||
-        this.form_data.receta == "" ||
         this.$refs.motivo.hasError
       ) {
         this.error = true;
@@ -372,7 +371,7 @@ export default {
       this.validar();
       if (this.error === true) {
         this.showNotif(
-          "Necesita rellenar los campos requeridos (Motivo Consulta y Receta).",
+          "Necesita rellenar los campos requeridos (Motivo Consulta).",
           "negative",
           "close"
         );
