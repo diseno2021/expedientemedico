@@ -40,10 +40,11 @@
               <q-popup-proxy transition-show="scale" transition-hide="scale">
                 <q-date
                   v-model="paciente.fechaNacimiento"
-                  mask="DD-MM-YYYY"
+                  mask="DD/MM/YYYY"
+                  :locale="myLocale"
                 >
                   <div class="row items-center justify-end">
-                    <q-btn v-close-popup label="Close" color="primary" flat />
+                    <q-btn v-close-popup label="Cerrar" color="primary" flat />
                   </div>
                 </q-date>
               </q-popup-proxy>
@@ -248,7 +249,15 @@ export default {
       datosGraficaEstatura: null,
       numerosGraficaEstatura: [],
       datosGraficaPeso: null,
-      numerosGraficaPeso: []
+      numerosGraficaPeso: [],
+      myLocale: {
+        /* starting with Sunday */
+        days: 'Domingo_Lunes_Martes_Miércoles_Jueves_Viernes_Sábado'.split('_'),
+        daysShort: 'Dom_Lun_Mar_Mié_Jue_Vie_Sáb'.split('_'),
+        months: 'Enero_Febrero_Marzo_Abril_Mayo_Junio_Julio_Agosto_Septiembre_Octubre_Noviembre_Diciembre'.split('_'),
+        monthsShort: 'Ene_Feb_Mar_Abr_May_Jun_Jul_Ago_Sep_Oct_Nov_Dic'.split('_'),
+        firstDayOfWeek: 1
+      }
     };
   },
   props: ["paciente"],

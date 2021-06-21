@@ -122,6 +122,7 @@ import Recetas from "./Recetas";
 import EnfermedadesCronicas from "./EnfermedadesCronicas";
 import Examenes from "../testGaleria.vue";
 import { auth, db } from "../../boot/firebase";
+import { date } from "quasar";
 
 export default {
   data: () => ({
@@ -191,6 +192,7 @@ export default {
           if (doc.exists) {
             if (doc.data().idMedico == auth.currentUser.uid) {
               this.paciente = doc.data();
+              this.paciente.fechaNacimiento = date.formatDate(this.paciente.fechaNacimiento, 'DD/MM/YYYY');
             } else {
               this.paciente = 'No pertece al medico';
             }
