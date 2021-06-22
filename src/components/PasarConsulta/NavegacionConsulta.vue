@@ -211,11 +211,11 @@ export default {
               enumerable: true,
               configurable: true
             });
-            console.log(this.consulta.fecha);
-            var c = new Date(this.consulta.fecha.toString());
-       
-            this.fechaSimp = c.getDay() + "/" + c.getMonth() + "/" + c.getFullYear();
-            console.log(this.fechaSimp);
+            
+            var c = this.consulta.fecha.toDate();
+                       
+            this.fechaSimp = c.getDate() + "/" + (c.getMonth()+1) + "/" + c.getFullYear();
+            
             // this.consultasPaciente.push(consulta);
           });
         });

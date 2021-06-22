@@ -29,7 +29,7 @@
             <div class="col-12 col-sm-5 column justify-center">
               <q-btn
                 class="q-my-sm"
-                outline
+                
                 color="primary"
                 icon="keyboard_arrow_left"
                 :to="'/paciente/' + this.$router.currentRoute.params.id"
@@ -47,7 +47,7 @@
 
               <q-btn
                 class="q-my-sm"
-                outline
+                
                 color="secondary"
                 icon="save"
                 @click="agregarConsulta()"
@@ -163,8 +163,7 @@
                   lazy-rules
                   :rules="[val => !!val || 'Campo requerido']"
                 />
-
-                <p>Sintomas subjetivos</p>
+                <p>Sintomas</p>
                 <q-editor
                   :toolbar="toolbar"
                   v-model="form_data.sintomas"
@@ -189,6 +188,7 @@
                   min-height="7rem"
                   required
                 ></q-editor>
+                <br/>
                 <p>Examenes</p>
                 <q-editor
                   :toolbar="toolbar"
@@ -210,22 +210,14 @@
               </div>
             </div>
           </div>
-          <q-input
-                ref="proximaCita"
+          
+
+          <hr class="lt-md" />
+
+          <div class="row justify-center items-baseline">
+            <q-btn
                 class="q-my-sm"
-                dense
-                outlined
-                v-model="form_data.proximaCita"
-                filled
-                type="date"
-                label="Próxima Cita"
-                stack-label
-                lazy-rules
-                
-              />
-          <q-btn
-                class="q-my-sm"
-                outline
+                style="margin-left: auto; margin-right: auto"
                 color="primary"
                 icon="keyboard_arrow_left"
                 :to="'/paciente/' + this.$router.currentRoute.params.id"
@@ -240,10 +232,25 @@
                   >Regresar al expediente</q-tooltip
                 ></q-btn
               >
+            <q-input
+                ref="proximaCita"
+                class="q-my-sm"
+                dense
+                style="margin-left: auto; margin-right: auto"
+                v-model="form_data.proximaCita"
+                filled
+                type="date"
+                label="Próxima Cita"
+                stack-label
+                lazy-rules
+                
+              />
+              
+          
 
               <q-btn
                 class="q-my-sm"
-                outline
+                style="margin-left: auto; margin-right: auto"
                 color="secondary"
                 icon="save"
                 @click="agregarConsulta()"
@@ -258,10 +265,7 @@
                   :offset="[0, 8]"
                   >Registrar una nueva consulta</q-tooltip
                 ></q-btn>
-
-          <hr class="lt-md" />
-
-          <div class="row justify-center items-baseline"></div>
+          </div>
         </div>
       </q-page>
     </q-page-container>
@@ -386,7 +390,7 @@ export default {
           var d = new Date();
           var c = new Date(d.toString());
           console.log(c);
-          this.form_data.fecha = d.toString();
+          this.form_data.fecha = d;
           // this.form_data.fecha = today.getFullYear()+'-'
           // +(today.getMonth()+1)+'-'
           // +today.getDate()+' '

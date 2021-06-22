@@ -11,8 +11,8 @@
           @click="$refs.menu.openCloseDrawer()"
         />
 
-        <q-toolbar-title> Nueva Consulta</q-toolbar-title>
-        <q-btn class="lt-md" flat @click="test" round dense icon="menu" />
+        <q-toolbar-title> Editar Consulta</q-toolbar-title>
+        
       </q-toolbar>
     </q-header>
     <Menu ref="menu" />
@@ -21,7 +21,7 @@
     </q-drawer> -->
     <q-page-container>
       <q-page padding class="q-pt-none">
-        <div id="pasar-consulta">
+        <div id="pasar-consulta" >
           <div class="row items-center">
             <div class="col-12 col-sm-7 justify-between">
               <h2 class="text-h2">Editar Consulta</h2>
@@ -29,7 +29,7 @@
             <div class="col-12 col-sm-5 column justify-center">
               <q-btn
                 class="q-my-sm"
-                outline
+                
                 color="primary"
                 icon="keyboard_arrow_left"
                 @click="obtenerIdPaciente()"
@@ -47,7 +47,7 @@
 
               <q-btn
                 class="q-my-sm"
-                outline
+                
                 color="secondary"
                 icon="save"
                 @click="guardarConsulta()"
@@ -150,10 +150,10 @@
                     required
                   />
 
-                  <p>Sintomas subjetivos</p>
+                  <p>Sintomas</p>
                   <q-editor
                     :toolbar="toolbar"
-                    v-model="form_data.sintomasSubjetivos"
+                    v-model="form_data.sintomas"
                     min-height="7rem"
                     required
                   ></q-editor>
@@ -194,10 +194,18 @@
               </div>
             </div>
              
-              <q-input
+              
+
+            
+          </q-form>
+          <hr class="lt-md" />
+
+          <div class="row justify-center items-baseline">
+            
+            <q-input
                 class="q-my-sm"
                 dense
-                outlined
+                style="margin-left: auto; margin-right: auto"
                 v-model="form_data.proximaCita"
                 filled
                 type="date"
@@ -205,10 +213,10 @@
                 stack-label
                 required
               />
-
+            
               <q-btn
                 class="q-my-sm"
-                outline
+                style="margin-left: auto; margin-right: auto"
                 color="primary"
                 icon="keyboard_arrow_left"
                 @click="obtenerIdPaciente()"
@@ -226,7 +234,7 @@
 
               <q-btn
                 class="q-my-sm"
-                outline
+                style="margin-left: auto; margin-right: auto"
                 color="secondary"
                 icon="save"
                 @click="guardarConsulta()"
@@ -242,12 +250,7 @@
                   >Registrar una nueva consulta</q-tooltip
                 ></q-btn
               >
-
-            
-          </q-form>
-          <hr class="lt-md" />
-
-          <div class="row justify-center items-baseline"></div>
+          </div>
         </div>
       </q-page>
     </q-page-container>
@@ -357,12 +360,12 @@ export default {
     onScroll(info) {
       if (this.spyMovil == false) {
         this.scrollInfo = info;
-        this.$refs.nav.scrollspy(info.position);
+        
       }
     },
     test() {
       this.spyMovil = true;
-      this.$refs.nav.scrollspy(this.scrollInfo.position);
+      
       this.drawerRight = !this.drawerRight;
     }
   }
