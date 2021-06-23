@@ -221,6 +221,7 @@ export default {
               configurable: true
             });
             this.consultasPaciente.push(consulta);
+            this.consultasPaciente.reverse();
           });
         });
     }

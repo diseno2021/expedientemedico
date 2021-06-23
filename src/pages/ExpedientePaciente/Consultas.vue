@@ -13,7 +13,7 @@
           <q-expansion-item>
             <template v-slot:header>
               <q-item-section class="text-body2">
-                <span> {{ formatoFecha(consulta.fecha) }} | <strong> Motivo: {{ consulta.motivoConsulta }} </strong> </span>
+                <span> {{ formatoFecha(consulta.fecha) }} - <strong> Motivo: {{ consulta.motivoConsulta }} </strong> </span>
               </q-item-section>
             </template>
             <q-separator></q-separator>
@@ -117,11 +117,11 @@
                   Proxima cita: {{ formatoFecha(consulta.proximaCita) }}
                 </div>
                 <div v-else class="col-auto q-pa-sm">
-                  Proxima cita: No se programo una proxima cita.
+                  Proxima cita: No se programo cita.
                 </div>
               </div>
               <div v-else class="col-auto q-pa-sm">
-                  Proxima cita: No se programo una proxima cita.
+                  Proxima cita: No se programo cita.
               </div>
               <q-space></q-space>
               <div class="col-auto q-py-xs q-px-sm">
@@ -197,9 +197,9 @@ export default {
     formatoFecha(){
       return fecha => {
         if (date.isValid(fecha)) {
-          return date.formatDate(fecha, 'DD/MM/YYYY - h:mm A');
+          return date.formatDate(fecha, 'DD/MM/YYYY');
         } else {
-          return date.formatDate(new Date(fecha.seconds * 1000), 'DD/MM/YYYY - h:mm A');
+          return date.formatDate(new Date(fecha.seconds * 1000), 'DD/MM/YYYY');
         }
       } 
     },
