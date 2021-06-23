@@ -12,11 +12,8 @@
         <q-card flat bordered>
           <q-expansion-item>
             <template v-slot:header>
-              <q-item-section class="text-subtitle2">
-                Motivo: {{ consulta.motivoConsulta }}
-              </q-item-section>
-              <q-item-section class="text-body2 text-right">
-                {{ formatoFecha(consulta.fecha) }}
+              <q-item-section class="text-body2">
+                <span> {{ formatoFecha(consulta.fecha) }} | <strong> Motivo: {{ consulta.motivoConsulta }} </strong> </span>
               </q-item-section>
             </template>
             <q-separator></q-separator>
@@ -198,8 +195,14 @@ export default {
   },
   computed: {
     formatoFecha(){
-      return fecha => date.formatDate(fecha, 'DD/MM/YYYY - h:mm A');
-    }
+      return fecha => {
+        if (date.isValid(fecha)) {
+          return date.formatDate(fecha, 'DD/MM/YYYY - h:mm A');
+        } else {
+          return date.formatDate(new Date(fecha.seconds * 1000), 'DD/MM/YYYY - h:mm A');
+        }
+      } 
+    },
   },
   watch: {
     consultas(newValue, oldValue) {

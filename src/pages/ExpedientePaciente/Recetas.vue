@@ -111,8 +111,14 @@ export default {
   },
   computed: {
     formatoFecha(){
-      return fecha => date.formatDate(fecha, 'DD/MM/YYYY - h:mm A');
-    }
+      return fecha => {
+        if (date.isValid(fecha)) {
+          return date.formatDate(fecha, 'DD/MM/YYYY - h:mm A');
+        } else {
+          return date.formatDate(new Date(fecha.seconds * 1000), 'DD/MM/YYYY - h:mm A');
+        }
+      } 
+    },
   },
   watch: {
     consultas(newValue, oldValue) {
