@@ -1,15 +1,15 @@
 {
-  "name": "prueba",
+  "name": "virtualdoc",
   "version": "0.0.1",
-  "description": "Ejercicio de prueba",
+  "description": "Sistema de Expediente Medico",
   "productName": "VirtualDoc",
-  "author": "Estudiantes de Diseño de Sistemas",
+  "author": "Estudiantes de Diseño de Sistemas. Universidad de El Salvador. Santa Ana",
   "private": true,
   "scripts": {
     "test": "echo \"No test specified\" && exit 0",
     "dev": "quasar dev",
     "build": "quasar build",
-    "build:pwa": "quasar build -m pwa"    
+    "build:pwa": "quasar build -m pwa"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
