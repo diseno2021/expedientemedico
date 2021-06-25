@@ -1,18 +1,19 @@
 <template>
   <div>
-    <div class="q-pa-md">
+    <div class="q-mx-md" style="margin-top: 20px" dense>
       <!-- <q-card flat> -->
-      <q-card-section>
-        <div class="row justify-center q-pb-xs">
+      
+        <div class="row justify-center q-pb-xs" dense>
           <q-avatar square rounded size="85px" class="q-mx-auto">
             <img :src="fotoPerfil" />
           </q-avatar>
         </div>
-        <div class="text-h6 q-pb-xs" v-if="paciente" >{{paciente.nombre}}</div>
-      </q-card-section>
+        <div class="text-h6 q-pb-xs" v-if="paciente" dense >{{paciente.nombre}}</div>
+      
       <!-- </q-card> -->
+      <Convertidor ref="convert"/>
     </div>
-    <div class="q-pa-md" style="max-width: 350px">
+    <div class="q-pa-md" style="max-width: 450px">
       <q-list>
         <q-expansion-item
           icon="book"
@@ -129,12 +130,14 @@
 
 <script>
 import TestGaleriaComponent from "src/pages/testGaleriaComponent.vue";
+import Convertidor from "components/PasarConsulta/ConvertirKgaLb.vue";
 import { db, st } from "../../boot/firebase";
 import Grafica from "../../components/ExpedientePaciente/Grafica";
 
 export default {
   components: {
     TestGaleriaComponent,
+    Convertidor,
     Grafica
   },
 

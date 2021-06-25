@@ -82,7 +82,7 @@
             <q-input
               class="q-mx-md q-my-md"
               type="number"
-              min="0"
+              min="0"        
               outlined
               suffix="lb"
               v-model="form_data.peso"
@@ -278,12 +278,13 @@ import navegacionConsulta from "components/PasarConsulta/NavegacionConsulta.vue"
 import Examenes from "pages/testGaleriaComponent.vue";
 import Menu from "components/Menu";
 import NavegacionConsulta from "components/PasarConsulta/NavegacionConsulta.vue";
+
 import { db } from "../../boot/firebase";
 export default {
   components: {
     perfil,
     navegacionConsulta,
-    Examenes,
+    Examenes,    
     Menu,
     NavegacionConsulta
   },
