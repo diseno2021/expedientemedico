@@ -1,34 +1,27 @@
 <template>
   <div class="col-md-6" dense>
-    
     <div class="row justify-center" dense>
-      <q-input filled mask="###.##" v-model="pesoKg" label="Peso Kg" dense style="max-width: 6rem; margin-right: 0.5rem"/>
-      <q-btn        
-        color="primary"
-        type="submit"
-        icon="keyboard_arrow_right"
-        dense
-        @click="convertirPeso()"
-      >
-      <q-tooltip
-                  content-class="bg-accent text-white"
-                  content-style="font-size: 12px"
-                  anchor="top left"
-                  self="bottom left"                  
-                  >convertir</q-tooltip>
-      </q-btn>
       <q-input
-      filled        
-        mask="###.##"
-        v-model="pesoLb"        
+        filled
+        v-model="pesoKg"
+        label="Peso Kg"
+        dense
+        style="max-width: 6rem; margin-right: 0.5rem"
+        @change="convertirKgALb"
+      >
+        <q-tooltip>Presione enter para convertir Kg a Lb</q-tooltip>
+      </q-input>
+
+      <q-input
+        filled
+        v-model="pesoLb"
         label="Peso lb"
         style="max-width: 6rem; margin-left: 0.5rem"
         dense
-      />
-    </div>
-    <div class="row justify-center">
-        Convertir peso de Kg a Lb
-      
+        @change="convertirLbaKg"
+      >
+        <q-tooltip>Presione enter para convertir Lb a</q-tooltip>
+      </q-input>
     </div>
   </div>
 </template>
@@ -42,8 +35,11 @@ export default {
     };
   },
   methods: {
-    convertirPeso() {
-      this.pesoLb = this.pesoKg * 2.2046;
+    convertirKgALb() {
+      this.pesoLb = `${this.pesoKg * 2.2046}`.slice(0, 6);
+    },
+    convertirLbaKg() {
+      this.pesoKg = `${this.pesoLb / 2.2046}`.slice(0, 6);
     },
   },
 };
