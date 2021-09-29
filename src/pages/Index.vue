@@ -191,7 +191,8 @@ export default {
         { slot: "Masculino", value: "Masculino" },
         { slot: "Femenino", value: "Femenino" }
       ],
-      pacientes: []
+      pacientes: [],
+      clinicas:[]
     };
   },
   //se le pone async para que no filtre antes de que este lleno el array de pacientes
@@ -240,6 +241,7 @@ export default {
           .where("idMedico", "==", auth.currentUser.uid)
           .get();
         snapshot.forEach(e => {
+          
           var paciente = {
             id: e.id,
             nombre: e.data().nombre,
@@ -247,10 +249,24 @@ export default {
             fechaNacimiento: e.data().fechaNacimiento,
             peso: e.data().peso[e.data().peso.length - 1],
             tipoSangre: e.data().tipoSangre,
-            genero: e.data().genero
+            genero: e.data().genero,
+            clinica:e.data().clinica
           };
           this.pacientes.push(paciente);
         });
+
+        const snap=await db.collection("clinicas").where("idMedico", "==", auth.currentUser.uid).get();
+        snap.forEach(c=>{
+          var clinica={
+            id:c.id,
+            nombre:c.data().nombre,
+            direccion:c.data().direccion,
+            telefono:c.data().telefono
+          }
+          this.clinicas.push(clinica);
+        });
+        
+
         for (var paciente of this.pacientes) {
           paciente.foto = await st
             .ref()
