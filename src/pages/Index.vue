@@ -82,6 +82,21 @@
                 </q-tooltip>
               </template>
             </q-btn-toggle>
+            <span v-if="$q.screen.width > 599">Filtrar clinica:</span>
+            <q-select
+              @input="filtrarPacientes"
+              class="inline q-mx-md"
+              rounded
+              style="max-width:9rem"
+              option-label="nombre"
+              v-model="clinicaSelected"
+              :options="clinicas"
+              dense
+            >
+             <template v-slot:prepend>
+                <q-icon name="local_hospital" />
+              </template>
+            </q-select>
             <span v-if="$q.screen.width > 599">Ver: </span>
             <q-select
               @input="filtrarPacientes"
@@ -192,7 +207,9 @@ export default {
         { slot: "Femenino", value: "Femenino" }
       ],
       pacientes: [],
-      clinicas:[]
+      clinicas:[{nombre:"todas"}],
+      clinicaSelected:{nombre:"todas"},
+
     };
   },
   //se le pone async para que no filtre antes de que este lleno el array de pacientes
@@ -351,6 +368,12 @@ export default {
         this.pacientesFiltrados = this.pacientesFiltrados.filter(p => {
           return p.genero == "Femenino";
         });
+      }
+      //FILTRO POR CLINICAS
+      if(this.clinicaSelected.nombre!="todas"){
+        this.pacientesFiltrados=this.pacientesFiltrados.filter(p=>{
+          return p.clinica.id==this.clinicaSelected.id;
+        })
       }
 
       //despues de filtrar devuelve el primer trozo, de esta manera cada vez que haya un filtro
