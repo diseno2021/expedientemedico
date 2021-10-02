@@ -21,9 +21,9 @@
               <div class="col q-pl-sm q-px-md q-py-xs">
                 <q-scroll-area style="height: 150px">
                   <div class="text-h6 q-mb-md">Receta</div>
-                  <div class="text-body2" v-html="consulta.receta"></div>
-                  <!-- impresion -->
-                   <q-btn round color="secondary" icon="print" @click="bar2 = true" />
+                  <div class="text-body2" v-html="consulta.receta"></div>                  
+                  <!-- impresion -->              
+                  
                   <q-dialog
                     v-model="bar2"
                     persistent
@@ -52,6 +52,11 @@
                   </q-dialog>
                   <!-- fin impresion -->
                 </q-scroll-area>
+              </div>
+              <div class="col-1 ">
+                  
+                   <q-btn round color="light-blue-3" icon="print" @click="bar2 = true" class="absolute-bottom-right q-mb-xl q-mx-md" >
+                     </q-btn>              
               </div>
             </div>
             <q-separator />
@@ -123,7 +128,7 @@ export default {
     max: 1,
     consultasPagina: [],
     nConsultasPagina: 4,
-    bar2: false,
+    bar2: false,    
   }),
   methods: {
     cambiarPagina() {
@@ -140,6 +145,9 @@ export default {
       this.consultasPagina.forEach((c, index) => {
         this.tab.push("sintomas" + index);
       });
+    },
+    sinMembrete(){
+
     }
   },
   computed: {
