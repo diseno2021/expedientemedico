@@ -20,17 +20,49 @@
             <div class="row">
               <div class="col q-pl-sm q-px-md q-py-xs">
                 <q-scroll-area style="height: 150px">
-                    
-                      <div class="text-h6 q-mb-md">Receta</div>
-                      <div class="text-body2" v-html="consulta.receta"></div>
-                    
+                  <div class="text-h6 q-mb-md">Receta</div>
+                  <div class="text-body2" v-html="consulta.receta"></div>
+                  <!-- impresion -->
+                   <q-btn round color="secondary" icon="print" @click="bar2 = true" />
+                  <q-dialog
+                    v-model="bar2"
+                    persistent
+                    transition-show="flip-down"
+                    transition-hide="flip-up"
+                  >
+                    <q-card class="bg-primary text-white">
+                      <q-bar>
+                        <q-icon name="print" class="q-mx-sm"/>
+                        Elija tipo impresión de Receta
+
+                        <q-space />
+
+                        <q-btn dense flat icon="close" v-close-popup>
+                          <q-tooltip content-class="bg-white text-primary"
+                            >Close</q-tooltip
+                          >
+                        </q-btn>
+                      </q-bar>
+
+                      <q-card-section class="bg-cyan-2 ">
+                        <q-btn unelevated rounded color="secondary" label="Con Membrete" class="q-ma-sm"/>
+                        <q-btn unelevated rounded color="secondary" label="Sin Membrete" class="q-ma-sm"/>
+                      </q-card-section>
+                    </q-card>
+                  </q-dialog>
+                  <!-- fin impresion -->
                 </q-scroll-area>
               </div>
             </div>
             <q-separator />
             <div class="row items-center">
               <div v-if="consulta.proximaCita != undefined">
-                <div v-if="consulta.proximaCita != null && consulta.proximaCita != ''" class="col-auto q-pa-sm">
+                <div
+                  v-if="
+                    consulta.proximaCita != null && consulta.proximaCita != ''
+                  "
+                  class="col-auto q-pa-sm"
+                >
                   Proxima cita: {{ formatoFecha(consulta.proximaCita) }}
                 </div>
                 <div v-else class="col-auto q-pa-sm">
@@ -38,7 +70,7 @@
                 </div>
               </div>
               <div v-else class="col-auto q-pa-sm">
-                  Proxima cita: No se programo cita.
+                Proxima cita: No se programo cita.
               </div>
               <q-space></q-space>
               <div class="col-auto q-py-xs q-px-sm">
@@ -79,11 +111,11 @@
   </div>
 </template>
 <script>
-import { date } from 'quasar';
+import { date } from "quasar";
 
 export default {
   props: {
-    consultas: Array,
+    consultas: Array
   },
   data: () => ({
     tab: [],
@@ -91,6 +123,7 @@ export default {
     max: 1,
     consultasPagina: [],
     nConsultasPagina: 4,
+    bar2: false,
   }),
   methods: {
     cambiarPagina() {
@@ -107,18 +140,18 @@ export default {
       this.consultasPagina.forEach((c, index) => {
         this.tab.push("sintomas" + index);
       });
-    },
+    }
   },
   computed: {
-    formatoFecha(){
+    formatoFecha() {
       return fecha => {
         if (date.isValid(fecha)) {
-          return date.formatDate(fecha, 'DD/MM/YYYY');
+          return date.formatDate(fecha, "DD/MM/YYYY");
         } else {
-          return date.formatDate(new Date(fecha.seconds * 1000), 'DD/MM/YYYY');
+          return date.formatDate(new Date(fecha.seconds * 1000), "DD/MM/YYYY");
         }
-      } 
-    },
+      };
+    }
   },
   watch: {
     consultas(newValue, oldValue) {
@@ -131,7 +164,7 @@ export default {
       this.consultasPagina.forEach((c, index) => {
         this.tab.push("sintomas" + index);
       });
-    },
-  },
+    }
+  }
 };
 </script>
