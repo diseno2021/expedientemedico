@@ -21,9 +21,9 @@
               <div class="col q-pl-sm q-px-md q-py-xs">
                 <q-scroll-area style="height: 150px">
                   <div class="text-h6 q-mb-md">Receta</div>
-                  <div class="text-body2" v-html="consulta.receta"></div>                  
-                  <!-- impresion -->              
-                  
+                  <div class="text-body2" v-html="consulta.receta"></div>
+                  <!-- impresion -->
+
                   <q-dialog
                     v-model="bar2"
                     persistent
@@ -32,7 +32,7 @@
                   >
                     <q-card class="bg-primary text-white">
                       <q-bar>
-                        <q-icon name="print" class="q-mx-sm"/>
+                        <q-icon name="print" class="q-mx-sm" />
                         Elija tipo impresión de Receta
 
                         <q-space />
@@ -45,8 +45,21 @@
                       </q-bar>
 
                       <q-card-section class="bg-cyan-2 ">
-                        <q-btn unelevated rounded color="secondary" label="Con Membrete" class="q-ma-sm"/>
-                        <q-btn unelevated rounded color="secondary" label="Sin Membrete" class="q-ma-sm"/>
+                        <q-btn
+                          unelevated
+                          rounded
+                          color="secondary"
+                          label="Con Membrete"
+                          class="q-ma-sm"
+                        />
+                        <q-btn
+                          unelevated
+                          rounded
+                          color="secondary"
+                          label="Sin Membrete"
+                          class="q-ma-sm"
+                          @click="sinMembrete(consulta.receta)"
+                        />
                       </q-card-section>
                     </q-card>
                   </q-dialog>
@@ -54,9 +67,14 @@
                 </q-scroll-area>
               </div>
               <div class="col-1 ">
-                  
-                   <q-btn round color="light-blue-3" icon="print" @click="bar2 = true" class="absolute-bottom-right q-mb-xl q-mx-md" >
-                     </q-btn>              
+                <q-btn
+                  round
+                  color="light-blue-3"
+                  icon="print"
+                  @click="bar2 = true"
+                  class="absolute-bottom-right q-mb-xl q-mx-md"
+                >
+                </q-btn>
               </div>
             </div>
             <q-separator />
@@ -117,6 +135,7 @@
 </template>
 <script>
 import { date } from "quasar";
+import { jsPDF } from "jspdf";
 
 export default {
   props: {
@@ -128,7 +147,7 @@ export default {
     max: 1,
     consultasPagina: [],
     nConsultasPagina: 4,
-    bar2: false,    
+    bar2: false
   }),
   methods: {
     cambiarPagina() {
@@ -146,8 +165,16 @@ export default {
         this.tab.push("sintomas" + index);
       });
     },
-    sinMembrete(){
-
+    sinMembrete(consulta) {
+      const doc = new jsPDF({
+        orientation: "landscape",
+        unit: "in",
+        format: [8.5, 5.5]
+      });
+      
+     
+      doc.text(consulta,10,10);
+      doc.save("test.pdf");
     }
   },
   computed: {
