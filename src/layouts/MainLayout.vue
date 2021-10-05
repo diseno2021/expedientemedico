@@ -12,7 +12,7 @@
         />
 
         <q-toolbar-title>
-          Pacientes
+          {{ $route.name }}
         </q-toolbar-title>
       </q-toolbar>
     </q-header>
