@@ -71,13 +71,13 @@
               </template>
               <template v-slot:Masculino>
                 <q-icon name="male" class="text-blue" />
-                 <q-tooltip>
+                <q-tooltip>
                   Solo Hombres
                 </q-tooltip>
               </template>
               <template v-slot:Femenino>
                 <q-icon name="female" class="text-pink" />
-                 <q-tooltip>
+                <q-tooltip>
                   Solo Mujeres
                 </q-tooltip>
               </template>
@@ -93,7 +93,7 @@
               :options="clinicas"
               dense
             >
-             <template v-slot:prepend>
+              <template v-slot:prepend>
                 <q-icon name="local_hospital" />
               </template>
             </q-select>
@@ -207,9 +207,8 @@ export default {
         { slot: "Femenino", value: "Femenino" }
       ],
       pacientes: [],
-      clinicas:[{nombre:"todas"}],
-      clinicaSelected:{nombre:"todas"},
-
+      clinicas: [{ nombre: "todas" }],
+      clinicaSelected: { nombre: "todas" }
     };
   },
   //se le pone async para que no filtre antes de que este lleno el array de pacientes
@@ -258,31 +257,22 @@ export default {
           .where("idMedico", "==", auth.currentUser.uid)
           .get();
         snapshot.forEach(e => {
-          
-          var paciente = {
-            id: e.id,
-            nombre: e.data().nombre,
-            direccion: e.data().direccion,
-            fechaNacimiento: e.data().fechaNacimiento,
-            peso: e.data().peso[e.data().peso.length - 1],
-            tipoSangre: e.data().tipoSangre,
-            genero: e.data().genero,
-            clinica:e.data().clinica
-          };
-          this.pacientes.push(paciente);
+          this.clinicas.push(e);
         });
 
-        const snap=await db.collection("clinicas").where("idMedico", "==", auth.currentUser.uid).get();
-        snap.forEach(c=>{
-          var clinica={
-            id:c.id,
-            nombre:c.data().nombre,
-            direccion:c.data().direccion,
-            telefono:c.data().telefono
-          }
+        const snap = await db
+          .collection("clinicas")
+          .where("idMedico", "==", auth.currentUser.uid)
+          .get();
+        snap.forEach(c => {
+          var clinica = {
+            id: c.id,
+            nombre: c.data().nombre,
+            direccion: c.data().direccion,
+            telefono: c.data().telefono
+          };
           this.clinicas.push(clinica);
         });
-        
 
         for (var paciente of this.pacientes) {
           paciente.foto = await st
@@ -370,10 +360,10 @@ export default {
         });
       }
       //FILTRO POR CLINICAS
-      if(this.clinicaSelected.nombre!="todas"){
-        this.pacientesFiltrados=this.pacientesFiltrados.filter(p=>{
-          return p.clinica.id==this.clinicaSelected.id;
-        })
+      if (this.clinicaSelected.nombre != "todas") {
+        this.pacientesFiltrados = this.pacientesFiltrados.filter(p => {
+          return p.clinica.id == this.clinicaSelected.id;
+        });
       }
 
       //despues de filtrar devuelve el primer trozo, de esta manera cada vez que haya un filtro
