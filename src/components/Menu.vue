@@ -67,7 +67,7 @@
           </q-item>
           <agregar_paciente :id_doctor="id_usuario"></agregar_paciente>
           <q-item
-            to="clinicas"
+            to="/clinicas"
             clickable
             v-ripple
             :active="link === '/clinicas'"
