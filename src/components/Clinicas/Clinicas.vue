@@ -24,12 +24,37 @@
                 color="primary"
                 icon="edit"
                 :to="'/clinica/editar/' + clinica.id"
-              />
-              <q-btn flat round color="red" icon="delete" />
+              >
+                <q-tooltip>
+                  Editar Clinica
+                </q-tooltip>
+              </q-btn>
+              <q-btn
+                flat
+                round
+                color="red"
+                icon="delete"
+                @click="borrarClinica(clinica)"
+              >
+                <q-tooltip>
+                  Borrar Clinica
+                </q-tooltip>
+              </q-btn>
             </div>
           </q-card-section>
           <q-separator inset />
-          <q-expansion-item icon="place" label="Dirección" :active="true">
+          <q-expansion-item>
+            <template v-slot:header>
+              <q-tooltip>
+                Ver direccion
+              </q-tooltip>
+              <q-item-section avatar>
+                <q-avatar icon="place" />
+              </q-item-section>
+              <q-item-section>
+                Dirección
+              </q-item-section>
+            </template>
             <q-card :class="$q.dark.isActive ? 'text-white' : 'text-black'">
               <q-card-section>
                 <div>
@@ -54,7 +79,11 @@
           color="blue-10"
           label="Nueva Clinica"
           icon-right="add"
-        />
+        >
+          <q-tooltip>
+            Crear Clinica
+          </q-tooltip>
+        </q-btn>
       </div>
     </div>
     <!-- mensaje si no hay clinicas-->
@@ -75,7 +104,11 @@
           color="blue-10"
           label="Nueva Clinica"
           icon-right="add"
-        />
+        >
+          <q-tooltip>
+            Crear Clinica
+          </q-tooltip>
+        </q-btn>
       </div>
     </div>
     <q-inner-loading :showing="visible">
@@ -88,6 +121,22 @@
         >Cargando Clinicas</span
       >
     </q-inner-loading>
+    <q-dialog v-model="confirm" persistent>
+      <q-card>
+        <q-card-section class="row items-center">
+          <q-icon name="warning" class="text-red" style="font-size: 2rem;" />
+          <span class="q-ml-sm">
+            Esta seguro que desea borrar la clinica
+            <strong>"{{ clinicaBorrar.nombre }}"</strong>
+          </span>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Cancel" color="primary" v-close-popup />
+          <q-btn flat label="Turn on Wifi" color="primary" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
@@ -97,6 +146,8 @@ export default {
   data() {
     return {
       visible: true,
+      confirm: false,
+      clinicaBorrar: {},
       clinicas: []
     };
   },
@@ -111,15 +162,23 @@ export default {
           .collection("clinicas")
           .where("idMedico", "==", auth.currentUser.uid)
           .get();
-        clinicaSnap.forEach(e => {
+        clinicaSnap.forEach(async e => {
           var clinica = e.data();
           clinica.id = e.id;
+          const pacienteSnap = await db
+            .collection("pacientes")
+            .where("clinica.id", "==", e.id);
           this.clinicas.push(clinica);
         });
         this.visible = false;
       } catch (error) {
         console.error(error);
       }
+    },
+    borrarClinica(clinica) {
+      this.clinicaBorrar = clinica;
+      console.log(this.clinicaBorrar);
+      this.confirm = true;
     }
   }
 };

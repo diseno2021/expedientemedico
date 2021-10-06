@@ -102,7 +102,9 @@
               round
               color="blue-10"
               @click="getCurrentLocation"
-            />
+            >
+              <q-tooltip>Ver Ubicacion Actual</q-tooltip>
+            </q-btn>
           </div>
         </div>
 
@@ -119,6 +121,19 @@
             <l-marker :lat-lng="marker" :icon="defaultMarkerIcon"></l-marker>
           </l-map>
         </q-card>
+        <q-banner
+          class="bg-warning text-white q-mt-md"
+          dense
+          rounded
+          style="border-left: 5px solid #fca103;"
+        >
+          <template v-slot:avatar>
+            <q-icon name="warning" color="white" />
+          </template>
+          <span class="text-weight-bold">
+            Por favor coloque el marcador en la ubicacion deseada
+          </span>
+        </q-banner>
       </div>
     </div>
     <!--loading-->
