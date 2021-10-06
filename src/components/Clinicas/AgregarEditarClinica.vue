@@ -1,109 +1,127 @@
 <template>
-  <div class="row q-pa-lg">
-    <div
-      class="col-12 col-md-6 q-px-md"
-      :style="$q.screen.lt.md ? 'order:2' : ''"
-    >
-      <q-form class="q-gutter-sm">
-        <q-input
-          filled
-          v-model="nombre"
-          label="Nobre de la Clinica"
-          :rules="rules"
-        />
-        <q-input
-          filled
-          v-model="telefono"
-          :rules="rules"
-          label="Telefono"
-          mask="#### - ####"
-          hint="#### - ####"
-        />
-        <q-input filled v-model="direccion.pais" label="Pais" :rules="rules" />
-        <q-input
-          filled
-          v-model="direccion.departamento"
-          label="Departamento"
-          :rules="rules"
-        />
-        <div class="row">
-          <div class="col q-pr-sm">
-            <q-input
-              filled
-              v-model="direccion.municipio"
-              label="Municipio"
-              :rules="rules"
-            />
-          </div>
-          <div class="col q-pl-sm">
-            <q-input
-              filled
-              v-model="direccion.codigoPostal"
-              label="Departamento"
-              :rules="rules"
-            />
-          </div>
-        </div>
-        <q-input
-          filled
-          v-model="direccion.colonia"
-          label="Colonia"
-          :rules="rules"
-        />
-        <q-input
-          filled
-          v-model="direccion.calle"
-          label="Calle"
-          :rules="rules"
-        />
-        <q-input
-          filled
-          v-model="direccion.referencia"
-          label="Punto de referencia"
-          hint="Campo Opcional"
-        />
-      </q-form>
-    </div>
-    <div
-      class="col-12 col-md-6 q-px-md"
-      :class="$q.screen.lt.md ? 'q-mb-md' : ''"
-      :style="$q.screen.lt.md ? 'order:1' : ''"
-    >
-      <div class="row q-mb-sm items-start">
-        <div class="col-10">
+  <div class="relative-position" :style="visible ? 'height: 92Vh' : ''">
+    <div class="row q-pa-lg">
+      <div
+        class="col-12 col-md-6 q-px-md"
+        :style="$q.screen.lt.md ? 'order:2' : ''"
+      >
+        <q-form class="q-gutter-sm" @submit="botonGuardarEditar">
           <q-input
             filled
-            v-model="buscarDireccion"
-            label="Buscar Direccion"
-            @keydown.enter="fowardGeocoding"
-            hint="Presione la tecla Enter para buscar"
+            v-model="nombre"
+            label="Nobre de la Clinica"
+            :rules="rules"
           />
-        </div>
-        <div class="col-2 text-center">
-          <q-btn
-            size="lg"
-            icon="my_location"
-            round
-            color="blue-10"
-            @click="getCurrentLocation"
+          <q-input
+            filled
+            v-model="telefono"
+            :rules="rules"
+            label="Telefono"
+            mask="#### - ####"
+            hint="#### - ####"
           />
-        </div>
+          <q-input
+            filled
+            v-model="direccion.pais"
+            label="Pais"
+            :rules="rules"
+          />
+          <q-input
+            filled
+            v-model="direccion.departamento"
+            label="Departamento"
+            :rules="rules"
+          />
+          <div class="row">
+            <div class="col q-pr-sm">
+              <q-input
+                filled
+                v-model="direccion.municipio"
+                label="Municipio"
+                :rules="rules"
+              />
+            </div>
+            <div class="col q-pl-sm">
+              <q-input
+                filled
+                v-model="direccion.codigoPostal"
+                label="Departamento"
+                :rules="rules"
+              />
+            </div>
+          </div>
+          <q-input
+            filled
+            v-model="direccion.colonia"
+            label="Colonia"
+            :rules="rules"
+          />
+          <q-input
+            filled
+            v-model="direccion.calle"
+            label="Calle"
+            :rules="rules"
+          />
+          <q-input
+            filled
+            v-model="direccion.referencia"
+            label="Punto de referencia"
+            hint="Campo Opcional"
+          />
+          <div>
+            <q-btn label="Guardar" type="submit" color="primary" />
+            <q-btn
+              label="Cancelar"
+              to="/clinicas"
+              color="danger"
+              flat
+              class="q-ml-sm"
+            />
+          </div>
+        </q-form>
       </div>
+      <div
+        class="col-12 col-md-6 q-px-md"
+        :class="$q.screen.lt.md ? 'q-mb-md' : ''"
+        :style="$q.screen.lt.md ? 'order:1' : ''"
+      >
+        <div class="row q-mb-sm items-start">
+          <div class="col-10">
+            <q-input
+              filled
+              v-model="buscarDireccion"
+              label="Buscar Direccion"
+              @keydown.enter="fowardGeocoding"
+              hint="Presione la tecla Enter para buscar"
+            />
+          </div>
+          <div class="col-2 text-center">
+            <q-btn
+              size="lg"
+              icon="my_location"
+              round
+              color="blue-10"
+              @click="getCurrentLocation"
+            />
+          </div>
+        </div>
 
-      <q-card class="full-width" flat style="flex:1; width:100em">
-        <l-map
-          ref="map"
-          v-if="showMap"
-          :zoom="zoom"
-          :center="center"
-          @click="updateMarker"
-          style="z-index: 0; height: 75vh; width: 100%"
-        >
-          <l-tile-layer :url="url" :attribution="attribution" />
-          <l-marker :lat-lng="marker" :icon="defaultMarkerIcon"></l-marker>
-        </l-map>
-      </q-card>
+        <q-card class="full-width" flat style="flex:1; width:100em">
+          <l-map
+            ref="map"
+            v-if="showMap"
+            :zoom="zoom"
+            :center="center"
+            @click="updateMarker"
+            style="z-index: 0; height: 75vh; width: 100%"
+          >
+            <l-tile-layer :url="url" :attribution="attribution" />
+            <l-marker :lat-lng="marker" :icon="defaultMarkerIcon"></l-marker>
+          </l-map>
+        </q-card>
+      </div>
     </div>
+    <!--loading-->
     <q-inner-loading :showing="visible">
       <q-spinner-cube size="3rem" color="primary" />
       <span
@@ -118,6 +136,7 @@
 </template>
 
 <script>
+import { auth, db } from "../../boot/firebase";
 import { LMap, LMarker, LTileLayer } from "vue2-leaflet";
 import markerIconPng from "leaflet/dist/images/marker-icon.png";
 import { latLng, Icon } from "leaflet";
@@ -129,7 +148,7 @@ export default {
   data() {
     return {
       visible: true,
-      zoom: 15,
+      zoom: 17,
       center: latLng(0, 0),
       url: "http://{s}.tile.osm.org/{z}/{x}/{y}.png",
       attribution:
@@ -165,7 +184,11 @@ export default {
     };
   },
   async created() {
-    await this.getCurrentLocation();
+    if (this.$route.params.id != null) {
+      await this.obtenerClinica();
+    } else {
+      await this.getCurrentLocation();
+    }
     this.visible = false;
   },
   methods: {
@@ -183,7 +206,7 @@ export default {
         this.center = latLng(coord.lat, coord.lng);
         this.direccion.lat = coord.lat;
         this.direccion.lng = coord.lng;
-        this.zoom = 15;
+        this.zoom = 17;
         this.$refs.map.mapObject.setView(this.center, this.zoom);
         await this.reverseGeocoding();
       } catch (error) {
@@ -231,6 +254,58 @@ export default {
       } else {
         this.direccion.colonia =
           this.direccionApi.neighbourhood + ", " + this.direccionApi.suburb;
+      }
+    },
+    async guardarClinica() {
+      try {
+        const ref = await db.collection("clinicas").add({
+          idMedico: auth.currentUser.uid,
+          nombre: this.nombre,
+          telefono: this.telefono,
+          direccion: this.direccion
+        });
+        this.$router.push("/clinicas");
+        console.log(ref.id);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async obtenerClinica() {
+      try {
+        const snapClinica = await db
+          .collection("clinicas")
+          .doc(this.$route.params.id)
+          .get();
+        this.nombre = snapClinica.data().nombre;
+        this.telefono = snapClinica.data().telefono;
+        this.direccion = snapClinica.data().direccion;
+        this.marker = latLng(this.direccion.lat, this.direccion.lng);
+        this.center = latLng(this.direccion.lat, this.direccion.lng);
+        this.$refs.map.mapObject.setView(this.center, 17);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async editarClinica() {
+      try {
+        const ref = await db
+          .collection("clinicas")
+          .doc(this.$route.params.id)
+          .update({
+            nombre: this.nombre,
+            telefono: this.telefono,
+            direccion: this.direccion
+          });
+        this.$router.push("/clinicas");
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async botonGuardarEditar() {
+      if (this.$route.params.id != null) {
+        await this.editarClinica();
+      } else {
+        await this.guardarClinica();
       }
     }
   }

@@ -23,6 +23,11 @@ const routes = [
         component: () => import("components/Clinicas/AgregarEditarClinica.vue")
       },
       {
+        path: "/clinica/editar/:id",
+        name: "Editar Clinica",
+        component: () => import("components/Clinicas/AgregarEditarClinica.vue")
+      },
+      {
         path: "/plantilla",
         component: () => import("pages/Plantilla.vue")
       },

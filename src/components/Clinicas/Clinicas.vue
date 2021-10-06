@@ -18,7 +18,13 @@
             </div>
             <q-space />
             <div>
-              <q-btn flat round color="primary" icon="edit" />
+              <q-btn
+                flat
+                round
+                color="primary"
+                icon="edit"
+                :to="'/clinica/editar/' + clinica.id"
+              />
               <q-btn flat round color="red" icon="delete" />
             </div>
           </q-card-section>
@@ -26,7 +32,16 @@
           <q-expansion-item icon="place" label="Dirección" :active="true">
             <q-card :class="$q.dark.isActive ? 'text-white' : 'text-black'">
               <q-card-section>
-                {{ clinica.direccion }}
+                <div>
+                  {{ clinica.direccion.pais }},
+                  {{ clinica.direccion.departamento }},
+                  {{ clinica.direccion.municipio }},
+                  {{ clinica.direccion.colonia }},
+                  {{ clinica.direccion.calle }}
+                </div>
+                <div class="text-caption text-blue-grey q-mt-sm">
+                  Punto de referencia: {{ clinica.direccion.referencia }}
+                </div>
               </q-card-section>
             </q-card>
           </q-expansion-item>
@@ -77,7 +92,7 @@
 </template>
 
 <script>
-import { auth, db, st } from "../../boot/firebase";
+import { auth, db } from "../../boot/firebase";
 export default {
   data() {
     return {
@@ -97,8 +112,9 @@ export default {
           .where("idMedico", "==", auth.currentUser.uid)
           .get();
         clinicaSnap.forEach(e => {
-          console.log(e.data());
-          this.clinicas.push(e.data());
+          var clinica = e.data();
+          clinica.id = e.id;
+          this.clinicas.push(clinica);
         });
         this.visible = false;
       } catch (error) {
