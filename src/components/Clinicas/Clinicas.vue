@@ -24,13 +24,22 @@
           </q-card-section>
           <q-separator inset />
           <q-expansion-item icon="place" label="Dirección" :active="true">
-            <q-card class="text-black">
+            <q-card :class="$q.dark.isActive ? 'text-white' : 'text-black'">
               <q-card-section>
                 {{ clinica.direccion }}
               </q-card-section>
             </q-card>
           </q-expansion-item>
         </q-card>
+      </div>
+      <div class="col-12">
+        <q-btn
+          to="/clinica/nueva"
+          class="q-ml-md"
+          color="blue-10"
+          label="Nueva Clinica"
+          icon-right="add"
+        />
       </div>
     </div>
     <!-- mensaje si no hay clinicas-->
@@ -45,6 +54,12 @@
         <div class=" text-h4  text-weight-bolder">
           No hay clinicas registradas
         </div>
+        <q-btn
+          class="q-mt-md"
+          color="blue-10"
+          label="Nueva Clinica"
+          icon-right="add"
+        />
       </div>
     </div>
     <q-inner-loading :showing="visible">
@@ -95,6 +110,6 @@ export default {
 
 <style>
 .q-expansion-item--expanded {
-  color: blue;
+  color: blue !important;
 }
 </style>
