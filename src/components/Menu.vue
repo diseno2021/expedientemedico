@@ -56,8 +56,8 @@
             to="/"
             clickable
             v-ripple
-            :active="link === 'Pacientes'"
-            @click="link = $route.name"
+            :active="link == '/'"
+            @click="cambiarRuta"
             :exact="true"
           >
             <q-item-section avatar>
@@ -70,8 +70,8 @@
             to="clinicas"
             clickable
             v-ripple
-            :active="link === 'Clinicas'"
-            @click="link = $route.name"
+            :active="link === '/clinicas'"
+            @click="cambiarRuta"
             :exact="true"
           >
             <q-item-section avatar>
@@ -118,6 +118,10 @@ export default {
     mostrarMensaje() {
       console.log("un mensaje");
       //this.$q.notify(this.user.displayName)
+    },
+    cambiarRuta() {
+      this.link = this.$route.name;
+      console.log(this.$route.name);
     },
     logout() {
       localStorage.removeItem("prefijo");
@@ -170,8 +174,8 @@ export default {
     }
   },
   async created() {
+    this.link = this.$route.path;
     var user = auth.currentUser;
-    this.link = this.$route.name;
     this.id_usuario = user.uid;
     console.log("Flag 1", user);
     if (user) {

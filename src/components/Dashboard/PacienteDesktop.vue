@@ -29,11 +29,9 @@
               style="font-size: 1.2em"
               class="text-red-5"
             />
-            <!--
-             <span class="text-caption text-grey-9" style="font-size: 0.8em"
+            <span class="text-caption text-grey-9" style="font-size: 0.8em"
               >{{ paciente.clinica.nombre }}
             </span>
-            -->
             <br />
             <q-separator></q-separator>
             <q-icon

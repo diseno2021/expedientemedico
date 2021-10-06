@@ -4,20 +4,19 @@
 const routes = [
   {
     path: "/",
+    //Name: "Pacientes",
     component: () => import("layouts/MainLayout.vue"),
     children: [
       {
         path: "",
-        name: "Pacientes",
+        name:"Pacientes",
         component: () => import("pages/Index.vue")
       },
       {
         path: "/clinicas",
         name: "Clinicas",
         component: () => import("components/Clinicas/Clinicas.vue"),
-        children:[
-          {path: "/clinica/",}
-        ]
+        children: [{ path: "/clinica/" }]
       },
       {
         path: "/plantilla",
