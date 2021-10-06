@@ -55,6 +55,7 @@
           No hay clinicas registradas
         </div>
         <q-btn
+          to="/clinica/nueva"
           class="q-mt-md"
           color="blue-10"
           label="Nueva Clinica"
