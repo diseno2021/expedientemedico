@@ -1,8 +1,16 @@
 <template>
   <div class="row q-pa-lg">
-    <div class="col-12 col-md-6 q-px-md">
+    <div
+      class="col-12 col-md-6 q-px-md"
+      :style="$q.screen.lt.md ? 'order:2' : ''"
+    >
       <q-form class="q-gutter-sm">
-        <q-input filled v-model="nombre" label="Nobre de la Clinica" :rules="rules" />
+        <q-input
+          filled
+          v-model="nombre"
+          label="Nobre de la Clinica"
+          :rules="rules"
+        />
         <q-input
           filled
           v-model="telefono"
@@ -56,7 +64,11 @@
         />
       </q-form>
     </div>
-    <div class="col-12 col-md-6">
+    <div
+      class="col-12 col-md-6 q-px-md"
+      :class="$q.screen.lt.md ? 'q-mb-md' : ''"
+      :style="$q.screen.lt.md ? 'order:1' : ''"
+    >
       <div class="row q-mb-sm items-start">
         <div class="col-10">
           <q-input
@@ -78,19 +90,30 @@
         </div>
       </div>
 
-      <q-card flat style="flex:1">
+      <q-card class="full-width" flat style="flex:1; width:100em">
         <l-map
+          ref="map"
           v-if="showMap"
           :zoom="zoom"
           :center="center"
           @click="updateMarker"
-          style="z-index: 0; height: 75vh; width: 75vh"
+          style="z-index: 0; height: 75vh; width: 100%"
         >
           <l-tile-layer :url="url" :attribution="attribution" />
           <l-marker :lat-lng="marker" :icon="defaultMarkerIcon"></l-marker>
         </l-map>
       </q-card>
     </div>
+    <q-inner-loading :showing="visible">
+      <q-spinner-cube size="3rem" color="primary" />
+      <span
+        class=" text-primary
+        text-uppercase
+        text-overline
+        text-weight-bold"
+        >Cargando Clinica</span
+      >
+    </q-inner-loading>
   </div>
 </template>
 
@@ -105,6 +128,7 @@ export default {
   components: { LMap, LMarker, LTileLayer },
   data() {
     return {
+      visible: true,
       zoom: 15,
       center: latLng(0, 0),
       url: "http://{s}.tile.osm.org/{z}/{x}/{y}.png",
@@ -142,6 +166,7 @@ export default {
   },
   async created() {
     await this.getCurrentLocation();
+    this.visible = false;
   },
   methods: {
     async updateMarker(event) {
@@ -149,7 +174,6 @@ export default {
       this.direccion.lng = event.latlng.lng;
       this.marker = latLng(this.direccion.lat, this.direccion.lng);
       this.center = latLng(this.direccion.lat, this.direccion.lng);
-      console.log(this.direccion.lat, this.direccion.lng);
       await this.reverseGeocoding();
     },
     async getCurrentLocation() {
@@ -160,9 +184,10 @@ export default {
         this.direccion.lat = coord.lat;
         this.direccion.lng = coord.lng;
         this.zoom = 15;
+        this.$refs.map.mapObject.setView(this.center, this.zoom);
         await this.reverseGeocoding();
       } catch (error) {
-        console.log(error);
+        console.error(error);
         alert(error);
       }
     },
@@ -175,7 +200,6 @@ export default {
           "&format=json"
       );
       this.direccionApi = res.data.address;
-      console.log(this.direccionApi);
       this.llenarDireccion();
     },
     async fowardGeocoding() {
@@ -191,7 +215,7 @@ export default {
         this.center = latLng(this.direccion.lat, this.direccion.lng);
         await this.reverseGeocoding();
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     },
     llenarDireccion() {
