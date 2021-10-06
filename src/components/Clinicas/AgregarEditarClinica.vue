@@ -2,7 +2,7 @@
   <div class="row q-pa-lg">
     <div class="col-12 col-md-6 q-px-md">
       <q-form class="q-gutter-sm">
-        <q-input filled v-model="nombre" label="Nombre" :rules="rules" />
+        <q-input filled v-model="nombre" label="Nobre de la Clinica" :rules="rules" />
         <q-input
           filled
           v-model="telefono"
@@ -62,7 +62,7 @@
           <q-input
             filled
             v-model="buscarDireccion"
-            label="Direccion"
+            label="Buscar Direccion"
             @keydown.enter="fowardGeocoding"
             hint="Presione la tecla Enter para buscar"
           />
