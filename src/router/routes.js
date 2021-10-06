@@ -9,14 +9,18 @@ const routes = [
     children: [
       {
         path: "",
-        name:"Pacientes",
+        name: "Pacientes",
         component: () => import("pages/Index.vue")
       },
       {
         path: "/clinicas",
         name: "Clinicas",
-        component: () => import("components/Clinicas/Clinicas.vue"),
-        children: [{ path: "/clinica/" }]
+        component: () => import("components/Clinicas/Clinicas.vue")
+      },
+      {
+        path: "/clinica/nueva",
+        name: "Nueva Clinica",
+        component: () => import("components/Clinicas/AgregarEditarClinica.vue")
       },
       {
         path: "/plantilla",
