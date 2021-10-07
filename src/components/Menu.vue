@@ -52,13 +52,33 @@
         </q-item>
         <q-separator />
         <div v-if="usuario != null">
-          <q-item to="/" clickable v-ripple>
+          <q-item
+            to="/"
+            clickable
+            v-ripple
+            :active="link == '/'"
+            @click="cambiarRuta"
+            :exact="true"
+          >
             <q-item-section avatar>
               <q-icon name="people" />
             </q-item-section>
             <q-item-section>Pacientes</q-item-section>
           </q-item>
           <agregar_paciente :id_doctor="id_usuario"></agregar_paciente>
+          <q-item
+            to="/clinicas"
+            clickable
+            v-ripple
+            :active="link === '/clinicas'"
+            @click="cambiarRuta"
+            :exact="true"
+          >
+            <q-item-section avatar>
+              <q-icon name="local_hospital" />
+            </q-item-section>
+            <q-item-section>Clinicas </q-item-section>
+          </q-item>
         </div>
       </q-list>
       <div class="fixed-bottom q-mb-xl" v-if="usuario != null">
@@ -90,13 +110,17 @@ export default {
       state: this.leftDrawerOpen,
       dark: false,
       pacientes: 0,
-      prefix: ""
+      prefix: "",
+      link: ""
     };
   },
   methods: {
     mostrarMensaje() {
       console.log("un mensaje");
       //this.$q.notify(this.user.displayName)
+    },
+    cambiarRuta() {
+      this.link = this.$route.name;
     },
     logout() {
       localStorage.removeItem("prefijo");
@@ -149,8 +173,9 @@ export default {
     }
   },
   async created() {
+    this.link = this.$route.path;
     var user = auth.currentUser;
-    this.id_usuario=user.uid;
+    this.id_usuario = user.uid;
     console.log("Flag 1", user);
     if (user) {
       await this.obtenerCantidadDePaciente();

@@ -258,7 +258,7 @@ export default {
           .where("idMedico", "==", auth.currentUser.uid)
           .get();
         snapshot.forEach(e => {
-          
+
           var paciente = {
             id: e.id,
             nombre: e.data().nombre,
@@ -282,7 +282,7 @@ export default {
           }
           this.clinicas.push(clinica);
         });
-        
+
 
         for (var paciente of this.pacientes) {
           paciente.foto = await st

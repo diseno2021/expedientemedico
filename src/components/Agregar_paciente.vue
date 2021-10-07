@@ -1,7 +1,11 @@
 <template>
   <div>
     <form>
-      <q-item @click="formulario = true" clickable v-ripple>
+      <q-item
+        @click="getClinicas"
+        clickable
+        v-ripple
+      >
         <q-item-section avatar>
           <q-icon name="person_add" />
         </q-item-section>
@@ -10,9 +14,15 @@
         </q-item-section>
       </q-item>
 
-      <q-dialog v-model="formulario" :maximized="true">
+      <q-dialog
+        v-model="formulario"
+        :maximized="true"
+      >
         <q-card>
-          <q-toolbar style="text-align: center" class="bg-primary text-white">
+          <q-toolbar
+            style="text-align: center"
+            class="bg-primary text-white"
+          >
             <q-toolbar-title>Nuevo Paciente</q-toolbar-title>
             <q-btn
               icon="close"
@@ -29,14 +39,16 @@
                 anchor="top left"
                 self="bottom left"
                 :offset="[0, 8]"
-                >Cancelar registro</q-tooltip
-              >
+              >Cancelar registro</q-tooltip>
             </q-btn>
           </q-toolbar>
 
           <div class="row">
             <br />
-            <div style="text-align: center" class="col-md-3 col-xs-12">
+            <div
+              style="text-align: center"
+              class="col-md-3 col-xs-12"
+            >
               <q-img
                 v-if="foto"
                 v-bind:src="foto"
@@ -51,9 +63,8 @@
                   anchor="top left"
                   self="bottom left"
                   :offset="[0, 8]"
-                  >Si desea cambiar la imagen seleccione una nueva y de click en
-                  el boton para subirla.</q-tooltip
-                >
+                >Si desea cambiar la imagen seleccione una nueva y de click en
+                  el boton para subirla.</q-tooltip>
                 <q-btn
                   dense
                   v-close-popup
@@ -69,12 +80,14 @@
                     anchor="bottom left"
                     self="top left"
                     :offset="[0, 8]"
-                    >Borrar imagen</q-tooltip
-                  >
+                  >Borrar imagen</q-tooltip>
                 </q-btn>
               </q-img>
               <br />
-              <div class="row" style="text-align: center">
+              <div
+                class="row"
+                style="text-align: center"
+              >
                 <q-file
                   filled
                   counter
@@ -102,8 +115,7 @@
                       anchor="top left"
                       self="bottom left"
                       :offset="[0, 8]"
-                      >Cargar imagen</q-tooltip
-                    >
+                    >Cargar imagen</q-tooltip>
                   </template>
                   <q-tooltip
                     content-class="bg-accent text-white"
@@ -111,10 +123,10 @@
                     anchor="top left"
                     self="bottom left"
                     :offset="[0, 8]"
-                    >Seleccione una imagen para el paciente</q-tooltip
-                  >
+                  >Seleccione una imagen para el paciente</q-tooltip>
                 </q-file>
               </div>
+
             </div>
 
             <div class="col-md-8 col-xs-11 justify-around">
@@ -141,13 +153,12 @@
                   anchor="top left"
                   self="bottom left"
                   :offset="[0, 8]"
-                  >Nombres y apellidos del paciente</q-tooltip
-                >
+                >Nombres y apellidos del paciente</q-tooltip>
               </q-input>
               <br />
 
               <div class="row">
-                <div class="col-md-5 col-xs-6">
+                <div class="col-md-4 col-xs-12">
                   <span class="label q-mx-md q-my-md">Sexo:</span>
                   <br />
                   <q-radio
@@ -171,14 +182,10 @@
                     anchor="top left"
                     self="bottom left"
                     :offset="[0, 8]"
-                    >Seleccionar sexo del paciente</q-tooltip
-                  >
+                  >Seleccionar sexo del paciente</q-tooltip>
                 </div>
-                <div class="col-md-5 col-xs-6">
-                  <span class="label q-mx-md q-my-md"
-                    >Fecha de nacimiento:</span
-                  >
-
+                <div class="col-md-4 col-xs-12">
+                  <span class="label q-mx-md q-my-md">Fecha de nacimiento:</span>
                   <br />
                   <q-input
                     ref="fechaNacimiento"
@@ -199,10 +206,32 @@
                       anchor="top left"
                       self="bottom left"
                       :offset="[0, 8]"
-                      >Agregar fecha de nacimiento del paciente</q-tooltip
-                    >
-               </q-input
+                    >Agregar fecha de nacimiento del paciente</q-tooltip>
+                  </q-input>
+                </div>
+                <div class="col-md-4 col-xs-12">
+                  <span class="label q-mx-md q-my-md">Selecciona clinica:</span>
+
+                  <br />
+                  <q-select
+                    ref="clinicaSelected"
+                    :rules="[
+                      val => !!val || 'Campo requerido'
+                    ]"
+                    lazy-rules
+                    v-model="paciente.clinica"
+                    :options="clinicas"
+                    option-label="nombre"
+                    label="Clinica"
                   >
+
+                    <template v-slot:prepend>
+                      <q-icon
+                        name="local_hospital"
+                        @click.stop
+                      />
+                    </template>
+                  </q-select>
                 </div>
               </div>
               <div class="row">
@@ -228,8 +257,7 @@
                       anchor="top left"
                       self="bottom left"
                       :offset="[0, 8]"
-                      >Número de contacto personal</q-tooltip
-                    >
+                    >Número de contacto personal</q-tooltip>
                   </q-input>
                 </div>
                 <div class="col-md-5 col-xs-6">
@@ -240,7 +268,7 @@
                     mask="####-####"
                   >
                     <template v-slot:before>
-                     <q-icon name="smartphone" />
+                      <q-icon name="smartphone" />
                     </template>
                     <q-tooltip
                       content-class="bg-accent text-white"
@@ -248,8 +276,7 @@
                       anchor="top left"
                       self="bottom left"
                       :offset="[0, 8]"
-                      >Número de contacto de whatsapp</q-tooltip
-                    >
+                    >Número de contacto de whatsapp</q-tooltip>
                   </q-input>
                 </div>
               </div>
@@ -274,8 +301,7 @@
                       self="bottom left"
                       :offset="[0, 8]"
                     >
-                      Direccción de correo electrónico</q-tooltip
-                    >
+                      Direccción de correo electrónico</q-tooltip>
                   </q-input>
                 </div>
                 <div class="col-5">
@@ -293,10 +319,9 @@
                       anchor="top left"
                       self="bottom left"
                       :offset="[0, 8]"
-                      >Dui(Documento de identidad personal)</q-tooltip
-                    >
+                    >Dui(Documento de identidad personal)</q-tooltip>
                     <template v-slot:before>
-                       <q-icon name="credit_card" />
+                      <q-icon name="credit_card" />
                     </template>
                   </q-input>
                 </div>
@@ -322,8 +347,7 @@
                   anchor="top left"
                   self="bottom left"
                   :offset="[0, 8]"
-                  >Dirección de actual residencia del paciente</q-tooltip
-                >
+                >Dirección de actual residencia del paciente</q-tooltip>
                 <template v-slot:before>
                   <q-icon name="assistant_direction" />
                 </template>
@@ -345,8 +369,7 @@
                   anchor="top left"
                   self="bottom left"
                   :offset="[0, 8]"
-                  >A quien llamar en caso de emergencia:</q-tooltip
-                >
+                >A quien llamar en caso de emergencia:</q-tooltip>
                 <template v-slot:before>
                   <q-icon name="report_problem" />
                 </template>
@@ -363,49 +386,45 @@
                   anchor="top left"
                   self="bottom left"
                   :offset="[0, 8]"
-                  >Observaciones del paciente</q-tooltip
-                >
+                >Observaciones del paciente</q-tooltip>
                 <template v-slot:before>
                   <q-icon name="description" />
                 </template>
               </q-input>
               <br />
               <q-btn
-              icon="do_disturb"
+                icon="do_disturb"
                 class="q-mx-md"
                 color="negative"
                 @click="cancelar()"
                 type="submit"
                 label="Cancelar"
-                >
+              >
                 <q-tooltip
                   content-class="bg-accent text-white"
                   content-style="font-size: 12px"
                   anchor="top left"
                   self="bottom left"
                   :offset="[0, 8]"
-                  >Cancelar y volver</q-tooltip
-                ></q-btn
-              >
-              <q-btn icon="person_add_alt_1"
+                >Cancelar y volver</q-tooltip>
+              </q-btn>
+              <q-btn
+                icon="person_add_alt_1"
                 class="q-mx-md"
                 color="primary"
                 @click="agregarPaciente()"
                 type="submit"
                 label="Registrar"
-                >
+              >
                 <q-tooltip
                   content-class="bg-accent text-white"
                   content-style="font-size: 12px"
                   anchor="top left"
                   self="bottom left"
                   :offset="[0, 8]"
-                  >Registrar un nuevo paciente</q-tooltip
-                >
+                >Registrar un nuevo paciente</q-tooltip>
 
               </q-btn>
-
-              
 
               <br />
               <br />
@@ -419,12 +438,12 @@
 </template>
 
 <script>
-import { db, st } from "../boot/firebase";
+import { db, st, auth } from "../boot/firebase";
 export default {
   name: "agregar_paciente",
   props: {
     //traer_pacientes: Function,
-    id_doctor: String
+    id_doctor: String,
   },
   data() {
     return {
@@ -433,6 +452,7 @@ export default {
       imagen_defecto: "https://s5.postimg.cc/537jajaxj/default.png",
       imagen: null,
       foto: "https://s5.postimg.cc/537jajaxj/default.png",
+      clinicas: [],
       paciente: {
         idMedico: this.id_doctor,
         nombre: null,
@@ -445,6 +465,7 @@ export default {
         dui: "",
         enCasoEmergencia: "",
         comentario: "",
+        clinica: "",
         //datos complementarios del documento
         alergias: "",
         antecedentes: "",
@@ -454,13 +475,14 @@ export default {
         foto: "",
         medicamentosPermanentes: "",
         peso: [],
-        tipoSangre: ""
+        tipoSangre: "",
       },
       error: true,
       formulario: false,
-      activar: true
+      activar: true,
     };
   },
+
   //limpia los campos del formulario para dejarlo listo para el siguiente paciente igualmente
   //para si desea cancelar el registro del paciente.
   methods: {
@@ -478,7 +500,8 @@ export default {
       this.paciente.dui = "";
       this.paciente.enCasoEmergencia = "";
       this.paciente.comentario = "";
-      this.imagen = null;
+      this.clinicas=[],
+      (this.paciente.clinica = ""), (this.imagen = null);
       this.mostrar_imagen = false;
     },
     //  Muestra una notificacion con color e icono y un mensaje dependiendo de que accion sera ejecutada.
@@ -488,7 +511,7 @@ export default {
         color: color,
         timeout: 1000,
         icon: icono,
-        position: "top"
+        position: "top",
       });
     },
     //permite ejecutar ciertas acciones como cerrar y limpiar el formulario aparte de mostrar
@@ -522,9 +545,9 @@ export default {
           console.log(error);
         } finally {
           //this.traer_pacientes();
-           this.$q.loading.hide();
+          this.$q.loading.hide();
           this.showNotif("Nuevo paciente guardado.", "accent", "cloud_done");
-        //  location.reload();
+          //  location.reload();
         }
       }
     },
@@ -537,12 +560,14 @@ export default {
       this.$refs.direccion.validate();
       this.$refs.enCasoEmergencia.validate();
       this.$refs.dui.validate();
+      this.$refs.clinicaSelected.validate();
       if (
         this.$refs.nombre.hasError ||
         this.$refs.fechaNacimiento.hasError ||
         this.$refs.telefono.hasError ||
         this.$refs.dui.hasError ||
         this.$refs.direccion.hasError ||
+        this.$refs.clinicaSelected.hasError ||
         this.$refs.enCasoEmergencia.hasError
       ) {
         this.error = true;
@@ -593,11 +618,11 @@ export default {
       await refs
         .child(this.carpeta + "/")
         .listAll()
-        .then(function(result) {
-          result.items.forEach(function(imgRefe) {
+        .then(function (result) {
+          result.items.forEach(function (imgRefe) {
             let nombre = imgRefe.name;
             if (nombre == "perfil.jpg") {
-              imgRefe.getDownloadURL().then(function(url) {
+              imgRefe.getDownloadURL().then(function (url) {
                 this2.foto = url;
               });
             }
@@ -610,7 +635,7 @@ export default {
         const refs = st.ref();
         let this2 = this;
         const imgref = refs.child(this.carpeta).child("perfil.jpg");
-        imgref.put(this.imagen).then(function(snapshot) {
+        imgref.put(this.imagen).then(function (snapshot) {
           this2.traer_imagen();
         });
       } catch (error) {
@@ -626,15 +651,15 @@ export default {
           const response = await fetch(this.imagen_defecto);
           const blob = await response.blob();
           var metadata = {
-            contentType: "image/png"
+            contentType: "image/png",
           };
 
           const refs = st.ref();
           let this2 = this;
           const imgref = refs.child(this.id_paciente).child("perfil.jpg");
 
-          imgref.put(blob, metadata).then(function(snapshot) {
-           // this2.limpiar();
+          imgref.put(blob, metadata).then(function (snapshot) {
+            // this2.limpiar();
             location.reload();
           });
         } catch (error) {
@@ -646,8 +671,8 @@ export default {
           let this2 = this;
           const imgref = refs.child(this.id_paciente).child("perfil.jpg");
 
-          imgref.put(this.imagen).then(function(snapshot) {
-         //   this2.limpiar();
+          imgref.put(this.imagen).then(function (snapshot) {
+            //   this2.limpiar();
             location.reload();
           });
         } catch (error) {
@@ -661,16 +686,32 @@ export default {
         let this2 = this;
         query
           .update({
-            foto: "/" + this.id_paciente + "/perfil.jpg"
+            foto: "/" + this.id_paciente + "/perfil.jpg",
           })
-          .then(function() {
+          .then(function () {
             this2.subir_imagen();
           });
       } catch (error) {
         console.log(error);
       } finally {
       }
-    }
-  }
+    },
+    async getClinicas() {
+      const snap = await db
+        .collection("clinicas")
+        .where("idMedico", "==", auth.currentUser.uid)
+        .get();
+      snap.forEach((c) => {
+        var clinica = {
+          id: c.id,
+          nombre: c.data().nombre,
+          direccion: c.data().direccion,
+          telefono: c.data().telefono,
+        };
+        this.clinicas.push(clinica);
+      });
+      this.formulario = true;
+    },
+  },
 };
 </script>
