@@ -3,7 +3,7 @@
     <div class="row q-pa-lg" v-if="!visible && clinicas.length > 0">
       <div
         class="col-12 col-md-6 q-pa-md"
-        v-for="clinica in clinicas"
+        v-for="(clinica, i) in clinicas"
         :key="clinica.id"
       >
         <q-card class="my-card" flat bordered>
@@ -14,6 +14,10 @@
               <div class="text-subtitle2">
                 <q-icon name="phone" />
                 {{ clinica.telefono }}
+              </div>
+              <div class="text-caption text-blue-grey">
+                <q-icon name="people" />
+                {{ clinica.pacientesNum }} pacientes
               </div>
             </div>
             <q-space />
@@ -34,7 +38,7 @@
                 round
                 color="red"
                 icon="delete"
-                @click="borrarClinica(clinica)"
+                @click="preguntaClinica(clinica, i)"
               >
                 <q-tooltip>
                   Borrar Clinica
@@ -132,8 +136,8 @@
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn flat label="Cancel" color="primary" v-close-popup />
-          <q-btn flat label="Turn on Wifi" color="primary" v-close-popup />
+          <q-btn flat label="Cancelar" color="primary" v-close-popup />
+          <q-btn flat label="Borrar" color="red" @click="eliminarClinica" />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -153,6 +157,7 @@ export default {
   },
   async created() {
     await this.traerClinicas();
+    this.visible = false;
   },
   methods: {
     async traerClinicas() {
@@ -167,18 +172,51 @@ export default {
           clinica.id = e.id;
           const pacienteSnap = await db
             .collection("pacientes")
-            .where("clinica.id", "==", e.id);
+            .where("clinica.id", "==", e.id)
+            .get();
+          clinica.pacientesNum = pacienteSnap.size;
           this.clinicas.push(clinica);
         });
-        this.visible = false;
       } catch (error) {
         console.error(error);
       }
     },
-    borrarClinica(clinica) {
-      this.clinicaBorrar = clinica;
-      console.log(this.clinicaBorrar);
-      this.confirm = true;
+    preguntaClinica(clinica, i) {
+      if (clinica.pacientesNum == 0) {
+        this.clinicaBorrar = clinica;
+        this.clinicaBorrar.index = i;
+        this.confirm = true;
+      } else {
+        this.$q.notify({
+          message:
+            "No se puede eliminar clinicas con pacientes! Cambie a los pacientes de clinica primero",
+          color: "red",
+          icon: "error"
+        });
+      }
+    },
+    async eliminarClinica() {
+      try {
+        const snapClinica = await db
+          .collection("clinicas")
+          .doc(this.clinicaBorrar.id)
+          .delete();
+        this.clinicas.splice(this.clinicaBorrar.index, 1);
+        this.clinicaBorrar = {};
+        this.$q.notify({
+          message: "Se elimino la clinica satisfactoriamente",
+          color: "green",
+          icon: "check_circle"
+        });
+        this.confirm = false;
+      } catch (error) {
+        console.error(error);
+        this.$q.notify({
+          message: "Se produjo un error al eliminar la clinica",
+          color: "red",
+          icon: "error"
+        });
+      }
     }
   }
 };
