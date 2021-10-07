@@ -15,6 +15,17 @@
           <q-item-label caption lines="1">
             <q-icon name="place" class="text-green" style="font-size: 1.5em"/> {{ paciente.direccion }}
           </q-item-label>
+          <q-item-label caption lines="1">
+            <q-icon
+              left
+              name="local_hospital"
+              style="font-size: 1.2em"
+              class="text-red-5"
+            />
+            <span class="text-caption text-grey-9" style="font-size: 0.8em"
+              >{{ paciente.clinica.nombre }}
+            </span>
+          </q-item-label>
         </q-item-section>
       </template>
       <q-separator inset />
