@@ -47,7 +47,7 @@
             </div>
           </q-card-section>
           <q-separator inset />
-          <q-expansion-item>
+          <q-expansion-item class="clinicaCard">
             <template v-slot:header>
               <q-tooltip>
                 Ver direccion
@@ -223,7 +223,7 @@ export default {
 </script>
 
 <style>
-.q-expansion-item--expanded {
+.clinicaCard.q-expansion-item--expanded {
   color: blue !important;
 }
 </style>
