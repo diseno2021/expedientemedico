@@ -26,76 +26,31 @@
                   <div class="text-h6 q-mb-md">Receta</div>
                   <div class="text-body2" v-html="consulta.receta"></div>
                   <!-- texto membrete -->
-                  <!-- <div style="visibility: hidden;">
+                  <div style="visibility: hidden;">
                     <div id="text">
-                      <div style="color: black; margin-top: 65px; margin-bottom: 65px; width: 100%"
-                        class="q-mx-md">
-                      <hr />
-                      <p
-                        v-html="consulta.receta"
-                      ></p>
-                      <hr />
+                      <div
+                        style="color: black; margin-top: 65px; margin-bottom: 65px; width: 100%"
+                        class="q-mx-md"
+                      >
+                        <hr />
+                        <p v-html="consulta.receta"></p>
+                        <hr />
                       </div>
                     </div>
-                  </div> -->
-                  <!-- impresion -->
-
-                  <!-- <q-dialog
-                    v-model="bar2"
-                    persistent
-                    transition-show="flip-down"
-                    transition-hide="flip-up"
-                  >
-                    <q-card class="bg-primary text-white">
-                      <q-bar>
-                        <q-icon name="print" class="q-mx-sm" />
-                        Elija tipo impresión de Receta
-
-                        <q-space />
-
-                        <q-btn dense flat icon="close" v-close-popup>
-                          <q-tooltip content-class="bg-white text-primary"
-                            >Close</q-tooltip
-                          >
-                        </q-btn>
-                      </q-bar>
-
-                      <q-card-section class="bg-cyan-2 ">
-                        <h1 style="font-weight: bold; color: black;">
-                          {{ indexx }}
-                        </h1>
-                        <q-btn
-                          unelevated
-                          rounded
-                          color="secondary"
-                          label="Con Membrete"
-                          class="q-ma-sm"
-                        />
-                        <q-btn
-                          unelevated
-                          rounded
-                          color="secondary"
-                          label="Sin Membrete"
-                          class="q-ma-sm"
-                          @click="sinMembrete(consulta.id)"
-                        />
-                      </q-card-section>
-                    </q-card>
-                  </q-dialog> -->
-                  <!-- fin impresion -->
+                  </div>
                 </q-scroll-area>
               </div>
-              <!-- <div class="col-1 ">
+              <!-- imprimir receta -->
+              <div class="col-1 ">
                 <q-btn
                   round
                   color="light-blue-3"
                   icon="print"
-                  @click="bar2 = true"
+                  @click="bar2 = true; indexSelect = indexx"
                   class="absolute-bottom-right q-mb-xl q-mx-md"
                 >
                 </q-btn>
-              </div> -->
-              <SinMembrete id="hola" :idConsulta="consulta.id" />
+              </div>
             </div>
             <q-separator />
             <div class="row items-center">
@@ -151,13 +106,48 @@
         El paciente no tiene recetas registradas
       </div>
     </div>
+    <q-dialog
+      v-model="bar2"
+      persistent
+      transition-show="flip-down"
+      transition-hide="flip-up"
+    >
+      <q-card class="bg-primary text-white">
+        <q-bar>
+          <q-icon name="print" class="q-mx-sm" />
+          Elija tipo impresión de Receta
+
+          <q-space />
+
+          <q-btn dense flat icon="close" v-close-popup>
+            <q-tooltip content-class="bg-white text-primary">Close</q-tooltip>
+          </q-btn>
+        </q-bar>
+
+        <q-card-section class="bg-cyan-2 ">
+          <q-btn
+            unelevated
+            rounded
+            color="secondary"
+            label="Con Membrete"
+            class="q-ma-sm"
+          />
+          <q-btn
+            unelevated
+            rounded
+            color="secondary"
+            label="Sin Membrete"
+            class="q-ma-sm"
+            @click="sinMembrete()"
+          />
+        </q-card-section>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 <script>
 import { date } from "quasar";
 import { jsPDF } from "jspdf";
-import { db } from "../../boot/firebase";
-import SinMembrete from "./SinMembrete";
 
 export default {
   props: {
@@ -174,7 +164,7 @@ export default {
     nConsultasPagina: 4,
     bar2: false,
     consultasPaciente: [],
-    algo: ""
+    indexSelect: null
   }),
   methods: {
     cambiarPagina() {
@@ -192,46 +182,21 @@ export default {
         this.tab.push("sintomas" + index);
       });
     },
-    sinMembrete(id) {
+    sinMembrete() {
       let text = document.querySelectorAll("#text");
 
-      let this2 = this;
-      console.log(id);
-      this.consultasPaciente = [];
-      db.collection("consultas")
-        .doc(id)
-        .get()
-        .then(doc => {
-          let consulta = doc.data();
-
-          this.consultasPaciente.push(consulta);
-        })
-        .catch(err => {
-          console.log(err);
-        });
-
-      for (let i = 0; i < this.consultasPagina.length; i++) {
-        const element = this.consultasPaciente[i];
-        this2.algo = element.receta;
-        //  console.log("ele",element.receta);
-      }
-
-      console.log("algo", this.algo);
-
-      // const doc = new jsPDF({
-      //   orientation: "l",
-      //   unit: "px",
-      //   // format: "dl"
-      //   format: [450, 300]
-      //   // format: [8.5, 5.5]
-      // });
-      // console.log(text);
-      // console.log(indexx);
-      // doc.html(text[0], {
-      //   callback: function(doc) {
-      //     doc.save(` ${indexx} `);
-      //   }
-      // });
+      const doc = new jsPDF({
+        orientation: "l",
+        unit: "px",
+        format: [450, 300]
+      });
+      console.log(text);
+      console.log(this.indexSelect);
+      doc.html(text[this.indexSelect], {
+        callback: function(doc) {
+          doc.save(` Receta `);
+        }
+      });
     }
   },
   computed: {
@@ -260,4 +225,3 @@ export default {
   }
 };
 </script>
-
