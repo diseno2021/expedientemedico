@@ -9,7 +9,7 @@
           <q-input
             filled
             v-model="nombre"
-            label="Nobre de la Clinica"
+            label="Nombre de la Clinica"
             :rules="rules"
           />
           <q-input
@@ -68,12 +68,12 @@
             label="Punto de referencia"
             hint="Campo Opcional"
           />
-          <div>
+          <div class="q-mt-md">
             <q-btn label="Guardar" type="submit" color="primary" />
             <q-btn
               label="Cancelar"
               to="/clinicas"
-              color="danger"
+              color="red"
               flat
               class="q-ml-sm"
             />
@@ -115,14 +115,27 @@
             :zoom="zoom"
             :center="center"
             @click="updateMarker"
-            style="z-index: 0; height: 75vh; width: 100%"
+            style="z-index: 0; height: 70vh; width: 100%"
           >
             <l-tile-layer :url="url" :attribution="attribution" />
             <l-marker :lat-lng="marker" :icon="defaultMarkerIcon"></l-marker>
           </l-map>
         </q-card>
         <q-banner
-          class="bg-warning text-white q-mt-md"
+          class="bg-positive text-white q-mt-md q-mb-sm"
+          dense
+          rounded
+          style="border-left: 5px solid #0d9403;"
+        >
+          <template v-slot:avatar>
+            <q-icon name="priority_high" color="white" />
+          </template>
+          <span class="text-weight-bold">
+            La busqueda solo cubre el territorio de El Salvador
+          </span>
+        </q-banner>
+        <q-banner
+          class="bg-warning text-white"
           dense
           rounded
           style="border-left: 5px solid #fca103;"
@@ -245,7 +258,7 @@ export default {
         var res = await axios.get(
           "https://us1.locationiq.com/v1/search.php?key=pk.cb6782b8b417bd7495da5c64a0c8780f&q=" +
             encodeURI(this.buscarDireccion) +
-            "&limit=1&format=json"
+            "&limit=1&countrycodes=sv&format=json"
         );
         this.direccion.lat = res.data[0].lat;
         this.direccion.lng = res.data[0].lon;
