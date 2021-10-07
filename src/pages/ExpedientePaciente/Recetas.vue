@@ -6,7 +6,7 @@
     <div class="row" v-if="consultas.length > 0">
       <div
         class="col-12 col-md-6 q-pa-sm"
-        v-for="consulta in consultasPagina"
+        v-for="(consulta, indexx) in consultasPagina"
         :key="consulta.id"
       >
         <q-card flat bordered>
@@ -14,6 +14,9 @@
             <template v-slot:header>
               <q-item-section class="text-body2 text-center">
                 {{ formatoFecha(consulta.fecha) }}
+                <div style="visibility: visible">
+                  {{ consulta.id }} - {{ indexx }}
+                </div>
               </q-item-section>
             </template>
             <q-separator></q-separator>
@@ -22,9 +25,22 @@
                 <q-scroll-area style="height: 150px">
                   <div class="text-h6 q-mb-md">Receta</div>
                   <div class="text-body2" v-html="consulta.receta"></div>
+                  <!-- texto membrete -->
+                  <!-- <div style="visibility: hidden;">
+                    <div id="text">
+                      <div style="color: black; margin-top: 65px; margin-bottom: 65px; width: 100%"
+                        class="q-mx-md">
+                      <hr />
+                      <p
+                        v-html="consulta.receta"
+                      ></p>
+                      <hr />
+                      </div>
+                    </div>
+                  </div> -->
                   <!-- impresion -->
 
-                  <q-dialog
+                  <!-- <q-dialog
                     v-model="bar2"
                     persistent
                     transition-show="flip-down"
@@ -45,6 +61,9 @@
                       </q-bar>
 
                       <q-card-section class="bg-cyan-2 ">
+                        <h1 style="font-weight: bold; color: black;">
+                          {{ indexx }}
+                        </h1>
                         <q-btn
                           unelevated
                           rounded
@@ -58,15 +77,15 @@
                           color="secondary"
                           label="Sin Membrete"
                           class="q-ma-sm"
-                          @click="sinMembrete(consulta.receta)"
+                          @click="sinMembrete(consulta.id)"
                         />
                       </q-card-section>
                     </q-card>
-                  </q-dialog>
+                  </q-dialog> -->
                   <!-- fin impresion -->
                 </q-scroll-area>
               </div>
-              <div class="col-1 ">
+              <!-- <div class="col-1 ">
                 <q-btn
                   round
                   color="light-blue-3"
@@ -75,7 +94,8 @@
                   class="absolute-bottom-right q-mb-xl q-mx-md"
                 >
                 </q-btn>
-              </div>
+              </div> -->
+              <SinMembrete id="hola" :idConsulta="consulta.id" />
             </div>
             <q-separator />
             <div class="row items-center">
@@ -136,10 +156,15 @@
 <script>
 import { date } from "quasar";
 import { jsPDF } from "jspdf";
+import { db } from "../../boot/firebase";
+import SinMembrete from "./SinMembrete";
 
 export default {
   props: {
     consultas: Array
+  },
+  components: {
+    SinMembrete
   },
   data: () => ({
     tab: [],
@@ -147,7 +172,9 @@ export default {
     max: 1,
     consultasPagina: [],
     nConsultasPagina: 4,
-    bar2: false
+    bar2: false,
+    consultasPaciente: [],
+    algo: ""
   }),
   methods: {
     cambiarPagina() {
@@ -165,16 +192,46 @@ export default {
         this.tab.push("sintomas" + index);
       });
     },
-    sinMembrete(consulta) {
-      const doc = new jsPDF({
-        orientation: "landscape",
-        unit: "in",
-        format: [8.5, 5.5]
-      });
-      
-     
-      doc.text(consulta,10,10);
-      doc.save("test.pdf");
+    sinMembrete(id) {
+      let text = document.querySelectorAll("#text");
+
+      let this2 = this;
+      console.log(id);
+      this.consultasPaciente = [];
+      db.collection("consultas")
+        .doc(id)
+        .get()
+        .then(doc => {
+          let consulta = doc.data();
+
+          this.consultasPaciente.push(consulta);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+
+      for (let i = 0; i < this.consultasPagina.length; i++) {
+        const element = this.consultasPaciente[i];
+        this2.algo = element.receta;
+        //  console.log("ele",element.receta);
+      }
+
+      console.log("algo", this.algo);
+
+      // const doc = new jsPDF({
+      //   orientation: "l",
+      //   unit: "px",
+      //   // format: "dl"
+      //   format: [450, 300]
+      //   // format: [8.5, 5.5]
+      // });
+      // console.log(text);
+      // console.log(indexx);
+      // doc.html(text[0], {
+      //   callback: function(doc) {
+      //     doc.save(` ${indexx} `);
+      //   }
+      // });
     }
   },
   computed: {
@@ -203,3 +260,4 @@ export default {
   }
 };
 </script>
+
