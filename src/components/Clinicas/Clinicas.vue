@@ -1,5 +1,6 @@
 <template>
   <div class="relative-position" :style="visible ? 'height: 92Vh' : ''">
+    <!-- Row de clinicas-->
     <div class="row q-pa-lg" v-if="!visible && clinicas.length > 0">
       <div
         class="col-12 col-md-6 q-pa-md"
@@ -167,16 +168,18 @@ export default {
           .collection("clinicas")
           .where("idMedico", "==", auth.currentUser.uid)
           .get();
-        clinicaSnap.forEach(async e => {
+        clinicaSnap.forEach(e => {
           var clinica = e.data();
           clinica.id = e.id;
-          const pacienteSnap = await db
-            .collection("pacientes")
-            .where("clinica.id", "==", e.id)
-            .get();
-          clinica.pacientesNum = pacienteSnap.size;
           this.clinicas.push(clinica);
         });
+        for (const clinica of this.clinicas) {
+          const pacienteSnap = await db
+            .collection("pacientes")
+            .where("clinica.id", "==", clinica.id)
+            .get();
+          clinica.pacientesNum = pacienteSnap.size;
+        }
       } catch (error) {
         console.error(error);
       }

@@ -121,7 +121,6 @@ export default {
     },
     cambiarRuta() {
       this.link = this.$route.name;
-      console.log(this.$route.name);
     },
     logout() {
       localStorage.removeItem("prefijo");
