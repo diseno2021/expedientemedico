@@ -279,10 +279,20 @@ export default {
           telefono: this.telefono,
           direccion: this.direccion
         });
+        this.$q.notify({
+          message: "Se creo la clinica satisfactoriamente",
+          color: "green",
+          icon: "check_circle"
+        });
         this.$router.push("/clinicas");
         console.log(ref.id);
       } catch (error) {
         console.error(error);
+        this.$q.notify({
+          message: "Se produjo un error al crear la clinica",
+          color: "red",
+          icon: "error"
+        });
       }
     },
     async obtenerClinica() {
@@ -311,9 +321,19 @@ export default {
             telefono: this.telefono,
             direccion: this.direccion
           });
+        this.$q.notify({
+          message: "Se edito la clinica satisfactoriamente",
+          color: "green",
+          icon: "check_circle"
+        });
         this.$router.push("/clinicas");
       } catch (error) {
         console.error(error);
+        this.$q.notify({
+          message: "Se produjo un error al editar la clinica",
+          color: "red",
+          icon: "error"
+        });
       }
     },
     async botonGuardarEditar() {
