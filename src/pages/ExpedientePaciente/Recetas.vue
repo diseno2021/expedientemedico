@@ -152,10 +152,7 @@ import { jsPDF } from "jspdf";
 export default {
   props: {
     consultas: Array
-  },
-  components: {
-    SinMembrete
-  },
+  },  
   data: () => ({
     tab: [],
     pagina: 1,
