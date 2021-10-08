@@ -13,7 +13,7 @@
           <q-expansion-item>
             <template v-slot:header>
               <q-item-section class="text-body2 text-center">
-                {{ formatoFecha(consulta.fecha) }}                
+                {{ formatoFecha(consulta.fecha) }}
               </q-item-section>
             </template>
             <q-separator></q-separator>
@@ -34,9 +34,12 @@
                         "
                         class="q-mx-md"
                       >
-                        <hr/>
-                        <p v-html="consulta.receta" style="height: 120px; width:300px;"></p>
-                        <hr/>
+                        <hr />
+                        <p
+                          v-html="consulta.receta"
+                          style="height: 120px; width:300px;"
+                        ></p>
+                        <hr />
                       </div>
                     </div>
                   </div>
@@ -64,6 +67,9 @@
                   "
                   class="absolute-bottom-right q-mb-xl q-mx-md"
                 >
+                  <q-tooltip>
+                    Imprimir receta
+                  </q-tooltip>
                 </q-btn>
               </div>
             </div>
@@ -139,15 +145,10 @@
           </q-btn>
         </q-bar>
 
-        <q-card-section class="bg-cyan-2">
+        <q-card-section class="bg-white">
+          <q-btn unelevated color="dark" label="Con Membrete" class="q-ma-sm" />
           <q-btn
-            unelevated           
-            color="dark"
-            label="Con Membrete"
-            class="q-ma-sm"
-          />
-          <q-btn
-            unelevated            
+            unelevated
             color="dark"
             label="Sin Membrete"
             class="q-ma-sm"
@@ -199,7 +200,7 @@ import { jsPDF } from "jspdf";
 
 export default {
   props: {
-    consultas: Array,
+    consultas: Array
   },
   data: () => ({
     tab: [],
