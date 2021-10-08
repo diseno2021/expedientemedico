@@ -26,10 +26,15 @@
                   <div class="text-h6 q-mb-md">Receta</div>
                   <div class="text-body2" v-html="consulta.receta"></div>
                   <!-- texto membrete -->
-                  <div style="visibility: hidden;">
+                  <div style="visibility: hidden">
                     <div id="text">
                       <div
-                        style="color: black; margin-top: 65px; margin-bottom: 65px; width: 100%"
+                        style="
+                          color: black;
+                          margin-top: 65px;
+                          margin-bottom: 65px;
+                          width: 100%;
+                        "
                         class="q-mx-md"
                       >
                         <hr />
@@ -40,13 +45,26 @@
                   </div>
                 </q-scroll-area>
               </div>
+              <div class="col-1">
+                <q-btn
+                  round
+                  color="red"
+                  icon="picture_as_pdf"
+                  @click="modalPdf = true"
+                  class="absolute-top-right q-mt-xl q-mx-md"
+                >
+                </q-btn>
+              </div>
               <!-- imprimir receta -->
-              <div class="col-1 ">
+              <div class="col-1">
                 <q-btn
                   round
                   color="light-blue-3"
                   icon="print"
-                  @click="bar2 = true; indexSelect = indexx"
+                  @click="
+                    bar2 = true;
+                    indexSelect = indexx;
+                  "
                   class="absolute-bottom-right q-mb-xl q-mx-md"
                 >
                 </q-btn>
@@ -124,7 +142,7 @@
           </q-btn>
         </q-bar>
 
-        <q-card-section class="bg-cyan-2 ">
+        <q-card-section class="bg-cyan-2">
           <q-btn
             unelevated
             rounded
@@ -143,6 +161,43 @@
         </q-card-section>
       </q-card>
     </q-dialog>
+    <!--Dialogo de pdf-->
+    <q-dialog
+      v-model="modalPdf"
+      persistent
+      transition-show="flip-down"
+      transition-hide="flip-up"
+    >
+      <q-card class="bg-primary text-white">
+        <q-bar>
+          <q-icon name="picture_as_pdf" class="q-mx-sm" />
+          ¿Desea visualizar o guardar?
+          <q-space />
+          <q-btn dense flat icon="close" v-close-popup>
+            <q-tooltip content-class="bg-white text-primary">Cerrar</q-tooltip>
+          </q-btn>
+        </q-bar>
+
+        <q-card-section class="bg-white justify-between">
+          <div class="row justify-between">
+            <q-btn
+              unelevated
+              rounded
+              color="secondary"
+              label="Visualizar"
+              class="q-ma-sm inline"
+            />
+            <q-btn
+              unelevated
+              rounded
+              color="secondary"
+              label="Guardar"
+              class="q-ma-sm inline"
+            />
+          </div>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 <script>
@@ -151,8 +206,8 @@ import { jsPDF } from "jspdf";
 
 export default {
   props: {
-    consultas: Array
-  },  
+    consultas: Array,
+  },
   data: () => ({
     tab: [],
     pagina: 1,
@@ -161,7 +216,8 @@ export default {
     nConsultasPagina: 4,
     bar2: false,
     consultasPaciente: [],
-    indexSelect: null
+    indexSelect: null,
+    modalPdf: false,
   }),
   methods: {
     cambiarPagina() {
@@ -185,27 +241,27 @@ export default {
       const doc = new jsPDF({
         orientation: "l",
         unit: "px",
-        format: [450, 300]
+        format: [450, 300],
       });
       console.log(text);
       console.log(this.indexSelect);
       doc.html(text[this.indexSelect], {
-        callback: function(doc) {
+        callback: function (doc) {
           doc.save(` Receta `);
-        }
+        },
       });
-    }
+    },
   },
   computed: {
     formatoFecha() {
-      return fecha => {
+      return (fecha) => {
         if (date.isValid(fecha)) {
           return date.formatDate(fecha, "DD/MM/YYYY");
         } else {
           return date.formatDate(new Date(fecha.seconds * 1000), "DD/MM/YYYY");
         }
       };
-    }
+    },
   },
   watch: {
     consultas(newValue, oldValue) {
@@ -218,7 +274,7 @@ export default {
       this.consultasPagina.forEach((c, index) => {
         this.tab.push("sintomas" + index);
       });
-    }
-  }
+    },
+  },
 };
 </script>
