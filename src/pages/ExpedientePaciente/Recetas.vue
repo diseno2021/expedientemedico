@@ -5,7 +5,7 @@
     </div>
     <div class="row" v-if="consultas.length > 0">
       <div
-        class="col-12 col-md-6 q-pa-sm"
+        class="col-12 col-lg-6 q-pa-sm"
         v-for="(consulta, indexx) in consultasPagina"
         :key="consulta.id"
       >
@@ -13,10 +13,7 @@
           <q-expansion-item>
             <template v-slot:header>
               <q-item-section class="text-body2 text-center">
-                {{ formatoFecha(consulta.fecha) }}
-                <div style="visibility: visible">
-                  {{ consulta.id }} - {{ indexx }}
-                </div>
+                {{ formatoFecha(consulta.fecha) }}                
               </q-item-section>
             </template>
             <q-separator></q-separator>
@@ -32,9 +29,9 @@
                         style="color: black; margin-top: 65px; margin-bottom: 65px; width: 100%"
                         class="q-mx-md"
                       >
-                        <hr />
-                        <p v-html="consulta.receta"></p>
-                        <hr />
+                        <hr/>
+                        <p v-html="consulta.receta" style="height: 120px; width:300px;"></p>
+                        <hr/>
                       </div>
                     </div>
                   </div>
@@ -124,18 +121,16 @@
           </q-btn>
         </q-bar>
 
-        <q-card-section class="bg-cyan-2 ">
+        <q-card-section class="bg-white">
           <q-btn
-            unelevated
-            rounded
-            color="secondary"
+            unelevated           
+            color="dark"
             label="Con Membrete"
             class="q-ma-sm"
           />
           <q-btn
-            unelevated
-            rounded
-            color="secondary"
+            unelevated            
+            color="dark"
             label="Sin Membrete"
             class="q-ma-sm"
             @click="sinMembrete()"
