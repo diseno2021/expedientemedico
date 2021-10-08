@@ -50,7 +50,7 @@
                   round
                   color="red"
                   icon="picture_as_pdf"
-                  @click="modalPdf = true"
+                  @click="generarPDF(consulta)"
                   class="absolute-top-right q-mt-xl q-mx-md"
                 >
                 </q-btn>
@@ -181,12 +181,14 @@
               color="secondary"
               label="Visualizar"
               class="q-ma-sm inline"
+              @click="visualizar"
             />
             <q-btn
               unelevated
               color="secondary"
               label="Guardar"
               class="q-ma-sm inline"
+              @click="guardar"
             />
           </div>
         </q-card-section>
@@ -212,6 +214,8 @@ export default {
     consultasPaciente: [],
     indexSelect: null,
     modalPdf: false,
+    pdf: new jsPDF(),
+    recetaSelected: null,
   }),
   methods: {
     cambiarPagina() {
@@ -245,6 +249,30 @@ export default {
         },
       });
     },
+    generarPDF(consulta) {
+      this.modalPdf = true;
+      this.recetaSelected = consulta;
+      const doc = new jsPDF({
+        format: 'letter',
+      });
+      doc.setFontSize(18);
+      doc.text('Receta', 20, 30);
+      doc.html(consulta.receta, {
+        x: 20,
+        y: 50,
+      },)
+      this.pdf = doc;
+    },
+    guardar() {
+      this.pdf.save('Receta - ' + this.formatoFecha(this.recetaSelected.fecha));
+      this.modalPdf = false;
+    },
+    visualizar(){
+      window.open(this.pdf.output('bloburl', {
+        filename: 'receta'
+      }), '_blank');
+      this.modalPdf = false;
+    }
   },
   computed: {
     formatoFecha() {
