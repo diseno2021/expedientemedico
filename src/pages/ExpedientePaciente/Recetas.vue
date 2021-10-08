@@ -13,7 +13,7 @@
           <q-expansion-item>
             <template v-slot:header>
               <q-item-section class="text-body2 text-center">
-                {{ formatoFecha(consulta.fecha) }}                
+                {{ formatoFecha(consulta.fecha) }}
               </q-item-section>
             </template>
             <q-separator></q-separator>
@@ -29,9 +29,12 @@
                         style="color: black; margin-top: 65px; margin-bottom: 65px; width: 100%"
                         class="q-mx-md"
                       >
-                        <hr/>
-                        <p v-html="consulta.receta" style="height: 120px; width:300px;"></p>
-                        <hr/>
+                        <hr />
+                        <p
+                          v-html="consulta.receta"
+                          style="height: 120px; width:300px;"
+                        ></p>
+                        <hr />
                       </div>
                     </div>
                   </div>
@@ -43,9 +46,15 @@
                   round
                   color="light-blue-3"
                   icon="print"
-                  @click="bar2 = true; indexSelect = indexx"
+                  @click="
+                    bar2 = true;
+                    indexSelect = indexx;
+                  "
                   class="absolute-bottom-right q-mb-xl q-mx-md"
                 >
+                  <q-tooltip>
+                    Imprimir receta
+                  </q-tooltip>
                 </q-btn>
               </div>
             </div>
@@ -122,14 +131,9 @@
         </q-bar>
 
         <q-card-section class="bg-white">
+          <q-btn unelevated color="dark" label="Con Membrete" class="q-ma-sm" />
           <q-btn
-            unelevated           
-            color="dark"
-            label="Con Membrete"
-            class="q-ma-sm"
-          />
-          <q-btn
-            unelevated            
+            unelevated
             color="dark"
             label="Sin Membrete"
             class="q-ma-sm"
@@ -147,7 +151,7 @@ import { jsPDF } from "jspdf";
 export default {
   props: {
     consultas: Array
-  },  
+  },
   data: () => ({
     tab: [],
     pagina: 1,
