@@ -79,6 +79,19 @@
             </q-item-section>
             <q-item-section>Clinicas </q-item-section>
           </q-item>
+          <q-item
+            to="/template"
+            clickable
+            v-ripple
+            :active="link === '/template'"
+            @click="cambiarRuta"
+            :exact="true"
+          >
+            <q-item-section avatar>
+              <q-icon name="settings" />
+            </q-item-section>
+            <q-item-section>Templates</q-item-section>
+          </q-item>
         </div>
       </q-list>
       <div class="fixed-bottom q-mb-xl" v-if="usuario != null">

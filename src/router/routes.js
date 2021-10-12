@@ -40,6 +40,11 @@ const routes = [
         component: () => import("src/pages/testGaleriaComponent.vue")
       },
       {
+        path: "/template",
+        name: "Template de facturas",
+        component: () => import("src/pages/Configuraciones/template.vue")
+      },
+      {
         path: "/sitioweb",
         component: () => import("pages/SitioWeb.vue")
       }
