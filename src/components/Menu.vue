@@ -190,10 +190,10 @@ export default {
     this.link = this.$route.path;
     var user = auth.currentUser;
     this.id_usuario = user.uid;
-    console.log("Flag 1", user);
+    //console.log("Flag 1", user);
 
     localStorage.setItem("id_doctor", user.uid);
-    console.log("Flag 1", user);
+    //console.log("Flag 1", user);
     if (user) {
       await this.obtenerCantidadDePaciente();
       // User is signed in.

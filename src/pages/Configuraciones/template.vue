@@ -49,7 +49,7 @@ export default {
     };
   },
   async created() {
-    console.log(this);
+    //console.log(this);
 
     let that = this;
     await db
@@ -63,11 +63,11 @@ export default {
           that.fotoFirmaDigital = docs.fotoFirmaDigital;
           that.fotoPieDePagina = docs.fotoPieDePagina;
         } else {
-          console.log("No existe Doc");
+          //console.log("No existe Doc");
         }
       })
       .catch((error) => {
-        console.log("Error al tratar de obtener el documento", error);
+        //console.log("Error al tratar de obtener el documento", error);
       });
   },
   methods: {},

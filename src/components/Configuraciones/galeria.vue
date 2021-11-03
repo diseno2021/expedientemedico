@@ -100,27 +100,27 @@ export default {
   },
   methods: {
     cambiar_imagen() {
-      console.log("Upload image");
+      //console.log("Upload image");
       let nombreFoto = this.numFoto;
       let foto1 = {};
       foto1[nombreFoto] = this.foto;
       //Este tiene que ser un método para subir a firebase
-      console.log(localStorage.getItem("id_doctor"));
+      //console.log(localStorage.getItem("id_doctor"));
       db.collection("medicos")
         .doc(localStorage.getItem("id_doctor"))
         .update(foto1)
         .then(() => {
-          console.log("done");
+          //console.log("done");
         })
         .catch(function (error) {
-          console.error("Error writing document: ", error);
+          //console.error("Error writing document: ", error);
         });
     },
   },
   watch: {
     imagen: {
       handler: function (newValue) {
-        console.log(newValue);
+        //console.log(newValue);
         var reader = new FileReader();
         reader.readAsDataURL(newValue);
         let that = this;
