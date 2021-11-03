@@ -4,7 +4,7 @@
       <div class="col-4">
         <q-img
           v-if="foto"
-          v-bind:src="foto"
+          :src="foto"
           contain
           :ratio="32 / 9"
           class="q-my-md rounded-borders q-mx-md q-mx-xs"
@@ -48,6 +48,7 @@
         label="Seleccione la imagen"
         v-model="imagen"
         accept=".jpg, image/*"
+        type="file"
       >
         <template v-slot:before>
           <q-icon name="attach_file" />
@@ -84,12 +85,54 @@
   </div>
 </template>
 <script>
+import { db } from "../../boot/firebase";
 export default {
+  props: {
+    //traer_pacientes: Function,
+    numFoto: String,
+    fotografia: String,
+  },
   data() {
     return {
-      foto: "https://i.postimg.cc/90nP9qMs/plantilla-moderna-abstracta-elegante-papel-corte-banner-1055-6400.jpg",
+      foto: this.fotografia,
       imagen: null,
     };
+  },
+  methods: {
+    cambiar_imagen() {
+      console.log("Upload image");
+      let nombreFoto = this.numFoto;
+      let foto1 = {};
+      foto1[nombreFoto] = this.foto;
+      //Este tiene que ser un método para subir a firebase
+      console.log(localStorage.getItem("id_doctor"));
+      db.collection("medicos")
+        .doc(localStorage.getItem("id_doctor"))
+        .update(foto1)
+        .then(() => {
+          console.log("done");
+        })
+        .catch(function (error) {
+          console.error("Error writing document: ", error);
+        });
+    },
+  },
+  watch: {
+    imagen: {
+      handler: function (newValue) {
+        console.log(newValue);
+        var reader = new FileReader();
+        reader.readAsDataURL(newValue);
+        let that = this;
+        reader.onload = function () {
+          //console.log(reader.result); //base64encoded string
+          that.foto = reader.result;
+        };
+      },
+    },
+    fotografia: function (newVal) {
+      this.foto = newVal;
+    },
   },
 };
 </script>
