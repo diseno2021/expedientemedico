@@ -333,7 +333,7 @@ export default {
               }
               this.pesos = this.paciente.peso;
               this.estaturas = this.paciente.estatura;
-              console.log(this.paciente);
+              //console.log(this.paciente);
             }
           );
           
@@ -382,7 +382,7 @@ export default {
         );
       } else {
         try {
-          console.log("HOla");
+          //console.log("HOla");
           this.$q.loading.show();
           
 
@@ -390,24 +390,24 @@ export default {
           this.estaturas.push(this.form_data.estatura);
           var d = new Date();
           var c = new Date(d.toString());
-          console.log(c);
+          //console.log(c);
           this.form_data.fecha = d;
           // this.form_data.fecha = today.getFullYear()+'-'
           // +(today.getMonth()+1)+'-'
           // +today.getDate()+' '
           // +today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-          console.log("esta es la fecha" + this.form_data.fecha);
+          //console.log("esta es la fecha" + this.form_data.fecha);
 
           const query = await db.collection("consultas").add(this.form_data);          
 
           this.actualizarPesos();
           
           this.limpiarFormulario();
-          console.log(this.$router.currentRoute.path);
+          //console.log(this.$router.currentRoute.path);
           this.showNotif("Se ha guardado la consulta", "positive", "check");
           this.$router.push("/paciente/" + this.$router.currentRoute.params.id);
         } catch (error) {
-          console.log(error);
+          //console.log(error);
         } finally {
           this.$q.loading.hide();
         }
@@ -415,15 +415,15 @@ export default {
     },
     actualizarPesos(){
           
-          console.log("Estos son los pesos "+this.paciente);
+          //console.log("Estos son los pesos "+this.paciente);
           
           return db.collection("pacientes").doc(this.$router.currentRoute.params.id).update({
                 peso: this.pesos,
                 estatura: this.estaturas
           }).then(function(){
-              console.log("peso actualizado");
+              //console.log("peso actualizado");
           }).catch(function(error) {
-              console.log("no se pudo actualizar peso", error);
+              //console.log("no se pudo actualizar peso", error);
           }); 
            
     },

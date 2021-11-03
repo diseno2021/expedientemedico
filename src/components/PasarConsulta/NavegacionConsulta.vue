@@ -169,7 +169,7 @@ export default {
   },
   methods: {
     onResize(size) {
-      console.log(size);
+      //console.log(size);
       this.report = size;
     },
     obtenerDatosPaciente() {
@@ -203,11 +203,11 @@ export default {
               });
           } else {
             // doc.data() will be undefined in this case
-            console.log("No such document!");
+            //console.log("No such document!");
           }
         })
         .catch((error) => {
-          console.log("Error getting document:", error);
+          //console.log("Error getting document:", error);
         });
     },
     obtenerConsultas() {

@@ -201,7 +201,7 @@ export default {
           }
         })
         .catch(error => {
-          console.log("Error getting document:", error);
+          //console.log("Error getting document:", error);
         })
         .finally( () => {
           this.cargando = false;

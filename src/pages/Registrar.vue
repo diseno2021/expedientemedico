@@ -114,10 +114,10 @@ export default {
       this.user
         .delete()
         .then(function () {
-          console.log("Se cancela el registro");
+          //console.log("Se cancela el registro");
         })
         .catch(function (error) {
-          console.log("Problemas al tratar de cancelar el registro.", error);
+          //console.log("Problemas al tratar de cancelar el registro.", error);
         });
       this.$router.push("/auth");
     },
@@ -137,7 +137,7 @@ export default {
         .doc(usuario.id)
         .set(usuario)
         .then(() => {
-          console.log("usuario guardado");
+          //console.log("usuario guardado");
           this.$router.push("/");
         })
         .catch((error) => {
@@ -158,11 +158,11 @@ export default {
         if (doc.exists) {
           this.$router.push("/");
         } else {
-          console.log("Registrate por favor");
+          //console.log("Registrate por favor");
         }
       })
       .catch((error) => {
-        console.log("Error al tratar de obtener el documento", error);
+        //console.log("Error al tratar de obtener el documento", error);
       });
   },
 };

@@ -129,7 +129,7 @@ export default {
   },
   methods: {
     mostrarMensaje() {
-      console.log("un mensaje");
+      //console.log("un mensaje");
       //this.$q.notify(this.user.displayName)
     },
     cambiarRuta() {
@@ -162,7 +162,7 @@ export default {
           .get();
         this.pacientes = snapshot.size;
       } catch (e) {
-        console.log(e);
+        //console.log(e);
       }
     },
     prefijo() {
@@ -176,11 +176,11 @@ export default {
               localStorage.setItem("prefijo", pref);
               this.prefix = pref;
             } else {
-              console.log("No existe Doc");
+              //console.log("No existe Doc");
             }
           })
           .catch(error => {
-            console.log("Error al tratar de obtener el documento", error);
+            //console.log("Error al tratar de obtener el documento", error);
           });
       } catch (error) {}
     }
@@ -189,7 +189,7 @@ export default {
     this.link = this.$route.path;
     var user = auth.currentUser;
     this.id_usuario = user.uid;
-    console.log("Flag 1", user);
+    //console.log("Flag 1", user);
     if (user) {
       await this.obtenerCantidadDePaciente();
       // User is signed in.

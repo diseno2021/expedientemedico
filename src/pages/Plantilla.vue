@@ -39,7 +39,7 @@ import {auth} from "../boot/firebase"
             },
             mostrarPosicion(){
                 navigator.geolocation.getCurrentPosition(pos=>{
-                    // console.log(pos.coords);
+                     //console.log(pos.coords);
                     var algo=pos.coords
                     this.$q.notify({
                                         message: "latitud: " + algo.latitude + " longitud: "+ algo.longitude,

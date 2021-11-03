@@ -542,7 +542,7 @@ export default {
           this.id_paciente = query.id;
           this.actualizar_paciente();
         } catch (error) {
-          console.log(error);
+          //console.log(error);
         } finally {
           //this.traer_pacientes();
           this.$q.loading.hide();
@@ -639,7 +639,7 @@ export default {
           this2.traer_imagen();
         });
       } catch (error) {
-        console.log(error);
+        //console.log(error);
       }
     },
     //sube la imagen a la carpeta de el usuario creando la carpeta y asignandola con nombre
@@ -663,7 +663,7 @@ export default {
             location.reload();
           });
         } catch (error) {
-          console.log(error);
+          //console.log(error);
         }
       } else {
         try {
@@ -676,7 +676,7 @@ export default {
             location.reload();
           });
         } catch (error) {
-          console.log(error);
+          //console.log(error);
         }
       }
     },
@@ -692,7 +692,7 @@ export default {
             this2.subir_imagen();
           });
       } catch (error) {
-        console.log(error);
+        //console.log(error);
       } finally {
       }
     },

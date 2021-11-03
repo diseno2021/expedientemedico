@@ -298,7 +298,7 @@ export default {
           icon: "check_circle"
         });
         this.$router.push("/clinicas");
-        console.log(ref.id);
+        //console.log(ref.id);
       } catch (error) {
         console.error(error);
         this.$q.notify({

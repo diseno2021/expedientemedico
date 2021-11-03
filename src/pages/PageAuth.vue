@@ -187,18 +187,18 @@ export default {
         .then((result) => {
           // if (user.metadata.creationTime === user.metadata.lastSignInTime) {
           if (result.additionalUserInfo.isNewUser) {
-            console.log("Nuevo usuario");
+            //console.log("Nuevo usuario");
             this.$router.push("/registrar");
           } else {
             this.$router.push("/");
           }
         })
         .catch((err) => {
-          console.log(err); // This will give you all the information needed to further debug any errors
+          //console.log(err); // This will give you all the information needed to further debug any errors
         });
     },
     probar: function () {
-      console.log(firebase.auth().user.displayName);
+      //console.log(firebase.auth().user.displayName);
     },
   },
 };

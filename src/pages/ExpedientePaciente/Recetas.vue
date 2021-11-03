@@ -241,8 +241,8 @@ export default {
         unit: "px",
         format: [450, 300],
       });
-      console.log(text);
-      console.log(this.indexSelect);
+      //console.log(text);
+      //console.log(this.indexSelect);
       doc.html(text[this.indexSelect], {
         callback: function (doc) {
           doc.save(` Receta `);
