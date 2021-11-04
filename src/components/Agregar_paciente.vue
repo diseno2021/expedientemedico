@@ -1,28 +1,19 @@
 <template>
   <div>
+    <q-item
+      clickable
+      @click="formulario = true"
+      class="drawer-section row drawer-option"
+    >
+      <div class="left-icon title-icon col-2">
+        <q-icon name="person_add" />
+      </div>
+      <div class="option-text">Nuevo Paciente</div>
+    </q-item>
     <form>
-      <q-item
-        @click="getClinicas"
-        clickable
-        v-ripple
-      >
-        <q-item-section avatar>
-          <q-icon name="person_add" />
-        </q-item-section>
-        <q-item-section @click="formulario = true">
-          Nuevo Paciente
-        </q-item-section>
-      </q-item>
-
-      <q-dialog
-        v-model="formulario"
-        :maximized="true"
-      >
+      <q-dialog v-model="formulario" :maximized="true">
         <q-card>
-          <q-toolbar
-            style="text-align: center"
-            class="bg-primary text-white"
-          >
+          <q-toolbar style="text-align: center" class="bg-primary text-white">
             <q-toolbar-title>Nuevo Paciente</q-toolbar-title>
             <q-btn
               icon="close"
@@ -39,16 +30,14 @@
                 anchor="top left"
                 self="bottom left"
                 :offset="[0, 8]"
-              >Cancelar registro</q-tooltip>
+                >Cancelar registro</q-tooltip
+              >
             </q-btn>
           </q-toolbar>
 
           <div class="row">
             <br />
-            <div
-              style="text-align: center"
-              class="col-md-3 col-xs-12"
-            >
+            <div style="text-align: center" class="col-md-3 col-xs-12">
               <q-img
                 v-if="foto"
                 v-bind:src="foto"
@@ -63,8 +52,9 @@
                   anchor="top left"
                   self="bottom left"
                   :offset="[0, 8]"
-                >Si desea cambiar la imagen seleccione una nueva y de click en
-                  el boton para subirla.</q-tooltip>
+                  >Si desea cambiar la imagen seleccione una nueva y de click en
+                  el boton para subirla.</q-tooltip
+                >
                 <q-btn
                   dense
                   v-close-popup
@@ -80,14 +70,12 @@
                     anchor="bottom left"
                     self="top left"
                     :offset="[0, 8]"
-                  >Borrar imagen</q-tooltip>
+                    >Borrar imagen</q-tooltip
+                  >
                 </q-btn>
               </q-img>
               <br />
-              <div
-                class="row"
-                style="text-align: center"
-              >
+              <div class="row" style="text-align: center">
                 <q-file
                   filled
                   counter
@@ -115,7 +103,8 @@
                       anchor="top left"
                       self="bottom left"
                       :offset="[0, 8]"
-                    >Cargar imagen</q-tooltip>
+                      >Cargar imagen</q-tooltip
+                    >
                   </template>
                   <q-tooltip
                     content-class="bg-accent text-white"
@@ -123,10 +112,10 @@
                     anchor="top left"
                     self="bottom left"
                     :offset="[0, 8]"
-                  >Seleccione una imagen para el paciente</q-tooltip>
+                    >Seleccione una imagen para el paciente</q-tooltip
+                  >
                 </q-file>
               </div>
-
             </div>
 
             <div class="col-md-8 col-xs-11 justify-around">
@@ -139,9 +128,9 @@
                 @keypress="soloLetras($event)"
                 lazy-rules
                 :rules="[
-                  val =>
+                  (val) =>
                     (val && val.length > 3) ||
-                    'Requerido, por favor complete el campo'
+                    'Requerido, por favor complete el campo',
                 ]"
               >
                 <template v-slot:before>
@@ -153,7 +142,8 @@
                   anchor="top left"
                   self="bottom left"
                   :offset="[0, 8]"
-                >Nombres y apellidos del paciente</q-tooltip>
+                  >Nombres y apellidos del paciente</q-tooltip
+                >
               </q-input>
               <br />
 
@@ -182,10 +172,13 @@
                     anchor="top left"
                     self="bottom left"
                     :offset="[0, 8]"
-                  >Seleccionar sexo del paciente</q-tooltip>
+                    >Seleccionar sexo del paciente</q-tooltip
+                  >
                 </div>
                 <div class="col-md-4 col-xs-12">
-                  <span class="label q-mx-md q-my-md">Fecha de nacimiento:</span>
+                  <span class="label q-mx-md q-my-md"
+                    >Fecha de nacimiento:</span
+                  >
                   <br />
                   <q-input
                     ref="fechaNacimiento"
@@ -194,10 +187,10 @@
                     type="date"
                     lazy-rules
                     :rules="[
-                      val => !!val || 'Campo requerido',
-                      val =>
+                      (val) => !!val || 'Campo requerido',
+                      (val) =>
                         edadPaciente() == false ||
-                        'Fecha de nacimiento incorrecta, edad minima 1 año'
+                        'Fecha de nacimiento incorrecta, edad minima 1 año',
                     ]"
                   >
                     <q-tooltip
@@ -206,7 +199,8 @@
                       anchor="top left"
                       self="bottom left"
                       :offset="[0, 8]"
-                    >Agregar fecha de nacimiento del paciente</q-tooltip>
+                      >Agregar fecha de nacimiento del paciente</q-tooltip
+                    >
                   </q-input>
                 </div>
                 <div class="col-md-4 col-xs-12">
@@ -215,21 +209,15 @@
                   <br />
                   <q-select
                     ref="clinicaSelected"
-                    :rules="[
-                      val => !!val || 'Campo requerido'
-                    ]"
+                    :rules="[(val) => !!val || 'Campo requerido']"
                     lazy-rules
                     v-model="paciente.clinica"
                     :options="clinicas"
                     option-label="nombre"
                     label="Clinica"
                   >
-
                     <template v-slot:prepend>
-                      <q-icon
-                        name="local_hospital"
-                        @click.stop
-                      />
+                      <q-icon name="local_hospital" @click.stop />
                     </template>
                   </q-select>
                 </div>
@@ -243,8 +231,8 @@
                     label="Número telefónico"
                     mask="####-####"
                     :rules="[
-                      val => !!val || 'Campo requerido',
-                      val => val.length > 8 || 'Numero telefonico invalido'
+                      (val) => !!val || 'Campo requerido',
+                      (val) => val.length > 8 || 'Numero telefonico invalido',
                     ]"
                     lazy-rules
                   >
@@ -257,7 +245,8 @@
                       anchor="top left"
                       self="bottom left"
                       :offset="[0, 8]"
-                    >Número de contacto personal</q-tooltip>
+                      >Número de contacto personal</q-tooltip
+                    >
                   </q-input>
                 </div>
                 <div class="col-md-5 col-xs-6">
@@ -276,7 +265,8 @@
                       anchor="top left"
                       self="bottom left"
                       :offset="[0, 8]"
-                    >Número de contacto de whatsapp</q-tooltip>
+                      >Número de contacto de whatsapp</q-tooltip
+                    >
                   </q-input>
                 </div>
               </div>
@@ -301,7 +291,8 @@
                       self="bottom left"
                       :offset="[0, 8]"
                     >
-                      Direccción de correo electrónico</q-tooltip>
+                      Direccción de correo electrónico</q-tooltip
+                    >
                   </q-input>
                 </div>
                 <div class="col-5">
@@ -319,7 +310,8 @@
                       anchor="top left"
                       self="bottom left"
                       :offset="[0, 8]"
-                    >Dui(Documento de identidad personal)</q-tooltip>
+                      >Dui(Documento de identidad personal)</q-tooltip
+                    >
                     <template v-slot:before>
                       <q-icon name="credit_card" />
                     </template>
@@ -336,9 +328,9 @@
                 label="Dirección de residencia"
                 lazy-rules
                 :rules="[
-                  val =>
+                  (val) =>
                     !!val ||
-                    'Requerido, por favor digite la direccion de residencia'
+                    'Requerido, por favor digite la direccion de residencia',
                 ]"
               >
                 <q-tooltip
@@ -347,7 +339,8 @@
                   anchor="top left"
                   self="bottom left"
                   :offset="[0, 8]"
-                >Dirección de actual residencia del paciente</q-tooltip>
+                  >Dirección de actual residencia del paciente</q-tooltip
+                >
                 <template v-slot:before>
                   <q-icon name="assistant_direction" />
                 </template>
@@ -360,7 +353,7 @@
                 placeholder="Jose Hernandez  7744-7192"
                 lazy-rules
                 :rules="[
-                  val => !!val || 'Requerido, por favor complete el campo'
+                  (val) => !!val || 'Requerido, por favor complete el campo',
                 ]"
               >
                 <q-tooltip
@@ -369,7 +362,8 @@
                   anchor="top left"
                   self="bottom left"
                   :offset="[0, 8]"
-                >A quien llamar en caso de emergencia:</q-tooltip>
+                  >A quien llamar en caso de emergencia:</q-tooltip
+                >
                 <template v-slot:before>
                   <q-icon name="report_problem" />
                 </template>
@@ -386,7 +380,8 @@
                   anchor="top left"
                   self="bottom left"
                   :offset="[0, 8]"
-                >Observaciones del paciente</q-tooltip>
+                  >Observaciones del paciente</q-tooltip
+                >
                 <template v-slot:before>
                   <q-icon name="description" />
                 </template>
@@ -406,7 +401,8 @@
                   anchor="top left"
                   self="bottom left"
                   :offset="[0, 8]"
-                >Cancelar y volver</q-tooltip>
+                  >Cancelar y volver</q-tooltip
+                >
               </q-btn>
               <q-btn
                 icon="person_add_alt_1"
@@ -422,8 +418,8 @@
                   anchor="top left"
                   self="bottom left"
                   :offset="[0, 8]"
-                >Registrar un nuevo paciente</q-tooltip>
-
+                  >Registrar un nuevo paciente</q-tooltip
+                >
               </q-btn>
 
               <br />
@@ -500,8 +496,7 @@ export default {
       this.paciente.dui = "";
       this.paciente.enCasoEmergencia = "";
       this.paciente.comentario = "";
-      this.clinicas=[],
-      (this.paciente.clinica = ""), (this.imagen = null);
+      (this.clinicas = []), (this.paciente.clinica = ""), (this.imagen = null);
       this.mostrar_imagen = false;
     },
     //  Muestra una notificacion con color e icono y un mensaje dependiendo de que accion sera ejecutada.
@@ -715,3 +710,26 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.drawer-option {
+  margin-top: 20px;
+  height: 60px;
+  padding: 0 20px;
+  background-color: rgba(0, 0, 0, 0.2);
+  font-size: 25px;
+  transition: all;
+  transition-duration: 300ms;
+}
+
+.drawer-option:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+.drawer-section {
+  align-items: center;
+}
+.left-icon {
+  font-size: 40px;
+  margin-right: 10px;
+}
+</style>

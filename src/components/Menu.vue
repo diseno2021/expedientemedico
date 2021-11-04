@@ -21,6 +21,33 @@
             {{ pacientes }}
           </q-chip>
         </q-item>
+
+        <agregar_paciente
+          :id_doctor="id_usuario"
+          class="drawer-section"
+        ></agregar_paciente>
+
+        <q-item
+          clickable
+          to="/clinicas"
+          class="drawer-section row drawer-option"
+        >
+          <div class="left-icon title-icon col-2">
+            <q-icon name="local_hospital" />
+          </div>
+          <div class="option-text">Clinicas</div>
+        </q-item>
+
+        <q-item
+          clickable
+          to="/template"
+          class="drawer-section row drawer-option"
+        >
+          <div class="left-icon title-icon col-2">
+            <q-icon name="settings" />
+          </div>
+          <div class="option-text">Template</div>
+        </q-item>
       </div>
     </q-drawer>
   </div>
@@ -75,6 +102,7 @@
   }
 
   .drawer-option {
+    margin-top: 20px;
     height: 60px;
     padding: 0 20px;
     background-color: rgba(0, 0, 0, 0.2);
