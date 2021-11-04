@@ -10,18 +10,17 @@
             <h2>VIRTUALDOC</h2>
           </div>
         </div>
-        <div class="spacer"></div>
-        <a href="/">
-          <div class="drawer-section row drawer-option">
-            <div class="left-icon title-icon col-2">
-              <q-icon name="people" />
-            </div>
-            <div class="option-text">Pacientes</div>
-            <q-chip color="secondary" class="people-chip" text-color="white">
-              {{ pacientes }}
-            </q-chip>
+        <div toclass="spacer"></div>
+
+        <q-item clickable to="/" class="drawer-section row drawer-option">
+          <div class="left-icon title-icon col-2">
+            <q-icon name="people" />
           </div>
-        </a>
+          <div class="option-text">Pacientes</div>
+          <q-chip color="secondary" class="people-chip" text-color="white">
+            {{ pacientes }}
+          </q-chip>
+        </q-item>
       </div>
     </q-drawer>
   </div>
