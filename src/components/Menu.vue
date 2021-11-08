@@ -9,6 +9,11 @@
       icon="favorite_border"
     />
 
+    <agregar_paciente
+      :id_doctor="id_usuario"
+      ref="newPatientForm"
+    ></agregar_paciente>
+
     <q-drawer
       v-model="state"
       @mouseenter="collapsed = false"
@@ -91,7 +96,16 @@
           </q-chip>
         </q-item>
 
-        <agregar_paciente :id_doctor="id_usuario"></agregar_paciente>
+        <q-item
+          clickable
+          @click="$refs.newPatientForm.open()"
+          class="drawer-section row drawer-option"
+        >
+          <div class="left-icon col-2">
+            <q-icon name="person_add" />
+          </div>
+          <div class="option-text">Nuevo Paciente</div>
+        </q-item>
 
         <q-item
           clickable
@@ -260,6 +274,7 @@ export default {
   },
   data() {
     return {
+      newPatient: false,
       collapsed: true,
       id_usuario: "",
       usuario: null,
@@ -273,7 +288,7 @@ export default {
 
   methods: {
     mostrarMensaje() {
-      //console.log("un mensaje");
+      //console.log("un mensaje");`
       //this.$q.notify(this.user.displayName)
     },
     cambiarRuta() {

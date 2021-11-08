@@ -1,15 +1,5 @@
 <template>
   <div>
-    <q-item
-      clickable
-      @click="formulario = true"
-      class="drawer-section row drawer-option"
-    >
-      <div class="left-icon title-icon col-2">
-        <q-icon name="person_add" />
-      </div>
-      <div class="option-text">Nuevo Paciente</div>
-    </q-item>
     <form>
       <q-dialog v-model="formulario" :maximized="true">
         <q-card>
@@ -438,8 +428,6 @@ import { db, st, auth } from "../boot/firebase";
 export default {
   name: "agregar_paciente",
   props: {
-    //traer_pacientes: Function,
-    collapsed: Boolean,
     id_doctor: String,
   },
   data() {
@@ -474,8 +462,8 @@ export default {
         peso: [],
         tipoSangre: "",
       },
-      error: true,
       formulario: false,
+      error: true,
       activar: true,
     };
   },
@@ -483,6 +471,9 @@ export default {
   //limpia los campos del formulario para dejarlo listo para el siguiente paciente igualmente
   //para si desea cancelar el registro del paciente.
   methods: {
+    open() {
+      this.formulario = true;
+    },
     limpiar() {
       this.foto = this.imagen_defecto;
       this.carpeta = "imagenes";
