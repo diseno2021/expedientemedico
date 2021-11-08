@@ -1,5 +1,6 @@
 <template>
   <q-layout view="lHh LpR lFf" @scroll="onScroll">
+    <!-- PacienteLayout Toolbar eliminada
     <q-header elevated>
       <q-toolbar>
         <q-btn
@@ -17,7 +18,7 @@
 
         <q-btn class="lt-md" flat @click="test" round dense icon="menu" />
       </q-toolbar>
-    </q-header>
+    </q-header> -->
     <Menu ref="menu" />
     <q-drawer v-model="drawerRight" show-if-above bordered side="right">
       <Navegacion ref="nav" />

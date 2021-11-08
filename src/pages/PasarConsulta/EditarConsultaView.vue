@@ -1,5 +1,6 @@
 <template>
   <q-layout view="lHh LpR lFf" @scroll="onScroll">
+    <!-- EditarConsultaView
     <q-header elevated>
       <q-toolbar>
         <q-btn
@@ -14,7 +15,7 @@
         <q-toolbar-title> Editar Consulta</q-toolbar-title>
         
       </q-toolbar>
-    </q-header>
+    </q-header> -->
     <Menu ref="menu" />
     <!-- <q-drawer v-model="drawerRight" show-if-above bordered side="right">
       <NavegacionConsulta ref="nav" />
