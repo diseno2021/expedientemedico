@@ -3,7 +3,6 @@
     <q-btn
       v-if="!state"
       round
-      elevated
       class="activate-btn"
       @click="state = true"
       size="xl"
@@ -16,6 +15,7 @@
     ></agregar_paciente>
 
     <q-drawer
+      elevated
       v-model="state"
       @mouseenter="collapsed = false"
       @mouseleave="collapsed = true"
