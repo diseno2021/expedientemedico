@@ -1,5 +1,14 @@
 <template>
   <div>
+    <q-btn
+      v-if="!state"
+      round
+      class="activate-btn"
+      @click="state = true"
+      size="xl"
+      icon="favorite_border"
+    />
+
     <q-drawer
       v-model="state"
       @mouseenter="collapsed = false"
@@ -146,6 +155,20 @@
 <style lang="scss" scoped>
 @import url("https://fonts.googleapis.com/css2?family=Ropa+Sans&display=swap");
 
+.activate-btn {
+  z-index: 100;
+  bottom: 30px;
+  left: 30px;
+  position: fixed;
+  top: 100;
+  color: white;
+  background: radial-gradient(
+    50% 50% at 50% 50%,
+    #247ca8 0%,
+    hsl(200, 75%, 36%) 100%
+  );
+}
+
 .drawer {
   background: radial-gradient(
     50% 50% at 50% 50%,
@@ -173,7 +196,6 @@
     align-items: center;
     font-size: 25px;
     padding: 0 20px;
-
     width: 100%;
     height: 60px;
     overflow: hidden;
