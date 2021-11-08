@@ -22,10 +22,7 @@
           </q-chip>
         </q-item>
 
-        <agregar_paciente
-          :id_doctor="id_usuario"
-          class="drawer-section"
-        ></agregar_paciente>
+        <agregar_paciente :id_doctor="id_usuario"></agregar_paciente>
 
         <q-item
           clickable
@@ -49,55 +46,41 @@
           <div class="option-text">Template</div>
         </q-item>
 
-       <div class="fixed-bottom q-mb-xl" v-if="usuario != null">
-        <q-separator />
+        <div class="fixed-bottom q-mb-xl" v-if="usuario != null">
+          <!-- <q-separator /> -->
 
-
-        <q-item clickable to="/" class="drawer-section row drawer-option">
-          <div class="left-icon title-icon col-2">
-            <q-icon name="nights_stay" />
-          </div>
-          <div class="option-text">Modo Oscuro</div>
+          <q-item class="drawer-section row">
+            <div class="left-icon title-icon col-2">
+              <q-icon name="nights_stay" />
+            </div>
+            <div class="option-text">Modo Oscuro</div>
             <q-item-section side>
-            <q-toggle color="blue" v-model="dark" @input="cambiarModoDark" />
-          </q-item-section>
-        </q-item>
+              <q-toggle color="dark" v-model="dark" @input="cambiarModoDark" />
+            </q-item-section>
+          </q-item>
 
-
-        <q-item clickable to="/" class="drawer-section row drawer-option">
-            <q-avatar>
+          <q-item class="drawer-section row">
+            <q-avatar class="left-icon">
               <img :src="usuario.photoURL" />
             </q-avatar>
-          <div class="col-9">
-            <div class="letraDisplaynamepequenia"> {{prefix}} {{usuario.displayName}}</div>
-            <div class="row text-caption text-weight-light letraEmail">
-              {{ usuario.email }}
+            <div class="col-8">
+              <div class="letraDisplaynamepequenia">
+                {{ prefix }} {{ usuario.displayName }}
+              </div>
+              <div class="row text-caption text-weight-light letraEmail">
+                {{ usuario.email }}
+              </div>
             </div>
-          </div>
-           
-            <q-btn flat round color="primary" icon="logout" @click="logout">
+            <q-btn flat round color="white" icon="logout" @click="logout">
               <q-tooltip anchor="center right" self="center left">
                 Cerrar Sesion
               </q-tooltip>
-              </q-btn>
-             
-            
-        </q-item>
-        
-       </div>
-  
-
-
-  
+            </q-btn>
+          </q-item>
+        </div>
       </div>
     </q-drawer>
-
-  <h1>hola</h1>
-
   </div>
-
-
-  
 </template>
 
 <style lang="scss" scoped>
@@ -116,6 +99,8 @@
 
   .drawer-section {
     align-items: center;
+    font-size: 25px;
+    padding: 0 20px;
   }
 
   a {
@@ -151,9 +136,7 @@
   .drawer-option {
     margin-top: 20px;
     height: 60px;
-    padding: 0 20px;
     background-color: rgba(0, 0, 0, 0.2);
-    font-size: 25px;
     transition: all;
     transition-duration: 300ms;
   }
@@ -161,14 +144,13 @@
   .drawer-option:hover {
     background-color: rgba(0, 0, 0, 0.8);
   }
-.letraDisplaynamepequenia{
-  font-size: 15px;
-}
+  .letraDisplaynamepequenia {
+    font-size: 15px;
+  }
 
-.letraEmail{
-  font-size: 15px;
-}
-
+  .letraEmail {
+    font-size: 15px;
+  }
 }
 </style>
 
