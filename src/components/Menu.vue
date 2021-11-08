@@ -1,9 +1,65 @@
 <template>
   <div>
-    <q-drawer v-model="state" show-if-above>
+    <q-drawer
+      v-model="state"
+      @mouseenter="collapsed = false"
+      @mouseleave="collapsed = true"
+      :mini="collapsed"
+      :mini-width="80"
+    >
+      <template v-slot:mini>
+        <div class="drawer container">
+          <div class="page-title drawer-section">
+            <div class="left-icon">
+              <q-icon name="favorite_border" />
+            </div>
+          </div>
+
+          <div toclass="spacer"></div>
+
+          <div class="page-title drawer-section drawer-option">
+            <div class="left-icon">
+              <q-icon name="people" />
+            </div>
+          </div>
+
+          <div class="drawer-section row drawer-option">
+            <div class="left-icon">
+              <q-icon name="person_add" />
+            </div>
+          </div>
+
+          <div class="drawer-section row drawer-option">
+            <div class="left-icon">
+              <q-icon name="local_hospital" />
+            </div>
+          </div>
+
+          <div class="drawer-section row drawer-option">
+            <div class="left-icon">
+              <q-icon name="settings" />
+            </div>
+          </div>
+
+          <div class="fixed-bottom q-mb-xl" v-if="usuario != null">
+            <div class="drawer-section row">
+              <div class="left-icon">
+                <q-icon name="nights_stay" />
+              </div>
+            </div>
+
+            <div class="drawer-section">
+              <q-avatar class="left-icon">
+                <img :src="usuario.photoURL" />
+              </q-avatar>
+            </div>
+          </div>
+        </div>
+      </template>
+
       <div class="drawer container">
         <div class="page-title drawer-section row">
-          <div class="left-icon title-icon col-2">
+          <div class="left-icon col-2">
             <q-icon name="favorite_border" />
           </div>
           <div>
@@ -13,11 +69,15 @@
         <div toclass="spacer"></div>
 
         <q-item clickable to="/" class="drawer-section row drawer-option">
-          <div class="left-icon title-icon col-2">
+          <div class="left-icon col-2">
             <q-icon name="people" />
           </div>
           <div class="option-text">Pacientes</div>
-          <q-chip color="secondary" class="people-chip" text-color="white">
+          <q-chip
+            color="secondary"
+            class="people-chip onDrawerCollapsed"
+            text-color="white"
+          >
             {{ pacientes }}
           </q-chip>
         </q-item>
@@ -29,7 +89,7 @@
           to="/clinicas"
           class="drawer-section row drawer-option"
         >
-          <div class="left-icon title-icon col-2">
+          <div class="left-icon col-2">
             <q-icon name="local_hospital" />
           </div>
           <div class="option-text">Clinicas</div>
@@ -40,7 +100,7 @@
           to="/template"
           class="drawer-section row drawer-option"
         >
-          <div class="left-icon title-icon col-2">
+          <div class="left-icon col-2">
             <q-icon name="settings" />
           </div>
           <div class="option-text">Template</div>
@@ -50,7 +110,7 @@
           <!-- <q-separator /> -->
 
           <q-item class="drawer-section row">
-            <div class="left-icon title-icon col-2">
+            <div class="left-icon col-2">
               <q-icon name="nights_stay" />
             </div>
             <div class="option-text">Modo Oscuro</div>
@@ -92,26 +152,14 @@
     #247ca8 0%,
     hsl(200, 75%, 36%) 100%
   );
-  color: white;
-  font-family: "Ropa Sans";
   height: 100%;
   width: 100%;
+  color: white;
+  font-family: "Ropa Sans";
+  transition: all 0.5s ease;
 
-  .drawer-section {
-    align-items: center;
-    font-size: 25px;
-    padding: 0 20px;
-  }
+  overflow: hidden;
 
-  a {
-    text-decoration: none;
-    color: inherit;
-  }
-
-  .left-icon {
-    font-size: 40px;
-    margin-right: 10px;
-  }
   .spacer {
     height: 40px;
     width: 100%;
@@ -119,18 +167,26 @@
 
   .page-title {
     padding: 20px;
-
-    h2 {
-      margin: 0;
-      font-size: 40px;
-    }
   }
 
-  .people-chip {
-    border-radius: 30px;
-    margin-left: 10px;
-    font-size: 20px;
-    font-style: italic;
+  .drawer-section {
+    align-items: center;
+    font-size: 25px;
+    padding: 0 20px;
+
+    width: 100%;
+    height: 60px;
+    overflow: hidden;
+  }
+
+  .left-icon {
+    font-size: 40px;
+    margin-right: 10px;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
   }
 
   .drawer-option {
@@ -144,6 +200,20 @@
   .drawer-option:hover {
     background-color: rgba(0, 0, 0, 0.8);
   }
+
+  .page-title {
+    h2 {
+      margin: 0;
+      font-size: 40px;
+    }
+  }
+  .people-chip {
+    border-radius: 30px;
+    margin-left: 10px;
+    font-size: 20px;
+    font-style: italic;
+  }
+
   .letraDisplaynamepequenia {
     font-size: 15px;
   }
@@ -168,15 +238,17 @@ export default {
   },
   data() {
     return {
+      collapsed: true,
       id_usuario: "",
       usuario: null,
-      state: this.leftDrawerOpen,
+      state: true,
       dark: false,
       pacientes: 0,
       prefix: "",
       link: "",
     };
   },
+
   methods: {
     mostrarMensaje() {
       //console.log("un mensaje");

@@ -439,6 +439,7 @@ export default {
   name: "agregar_paciente",
   props: {
     //traer_pacientes: Function,
+    collapsed: Boolean,
     id_doctor: String,
   },
   data() {
@@ -720,6 +721,9 @@ export default {
   font-size: 25px;
   transition: all;
   transition-duration: 300ms;
+}
+.isCollapsed {
+  display: none;
 }
 
 .drawer-option:hover {
