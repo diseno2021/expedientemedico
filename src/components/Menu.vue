@@ -331,6 +331,10 @@ export default {
     },
   },
   async created() {
+    if (window.innerWidth < 1024) {
+      this.state = false;
+    }
+
     this.link = this.$route.path;
     var user = auth.currentUser;
     this.id_usuario = user.uid;
