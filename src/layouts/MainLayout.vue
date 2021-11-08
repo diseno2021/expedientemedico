@@ -1,7 +1,10 @@
 <template>
   <q-layout view="lHh Lpr lFf">
+    <!-- Toolbar eliminada MainLayout
     <q-header elevated>
-      <q-toolbar>
+
+       
+        <q-toolbar>
         <q-btn
           flat
           dense
@@ -14,8 +17,8 @@
         <q-toolbar-title>
           {{ $route.name }}
         </q-toolbar-title>
-      </q-toolbar>
-    </q-header>
+      </q-toolbar> 
+    </q-header> -->
     <Menu ref="menu" />
     <q-page-container>
       <router-view />

@@ -1,109 +1,266 @@
 <template>
   <div>
-    <q-drawer v-model="state" show-if-above bordered>
-      <q-list>
-        <q-item>
-          <q-item-section header>
-            <q-card
-              class="row text-primary text-h5 text-bold q-my-md justify-center items-center"
-              flat
-              @click.prevent="state = false"
-            >
-              <q-img
-                src="../../src/assets/img/doctoresvirtual.png"
-                style="height: 50px; max-width: 150px"
-              />
-            </q-card>
-          </q-item-section>
-        </q-item>
-        <q-separator />
+    <q-btn
+      v-if="!state"
+      round
+      class="activate-btn"
+      @click="state = true"
+      size="xl"
+      icon="favorite_border"
+    />
 
-        <q-card flat class="row q-my-md items-center" v-if="usuario != null">
-          <div class="col-3 text-center">
-            <q-avatar>
-              <img :src="usuario.photoURL" />
-            </q-avatar>
-          </div>
-          <div class="col">
-            <div class="row">{{ prefix }} {{ usuario.displayName }}</div>
-            <div class="row text-caption text-weight-light">
-              {{ usuario.email }}
+    <agregar_paciente
+      :id_doctor="id_usuario"
+      ref="newPatientForm"
+    ></agregar_paciente>
+
+    <q-drawer
+      elevated
+      v-model="state"
+      @mouseenter="collapsed = false"
+      @mouseleave="collapsed = true"
+      :mini="collapsed"
+      :mini-width="80"
+    >
+      <template v-slot:mini>
+        <div class="drawer container">
+          <div class="page-title drawer-section">
+            <div class="left-icon">
+              <q-icon name="favorite_border" />
             </div>
           </div>
-          <div class="col-2">
-            <q-btn flat round color="primary" icon="logout" @click="logout">
+
+          <div toclass="spacer"></div>
+
+          <div class="page-title drawer-section drawer-option">
+            <div class="left-icon">
+              <q-icon name="people" />
+            </div>
+          </div>
+
+          <div class="drawer-section row drawer-option">
+            <div class="left-icon">
+              <q-icon name="person_add" />
+            </div>
+          </div>
+
+          <div class="drawer-section row drawer-option">
+            <div class="left-icon">
+              <q-icon name="local_hospital" />
+            </div>
+          </div>
+
+          <div class="drawer-section row drawer-option">
+            <div class="left-icon">
+              <q-icon name="settings" />
+            </div>
+          </div>
+
+          <div class="fixed-bottom q-mb-xl" v-if="usuario != null">
+            <div class="drawer-section row">
+              <div class="left-icon">
+                <q-icon name="nights_stay" />
+              </div>
+            </div>
+
+            <div class="drawer-section">
+              <q-avatar class="left-icon">
+                <img :src="usuario.photoURL" />
+              </q-avatar>
+            </div>
+          </div>
+        </div>
+      </template>
+
+      <div class="drawer container">
+        <div class="page-title drawer-section row">
+          <div class="left-icon col-2">
+            <q-icon name="favorite_border" />
+          </div>
+          <div>
+            <h2>VIRTUALDOC</h2>
+          </div>
+        </div>
+        <div toclass="spacer"></div>
+
+        <q-item clickable to="/" class="drawer-section row drawer-option">
+          <div class="left-icon col-2">
+            <q-icon name="people" />
+          </div>
+          <div class="option-text">Pacientes</div>
+          <q-chip
+            color="secondary"
+            class="people-chip onDrawerCollapsed"
+            text-color="white"
+          >
+            {{ pacientes }}
+          </q-chip>
+        </q-item>
+
+        <q-item
+          clickable
+          @click="$refs.newPatientForm.open()"
+          class="drawer-section row drawer-option"
+        >
+          <div class="left-icon col-2">
+            <q-icon name="person_add" />
+          </div>
+          <div class="option-text">Nuevo Paciente</div>
+        </q-item>
+
+        <q-item
+          clickable
+          to="/clinicas"
+          class="drawer-section row drawer-option"
+        >
+          <div class="left-icon col-2">
+            <q-icon name="local_hospital" />
+          </div>
+          <div class="option-text">Clinicas</div>
+        </q-item>
+
+        <q-item
+          clickable
+          to="/template"
+          class="drawer-section row drawer-option"
+        >
+          <div class="left-icon col-2">
+            <q-icon name="settings" />
+          </div>
+          <div class="option-text">Template</div>
+        </q-item>
+
+        <div class="fixed-bottom q-mb-xl" v-if="usuario != null">
+          <!-- <q-separator /> -->
+
+          <q-item class="drawer-section row">
+            <div class="left-icon col-2">
+              <q-icon name="nights_stay" />
+            </div>
+            <div class="option-text">Modo Oscuro</div>
+            <q-item-section side>
+              <q-toggle color="dark" v-model="dark" @input="cambiarModoDark" />
+            </q-item-section>
+          </q-item>
+
+          <q-item class="drawer-section row">
+            <q-avatar class="left-icon">
+              <img :src="usuario.photoURL" />
+            </q-avatar>
+            <div class="col-8">
+              <div class="letraDisplaynamepequenia">
+                {{ prefix }} {{ usuario.displayName }}
+              </div>
+              <div class="row text-caption text-weight-light letraEmail">
+                {{ usuario.email }}
+              </div>
+            </div>
+            <q-btn flat round color="white" icon="logout" @click="logout">
               <q-tooltip anchor="center right" self="center left">
                 Cerrar Sesion
               </q-tooltip>
             </q-btn>
-          </div>
-        </q-card>
-        <q-separator />
-        <q-item>
-          <q-item-section avatar>
-            <q-icon name="nights_stay" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>Modo Oscuro</q-item-label>
-          </q-item-section>
-          <q-item-section side>
-            <q-toggle color="blue" v-model="dark" @input="cambiarModoDark" />
-          </q-item-section>
-        </q-item>
-        <q-separator />
-        <div v-if="usuario != null">
-          <q-item
-            to="/"
-            clickable
-            v-ripple
-            :active="link == '/'"
-            @click="cambiarRuta"
-            :exact="true"
-          >
-            <q-item-section avatar>
-              <q-icon name="people" />
-            </q-item-section>
-            <q-item-section>Pacientes</q-item-section>
-          </q-item>
-          <agregar_paciente :id_doctor="id_usuario"></agregar_paciente>
-          <q-item
-            to="/clinicas"
-            clickable
-            v-ripple
-            :active="link === '/clinicas'"
-            @click="cambiarRuta"
-            :exact="true"
-          >
-            <q-item-section avatar>
-              <q-icon name="local_hospital" />
-            </q-item-section>
-            <q-item-section>Clinicas </q-item-section>
-          </q-item>
-          <q-item
-            to="/template"
-            clickable
-            v-ripple
-            :active="link === '/template'"
-            @click="cambiarRuta"
-            :exact="true"
-          >
-            <q-item-section avatar>
-              <q-icon name="settings" />
-            </q-item-section>
-            <q-item-section>Templates</q-item-section>
           </q-item>
         </div>
-      </q-list>
-      <div class="fixed-bottom q-mb-xl" v-if="usuario != null">
-        <q-separator />
-        <q-card class="text-center q-mt-xl" flat>
-          <q-icon name="people" style="font-size: 2.5rem" />
-          <div class="full-width">{{ pacientes }} pacientes registrados</div>
-        </q-card>
       </div>
     </q-drawer>
   </div>
 </template>
+
+<style lang="scss" scoped>
+@import url("https://fonts.googleapis.com/css2?family=Ropa+Sans&display=swap");
+
+.activate-btn {
+  z-index: 100;
+  bottom: 30px;
+  left: 30px;
+  position: fixed;
+  top: 100;
+  color: white;
+  background: radial-gradient(
+    50% 50% at 50% 50%,
+    #247ca8 0%,
+    hsl(200, 75%, 36%) 100%
+  );
+}
+
+.drawer {
+  background: radial-gradient(
+    50% 50% at 50% 50%,
+    #247ca8 0%,
+    hsl(200, 75%, 36%) 100%
+  );
+  height: 100%;
+  width: 100%;
+  color: white;
+  font-family: "Ropa Sans";
+  transition: all 0.5s ease;
+
+  overflow: hidden;
+
+  .spacer {
+    height: 40px;
+    width: 100%;
+  }
+
+  .page-title {
+    padding: 20px;
+  }
+
+  .drawer-section {
+    align-items: center;
+    font-size: 25px;
+    padding: 0 20px;
+    width: 100%;
+    height: 60px;
+    overflow: hidden;
+  }
+
+  .left-icon {
+    font-size: 40px;
+    margin-right: 10px;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .drawer-option {
+    margin-top: 20px;
+    height: 60px;
+    background-color: rgba(0, 0, 0, 0.2);
+    transition: all;
+    transition-duration: 300ms;
+  }
+
+  .drawer-option:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+
+  .page-title {
+    h2 {
+      margin: 0;
+      font-size: 40px;
+    }
+  }
+  .people-chip {
+    border-radius: 30px;
+    margin-left: 10px;
+    font-size: 20px;
+    font-style: italic;
+  }
+
+  .letraDisplaynamepequenia {
+    font-size: 15px;
+  }
+
+  .letraEmail {
+    font-size: 15px;
+  }
+}
+</style>
+
 
 <script>
 import Agregar_paciente from "../components/Agregar_paciente.vue";
@@ -113,23 +270,26 @@ export default {
   props: {
     leftDrawerOpen: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   data() {
     return {
+      newPatient: false,
+      collapsed: true,
       id_usuario: "",
       usuario: null,
-      state: this.leftDrawerOpen,
+      state: true,
       dark: false,
       pacientes: 0,
       prefix: "",
-      link: ""
+      link: "",
     };
   },
+
   methods: {
     mostrarMensaje() {
-      //console.log("un mensaje");
+      //console.log("un mensaje");`
       //this.$q.notify(this.user.displayName)
     },
     cambiarRuta() {
@@ -137,14 +297,14 @@ export default {
     },
     logout() {
       localStorage.removeItem("prefijo");
-      localStorage.removeItem("id_doctor");      
+      localStorage.removeItem("id_doctor");
       auth
         .signOut()
         .then(() => {
           // Sign-out successful.
           this.$q.notify("Se ha cerrado la sesión");
         })
-        .catch(error => {
+        .catch((error) => {
           // An error happened.
           this.$q.notify(error);
         });
@@ -163,7 +323,7 @@ export default {
           .get();
         this.pacientes = snapshot.size;
       } catch (e) {
-        //console.log(e);
+        console.error(e);
       }
     },
     prefijo() {
@@ -171,7 +331,7 @@ export default {
         db.collection("medicos")
           .doc(this.usuario.uid)
           .get()
-          .then(doc => {
+          .then((doc) => {
             if (doc.exists) {
               let pref = doc.data().prefijo;
               localStorage.setItem("prefijo", pref);
@@ -180,20 +340,22 @@ export default {
               //console.log("No existe Doc");
             }
           })
-          .catch(error => {
-            //console.log("Error al tratar de obtener el documento", error);
+          .catch((error) => {
+            console.error("Error al tratar de obtener el documento", error);
           });
       } catch (error) {}
-    }
+    },
   },
   async created() {
+    if (window.innerWidth < 1024) {
+      this.state = false;
+    }
+
     this.link = this.$route.path;
     var user = auth.currentUser;
     this.id_usuario = user.uid;
-    //console.log("Flag 1", user);
 
     localStorage.setItem("id_doctor", user.uid);
-    //console.log("Flag 1", user);
     if (user) {
       await this.obtenerCantidadDePaciente();
       // User is signed in.
@@ -204,11 +366,8 @@ export default {
       } else {
         this.prefijo();
       }
-    } else {
-      // No user is signed in.
     }
-  }
+  },
 };
 </script>
 
-<style lang="scss" scoped></style>

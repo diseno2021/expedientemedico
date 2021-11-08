@@ -1,5 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf">
+    <!-- Toolbar eliminada ConsultaLayout
     <q-header elevated>
       <q-toolbar>
         <q-btn
@@ -15,7 +16,7 @@
           Nueva Consulta
         </q-toolbar-title>
       </q-toolbar>
-    </q-header>
+    </q-header> -->
     <Menu ref="menu" />
     <q-drawer v-model="drawerRight" show-if-above bordered side="right">
       <NavegacionConsulta ref="nav" />
