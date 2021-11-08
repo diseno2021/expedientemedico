@@ -3,6 +3,7 @@
     <q-btn
       v-if="!state"
       round
+      elevated
       class="activate-btn"
       @click="state = true"
       size="xl"
