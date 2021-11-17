@@ -68,7 +68,7 @@
                   class="absolute-bottom-right q-mb-xl q-mx-md"
                 >
                   <q-tooltip>
-                    Imprimir receta
+                    Imprimir receta sin membrete
                   </q-tooltip>
                 </q-btn>
               </div>
@@ -127,6 +127,7 @@
         El paciente no tiene recetas registradas
       </div>
     </div>
+    <!-- sin membrete dialog -->
     <q-dialog
       v-model="bar2"
       persistent
@@ -136,7 +137,7 @@
       <q-card class="bg-primary text-white">
         <q-bar>
           <q-icon name="print" class="q-mx-sm" />
-          Elija tipo impresión de Receta
+          La impresión será sin membrete ¿Estás Seguro?
 
           <q-space />
 
@@ -146,14 +147,14 @@
         </q-bar>
 
         <q-card-section class="bg-white">
-          <q-btn unelevated color="dark" label="Con Membrete" class="q-ma-sm" />
           <q-btn
             unelevated
             color="dark"
-            label="Sin Membrete"
-            class="q-ma-sm"
+            label="Seguir"
+            class="q-mx-xl"
             @click="sinMembrete()"
           />
+          <q-btn unelevated color="grey-8" label="Cancelar" class="q-mx-xl" @click="bar2=false" />
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -248,6 +249,7 @@ export default {
           doc.save(` Receta `);
         },
       });
+      this.bar2 = false
     },
     generarPDF(consulta) {
       this.modalPdf = true;
