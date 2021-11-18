@@ -22,5 +22,6 @@ let auth = firebase.auth()
 let db = firebase.firestore();
 let st = firebase.storage();
 let anal=firebase.analytics();
+//se agrego analytics
 
 export { firebase, auth, db, st }
