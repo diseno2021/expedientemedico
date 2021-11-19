@@ -37,7 +37,7 @@
                         <hr />
                         <p
                           v-html="consulta.receta"
-                          style="height: 120px; width:300px;"
+                          style="height: 120px; width: 300px"
                         ></p>
                         <hr />
                       </div>
@@ -67,9 +67,7 @@
                   "
                   class="absolute-bottom-right q-mb-xl q-mx-md"
                 >
-                  <q-tooltip>
-                    Imprimir receta sin membrete
-                  </q-tooltip>
+                  <q-tooltip> Imprimir receta </q-tooltip>
                 </q-btn>
               </div>
             </div>
@@ -101,6 +99,40 @@
                   :to="'/editar-consulta/' + consulta.id"
                   >Editar</q-btn
                 >
+                 <q-dialog
+      v-model="bar1"
+      persistent
+      transition-show="flip-down"
+      transition-hide="flip-up"
+    >
+      <q-card class="bg-primary text-white">
+        <q-bar>
+          <q-icon name="print" class="q-mx-sm" />
+          Seleccione el metodo de impresion
+
+          <q-space />
+
+          <q-btn dense flat icon="close" v-close-popup>
+            <q-tooltip content-class="bg-white text-primary">Close</q-tooltip>
+          </q-btn>
+        </q-bar>
+
+        <q-card-section class="bg-white">
+          <div class="col-6">
+            <q-btn
+              color="dark"
+              label="Sin membrete"
+              class="q-mx-xl"
+              @click="bar2 = true"
+            />
+          </div>
+          <!-- <q-btn unelevated color="grey-8" label="Con membrete" class="q-mx-xl" @click="bar1=false"/> -->
+          <div class="col-6">
+            <recetas-membrete :id="consulta.id" />
+          </div>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
               </div>
             </div>
           </q-expansion-item>
@@ -127,42 +159,8 @@
         El paciente no tiene recetas registradas
       </div>
     </div>
-     <!-- Como imprimir dialog -->
-    <q-dialog
-      v-model="bar1"
-      persistent
-      transition-show="flip-down"
-      transition-hide="flip-up"
-    >
-      <q-card class="bg-primary text-white">
-        <q-bar>
-          <q-icon name="print" class="q-mx-sm" />
-          Seleccione el metodo de impresion
-
-          <q-space />
-        
-          <q-btn dense flat icon="close" v-close-popup>
-            <q-tooltip content-class="bg-white text-primary">Close</q-tooltip>
-          </q-btn>
-        </q-bar>
-
-        <q-card-section class="bg-white">
-          <div class="col6">
-          <q-btn
-           
-            color="dark"
-            label="Sin membrete"
-            class="q-mx-xl"
-            @click="bar2=true"
-          />
-          </div>
-          <!-- <q-btn unelevated color="grey-8" label="Con membrete" class="q-mx-xl" @click="bar1=false"/> -->
-         <div class="col6">
-         <recetas-membrete id="consulta.id"/>
-         </div>
-        </q-card-section>
-      </q-card>
-    </q-dialog>
+    <!-- Como imprimir dialog -->
+   
     <!-- sin membrete dialog -->
     <q-dialog
       v-model="bar2"
@@ -190,7 +188,13 @@
             class="q-mx-xl"
             @click="sinMembrete()"
           />
-          <q-btn unelevated color="grey-8" label="Cancelar" class="q-mx-xl" @click="bar2=false" />
+          <q-btn
+            unelevated
+            color="grey-8"
+            label="Cancelar"
+            class="q-mx-xl"
+            @click="bar2 = false"
+          />
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -236,12 +240,12 @@
 <script>
 import { date } from "quasar";
 import { jsPDF } from "jspdf";
-import RecetasMembrete from './RecetasMembrete.vue';
+import RecetasMembrete from "./RecetasMembrete.vue";
 
 export default {
   components: { RecetasMembrete },
   props: {
-    consultas: Array
+    consultas: Array,
   },
   data: () => ({
     tab: [],
@@ -288,32 +292,35 @@ export default {
           doc.save(` Receta `);
         },
       });
-      this.bar2 = false
+      this.bar2 = false;
     },
     generarPDF(consulta) {
       this.modalPdf = true;
       this.recetaSelected = consulta;
       const doc = new jsPDF({
-        format: 'letter',
+        format: "letter",
       });
       doc.setFontSize(18);
-      doc.text('Receta', 20, 30);
+      doc.text("Receta", 20, 30);
       doc.html(consulta.receta, {
         x: 20,
         y: 50,
-      },)
+      });
       this.pdf = doc;
     },
     guardar() {
-      this.pdf.save('Receta - ' + this.formatoFecha(this.recetaSelected.fecha));
+      this.pdf.save("Receta - " + this.formatoFecha(this.recetaSelected.fecha));
       this.modalPdf = false;
     },
-    visualizar(){
-      window.open(this.pdf.output('bloburl', {
-        filename: 'receta'
-      }), '_blank');
+    visualizar() {
+      window.open(
+        this.pdf.output("bloburl", {
+          filename: "receta",
+        }),
+        "_blank"
+      );
       this.modalPdf = false;
-    }
+    },
   },
   computed: {
     formatoFecha() {
