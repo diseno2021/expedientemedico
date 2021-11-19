@@ -267,7 +267,6 @@ export default {
             genero: e.data().genero,
             clinica: e.data().clinica
           };
-          console.log(paciente);
           this.pacientes.push(paciente);
         });
 
