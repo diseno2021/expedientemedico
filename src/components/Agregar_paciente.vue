@@ -491,6 +491,7 @@ export default {
       this.paciente.comentario = "";
      (this.clinicas = []),(this.paciente.clinica = ""), (this.imagen = null);
       this.mostrar_imagen = false;
+
     },
     //  Muestra una notificacion con color e icono y un mensaje dependiendo de que accion sera ejecutada.
     showNotif(mensaje, color, icono) {
