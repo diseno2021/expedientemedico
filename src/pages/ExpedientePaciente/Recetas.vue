@@ -62,7 +62,7 @@
                   color="light-blue-3"
                   icon="print"
                   @click="
-                    bar2 = true;
+                    bar1 = true;
                     indexSelect = indexx;
                   "
                   class="absolute-bottom-right q-mb-xl q-mx-md"
@@ -127,6 +127,42 @@
         El paciente no tiene recetas registradas
       </div>
     </div>
+     <!-- Como imprimir dialog -->
+    <q-dialog
+      v-model="bar1"
+      persistent
+      transition-show="flip-down"
+      transition-hide="flip-up"
+    >
+      <q-card class="bg-primary text-white">
+        <q-bar>
+          <q-icon name="print" class="q-mx-sm" />
+          Seleccione el metodo de impresion
+
+          <q-space />
+        
+          <q-btn dense flat icon="close" v-close-popup>
+            <q-tooltip content-class="bg-white text-primary">Close</q-tooltip>
+          </q-btn>
+        </q-bar>
+
+        <q-card-section class="bg-white">
+          <div class="col6">
+          <q-btn
+           
+            color="dark"
+            label="Sin membrete"
+            class="q-mx-xl"
+            @click="bar2=true"
+          />
+          </div>
+          <!-- <q-btn unelevated color="grey-8" label="Con membrete" class="q-mx-xl" @click="bar1=false"/> -->
+         <div class="col6">
+         <recetas-membrete id="consulta.id"/>
+         </div>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
     <!-- sin membrete dialog -->
     <q-dialog
       v-model="bar2"
@@ -200,8 +236,10 @@
 <script>
 import { date } from "quasar";
 import { jsPDF } from "jspdf";
+import RecetasMembrete from './RecetasMembrete.vue';
 
 export default {
+  components: { RecetasMembrete },
   props: {
     consultas: Array
   },
@@ -212,6 +250,7 @@ export default {
     consultasPagina: [],
     nConsultasPagina: 4,
     bar2: false,
+    bar1: false,
     consultasPaciente: [],
     indexSelect: null,
     modalPdf: false,
