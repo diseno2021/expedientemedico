@@ -128,7 +128,7 @@
           </div>
           <!-- <q-btn unelevated color="grey-8" label="Con membrete" class="q-mx-xl" @click="bar1=false"/> -->
           <div class="col-6">
-            <recetas-membrete :id="consulta.id" />
+            <recetas-membrete :consul="consulta"  />
           </div>
         </q-card-section>
       </q-card>

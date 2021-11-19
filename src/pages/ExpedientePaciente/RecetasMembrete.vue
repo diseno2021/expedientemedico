@@ -35,7 +35,7 @@
       </q-card>
     </q-dialog>
 
-    <div style="width: 1130px; height: 905px;display:none">
+    <div style="width: 1130px; height: 905px;display: none">
 
         <div id="target" ref="targetHtml" style="width: 1130px; height: 905px" >
           <div class="content">
@@ -49,10 +49,10 @@
                 <div class="content" style="padding-left: 30px; height: 405px">
                     <h3><b>Receta</b></h3>
                     <h4> Fecha: {{fecha}} </h4>
-                     <p v-html="recetas.receta">
+                     <p v-html="consul.receta">
                       </p>
                       <h5 style="text-align: right; float: right; top: 100%;">
-                      Proxima cita: {{recetas.proximaCita}}
+                      Proxima cita: {{consul.proximaCita}}
                     </h5>
                 </div>
                       <hr />
@@ -75,7 +75,7 @@ import jsPDF from "jspdf";
 export default {
   name: "RecetasMembrete",
    props: {
-    id: String
+    consul: Object 
   },
   data() {
     return {
@@ -91,7 +91,10 @@ export default {
     };
   },
    created() {
-     this.mostrar();
+    this.traerImg();
+    this.fecha=this.consul.fecha.toDate();
+    this.darFormatoFecha(this.fecha)
+    console.log(this.fecha);
    },
   methods: {
     traerImg() {
@@ -103,26 +106,23 @@ export default {
       .get()
       .then((doc) => {
         if (doc.exists) {
-           console.log(doc);
           let docs = doc.data();
-          console.log(docs);
           that.encabezado = docs.fotoEncabezado;
           that.firmaDigital = docs.fotoFirmaDigital;
           that.pieDePagina = docs.fotoPieDePagina;
         }
       })
       .catch((error) => {
-        //console.log("Error al tratar de obtener el documento", error);
-      });
+       });
   },
     mostrar() {
      let query=db.collection("consultas").doc(this.id)
     
      this.recetas=query.get().then(query=>{
        if(query.exists){
-         console.log(query);
+         console.log("datos: "+query);
          this.recetas=query.data();
-         console.log(this.recetas);
+         console.log("la receta dentro de mostrar:"+this.recetas);
          this.fecha = this.recetas.fecha.toDate()
          this.darFormatoFecha(this.fecha)
        }
@@ -138,8 +138,7 @@ export default {
     },
 
     generarPdf() {
-      this.mostrar();
-      console.log(document.querySelector("#target"));
+      
       var doc = new jsPDF(
         {
           orientation: "l",
@@ -148,10 +147,11 @@ export default {
         }
         //  "p", "pt", "a4"
       );
-      const ruta = document.querySelector("#target");
+      let ruta = document.querySelectorAll("#target");
       // doc.setFontSize(18);
       // doc.text('Receta', 20, 30);
-      doc.html(ruta, {
+      
+      doc.html(ruta[1], {
         callback: function (doc) {
           doc.save("Receta_Membrete.pdf");
         },
