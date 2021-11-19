@@ -16,7 +16,7 @@
           La impresión será con membrete ¿Estás Seguro?
 
           <q-space />
-
+  
           <q-btn dense flat icon="close" v-close-popup>
             <q-tooltip content-class="bg-white text-primary">Close</q-tooltip>
           </q-btn>
@@ -75,7 +75,14 @@ import jsPDF from "jspdf";
 export default {
   name: "RecetasMembrete",
    props: {
-    consul: Object 
+    consul: {
+      type: Object,
+      required: true
+      },
+    id : {
+      type:Number,
+      default: null
+      }
   },
   data() {
     return {
@@ -91,10 +98,11 @@ export default {
     };
   },
    created() {
+    console.log("el id es: "+this.id)
     this.traerImg();
     this.fecha=this.consul.fecha.toDate();
     this.darFormatoFecha(this.fecha)
-    console.log(this.fecha);
+   
    },
   methods: {
     traerImg() {
@@ -136,7 +144,9 @@ export default {
 
       this.fecha = dia + "-" + mes + "-" + anio
     },
-
+    mostrarid(){
+console.log(this.id);
+    },
     generarPdf() {
       
       var doc = new jsPDF(
@@ -150,8 +160,8 @@ export default {
       let ruta = document.querySelectorAll("#target");
       // doc.setFontSize(18);
       // doc.text('Receta', 20, 30);
-      
-      doc.html(ruta[1], {
+      console.log("el id es a inmprimir: "+this.id)
+      doc.html(ruta[this.id], {
         callback: function (doc) {
           doc.save("Receta_Membrete.pdf");
         },
