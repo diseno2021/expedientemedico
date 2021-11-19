@@ -1,9 +1,12 @@
 <template>
   <div class="contenedor">
-      <q-btn color="grey-8" label="Con membrete" 
-      class="q-mx-xl" 
-      @click="bar1=true"/>
-      <!-- con membrete dialog -->
+    <q-btn
+      color="grey-8"
+      label="Con membrete"
+      class="q-mx-xl"
+      @click="bar1 = true"
+    />
+    <!-- con membrete dialog -->
     <q-dialog
       v-model="bar1"
       persistent
@@ -16,7 +19,7 @@
           La impresión será con membrete ¿Estás Seguro?
 
           <q-space />
-  
+
           <q-btn dense flat icon="close" v-close-popup>
             <q-tooltip content-class="bg-white text-primary">Close</q-tooltip>
           </q-btn>
@@ -30,41 +33,45 @@
             class="q-mx-xl"
             @click="generarPdf"
           />
-          <q-btn unelevated color="grey-8" label="Cancelar" class="q-mx-xl" @click="bar1=false" />
+          <q-btn
+            unelevated
+            color="grey-8"
+            label="Cancelar"
+            class="q-mx-xl"
+            @click="bar1 = false"
+          />
         </q-card-section>
       </q-card>
     </q-dialog>
 
-    <div style="width: 1130px; height: 905px;display: none">
+    <div style="width: 1130px; height: 905px; display: none">
+      <div id="target" ref="targetHtml" style="width: 1130px; height: 905px">
+        <div class="content">
+          <img
+            :src="encabezado"
+            style="width: 100%; height: 250px; left: 100%; object-fit: contain"
+          />
+        </div>
 
-        <div id="target" ref="targetHtml" style="width: 1130px; height: 905px" >
-          <div class="content">
-            <img
-              :src="encabezado"
-              style="width: 100%; height: 250px; left: 100%; object-fit: contain"
-            />
-          </div>
-
-          <hr />
-                <div class="content" style="padding-left: 30px; height: 405px">
-                    <h3><b>Receta</b></h3>
-                    <h4> Fecha: {{fecha}} </h4>
-                     <p v-html="consul.receta">
-                      </p>
-                      <h5 style="text-align: right; float: right; top: 100%;">
-                      Proxima cita: {{consul.proximaCita}}
-                    </h5>
-                </div>
-                      <hr />
-                <div class="content" style="bottom: 0px">
-                      <img
-                        :src="pieDePagina"
-                        style="width: 100%; height: 250px; object-fit: contain"
-                      />
-                  </div>
-          </div>
+        <hr />
+        <div class="content" style="padding-left: 30px; height: 405px">
+          <h3><b>Receta</b></h3>
+          <h4>Fecha: {{ fecha }}</h4>
+          <p v-html="consul.receta"></p>
+          <h5 style="text-align: right; float: right; top: 100%">
+            Proxima cita: {{ consul.proximaCita }}
+          </h5>
+        </div>
+        <hr />
+        <div class="content" style="bottom: 0px">
+          <img
+            :src="pieDePagina"
+            style="width: 100%; height: 250px; object-fit: contain"
+          />
+        </div>
+      </div>
     </div>
-   <br />
+    <br />
   </div>
 </template>
 
@@ -74,18 +81,20 @@ import jsPDF from "jspdf";
 
 export default {
   name: "RecetasMembrete",
-   props: {
+  props: {
     consul: {
       type: Object,
-      required: true
-      },
-    id : {
-      type:Number,
-      default: null
-      }
+      required: true,
+    },
+    id: {
+      type: Number,
+      default: null,
+    },
   },
   data() {
     return {
+      paciente: "",
+      medico: "",
       bar1: false,
       recetas: "",
       fecha: "",
@@ -97,58 +106,54 @@ export default {
       indexSelect: null,
     };
   },
-   created() {
-    console.log("el id es: "+this.id)
+  created() {
+    this.traerDatosPaciente()
+    console.log("el id es: " + this.id);
     this.traerImg();
-    this.fecha=this.consul.fecha.toDate();
-    this.darFormatoFecha(this.fecha)
-   
-   },
+    this.fecha = this.consul.fecha.toDate();
+    this.darFormatoFecha(this.fecha);
+  },
   methods: {
     traerImg() {
-      
-    let that = this;
-    db
-      .collection("medicos")
-      .doc(localStorage.getItem("id_doctor"))
-      .get()
-      .then((doc) => {
-        if (doc.exists) {
-          let docs = doc.data();
-          that.encabezado = docs.fotoEncabezado;
-          that.firmaDigital = docs.fotoFirmaDigital;
-          that.pieDePagina = docs.fotoPieDePagina;
-        }
-      })
-      .catch((error) => {
-       });
-  },
+      let that = this;
+      db.collection("medicos")
+        .doc(localStorage.getItem("id_doctor"))
+        .get()
+        .then((doc) => {
+          if (doc.exists) {
+            let docs = doc.data();
+            that.encabezado = docs.fotoEncabezado;
+            that.firmaDigital = docs.fotoFirmaDigital;
+            that.pieDePagina = docs.fotoPieDePagina;
+          }
+        })
+        .catch((error) => {});
+    },
     mostrar() {
-     let query=db.collection("consultas").doc(this.id)
-    
-     this.recetas=query.get().then(query=>{
-       if(query.exists){
-         console.log("datos: "+query);
-         this.recetas=query.data();
-         console.log("la receta dentro de mostrar:"+this.recetas);
-         this.fecha = this.recetas.fecha.toDate()
-         this.darFormatoFecha(this.fecha)
-       }
-     })
+      let query = db.collection("consultas").doc(this.id);
+
+      this.recetas = query.get().then((query) => {
+        if (query.exists) {
+          console.log("datos: " + query);
+          this.recetas = query.data();
+          console.log("la receta dentro de mostrar:" + this.recetas);
+          this.fecha = this.recetas.fecha.toDate();
+          this.darFormatoFecha(this.fecha);
+        }
+      });
     },
 
-    darFormatoFecha(fecha){
-      const anio = fecha.getFullYear().toString()
-      const mes = fecha.getMonth().toString()
-      const dia = fecha.getDate().toString()
+    darFormatoFecha(fecha) {
+      const anio = fecha.getFullYear().toString();
+      const mes = fecha.getMonth().toString();
+      const dia = fecha.getDate().toString();
 
-      this.fecha = dia + "-" + mes + "-" + anio
+      this.fecha = dia + "-" + mes + "-" + anio;
     },
-    mostrarid(){
-console.log(this.id);
+    mostrarid() {
+      console.log(this.id);
     },
     generarPdf() {
-      
       var doc = new jsPDF(
         {
           orientation: "l",
@@ -160,7 +165,7 @@ console.log(this.id);
       let ruta = document.querySelectorAll("#target");
       // doc.setFontSize(18);
       // doc.text('Receta', 20, 30);
-      console.log("el id es a inmprimir: "+this.id)
+      console.log("el id es a inmprimir: " + this.id);
       doc.html(ruta[this.id], {
         callback: function (doc) {
           doc.save("Receta_Membrete.pdf");
@@ -168,6 +173,14 @@ console.log(this.id);
       });
       this.bar1 = false;
     },
+    async traerDatosPaciente(){
+      const dataPaciente = await db.collection('pacientes').doc(this.consul.idPaciente).get()
+      this.paciente = dataPaciente.data()
+      const dataMedico = await db.collection('medicos').doc(dataPaciente.data().idMedico).get()
+      this.medico = dataMedico.data()
+      console.log(this.medico)
+
+    }
   },
 };
 </script>
