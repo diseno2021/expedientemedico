@@ -298,7 +298,6 @@ export default {
           icon: "check_circle"
         });
         this.$router.push("/clinicas");
-        //console.log(ref.id);
       } catch (error) {
         console.error(error);
         this.$q.notify({
@@ -334,6 +333,23 @@ export default {
             telefono: this.telefono,
             direccion: this.direccion
           });
+        const refPaciente = await db
+          .collection("pacientes")
+          .where("clinica.id", "==", this.$route.params.id)
+          .get();
+        for (var paciente of refPaciente.docs) {
+          const refPacienteClinica = await db
+            .collection("pacientes")
+            .doc(paciente.id)
+            .update({
+              clinica: {
+                id: this.$route.params.id,
+                nombre: this.nombre,
+                telefono: this.telefono,
+                direccion: this.direccion
+              }
+            });
+        }
         this.$q.notify({
           message: "Se edito la clinica satisfactoriamente",
           color: "green",
