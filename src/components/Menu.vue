@@ -99,7 +99,7 @@
 
         <q-item
           clickable
-          @click="$refs.newPatientForm.open()"
+          @click="$refs.newPatientForm.open();$refs.newPatientForm.getClinicas()"
           class="drawer-section row drawer-option"
         >
           <div class="left-icon col-2">

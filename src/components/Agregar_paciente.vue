@@ -468,6 +468,7 @@ export default {
     };
   },
 
+
   //limpia los campos del formulario para dejarlo listo para el siguiente paciente igualmente
   //para si desea cancelar el registro del paciente.
   methods: {
@@ -488,7 +489,7 @@ export default {
       this.paciente.dui = "";
       this.paciente.enCasoEmergencia = "";
       this.paciente.comentario = "";
-      (this.clinicas = []), (this.paciente.clinica = ""), (this.imagen = null);
+     (this.clinicas = []),(this.paciente.clinica = ""), (this.imagen = null);
       this.mostrar_imagen = false;
     },
     //  Muestra una notificacion con color e icono y un mensaje dependiendo de que accion sera ejecutada.
