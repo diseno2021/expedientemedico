@@ -49,9 +49,8 @@
                 <div class="content" style="padding-left: 30px; height: 405px">
                     <h3><b>Receta</b></h3>
                     <h4> Fecha: {{fecha}} </h4>
-                     <p>
-                      {{recetas.receta}}
-                    </p>
+                     <p v-html="recetas.receta">
+                      </p>
                       <h5 style="text-align: right; float: right; top: 100%;">
                       Proxima cita: {{recetas.proximaCita}}
                     </h5>
@@ -81,7 +80,7 @@ export default {
   data() {
     return {
       bar1: false,
-      recetas: this.id,
+      recetas: "",
       fecha: "",
       encabezado: "",
       firmaDigital: "",
@@ -91,12 +90,12 @@ export default {
       indexSelect: null,
     };
   },
-   mounted() {
+   created() {
      this.mostrar();
-     this.traerImg();
    },
   methods: {
     traerImg() {
+      
     let that = this;
     db
       .collection("medicos")
@@ -104,7 +103,9 @@ export default {
       .get()
       .then((doc) => {
         if (doc.exists) {
+           console.log(doc);
           let docs = doc.data();
+          console.log(docs);
           that.encabezado = docs.fotoEncabezado;
           that.firmaDigital = docs.fotoFirmaDigital;
           that.pieDePagina = docs.fotoPieDePagina;
@@ -116,9 +117,12 @@ export default {
   },
     mostrar() {
      let query=db.collection("consultas").doc(this.id)
+    
      this.recetas=query.get().then(query=>{
        if(query.exists){
+         console.log(query);
          this.recetas=query.data();
+         console.log(this.recetas);
          this.fecha = this.recetas.fecha.toDate()
          this.darFormatoFecha(this.fecha)
        }
@@ -134,6 +138,7 @@ export default {
     },
 
     generarPdf() {
+      this.mostrar();
       console.log(document.querySelector("#target"));
       var doc = new jsPDF(
         {
