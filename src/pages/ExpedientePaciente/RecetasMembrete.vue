@@ -44,8 +44,8 @@
       </q-card>
     </q-dialog>
 
-    <div style="width: 1130px; height: 905px; display: none">
-      <div id="target" ref="targetHtml" style="width: 1130px; height: 905px">
+    <div style="width: 1130px; height: 980px; display: none">
+      <div id="target" ref="targetHtml" style="width: 1130px; height: 980px">
         <div class="content">
           <img
             :src="encabezado"
@@ -54,16 +54,38 @@
         </div>
 
         <hr />
-        <div class="content" style="padding-left: 30px; height: 405px">
+        <div class="content" style="padding-left: 30px; height: 480px; width: 1130px;">
+          <div class="row" style="font-size: 25px; width: 100%;">
+            <div class="col">
+              <center><label> <strong>{{ medico.nombre }} </strong> </label><br></center>
+            </div>
+          </div>
+          <div class="row" style="font-size: 20px">
+            <div class="col">
+              <label><b>Nombre: </b> {{ paciente.nombre }} </label><br>
+              <label><b>direccion: </b> {{ paciente.direccion }} </label>
+              <label><b>Fecha: </b> {{ fecha }}</label>
+            </div>
+            <div class="col">
+              <label><b>DUI: </b> {{ paciente.dui }} </label><br>
+              <label><b>Telefono: </b> {{ paciente.telefono }} </label><br>
+            </div>
+          </div>
+        
+          
+          
+          
           <h3><b>Receta</b></h3>
-          <h4>Fecha: {{ fecha }}</h4>
-          <p v-html="consul.receta"></p>
+          
+          <div style="font-size: 15px;">
+            <p v-html="consul.receta"></p>
+          </div>
           <h5 style="text-align: right; float: right; top: 100%">
             Proxima cita: {{ consul.proximaCita }}
           </h5>
         </div>
         <hr />
-        <div class="content" style="bottom: 0px">
+        <div class="content" style="bottom: 0px; height: 250px">
           <img
             :src="pieDePagina"
             style="width: 100%; height: 250px; object-fit: contain"
@@ -178,7 +200,6 @@ export default {
       this.paciente = dataPaciente.data()
       const dataMedico = await db.collection('medicos').doc(dataPaciente.data().idMedico).get()
       this.medico = dataMedico.data()
-      console.log(this.medico)
 
     }
   },
