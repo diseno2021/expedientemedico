@@ -241,6 +241,7 @@
 import { date } from "quasar";
 import { jsPDF } from "jspdf";
 import RecetasMembrete from "./RecetasMembrete.vue";
+import { auth, db } from "../../boot/firebase";
 
 export default {
   components: { RecetasMembrete },
@@ -297,16 +298,31 @@ export default {
     generarPDF(consulta) {
       this.modalPdf = true;
       this.recetaSelected = consulta;
-      const doc = new jsPDF({
+      const docPDF = new jsPDF({
         format: "letter",
       });
-      doc.setFontSize(18);
-      doc.text("Receta", 20, 30);
-      doc.html(consulta.receta, {
-        x: 20,
+      var docRef = db.collection("medicos").doc(auth.currentUser.uid);
+      docRef.get().then(doc => {
+        if (doc.exists) {
+          console.log(doc.data());
+          if (doc.data().fotoEncabezado != undefined && doc.data().fotoEncabezado != null && doc.data().fotoEncabezado != '') {
+            docPDF.addImage(doc.data().fotoEncabezado, 'PNG', 0, 0, 216, 30);
+          }
+          if (doc.data().fotoFirmaDigital != undefined && doc.data().fotoFirmaDigital != null && doc.data().fotoFirmaDigital != '') {
+            docPDF.addImage(doc.data().fotoFirmaDigital, 'PNG', 160, 220, 40, 20);
+          }
+          if (doc.data().fotoPieDePagina != undefined && doc.data().fotoPieDePagina != null && doc.data().fotoPieDePagina != '') {
+            docPDF.addImage(doc.data().fotoPieDePagina, 'PNG', 0, 250, 216, 30);
+          }
+        }
+      });
+      docPDF.setFontSize(18);
+      docPDF.text("Receta", 15, 40);
+      docPDF.html(consulta.receta, {
+        x: 15,
         y: 50,
       });
-      this.pdf = doc;
+      this.pdf = docPDF;
     },
     guardar() {
       this.pdf.save("Receta - " + this.formatoFecha(this.recetaSelected.fecha));
