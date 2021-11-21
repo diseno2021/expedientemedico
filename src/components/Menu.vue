@@ -7,7 +7,7 @@
             <q-card
               class="row text-primary text-h5 text-bold q-my-md justify-center items-center"
               flat
-              @click.prevent="state = false"
+              @click.prevent="state = false" 
             >
               <q-img
                 src="../../src/assets/img/doctoresvirtual.png"
