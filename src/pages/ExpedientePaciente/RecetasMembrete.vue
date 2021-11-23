@@ -1,14 +1,15 @@
 <template>
   <div class="contenedor">
     <q-btn
-      color="grey-8"
+    style="min-width:25vh"
+      color="dark"
       label="Con membrete"
       class="q-mx-xl"
-      @click="bar1 = true"
+      @click="bar2 = true"
     />
     <!-- con membrete dialog -->
     <q-dialog
-      v-model="bar1"
+      v-model="bar2"
       persistent
       transition-show="flip-down"
       transition-hide="flip-up"
@@ -31,14 +32,14 @@
             color="dark"
             label="Seguir"
             class="q-mx-xl"
-            @click="generarPdf"
+            @click="generarPdf "
           />
           <q-btn
             unelevated
             color="grey-8"
             label="Cancelar"
             class="q-mx-xl"
-            @click="bar1 = false"
+            @click="bar2 = false"
           />
         </q-card-section>
       </q-card>
@@ -71,12 +72,7 @@
               <label><b>Telefono: </b> {{ paciente.telefono }} </label><br>
             </div>
           </div>
-        
-          
-          
-          
           <h3><b>Receta</b></h3>
-          
           <div style="font-size: 15px;">
             <p v-html="consul.receta"></p>
           </div>
@@ -117,7 +113,7 @@ export default {
     return {
       paciente: "",
       medico: "",
-      bar1: false,
+      bar2: false,
       recetas: "",
       fecha: "",
       encabezado: "",
@@ -193,7 +189,7 @@ export default {
           doc.save("Receta_Membrete.pdf");
         },
       });
-      this.bar1 = false;
+      this.bar2 = false;
     },
     async traerDatosPaciente(){
       const dataPaciente = await db.collection('pacientes').doc(this.consul.idPaciente).get()

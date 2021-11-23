@@ -99,40 +99,48 @@
                   :to="'/editar-consulta/' + consulta.id"
                   >Editar</q-btn
                 >
-                 <q-dialog
-      v-model="bar1"
-      persistent
-      transition-show="flip-down"
-      transition-hide="flip-up"
-    >
-      <q-card class="bg-primary text-white">
-        <q-bar>
-          <q-icon name="print" class="q-mx-sm" />
-          Seleccione el metodo de impresion
+                <q-dialog
+                  v-model="bar1"
+                  persistent
+                  transition-show="flip-down"
+                  transition-hide="flip-up"
+                >
+                  <q-card class="bg-primary text-white">
+                    <q-bar>
+                      <q-icon name="print" class="q-mx-sm" />
+                      Seleccione el metodo de impresion
 
-          <q-space />
+                      <q-space />
 
-          <q-btn dense flat icon="close" v-close-popup>
-            <q-tooltip content-class="bg-white text-primary">Close</q-tooltip>
-          </q-btn>
-        </q-bar>
+                      <q-btn dense flat icon="close" v-close-popup>
+                        <q-tooltip content-class="bg-white text-primary"
+                          >Close</q-tooltip
+                        >
+                      </q-btn>
+                    </q-bar>
 
-        <q-card-section class="bg-white">
-          <div class="col-6">
-            <q-btn
-              color="dark"
-              label="Sin membrete"
-              class="q-mx-xl"
-              @click="bar2 = true"
-            />
-          </div>
-          <!-- <q-btn unelevated color="grey-8" label="Con membrete" class="q-mx-xl" @click="bar1=false"/> -->
-          <div class="col-6">
-            <recetas-membrete :consul="consulta" :id="indexSelect" />
-          </div>
-        </q-card-section>
-      </q-card>
-    </q-dialog>
+                    <q-card-section class="bg-white">
+                      <div class="row">
+                        <div class="col-6">
+                          <recetas-membrete
+                            :consul="consulta"
+                            :id="indexSelect"
+                          />
+                        </div>
+                        <div class="col-6">
+                          <q-btn
+                            color="dark"
+                            label="Sin membrete"
+                            class="q-mx-xl"
+                            @click="bar2 = true; bar1=false"
+                            style="min-width: 25vh"
+                          />
+                        </div>
+                      </div>
+                      <!-- <q-btn unelevated color="grey-8" label="Con membrete" class="q-mx-xl" @click="bar1=false"/> -->
+                    </q-card-section>
+                  </q-card>
+                </q-dialog>
               </div>
             </div>
           </q-expansion-item>
@@ -160,7 +168,7 @@
       </div>
     </div>
     <!-- Como imprimir dialog -->
-   
+
     <!-- sin membrete dialog -->
     <q-dialog
       v-model="bar2"
@@ -302,17 +310,36 @@ export default {
         format: "letter",
       });
       var docRef = db.collection("medicos").doc(auth.currentUser.uid);
-      docRef.get().then(doc => {
+      docRef.get().then((doc) => {
         if (doc.exists) {
           console.log(doc.data());
-          if (doc.data().fotoEncabezado != undefined && doc.data().fotoEncabezado != null && doc.data().fotoEncabezado != '') {
-            docPDF.addImage(doc.data().fotoEncabezado, 'PNG', 0, 0, 216, 30);
+          if (
+            doc.data().fotoEncabezado != undefined &&
+            doc.data().fotoEncabezado != null &&
+            doc.data().fotoEncabezado != ""
+          ) {
+            docPDF.addImage(doc.data().fotoEncabezado, "PNG", 0, 0, 216, 30);
           }
-          if (doc.data().fotoFirmaDigital != undefined && doc.data().fotoFirmaDigital != null && doc.data().fotoFirmaDigital != '') {
-            docPDF.addImage(doc.data().fotoFirmaDigital, 'PNG', 160, 220, 40, 20);
+          if (
+            doc.data().fotoFirmaDigital != undefined &&
+            doc.data().fotoFirmaDigital != null &&
+            doc.data().fotoFirmaDigital != ""
+          ) {
+            docPDF.addImage(
+              doc.data().fotoFirmaDigital,
+              "PNG",
+              160,
+              220,
+              40,
+              20
+            );
           }
-          if (doc.data().fotoPieDePagina != undefined && doc.data().fotoPieDePagina != null && doc.data().fotoPieDePagina != '') {
-            docPDF.addImage(doc.data().fotoPieDePagina, 'PNG', 0, 250, 216, 30);
+          if (
+            doc.data().fotoPieDePagina != undefined &&
+            doc.data().fotoPieDePagina != null &&
+            doc.data().fotoPieDePagina != ""
+          ) {
+            docPDF.addImage(doc.data().fotoPieDePagina, "PNG", 0, 250, 216, 30);
           }
         }
       });
