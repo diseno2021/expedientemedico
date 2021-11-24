@@ -5,7 +5,7 @@
       color="dark"
       label="Con membrete"
       class="q-mx-xl"
-      @click="bar2 = true"
+      @click="bar2 = true; bar1=false"
     />
     <!-- con membrete dialog -->
     <q-dialog
@@ -32,7 +32,7 @@
             color="dark"
             label="Seguir"
             class="q-mx-xl"
-            @click="generarPdf "
+            @click="generarPdf"
           />
           <q-btn
             unelevated
@@ -73,7 +73,7 @@
             </div>
           </div>
           <h3><b>Receta</b></h3>
-          <div style="font-size: 15px;">
+          <div style="font-size: 15px; height=50%; max-height=75%">
             <p v-html="consul.receta"></p>
           </div>
           <h5 style="text-align: right; float: right; top: 100%">
@@ -81,10 +81,10 @@
           </h5>
         </div>
         <hr />
-        <div class="content" style="bottom: 0px; height: 250px">
+        <div class="content" style="height: 80%" >
           <img
             :src="pieDePagina"
-            style="width: 100%; height: 250px; object-fit: contain"
+            style="width: 100%; height: 220px; object-fit: contain"
           />
         </div>
       </div>
@@ -114,6 +114,7 @@ export default {
       paciente: "",
       medico: "",
       bar2: false,
+      bar1: false,
       recetas: "",
       fecha: "",
       encabezado: "",
