@@ -1,31 +1,50 @@
 <template>
   <div class="q-pa-md">
-    <div class="q-pa-md">
-      Encabezado
-      <Imagen
-        id="examenes"
-        :numFoto="'fotoEncabezado'"
-        :fotografia="fotoEncabezado"
-      />
+    <div class="text-bold text-primary titles" align="center">
+      Configura tus plantillas
     </div>
-    <q-separator />
-    <div class="q-pa-md">
-      Pie de pagina
-      <Imagen
-        id="examenes"
-        :numFoto="'fotoPieDePagina'"
-        :fotografia="fotoPieDePagina"
-      />
-    </div>
-    <q-separator />
-    <div class="q-pa-md">
-      Firma digital
-      <Imagen
-        id="examenes"
-        :numFoto="'fotoFirmaDigital'"
-        :fotografia="fotoFirmaDigital"
-      />
-    </div>
+    <q-card class="my-card cards">
+      <q-card-section>
+        <div class="q-pa-md">
+          <div class="text-bold text-secondary" style="font-size:x-large" align="center">
+            Encabezado de documentos
+          </div>
+          <Imagen
+            id="examenes"
+            :numFoto="'fotoEncabezado'"
+            :fotografia="fotoEncabezado"
+          />
+        </div>
+      </q-card-section>
+    </q-card>
+    <q-card class="my-card cards">
+      <q-card-section>
+        <div class="q-pa-md">
+          <div class="text-bold text-secondary" style="font-size:x-large" align="center">
+            Pie de pagina de documentos
+          </div>
+          <Imagen
+            id="examenes"
+            :numFoto="'fotoPieDePagina'"
+            :fotografia="fotoPieDePagina"
+          />
+        </div>
+      </q-card-section>
+    </q-card>
+    <q-card class="my-card cards">
+      <q-card-section>
+        <div class="q-pa-md">
+          <div class="text-bold text-secondary" style="font-size:x-large" align="center">
+            Firma para documentos
+          </div>
+          <Imagen
+            id="examenes"
+            :numFoto="'fotoFirmaDigital'"
+            :fotografia="fotoFirmaDigital"
+          />
+        </div>
+      </q-card-section>
+    </q-card>
   </div>
 </template>
 

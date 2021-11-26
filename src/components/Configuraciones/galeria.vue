@@ -1,20 +1,21 @@
 <template>
   <div class="q-pa-md">
-    <div class="q-col-gutter-md row items-start">
-      <div class="col-4">
+    <div class="q-my-md">
+      <div class="q-my-md" aling="center">
         <q-img
           v-if="foto"
           :src="foto"
           contain
           :ratio="32 / 9"
-          class="q-my-md rounded-borders q-mx-md q-mx-xs"
+          class="q-my-md rounded-borders"
+          
         >
           <q-tooltip
             content-class="bg-accent text-white"
             content-style="font-size: 12px"
             anchor="top left"
             self="bottom left"
-            :offset="[0, 8]"
+            :offset="[0, 0]"
             >Si desea cambiar la imagen seleccione una nueva y de click en el
             boton para subirla.</q-tooltip
           >
@@ -40,7 +41,7 @@
       </div>
     </div>
     <br />
-    <div class="row" style="text-align: center">
+    <div class="q-my-md" style="text-align: center">
       <q-file
         filled
         counter
