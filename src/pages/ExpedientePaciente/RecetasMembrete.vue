@@ -58,7 +58,7 @@
         <div class="content" style="padding-left: 30px; height: 510px; width: 1130px;">
           <div class="row" style="font-size: 25px; width: 100%;">
             <div class="col">
-              <center><label> <strong>{{ medico.nombre }} </strong> </label><br></center>
+              <center><label> <strong>Dr. {{ medico.nombre }} </strong> </label><br></center>
             </div>
           </div>
           <div class="row" style="font-size: 20px">
@@ -75,7 +75,6 @@
           <h3><b>Receta</b></h3>
           <div style="font-size: 15px; height=50%; max-height=100%">
             <p v-html="consul.receta"></p>
-    
          </div>
          
           <img
