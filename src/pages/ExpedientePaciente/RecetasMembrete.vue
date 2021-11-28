@@ -63,7 +63,7 @@
           </div>
           <div class="row" style="font-size: 20px">
             <div class="col">
-              <label><b>Nombre: </b> {{ paciente.nombre }} </label><br>
+              <label><b>Paciente: </b> {{ paciente.nombre }} </label><br>
              
             </div>
             <div class="col">
