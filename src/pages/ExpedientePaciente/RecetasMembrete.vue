@@ -64,12 +64,10 @@
           <div class="row" style="font-size: 20px">
             <div class="col">
               <label><b>Nombre: </b> {{ paciente.nombre }} </label><br>
-              <label><b>direccion: </b> {{ paciente.direccion }} </label>
-              <label><b>Fecha: </b> {{ fecha }}</label>
+             
             </div>
             <div class="col">
-              <label><b>DUI: </b> {{ paciente.dui }} </label><br>
-              <label><b>Telefono: </b> {{ paciente.telefono }} </label><br>
+              <label><b>Fecha: </b> {{ fecha }}</label>
             </div>
           </div>
           <h3><b>Receta</b></h3>
