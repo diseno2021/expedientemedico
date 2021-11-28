@@ -55,7 +55,7 @@
         </div>
 
         <hr />
-        <div class="content" style="padding-left: 30px; height: 480px; width: 1130px;">
+        <div class="content" style="padding-left: 30px; height: 510px; width: 1130px;">
           <div class="row" style="font-size: 25px; width: 100%;">
             <div class="col">
               <center><label> <strong>{{ medico.nombre }} </strong> </label><br></center>
@@ -73,10 +73,17 @@
             </div>
           </div>
           <h3><b>Receta</b></h3>
-          <div style="font-size: 15px; height=50%; max-height=75%">
+          <div style="font-size: 15px; height=50%; max-height=100%">
             <p v-html="consul.receta"></p>
-          </div>
-          <h5 style="text-align: right; float: right; top: 100%">
+    
+         </div>
+         
+          <img
+            :src="firmaDigital"
+            style="top: 100%;width: 25%; height: 100px; object-fit: contain; float: right;text-align: right;"
+          />
+         
+          <h5 style="top: 100%">
             Proxima cita: {{ consul.proximaCita }}
           </h5>
         </div>
@@ -84,7 +91,7 @@
         <div class="content" style="height: 80%" >
           <img
             :src="pieDePagina"
-            style="width: 100%; height: 220px; object-fit: contain"
+            style="width: 100%; height: 220px; object-fit: contain;position: fixed"
           />
         </div>
       </div>
